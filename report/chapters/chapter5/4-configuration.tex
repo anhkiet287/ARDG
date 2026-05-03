@@ -1,5 +1,16 @@
 ﻿\section{Training Configuration}
 
+% TODO[Kiệt]:
+% Goal:
+% - Describe the controlled training setup that makes method comparisons fair.
+% Flow:
+% - Optimizer, schedule, epochs, batch construction, checkpoint selection, and method summary.
+% Include:
+% - Keep method names in formal tables as PGD-AT, DDN-AT, Multi-AT, AttackDRO, AttackDRO++, and AttackDRO++ (Ours).
+% Avoid:
+% - Explaining method internals already covered in Chapter 4.
+% Target length: 4-6 paragraphs plus existing tables.
+
 All methods are trained under a controlled adversarial training pipeline. Unless
 otherwise stated, the optimizer, model architecture, dataset split, preprocessing
 pipeline, and evaluation protocol are kept fixed across methods. This ensures that

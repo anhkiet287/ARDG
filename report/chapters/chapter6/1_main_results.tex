@@ -1,10 +1,34 @@
 ﻿% ─────────────────────────────────────────────────────────────────────────────
 \section{Whitebox Robustness Under Direct Attacks}
 \label{sec:main_results}
+
+% TODO[Kiệt]:
+% Goal:
+% - Present the main whitebox robustness evidence and interpret it conservatively.
+% Flow:
+% - Main aggregate result, paired/statistical support, per-attack breakdown, worst-case behavior, and stability.
+% - End each subsection with what the result does and does not establish.
+% Include:
+% - Cite every active table that supports a claim.
+% - Keep metric names consistent with docs/05_notation_registry.md.
+% Avoid:
+% - Introducing graybox or ablation conclusions before their sections.
+% Target length: 5-8 pages depending on final table density.
 % ─────────────────────────────────────────────────────────────────────────────
 
 \subsection{Aggregate Robustness}
 \label{sec:aggregate_robustness}
+
+% TODO[Kiệt]:
+% Goal:
+% - Make the aggregate result easy to read before detailed statistics.
+% Flow:
+% - State the main pattern in `tab:agg-results`, then qualify it with effect size and corrected tests.
+% Include:
+% - References to `tab:effect_size_summary`, `tab:paired_aggregate_all_baselines`, and `tab:corrected_paired_tests` where claims depend on them.
+% Avoid:
+% - Treating small non-significant differences as conclusions.
+% Target length: 4-6 paragraphs plus existing tables.
 
 \begin{table}[H]
 \centering
@@ -377,6 +401,18 @@ compared.
 \subsection{Per-Attack Robustness Breakdown}
 \label{sec:per_attack_breakdown}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain which attack families drive the aggregate gain.
+% Flow:
+% - Discuss per-attack table, then connect source vs held-out attacks to the research questions.
+% Include:
+% - Refer to `tab:per_attack_all_baselines`.
+% - Use report-facing attack names, not code-style attack names.
+% Avoid:
+% - Repeating all table numbers in prose.
+% Target length: 3-5 paragraphs.
+
 The aggregate metrics show the overall trend, but they do not reveal which attacks
 drive the improvement. Table~\ref{tab:per_attack_all_baselines} reports per-attack
 paired comparisons between AttackDRO++ and each baseline. The table is divided into
@@ -487,6 +523,17 @@ preserved rather than improved.
 \subsection{Worst-Case Behavior: Worst(8) and AutoAttack}
 \label{sec:worst_case_behavior}
 
+% TODO[Kiệt]:
+% Goal:
+% - Separate worst-case suite behavior from AutoAttack sanity/stress testing.
+% Flow:
+% - Interpret `Worst(8)` first, then explain why AutoAttack is reported separately.
+% Include:
+% - References to `tab:worst_autoattack_sanity` and `tab:autoattack_fulltest`.
+% Avoid:
+% - Claiming AutoAttack is part of Mean(8).
+% Target length: 3-4 paragraphs.
+
 Two metrics test standardized worst-case behavior. Worst(8) is the minimum
 robust accuracy across the eight evaluation attacks per checkpoint;
 AutoAttack-$\ell_\infty$ is an ensemble $\ell_\infty$ stress test following
@@ -564,6 +611,17 @@ $\ell_\infty$ depth, but provides the best average cross-attack balance.
 
 \subsection{Variance Reduction and Training Stability}
 \label{sec:variance_reduction}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain whether AttackDRO++ changes seed-to-seed stability.
+% Flow:
+% - Interpret `tab:variance-reduction`, then state whether the result supports or only suggests improved stability.
+% Include:
+% - Keep standard deviation and ratio definitions clear.
+% Avoid:
+% - Overclaiming reliability from variance alone.
+% Target length: 2-3 paragraphs.
 
 In addition to improving the mean of average-case robustness metrics, AttackDRO++ also
 reduces seed-to-seed variation relative to Multi-AT. Table~\ref{tab:variance-reduction}

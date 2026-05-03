@@ -4,3 +4,9 @@
 4. provide full outline and template for each section so partner just fill in content. 
 5. list all figures and tables we have. 
 6. list all notation, symbol we used for consistent. 
+
+for compile pdf:
+```bash
+cd C:\Users\ADMIN\Documents\GitHub\ARDG\report
+powershell -ExecutionPolicy Bypass -File .\build.ps1
+```

@@ -1,5 +1,17 @@
 \chapter{Experimental Setup}
 
+% TODO[Kiệt]:
+% Goal:
+% - Make Chapter 5 the reproducibility source of truth for every result in Chapter 6.
+% Flow:
+% - Keep dataset, architecture, attacks, training configuration, hyperparameters, metrics, and graybox protocol in a clean order.
+% - Add the missing Chapter 5.9 Tools, Platforms, and Experiment Tracking in a later structural patch.
+% Include:
+% - A tools/platforms table and setup recap table when prose-writing begins.
+% Avoid:
+% - Moving results or interpretation into the setup chapter.
+% Target length: Full chapter should be concise but complete enough to reproduce experiments.
+
 \input{chapters/chapter5/1-dataset_preprocessing}
 \input{chapters/chapter5/2-architectures}
 \input{chapters/chapter5/3-attack_suite}
@@ -8,3 +20,15 @@
 \input{chapters/chapter5/6-protocol}
 \input{chapters/chapter5/7-eval_metrics}
 \input{chapters/chapter5/8-graybox_transfer}
+
+% TODO[Team]:
+% Goal:
+% - Add Chapter 5.9 Tools, Platforms, and Experiment Tracking in a later structural patch.
+% Flow:
+% - Summarize PyTorch, torchvision, TorchAttacks, AutoAttack package, adv-lib, NumPy, pandas, matplotlib, W&B, Google Colab/Drive, MiKTeX, and local hardware only where relevant.
+% Include:
+% - Planned table `tab:ch5_tools_platforms`.
+% - A Chapter 5 setup recap table `tab:ch5_setup_summary` using the special recap-table style from docs/06_style_rules.md.
+% Avoid:
+% - Adding unverified tool versions or hardware details.
+% Target length: 1 short section plus 1-2 compact tables.

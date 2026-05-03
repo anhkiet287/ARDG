@@ -3,20 +3,104 @@
 
 \section{Adversarial Robustness and the Cross-Attack Gap}
 
+% TODO[Kiệt]:
+% Goal:
+% - Open with a compact motivation for adversarial robustness and the cross-attack gap.
+% Flow:
+% - Start from image classification reliability, then explain why robustness to one attack is not enough.
+% - Bridge quickly to the Stage 1 observation that attacks differ by norm, objective, and optimization behavior.
+% Include:
+% - One concrete example of cross-attack mismatch.
+% - A restrained statement of why this matters for evaluating robust models.
+% Avoid:
+% - Long background that belongs in Chapter 2.
+% - Unsupported broad claims about security or deployment.
+% Target length: 2-3 paragraphs.
 
 
 \section{Stage 1 Findings and Their Limitations}
 
+% TODO[Kiệt]:
+% Goal:
+% - Use Stage 1 as the bridge from diagnosis to this report's method.
+% Flow:
+% - Summarize what Stage 1 found, then state what Stage 1 could not solve.
+% - End by motivating multi-attack and group-aware training.
+% Include:
+% - Mention that Stage 1 informs the attack suite and evaluation discipline.
+% - Keep any quantitative claim tied to an existing result or table if added later.
+% Avoid:
+% - Repeating full Stage 1 experiments.
+% Target length: 2 paragraphs.
+
 \section{Problem Statement}
 
+% TODO[Kiệt]:
+% Goal:
+% - State the precise problem this report addresses.
+% Flow:
+% - Define the gap: single-attack robustness does not reliably generalize across attacks.
+% - State the desired behavior: improve robustness across source and held-out attacks without relying on one attack family.
+% Include:
+% - Distinguish attack names from training-method names using docs/05_notation_registry.md.
+% Avoid:
+% - Introducing method details that belong in Chapter 4.
+% Target length: 1-2 paragraphs.
 
 
 \section{Research Questions and Hypotheses}
 
+% TODO[Kiệt]:
+% Goal:
+% - Present a small set of research questions that Chapter 6 can answer directly.
+% Flow:
+% - RQ1: aggregate whitebox robustness.
+% - RQ2: class-wise or attack-wise robustness gaps.
+% - RQ3: graybox transfer robustness.
+% - RQ4: sensitivity to key AttackDRO++ components.
+% Include:
+% - A matching hypothesis for each RQ only if Chapter 6 has supporting evidence.
+% Avoid:
+% - Questions that require experiments not in the report.
+% Target length: 1 concise list plus 1 transition paragraph.
 
 
 \section{Contributions of This Work}
 
+% TODO[Kiệt]:
+% Goal:
+% - List contributions in a way that matches the actual implementation and results.
+% Flow:
+% - Method contribution, evaluation contribution, and empirical finding contribution.
+% Include:
+% - AttackDRO++ (Ours), gradient fingerprints, uniform anchor, repeated-seed evaluation.
+% Avoid:
+% - Claiming theoretical guarantees or untested deployment benefits.
+% Target length: 3-5 bullets or 1 compact paragraph.
+
 \section{Scope and Limitations}
 
+% TODO[Kiệt]:
+% Goal:
+% - Set honest boundaries before the method/results chapters.
+% Flow:
+% - Dataset/model scope, attack-suite scope, compute/repeated-seed scope, and what is not claimed.
+% Include:
+% - CIFAR-10 and ResNet-18 as the main setting.
+% - AutoAttack as a separate sanity/stress test rather than part of Mean(8).
+% Avoid:
+% - Apologetic wording; state limitations as design boundaries.
+% Target length: 2-3 paragraphs.
+
 \section{Report Organization}
+
+% TODO[Kiệt]:
+% Goal:
+% - Preview the seven-chapter flow in one short roadmap.
+% Flow:
+% - One sentence each for Chapters 2-7.
+% Include:
+% - Make Chapter 2 background, Chapter 3 gap, Chapter 4 method, Chapter 5 setup, Chapter 6 results, and Chapter 7 conclusion feel connected.
+% Avoid:
+% - A separate Chapter 1 summary.
+% Target length: 1 paragraph.

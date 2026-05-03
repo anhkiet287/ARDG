@@ -1,7 +1,31 @@
 \section{Sensitivity to Key Hyperparameters}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain ablations as sensitivity checks, not as a separate results dump.
+% Flow:
+% - Anchor strength, q-frozen behavior, cluster count, refresh schedule, feature mode, and regularizer.
+% - For each: result -> interpretation -> limitation.
+% Include:
+% - Cite `fig:ablation_dashboard`, `tab:ablation_num_clusters`, and `tab:cluster_refresh_schedule_ablation` where relevant.
+% - Normalize `M(8)` to `Mean(8)` in a later naming cleanup.
+% Avoid:
+% - Adding extra ablation files back into the main flow without user confirmation.
+% Target length: 4-6 pages depending on final ablation scope.
+
 \subsection{Anchor Strength}
 \label{subsec:ablation_anchor_strength}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain why the selected anchor strength is a stability trade-off.
+% Flow:
+% - Interpret the dashboard, then connect the chosen setting to Chapter 4's anchor objective.
+% Include:
+% - Reference `fig:ablation_dashboard`.
+% Avoid:
+% - Claiming exact optimum unless the ablation supports it.
+% Target length: 2-3 paragraphs.
 
 The anchor-strength ablation examines the interpolation between the uniform
 multi-attack ERM loss and the adaptive Cluster-DRO loss. A smaller anchor gives
@@ -38,6 +62,17 @@ ranking.
 \subsection{Number of Clusters}
 \label{subsec:ablation_num_clusters}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain sensitivity to cluster count without overfitting the narrative to one value.
+% Flow:
+% - Discuss too few, default, and too many clusters as a grouping-resolution trade-off.
+% Include:
+% - Reference `tab:ablation_num_clusters`.
+% Avoid:
+% - Leaving placeholder-looking cells unexplained if the table is not final.
+% Target length: 2-3 paragraphs.
+
 The number of clusters controls the granularity of the latent groups used by
 AttackDRO++. Too few clusters may merge distinct failure modes, while too many
 clusters may fragment the minibatch and make group-loss estimates noisy.
@@ -71,6 +106,17 @@ $K=4$ is universally optimal.
 
 \subsection{Cluster-Refresh Schedule}
 \label{subsec:ablation_cluster_refresh}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain how refresh frequency affects cluster stability and adaptivity.
+% Flow:
+% - Compare refresh policies, then connect to feature-bank freshness and q reset.
+% Include:
+% - Reference `tab:cluster_refresh_schedule_ablation`.
+% Avoid:
+% - Overclaiming from small-seed ablation results.
+% Target length: 2-3 paragraphs.
 
 We studies the effect of the cluster-refresh interval $R$ in
 AttackDRO++ with Anchor35, GradFP, and $K=4$. The refresh interval controls how

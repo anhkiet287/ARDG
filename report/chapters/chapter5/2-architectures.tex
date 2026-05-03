@@ -1,5 +1,16 @@
 \section{Model Architecture}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain the architecture only as much as needed for reproducibility and the method.
+% Flow:
+% - State ResNet-18 adaptation, logits, penultimate feature dimension, and why this supports clustering.
+% Include:
+% - Keep notation consistent with Chapter 4 and docs/05_notation_registry.md.
+% Avoid:
+% - Long architecture tutorial or unplanned architecture comparisons.
+% Target length: 3-4 paragraphs.
+
 The primary architecture used in this study is ResNet-18, based on the residual learning
 framework of He et al.~\cite{he2016deep}, adapted for CIFAR-10 resolution. ResNet-18
 provides a useful balance between expressiveness and computational cost: it is large

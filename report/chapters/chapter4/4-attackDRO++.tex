@@ -1,6 +1,19 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{AttackDRO++: Group DRO Over Discovered Clusters}
 \label{sec:attackdropp}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain how AttackDRO++ changes the grouping unit from attack identity to discovered latent clusters.
+% Flow:
+% - Define clustering assignment, cluster loss, cluster q weights, and refresh policy.
+% - Explain why discovered groups can cut across attacks and classes.
+% Include:
+% - Keep `K` usage clear: class count vs cluster count should not be ambiguous.
+% - Consider whether the algorithm block in the complete framework is enough or needs an earlier pointer.
+% Avoid:
+% - Reporting that the method works; leave empirical support for Chapter 6.
+% Target length: 5-7 paragraphs.
 % ─────────────────────────────────────────────────────────────────────────────
 
 AttackDRO++ replaces the manually defined attack groups in AttackDRO with latent

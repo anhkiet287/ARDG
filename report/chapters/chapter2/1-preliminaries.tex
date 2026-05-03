@@ -1,5 +1,17 @@
 \section{Preliminaries}
 
+% TODO[ĐA]:
+% Goal:
+% - Explain notation and the learning setting needed for the rest of the report.
+% Flow:
+% - Define classification notation, model notation, loss, dataset, and perturbation notation.
+% - Keep symbols consistent with docs/05_notation_registry.md.
+% Include:
+% - A small notation table only if many symbols are introduced here.
+% - A sentence that Chapter 4 gives the full AttackDRO++ formulation.
+% Avoid:
+% - Introducing result metrics or implementation details too early.
+% Target length: 3-5 paragraphs plus optional notation table.
 
 This section introduces the basic notation and learning setting used throughout the report. Since Stage 1 already established the general background on deep neural networks, adversarial examples, adversarial attacks, and adversarial training, the present section provides a concise recap of these foundations before extending them toward the Stage 2 methodology. In particular, we focus on the concepts that are necessary for formulating adversarial training under multiple attack-induced domains.
 
@@ -67,6 +79,18 @@ This phenomenon motivates the study of adversarial robustness. In Stage 1, this 
 
 \subsection{Adversarial examples}
 
+% TODO[ĐA]:
+% Goal:
+% - Explain adversarial examples intuitively before the formal equations.
+% Flow:
+% - Clean image -> small perturbation -> adversarial image -> changed prediction.
+% - Define perturbation budget, norm constraint, targeted vs untargeted setting, and label preservation.
+% Include:
+% - Consider a simple conceptual figure for clean image, perturbation, adversarial image, and prediction change.
+% - Connect the idea to the cross-attack gap without repeating Stage 1.
+% Avoid:
+% - Long attack history or detailed derivations of every attack.
+% Target length: 4-6 paragraphs plus optional figure.
 
 Adversarial examples are inputs that have been intentionally perturbed to cause a machine learning model to make incorrect predictions, while the perturbations remain small enough to preserve the original semantic label. Given a clean input $x\in\mathbb{R}^{d}$ with true label $y$, an adversarial example can be written as
 
@@ -144,6 +168,18 @@ From this perspective, the goal is not only to minimize adversarial loss for a s
 
 \subsection{Threat models}
 
+% TODO[ĐA]:
+% Goal:
+% - Define whitebox, graybox, and blackbox access levels in a compact way.
+% Flow:
+% - Start with perturbation constraints, then explain model access assumptions.
+% - Tie whitebox to direct evaluation/training and graybox to transfer evaluation.
+% Include:
+% - Consider a small table comparing access to model parameters, gradients, logits/scores, and labels.
+% - State that Chapter 6 uses whitebox and graybox analysis; blackbox is background only unless explicitly evaluated.
+% Avoid:
+% - Making blackbox attacks a major focus if they are not used in the current experiments.
+% Target length: 4-6 paragraphs plus optional comparison table.
 
 In this project, we consider adversarial perturbations constrained by an $\ell_p$-norm budget, as introduced in the previous section. For a clean input $x$, the adversary searches for an adversarial example $x^{adv}=x+\delta$ such that
 
@@ -207,4 +243,3 @@ In score-based attacks, the adversary can observe confidence scores or logits an
 In decision-based attacks, the adversary only observes the final predicted label. This is an even more restrictive setting because the attacker cannot directly measure how close an input is to the decision boundary using scores or probabilities. Such attacks typically require more queries and are not the primary focus of this report.
 
 Black-box evaluation is important because it helps detect whether a defense relies on misleading or uninformative gradients. Some defenses may appear robust against gradient-based white-box attacks but fail under gradient-free black-box attacks. This phenomenon is often associated with gradient masking, where gradients become difficult to use without the model becoming genuinely robust. Therefore, including black-box or score-based components in the evaluation suite provides a stronger robustness assessment.
-

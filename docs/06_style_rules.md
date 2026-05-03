@@ -1,4 +1,4 @@
-# 06_style_rules.md — DATN Report Style Rules
+﻿# 06_style_rules.md — DATN Report Style Rules
 
 ---
 
@@ -385,6 +385,26 @@ This file is the single source of truth for every `\label{...}` in the project. 
 | alg:ch4_attackdro | algorithm | AttackDRO training procedure | 4 |
 | eq:groupdro_objective | equation | Group DRO objective function | 4 |
 ```
+## 11. Method naming convention
+
+Use these report-facing method names consistently in titles, tables, captions, and prose.
+
+| Old / shorthand name | Final report name | Notes |
+|---|---|---|
+| PGD-AT | PGD-AT | Single-attack adversarial training using PGD-$\ell_\infty$. |
+| DDN-AT | DDN-AT | Single-attack adversarial training using DDN-$\ell_2$. |
+| Multi-AT | Multi-AT | Uniform multi-attack adversarial training baseline. |
+| AttackDRO++ | AttackDRO++; AttackDRO++ (Ours) in formal result comparisons when needed | Proposed method. Use “the proposed method” when avoiding repeated method names in prose. |
+
+Usage rules:
+
+- Use `PGD-AT` in formal tables/captions.
+- Use `DDN-AT` in formal tables/captions.
+- Use `Multi-AT` as the formal baseline name.
+- Use “uniform multi-attack adversarial training baseline” only as explanatory prose, not as the formal method name.
+- Use `AttackDRO++` in prose after first definition.
+- Use `AttackDRO++ (Ours)` in formal result tables/captions when comparison clarity is needed.
+- Define these method names once in Chapter 5, preferably in `tab:ch5_compared_methods`.
 
 ### Chapters
 

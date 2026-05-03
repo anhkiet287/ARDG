@@ -1,6 +1,18 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Uniform-Anchored Training Objective}
 \label{sec:anchor}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain why the uniform anchor stabilizes adaptive Cluster-DRO.
+% Flow:
+% - Define the instability risk, then introduce anchor interpolation, q-floor, and warmup.
+% - Connect each mechanism to a specific stability concern.
+% Include:
+% - Keep all hyperparameter values consistent with Chapter 5 tables.
+% Avoid:
+% - Presenting ablation conclusions here.
+% Target length: 4-6 paragraphs.
 % ─────────────────────────────────────────────────────────────────────────────
 
 A pure Cluster-DRO objective can become unstable when the cluster weights

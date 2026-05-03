@@ -2,6 +2,17 @@
 \newpage
 \section{Graybox Robustness Across Surrogate Models}
 \label{sec:graybox_transfer_results}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain graybox robustness as transfer behavior, not just another accuracy table.
+% Flow:
+% - Start with protocol sanity, then transfer matrices, pairwise comparisons, gap analysis, per-cell analysis, and decomposition.
+% Include:
+% - Cite active figures/tables from docs/04_figure_table_registry.md, especially currently unreferenced graybox tables/figures if kept.
+% Avoid:
+% - Overclaiming deployment transfer beyond the surrogate/target protocol.
+% Target length: 6-9 pages depending on consolidation.
 % ─────────────────────────────────────────────────────────────────────────────
 
 The whitebox results in Section~\ref{sec:main_results} show that
@@ -14,6 +25,17 @@ target checkpoint.
 
 \subsection{Seed Selection and Whitebox Sanity Check}
 \label{sec:graybox_panel}
+
+% TODO[Kiệt]:
+% Goal:
+% - Justify the five-seed graybox subset and show it is consistent with the main whitebox trends.
+% Flow:
+% - Explain seed selection, then interpret `tab:graybox_whitebox_sanity`.
+% Include:
+% - State clearly that this is a sanity check, not the main 20-seed whitebox result.
+% Avoid:
+% - Repeating full Chapter 6.1 results.
+% Target length: 2-3 paragraphs.
 
 The graybox panel uses five representative seeds,
 \(\{73,\ 202,\ 1337,\ 7777,\ 12345\}\), applied to all four methods. This
@@ -70,6 +92,17 @@ main evaluation protocol and supports the cross-method analyses below.
 
 \subsection{Cross-Method Transfer Matrix}
 \label{sec:graybox_matrix}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain how to read the graybox transfer matrices and what off-diagonal transfer means.
+% Flow:
+% - Define row/column roles, then interpret aggregate and per-attack matrices.
+% Include:
+% - Reference `fig:graybox_transfer_matrix`, `fig:graybox_transfer_linf`, and `fig:graybox_transfer_l2`.
+% Avoid:
+% - Treating diagonal whitebox cells as graybox evidence.
+% Target length: 3-5 paragraphs.
 
 We aggregate the per-attack per-class transfer table into a method-level
 $4 \times 4$ transfer matrix. Rows index the target method being evaluated, and columns index the
@@ -192,6 +225,17 @@ improving over Multi-AT on most \(\ell_2\)-oriented transfer cells.
 \subsection{AttackDRO++ vs. Multi-AT}
 \label{sec:graybox_headline}
 
+% TODO[Kiệt]:
+% Goal:
+% - Compare AttackDRO++ against the strongest uniform multi-attack baseline under graybox transfer.
+% Flow:
+% - Interpret paired graybox tests, then identify where the advantage is robust or limited.
+% Include:
+% - Reference `tab:paired-graybox-two-panel` and `tab:graybox_attack_family`.
+% Avoid:
+% - Ignoring corrected p-values or effect size when discussing differences.
+% Target length: 3-5 paragraphs.
+
 The main graybox comparison is between AttackDRO++ and Multi-AT.
 Both methods train on the same source attacks
 $\{\text{PGD-}\ell_\infty,\ \text{DDN-}\ell_2\}$ and use the same backbone
@@ -302,6 +346,17 @@ this asymmetry in Section~\ref{sec:graybox_gap}.
 \subsection{Per-Attack Analysis}
 \label{sec:graybox_per_attack}
 
+% TODO[Kiệt]:
+% Goal:
+% - Identify which attacks drive graybox transfer differences.
+% Flow:
+% - Discuss per-attack table, then connect attack-family behavior to whitebox findings.
+% Include:
+% - Reference `tab:graybox_per_attack` if retained in the main flow.
+% Avoid:
+% - Duplicating the transfer-matrix discussion.
+% Target length: 2-4 paragraphs.
+
 To check whether the $+0.549$~pp Mean(8) gain over Multi-AT is
 broad or concentrated, we report paired graybox deltas attack by attack
 on the same $n=200$ pair set. Each attack contributes $25$ paired
@@ -383,6 +438,18 @@ remain narrow specialists under transfer.
 
 \subsection{Whitebox--Graybox Gap and Specialist Inflation}
 \label{sec:graybox_gap}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain the gap between direct whitebox robustness and transferred robustness.
+% Flow:
+% - Define the gap sign, interpret `tab:graybox_gap`, then use heatmaps for method-specific patterns.
+% Include:
+% - Reference gap heatmaps from `fig:graybox_gap_ddnat` to `fig:graybox_gap_attackdropp`.
+% - Add caption polish later for sign/unit/averaging conditions.
+% Avoid:
+% - Treating large whitebox scores alone as evidence of transferable robustness.
+% Target length: 3-5 paragraphs.
 
 The DDN-AT target row in Figure~\ref{fig:graybox_transfer_matrix} and
 the DDN-AT row in Table~\ref{tab:graybox_attack_family} are the highest
@@ -471,6 +538,17 @@ more balanced gap patterns, with AttackDRO++ avoiding the severe
 specialist inflation observed for DDN-AT.
 \subsection{Per-(Class-Attack) Analysis}
 \label{sec:graybox_per_cell}
+
+% TODO[Kiệt]:
+% Goal:
+% - Explain fine-grained graybox gains and failures by class and attack.
+% Flow:
+% - Interpret `tab:graybox_per_cell`, then use delta heatmaps to show where gains concentrate.
+% Include:
+% - Reference `fig:graybox_delta_multiat`, `fig:graybox_delta_pgdat`, and `fig:graybox_delta_ddnat` if all remain in the main flow.
+% Avoid:
+% - Listing every class-attack cell.
+% Target length: 3-5 paragraphs.
 
 We complement the aggregate analysis with a paired per-cell test. For
 each of the $80$ attack--class cells, we compare the graybox accuracy of
@@ -586,6 +664,17 @@ AttackDRO++ (Ours) minus DDN-AT. Green favors AttackDRO++ (Ours); red favors DDN
 \subsection{Method Contribution Decomposition}
 \label{sec:graybox_decomposition}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain the contribution split between multi-attack training and Cluster-DRO components.
+% Flow:
+% - Interpret the decomposition table first, then use the figure as visual support.
+% Include:
+% - Reference `tab:graybox_decomposition` and `fig:method_decomposition` if kept.
+% Avoid:
+% - Treating decomposition as causal proof beyond the available comparisons.
+% Target length: 2-4 paragraphs.
+
 The whitebox results of Section~\ref{sec:main_results} compare AttackDRO++
 against Multi-AT and against the two single-attack baselines as
 three separate contrasts. Under graybox transfer, we can additionally
@@ -665,6 +754,17 @@ paths.}
 \iffalse
 \subsection{Section Summary}
 \label{sec:graybox_section_summary}
+
+% TODO[Kiệt]:
+% Goal:
+% - Remove or convert this section-level summary in a later style cleanup.
+% Flow:
+% - Replace with a short transition paragraph or move synthesis into `6_summary.tex`.
+% Include:
+% - No new results.
+% Avoid:
+% - Keeping section-level summaries against docs/06_style_rules.md.
+% Target length: 0 paragraphs here after cleanup; use Chapter 6 summary instead.
 
 The graybox transfer results jointly establish the following
 conclusions:

@@ -1,6 +1,17 @@
 \section{Statistical Significance Protocol}
 \label{sec:statistical-significance-protocol}
 
+% TODO[Kiệt]:
+% Goal:
+% - Explain the statistical protocol as the contract for Chapter 6 claims.
+% Flow:
+% - Paired seed design, tests, effect size, confidence intervals, and correction.
+% Include:
+% - Keep terms consistent with docs/05_notation_registry.md and Chapter 2 statistical background.
+% Avoid:
+% - Overstating significance when effect sizes or corrected p-values are weak.
+% Target length: 5-7 paragraphs plus reporting-format table.
+
 To ensure that the reported improvements are not caused by seed-specific randomness, this study applies a repeated-seed statistical protocol. Each method is trained and evaluated under the same set of seeds, dataset split, architecture, attack suite, and evaluation configuration. The seed-level result is used as the basic unit of analysis.
 
 For a given metric, let $x_i$ be the performance of AttackDRO++ under seed $i$, and let $y_i$ be the performance of a baseline method under the same seed. The paired difference is defined as:

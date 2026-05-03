@@ -1,6 +1,18 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Complete Training Framework}
 \label{sec:pipeline}
+
+% TODO[Kiệt]:
+% Goal:
+% - Make the complete AttackDRO++ pipeline reproducible at the algorithm level.
+% Flow:
+% - Walk through mixed-batch attack generation, feature construction, cluster assignment, loss computation, q update, and cluster refresh.
+% Include:
+% - Check whether the existing algorithm block is enough or whether a pipeline figure would improve readability.
+% - Ensure table hyperparameters match Chapter 5 setup tables.
+% Avoid:
+% - Adding implementation details that belong in Chapter 5 unless they clarify the algorithm.
+% Target length: 4-6 paragraphs plus existing table/algorithm.
 % ─────────────────────────────────────────────────────────────────────────────
 
 Algorithm~\ref{alg:attackdropp} summarizes the complete AttackDRO++ training
@@ -117,5 +129,16 @@ fixed during training, heldout attacks are never used for optimization, and resu
 reported both per attack and through aggregate robustness metrics.
 
 \subsection{Implementation and Computational Considerations}
+
+% TODO[Kiệt]:
+% Goal:
+% - Add implementation and compute notes that help readers reproduce the method.
+% Flow:
+% - Explain feature-bank memory, clustering refresh cost, attack-generation cost, and repeated-seed practicality.
+% Include:
+% - Mention hardware/software only if it is finalized in Chapter 5.9.
+% Avoid:
+% - New performance claims or runtime numbers unless sourced from actual logs.
+% Target length: 2-4 paragraphs.
 
 % TODO: Add implementation and computational considerations without rewriting method prose.
