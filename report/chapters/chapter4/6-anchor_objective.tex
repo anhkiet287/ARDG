@@ -1,0 +1,72 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Uniform-Anchored Training Objective}
+\label{sec:anchor}
+% ─────────────────────────────────────────────────────────────────────────────
+
+A pure Cluster-DRO objective can become unstable when the cluster weights
+\(\mathbf{q}\) concentrate too strongly on a small number of hard clusters. We refer
+to this failure mode as \emph{\(q\)-collapse}. In the extreme case, the objective
+approaches a worst-cluster loss, where most of the training signal is dominated by
+one cluster. This behavior is undesirable in multi-attack adversarial training because
+the hardest cluster may change after each cluster refresh, and over-emphasizing one
+cluster can reduce robustness on the remaining attacks or groups.
+
+To stabilize training, AttackDRO++ uses a uniform-anchored Cluster-DRO objective
+that interpolates between the uniform multi-attack ERM loss and the adaptive
+cluster-DRO loss:
+\begin{equation}
+    \mathcal{L}_{\mathrm{AttackDRO++}}
+        =
+        (1 - \lambda_{\mathrm{DRO}})\mathcal{L}_{\mathrm{ERM}}
+        +
+        \lambda_{\mathrm{DRO}}\mathcal{L}_{\mathrm{ClusterDRO}} .
+    \label{eq:final_loss}
+\end{equation}
+Here, \(\lambda_{\mathrm{DRO}}\in[0,1]\) controls the strength of the Cluster-DRO
+correction. When \(\lambda_{\mathrm{DRO}}=0\), the method reduces to uniform
+multi-attack ERM. When \(\lambda_{\mathrm{DRO}}=1\), the method becomes pure
+Cluster-DRO.
+
+Equivalently, Equation~\eqref{eq:final_loss} can be written as
+\begin{equation}
+    \mathcal{L}_{\mathrm{AttackDRO++}}
+        =
+        \mathcal{L}_{\mathrm{ERM}}
+        +
+        \lambda_{\mathrm{DRO}}
+        \left(
+            \mathcal{L}_{\mathrm{ClusterDRO}}
+            -
+            \mathcal{L}_{\mathrm{ERM}}
+        \right).
+\end{equation}
+This form shows that \(\lambda_{\mathrm{DRO}}\) scales the difference between the
+cluster-reweighted loss and the uniform loss. If the cluster-DRO loss is close to the
+uniform loss, the correction is small. If some clusters are substantially harder, the
+correction becomes larger, but its influence remains controlled by
+\(\lambda_{\mathrm{DRO}}\).
+
+In the main experiments, we use \(\lambda_{\mathrm{DRO}}=0.35\), referred to as
+the \texttt{Anchor35} setting. This value keeps the uniform multi-attack objective as
+the dominant stabilizing term while still allowing the model to adapt toward harder
+clusters. Intuitively, this suggests an inverted-U behavior: a small amount of
+Cluster-DRO pressure can improve robustness by emphasizing hard groups, whereas
+excessive pressure may overfit unstable clusters and harm the balance across attacks.
+
+A second stabilization mechanism is the floor projection applied to the cluster
+weights. After each exponentiated-gradient update, \(\mathbf{q}\) is normalized and
+projected so that every cluster keeps at least \(q_{\min}\) mass:
+\begin{equation}
+    q_k \ge q_{\min}, \qquad \sum_{k=1}^{K} q_k = 1.
+    \label{eq:floor}
+\end{equation}
+This prevents any cluster from being completely ignored. In our default setting,
+\(q_{\min}=0.03\). Together, the uniform anchor and the floor projection ensure that
+training receives both a stable per-sample ERM signal and an adaptive cluster-level
+correction.
+
+Finally, the \(q\)-update is delayed during the early training phase. For the first
+\(T_w\) epochs, \(\mathbf{q}\) remains uniform while the model representation and
+initial cluster assignments become more reliable. After this warmup period, the
+cluster weights are updated using the exponentiated-gradient rule. In the main
+configuration, \(T_w=3\) epochs.

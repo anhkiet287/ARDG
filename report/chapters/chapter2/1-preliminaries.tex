@@ -1,0 +1,210 @@
+\section{Preliminaries}
+
+
+This section introduces the basic notation and learning setting used throughout the report. Since Stage 1 already established the general background on deep neural networks, adversarial examples, adversarial attacks, and adversarial training, the present section provides a concise recap of these foundations before extending them toward the Stage 2 methodology. In particular, we focus on the concepts that are necessary for formulating adversarial training under multiple attack-induced domains.
+
+We consider a supervised classification problem with input space $\mathcal{X}\subseteq\mathbb{R}^d$ and label space $\mathcal{Y}=\{1,\ldots,K\}$. A training dataset is denoted by
+
+\[
+\mathcal{D}=\{(x_i,y_i)\}_{i=1}^{n},
+\]
+
+where each sample $(x_i,y_i)$ is drawn from an underlying data distribution $P_{XY}$. The goal is to learn a classifier that predicts the correct label for unseen inputs while remaining stable under adversarial perturbations. This stability requirement is central to adversarial robustness and becomes the main motivation for the multi-attack and group-aware training methods studied in later chapters.
+
+\subsection{Deep Neural Networks and Classification}
+
+Deep neural networks (DNNs) have become the dominant paradigm for modern classification tasks due to their ability to learn hierarchical feature representations directly from data. A DNN consists of multiple layers of nonlinear transformations, where early layers often capture low-level patterns such as edges or textures, while deeper layers encode more abstract and task-specific semantic features.
+
+Formally, a neural network with parameters $\theta$ defines a function
+
+\[
+f_\theta:\mathbb{R}^{d}\rightarrow\mathbb{R}^{K},
+\]
+
+which maps an input $x\in\mathbb{R}^{d}$ to a vector of $K$ real-valued outputs. These outputs are commonly referred to as logits and represent the model’s unnormalized scores for each class. The predicted class is obtained by selecting the class with the largest logit:
+
+\[
+\hat{y}=\arg\max_{k\in\{1,\ldots,K\}} f_\theta(x)_k.
+\]
+
+For probabilistic interpretation, the logits are usually passed through the softmax function
+
+\[
+p_\theta(y=k\mid x)=
+\frac{\exp(f_\theta(x)_k)}
+{\sum_{j=1}^{K}\exp(f_\theta(x)_j)}.
+\]
+
+The model is trained by minimizing the cross-entropy loss between the predicted distribution and the ground-truth label. For a single training sample $(x,y)$, the loss is defined as
+
+\[
+\ell(f_\theta(x),y)
+=
+-\log p_\theta(y\mid x).
+\]
+
+Standard empirical risk minimization trains the model by minimizing the average loss over the training set
+
+\[
+\min_{\theta}
+\frac{1}{n}
+\sum_{i=1}^{n}
+\ell(f_\theta(x_i),y_i).
+\]
+
+Although this objective is effective for improving clean classification accuracy, it does not explicitly require the classifier to be stable under small input perturbations. In high-dimensional input spaces, a perturbation $\delta$ with small norm can still significantly change the logits and alter the predicted label:
+
+\[
+\arg\max_k f_\theta(x)_k
+\neq
+\arg\max_k f_\theta(x+\delta)_k,
+\quad
+\|\delta\|_p\leq\varepsilon.
+\]
+
+This phenomenon motivates the study of adversarial robustness. In Stage 1, this vulnerability was analyzed through a diverse suite of attacks, including FGSM, PGD, Carlini–Wagner, DeepFool, and AutoAttack. The results showed that robustness obtained against one attack configuration does not necessarily transfer to other attacks, revealing a cross-attack robustness gap. Stage 2 builds on this observation by treating different attack mechanisms as distinct domains and by developing group-aware training objectives to reduce this gap.
+
+
+\subsection{Adversarial examples}
+
+
+Adversarial examples are inputs that have been intentionally perturbed to cause a machine learning model to make incorrect predictions, while the perturbations remain small enough to preserve the original semantic label. Given a clean input $x\in\mathbb{R}^{d}$ with true label $y$, an adversarial example can be written as
+
+\[
+x^{adv}=x+\delta,
+\]
+
+where $\delta$ denotes the adversarial perturbation. The objective of the attacker is to find a perturbation that changes the model prediction while remaining within a constrained perturbation set. In the untargeted setting, the attacker aims to produce $x^{adv}$ such that
+
+\[
+\arg\max_{k} f_\theta(x^{adv})_k \neq y.
+\]
+
+In contrast, a targeted attack attempts to force the model to predict a specific target class $y_{target}\neq y$:
+
+\[
+\arg\max_{k} f_\theta(x^{adv})_k = y_{target}.
+\]
+
+Most adversarial attacks constrain the perturbation by an $\ell_p$-norm budget. The feasible perturbation set is commonly defined as
+
+\[
+\mathcal{S}_p(\varepsilon)
+=
+\{\delta\in\mathbb{R}^{d}:\|\delta\|_p\leq\varepsilon\},
+\]
+
+where $p\in\{2,\infty\}$ is the norm type and $\varepsilon>0$ controls the maximum allowed perturbation size. The adversarial example is also clipped to the valid input range, typically $x^{adv}\in[0,1]^d$ for normalized images. Therefore, the adversary searches within the feasible set
+
+\[
+x^{adv}\in (x+\mathcal{S}_p(\varepsilon))\cap[0,1]^d.
+\]
+
+Under this formulation, adversarial example generation can be viewed as an inner maximization problem. For a given model $f_\theta$, loss function $\ell$, and clean sample $(x,y)$, the attacker seeks
+
+\[
+\delta^\ast
+=
+\arg\max_{\delta\in\mathcal{S}_p(\varepsilon)}
+\ell(f_\theta(x+\delta),y).
+\]
+
+The resulting adversarial example $x+\delta^\ast$ corresponds to an input within the allowed perturbation region that maximizes the model’s loss. In practice, this maximization is approximated by different attack algorithms, such as FGSM, PGD, Carlini--Wagner, DeepFool, or AutoAttack. Stage 1 used these attacks as a diverse evaluation suite to measure how robust a PGD-trained model remains when exposed to attacks beyond the one used during training.
+
+A central assumption in adversarial robustness is label preservation. Although the input is perturbed, the true semantic class is assumed to remain unchanged:
+
+\[
+y(x)=y(x+\delta),
+\quad
+\text{for } \|\delta\|_p\leq\varepsilon.
+\]
+
+This assumption distinguishes adversarial perturbations from natural distribution shifts or semantic transformations that genuinely change the class. For example, in image classification, a small imperceptible perturbation to a CIFAR-10 image should not change a ``cat'' into a ``dog'' from a human perspective. If the model misclassifies the perturbed image, the error reflects a lack of robustness rather than ambiguity in the data.
+
+Different attacks produce perturbations with different geometric and optimization characteristics. Gradient-based attacks such as FGSM and PGD directly use the gradient of the loss with respect to the input. Optimization-based methods such as Carlini--Wagner search for small perturbations that satisfy a misclassification objective. Boundary-based methods such as DeepFool estimate the closest decision boundary, while ensemble methods such as AutoAttack combine multiple attack strategies to provide a stronger and more reliable robustness evaluation. These differences are important because a model that performs well against one attack may still fail against another.
+
+This observation is the key motivation for the Stage 2 formulation. Instead of treating attacks only as evaluation tools, we interpret each attack mechanism as inducing a distinct adversarial domain. For an attack $e$, let $\mathcal{A}_e$ denote the corresponding adversarial example generator. The adversarial sample generated by this attack can be written as
+
+\[
+x^{adv}_e = \mathcal{A}_e(x,y,f_\theta).
+\]
+
+The risk associated with attack domain $e$ is then defined as
+
+\[
+R_e(\theta)
+=
+\mathbb{E}_{(x,y)\sim P_{XY}}
+\left[
+\ell(f_\theta(x^{adv}_e),y)
+\right].
+\]
+
+From this perspective, the goal is not only to minimize adversarial loss for a single attack, but also to control the variation of risks across multiple attack domains. A model trained only on one attack may achieve low $R_e(\theta)$ for the training attack but still suffer high risk under another attack $e'$. This mismatch gives rise to the cross-attack robustness gap, which Stage 1 empirically identified and Stage 2 aims to reduce using multi-attack and group-aware optimization methods.
+
+\subsection{Threat models}
+
+
+In this project, we consider adversarial perturbations constrained by an $\ell_p$-norm budget, as introduced in the previous section. For a clean input $x$, the adversary searches for an adversarial example $x^{adv}=x+\delta$ such that
+
+\[
+\|\delta\|_p \leq \varepsilon,
+\quad
+x^{adv}\in[0,1]^d,
+\]
+
+where $p\in\{2,\infty\}$ and $\varepsilon$ controls the perturbation magnitude. In addition to the perturbation constraint, the adversary’s access to the model determines the type of threat model. We distinguish three common settings: white-box, gray-box, and black-box attacks.
+
+\paragraph{White-box threat model}
+
+In the white-box setting, the adversary has full access to the model architecture, parameters, loss function, and gradients. This is the strongest and most commonly used setting for evaluating first-order robustness. Given full access to $f_\theta$, the attacker can compute gradients of the loss with respect to the input:
+
+\[
+\nabla_x \ell(f_\theta(x),y),
+\]
+
+and use them to construct adversarial examples. Attacks such as FGSM and PGD are typical white-box attacks because they directly rely on input gradients to increase the classification loss.
+
+The white-box setting is particularly important for adversarial training. During training, the model itself is used to generate adversarial examples through an inner maximization procedure. For example, PGD-based adversarial training approximates
+
+\[
+\max_{\delta\in\mathcal{S}_p(\varepsilon)}
+\ell(f_\theta(x+\delta),y)
+\]
+
+using multiple projected gradient ascent steps. Since the attack is generated using the current model’s gradients, adversarial training naturally operates in a white-box setting.
+
+In Stage 2, the main training attacks are also considered under the white-box threat model. This allows the training procedure to generate strong adversarial samples from the current model and to optimize against them. However, as observed in Stage 1, robustness under a white-box training attack does not necessarily imply robustness against other white-box attacks with different optimization strategies, norms, or loss functions.
+
+\paragraph{Gray-box threat model}
+
+The gray-box setting represents an intermediate level of adversarial knowledge. In this case, the adversary may not have full access to the target model’s parameters or gradients, but may have access to related information such as the model architecture, training procedure, dataset, or a surrogate model. Adversarial examples are often generated on a surrogate model and then transferred to the target model.
+
+Formally, let $f_{\theta_s}$ be a surrogate model and $f_{\theta_t}$ be the target model. A gray-box adversarial example can be generated as
+
+\[
+x^{adv}
+=
+\mathcal{A}(x,y,f_{\theta_s}),
+\]
+
+and then evaluated on the target model $f_{\theta_t}$. The attack succeeds if
+
+\[
+\arg\max_k f_{\theta_t}(x^{adv})_k \neq y.
+\]
+
+This setting is important because adversarial examples often transfer across models. A perturbation generated to fool one model can also fool another model, especially when the two models share similar architectures, training data, or learned decision boundaries.
+
+In this project, gray-box evaluation is useful for measuring transfer robustness. While white-box evaluation tests whether a model is robust to attacks generated directly against itself, gray-box evaluation tests whether robustness generalizes across source and target models. This is especially relevant to the attacks-as-domains perspective, because transfer attacks can be interpreted as another form of distribution shift: the perturbation is generated from one model’s loss landscape but evaluated on another model’s decision boundary.
+
+\paragraph{Black-box threat model}
+
+In the black-box setting, the adversary does not have access to the model parameters or gradients. Instead, the attacker can only query the model and observe limited outputs, such as predicted labels, confidence scores, or logits. Depending on the available output information, black-box attacks can be further divided into score-based and decision-based attacks.
+
+In score-based attacks, the adversary can observe confidence scores or logits and use them to guide the search for adversarial examples. Square Attack is an example of a score-based black-box attack. It performs random localized perturbation updates and accepts changes that improve the attack objective, without requiring gradient information.
+
+In decision-based attacks, the adversary only observes the final predicted label. This is an even more restrictive setting because the attacker cannot directly measure how close an input is to the decision boundary using scores or probabilities. Such attacks typically require more queries and are not the primary focus of this report.
+
+Black-box evaluation is important because it helps detect whether a defense relies on misleading or uninformative gradients. Some defenses may appear robust against gradient-based white-box attacks but fail under gradient-free black-box attacks. This phenomenon is often associated with gradient masking, where gradients become difficult to use without the model becoming genuinely robust. Therefore, including black-box or score-based components in the evaluation suite provides a stronger robustness assessment.
+

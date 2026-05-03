@@ -1,0 +1,121 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Complete Training Framework}
+\label{sec:pipeline}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Algorithm~\ref{alg:attackdropp} summarizes the complete AttackDRO++ training
+pipeline. The method combines mixed adversarial batch generation, augmented
+feature construction, cluster-level reweighting, \(q\)-updates, and a
+uniform-anchored loss. Table~\ref{tab:hparams} lists the default hyperparameters
+used in the main experiments.
+
+
+\begin{table}[H]
+\centering
+\caption{Default hyperparameters for AttackDRO++ in the main experiments.}
+\label{tab:hparams}
+\small
+\begin{tabularx}{\textwidth}{@{}l l l X@{}}
+\toprule
+Hyperparameter & Symbol & Value & Role \\
+\midrule
+DRO anchor strength      & \(\lambda_{\mathrm{DRO}}\)  & 0.35  & Interpolates between uniform ERM and Cluster-DRO \\
+Number of clusters       & \(K\)                       & 4     & Controls latent group granularity \\
+\(q\) learning rate      & \(\eta_q\)                  & \(3\times10^{-4}\) & Step size for exponentiated-gradient update \\
+\(q\)-floor              & \(q_{\min}\)                & 0.03  & Minimum mass retained by each cluster \\
+\(q\)-warmup             & \(T_w\)                     & 3 epochs & Delays adaptive reweighting until clusters are more reliable \\
+Gradient projection dim. & \(d_{\mathrm{proj}}\)       & 128   & Dimension of projected gradient fingerprint \\
+Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradFP component in \(\psi\) \\
+Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of label component in \(\psi\) \\
+Feature bank size        & \(|\mathcal{F}|\)           & 4{,}096 & Buffer used to refit K-means \\
+Cluster refresh interval & \(R\)                       & 2 epochs & Default K-means refit frequency \\
+\(q\)-refresh policy     & --                          & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
+Bootstrap assignment     & --                          & random & Used before the first K-means refit \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{algorithm}[H]
+\caption{AttackDRO++ with Gradient Fingerprints and Uniform Anchor}
+\label{alg:attackdropp}
+\DontPrintSemicolon
+\SetAlgoLined
+
+\KwIn{Training set \(\mathcal{D}_{\mathrm{train}}\), model \(f_\theta\), source attacks \(\mathcal{A}_{\mathrm{src}}=\{A_1,\ldots,A_M\}\), Cluster count \(K\), anchor weight \(\lambda_{\mathrm{DRO}}\), learning rates \(\eta_\theta,\eta_q\), \(q\)-floor \(q_{\min}\), Label weight \(\lambda_{\mathrm{lbl}}\), gradient weight \(\lambda_{\mathrm{grad}}\), projection dimension \(d_{\mathrm{proj}}\), Refresh interval \(R\), warmup epochs \(T_w\)}
+\KwOut{Trained model \(f_\theta^\ast\)}
+
+Initialize \(\mathbf{q} \leftarrow (1/K,\ldots,1/K)\)\;
+Initialize feature bank \(\mathcal{F} \leftarrow \emptyset\)\;
+Initialize K-means clusterer as unavailable\;
+Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}}}\)\;
+
+\For{epoch \(e = 1,\ldots,E\)}{
+    \For{each minibatch \((x,y)\) of size \(N\)}{
+        Generate mixed adversarial batch \(x^{\mathrm{adv}}\) using \(\mathcal{A}_{\mathrm{src}}\)\;
+        Compute logits and features \((z,h) \leftarrow f_\theta(x^{\mathrm{adv}})\)\;
+        Build augmented features \(\psi \leftarrow \mathrm{BuildFeature}(z,h,y,P)\)\;
+        Assign cluster ids \(c \leftarrow \mathrm{AssignCluster}(\psi,\mathrm{Clusterer},K)\)\;
+
+        Compute uniform loss \(\mathcal{L}_{\mathrm{ERM}}\)\;
+        Compute cluster-DRO loss \(\mathcal{L}_{\mathrm{ClusterDRO}}\)\;
+        Compute final loss
+        \[
+        \mathcal{L}
+        =
+        (1-\lambda_{\mathrm{DRO}})\mathcal{L}_{\mathrm{ERM}}
+        +
+        \lambda_{\mathrm{DRO}}\mathcal{L}_{\mathrm{ClusterDRO}} .
+        \]
+
+        Update model parameters \(\theta\) using SGD\;
+
+        \If{\(e > T_w\)}{
+            Update \(\mathbf{q}\) using exponentiated gradient and floor projection\;
+        }
+
+        Add detached features \(\psi\) to feature bank \(\mathcal{F}\)\;
+    }
+
+    \If{refresh condition is met}{
+        Refresh K-means clusterer using \(\mathrm{KMeans}(\mathcal{F},K)\)\;
+        Apply \(q\)-refresh policy to \(\mathbf{q}\) \tcp*{default: reset to uniform}
+        Reset or update feature bank \(\mathcal{F}\) according to the memory policy\;
+    }
+}
+
+\Return{\(f_\theta^\ast\)}
+\end{algorithm}
+
+
+The refresh condition is written as a policy rather than a fixed operation. It can be
+instantiated using either epoch-based or step-based schedules. Unless otherwise
+specified, the main experiments use an epoch-based schedule with \(R=2\) epochs and
+reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
+
+\subsection{Progression from Stage 1 to the Final Method}
+
+This methodology directly extends the attacks-as-domains framework from Stage 1,
+which diagnosed the cross-attack robustness gap. Stage 2 moves from diagnosis to
+intervention. The progression is:
+\begin{enumerate}
+    \item \textbf{Single-AT}: trains against one source attack and can leave a large
+    cross-attack robustness gap.
+    \item \textbf{Uniform ERM}: trains on multiple source attacks with equal weighting;
+    it is strong but cannot adapt to weak groups.
+    \item \textbf{AttackDRO}: reweights attack-level groups, but remains limited by the
+    assumption that each attack group is homogeneous.
+    \item \textbf{AttackDRO++}: discovers latent cross-attack groups using K-means over
+    adversarial representations.
+    \item \textbf{Gradient Fingerprints}: enrich clustering with optimization-level
+    difficulty information.
+    \item \textbf{Uniform Anchor}: stabilizes Cluster-DRO by preserving the strong
+    uniform multi-attack training signal.
+\end{enumerate}
+
+The evaluation discipline from Stage 1 is preserved throughout: source attacks are
+fixed during training, heldout attacks are never used for optimization, and results are
+reported both per attack and through aggregate robustness metrics.
+
+\subsection{Implementation and Computational Considerations}
+
+% TODO: Add implementation and computational considerations without rewriting method prose.

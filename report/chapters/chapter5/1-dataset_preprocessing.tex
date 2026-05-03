@@ -1,0 +1,8 @@
+\section{Dataset and Preprocessing}
+
+The experiments are conducted on CIFAR-10, a standard image-classification benchmark consisting of ten object categories. Each image has spatial resolution (32 \times 32) with three color channels. The dataset is divided into training, validation, and test subsets. In our experimental pipeline, 40,000 images are used for training, 10,000 images are used for validation and checkpoint selection, and 10,000 images are reserved for final test-set evaluation.
+
+The validation set is used only for model selection and hyperparameter monitoring. Final reported numbers are computed on the test set after the checkpoint has been selected. This separation is important because adversarial robustness estimates can vary across random seeds and training checkpoints; using a held-out validation set reduces the risk of selecting a checkpoint based on test-set performance.
+All images are normalized using the same preprocessing pipeline across methods. During training, standard CIFAR-10 data augmentation is applied to the clean images before adversarial examples are generated. The augmentation includes random cropping with padding and random horizontal flipping. During validation and testing, no stochastic augmentation is used. This ensures that differences between methods are caused by the training objective rather than by differences in preprocessing or evaluation.
+
+The same dataset split, preprocessing pipeline, and evaluation dataloaders are used for all compared methods. This includes single-attack adversarial training baselines,Multi-ATtack training, AttackDRO, AttackDRO++, and the proposed AttackDRO++ variant with gradient fingerprints and uniform anchoring.

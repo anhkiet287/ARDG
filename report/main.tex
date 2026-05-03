@@ -1,0 +1,172 @@
+% main.tex
+% Compile with: XeLaTeX
+\documentclass[12pt,a4paper]{report}
+
+% =========================
+% Basic layout / font
+% =========================
+\usepackage[fontsize=13pt]{scrextend}      % font size helper
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+
+% XeLaTeX font loader
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% system font
+
+% Language
+\usepackage[vietnamese,english]{babel}     % nếu muốn đổi sang polyglossia, báo mình
+
+% =========================
+% Spacing & paragraph
+% =========================
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5\baselineskip}
+
+% =========================
+% Math
+% =========================
+\usepackage{amsmath}        
+\usepackage{unicode-math}
+% \setmathfont{Latin Modern Math}
+\usepackage{textcomp}
+% =========================
+% Figures, tables, graphics
+% =========================
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}           % [H]
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{xurl}
+\emergencystretch=2em
+
+% =========================
+% TikZ / drawing
+% =========================
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+
+% For cover background frames
+\usepackage{eso-pic}
+
+% =========================
+% Lists, algorithms, code
+% =========================
+\usepackage{enumitem}
+\setlist{nolistsep}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{algorithmic}
+\usepackage{array}
+
+% =========================
+% TOC / headings
+% =========================
+\usepackage{tocloft}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{*0.8}{*0.4}
+\titlespacing*{\subsection}{0pt}{*0.5}{*0.2}
+\usepackage{etoolbox}
+\patchcmd{\section}{\par}{\medskip}{}{}
+\patchcmd{\subsection}{\par}{\medskip}{}{}
+
+% =========================
+% Bibliography
+% =========================
+% You used IEEEtran as bibliography style below (numeric). Configure natbib accordingly.
+\usepackage[numbers,sort&compress]{natbib}
+
+% =========================
+% Header / footer
+% =========================
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% =========================
+% Hyperlinks (load late)
+% =========================
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+% =========================
+% Cover variables (edit here)
+% =========================
+\newcommand{\ReportTitle}{DOMAIN GENERALIZATION FOR ADVERSARIAL ROBUSTNESS}
+\newcommand{\CouncilName}{}
+\newcommand{\SupervisorOne}{Nguyễn An Khương}
+\newcommand{\SupervisorTwo}{Văn Minh Hào}
+\newcommand{\ReviewerName}{...}
+\newcommand{\StudentOneName}{Nguyễn Anh Kiệt}
+\newcommand{\StudentOneID}{2252403}
+\newcommand{\StudentTwoName}{Lê Văn Đức Anh}
+\newcommand{\StudentTwoID}{2252027}
+\newcommand{\StudentThreeName}{Nguyễn Tiến Thành}
+\newcommand{\StudentThreeID}{2053437}
+\newcommand{\CoverPlaceTime}{HO CHI MINH CITY, May 2026}
+
+
+% =========================
+% Misc
+% =========================
+\usepackage{xcolor}
+\usepackage{lscape}
+\usepackage{microtype}      
+
+
+% =========================
+% Document
+% =========================
+\begin{document}
+
+% ---------- INS SIGNATURE ----------
+\include{outsider/cover-page}
+
+% ---------- INS SIGNATURE ----------
+\include{outsider/ins-signature}
+
+% ---------- DECLARATION ----------
+\include{outsider/decl-of-authen}
+
+% ---------- ACKNOWLEDGEMENT ----------
+\include{outsider/ack}
+
+% ---------- ABSTRACT ----------
+\include{outsider/abstract}
+
+% ---------- CONTENT ----------
+\include{outsider/table_content}
+
+% ---------- List of Abbreviations ----------
+\include{outsider/list-of-abbreviations}
+
+
+% ---------- MAIN CONTENT ----------
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+\include{chapters/chapter4}
+\include{chapters/chapter5}
+\include{chapters/chapter6}
+\include{chapters/chapter7}
+
+% ---------- REFERENCES ----------
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+% ---------- APPENDICES ----------
+\appendix
+\include{appendices}
+
+\end{document}

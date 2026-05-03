@@ -1,0 +1,130 @@
+\section{Sensitivity to Key Hyperparameters}
+
+\subsection{Anchor Strength}
+\label{subsec:ablation_anchor_strength}
+
+The anchor-strength ablation examines the interpolation between the uniform
+multi-attack ERM loss and the adaptive Cluster-DRO loss. A smaller anchor gives
+more weight to the uniform baseline, while a larger anchor increases the influence of
+cluster-level reweighting. Figure~\ref{fig:ablation_dashboard} provides the dashboard
+view of the ablation results, with the anchor-strength comparison shown as the first
+sensitivity check. Figure~\ref{fig:ablation_dashboard} reports the corresponding
+numeric summary.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/anchor_strength_ablation}
+    \caption{Ablation dashboard for AttackDRO++. The dashboard summarizes the
+    sensitivity of M(8) robust accuracy to anchor strength, number of clusters, and
+    cluster-refresh schedule. M(8) denotes the mean robust accuracy over the eight
+    bounded evaluation attacks and excludes AutoAttack.}
+    \label{fig:ablation_dashboard}
+\end{figure}
+
+
+Overall, the ablation supports using a moderate anchor rather than relying entirely on
+either uniform ERM or aggressive Cluster-DRO weighting. The default
+$\lambda_{\mathrm{DRO}}=0.35$ is retained because it provides a practical balance: the
+uniform multi-attack signal remains dominant, while the cluster-level correction can still
+emphasize harder latent groups. Since some settings are evaluated with fewer seeds, the
+observed differences should be interpreted as a sensitivity trend rather than a definitive
+ranking.
+
+% Extra ablation removed from main flow; keep source text here for archive only.
+\iffalse
+\subsection{q-Frozen Ablation}
+\fi
+
+\subsection{Number of Clusters}
+\label{subsec:ablation_num_clusters}
+
+The number of clusters controls the granularity of the latent groups used by
+AttackDRO++. Too few clusters may merge distinct failure modes, while too many
+clusters may fragment the minibatch and make group-loss estimates noisy.
+Table~\ref{tab:ablation_num_clusters} summarizes the sensitivity to this design choice.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Number-of-clusters ablation for AttackDRO++. The number of clusters
+    $K$ determines the granularity of the latent adversarial groups used by Cluster-DRO.
+    M(8) is the mean robust accuracy over the eight bounded evaluation attacks and
+    excludes AutoAttack.}
+    \label{tab:ablation_num_clusters}
+    \begin{tabular}{lccc}
+        \toprule
+        Setting & $K$ & M(8) & Notes \\
+        \midrule
+        Coarse grouping & 2 & TODO & TODO \\
+        Default grouping & 4 & TODO & Default setting \\
+        Finer grouping & 6 & TODO & TODO \\
+        Very fine grouping & 10 & TODO & TODO \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The default choice $K=4$ is kept as a conservative middle point. It is expressive enough
+to separate more than the two source attack identities, but it avoids the instability that
+can arise when clusters become too small. The results should be read as evidence that
+the method is reasonably robust around the default cluster granularity, not as proof that
+$K=4$ is universally optimal.
+
+\subsection{Cluster-Refresh Schedule}
+\label{subsec:ablation_cluster_refresh}
+
+We studies the effect of the cluster-refresh interval $R$ in
+AttackDRO++ with Anchor35, GradFP, and $K=4$. The refresh interval controls how
+often the K-means clusterer is refitted from the feature bank. A shorter interval may
+adapt more quickly to representation changes, while a longer interval may provide a
+more stable clustering signal.
+
+Table~\ref{tab:cluster_refresh_schedule_ablation} compares refreshing the clusterer
+every one epoch and every two epochs. The two settings produce very similar results.
+The default two-epoch schedule gives a slightly higher Mean(8), with
+$62.44 \pm 0.22$, compared with $62.38 \pm 0.14$ for the one-epoch schedule. It also
+achieves a slightly higher $\ell_\infty$-family average. In contrast, refreshing every
+epoch gives slightly better Worst(8), AutoAttack, and $\ell_2$-family average.
+
+Overall, the differences are small relative to the three-seed setting. Therefore, this
+ablation does not show a strong advantage for either refresh interval. We retain
+$R=2$ epochs as the default because it gives comparable robustness while avoiding
+overly frequent cluster refitting.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Cluster-refresh schedule ablation for AttackDRO++ with Anchor35, GradFP,
+    and $K=4$. Values are robust accuracy (\%) reported as mean $\pm$ standard deviation
+    over three seeds. Mean(8) averages over the eight bounded evaluation attacks and
+    excludes AutoAttack. Worst(8) is the minimum robust accuracy over the same eight
+    bounded attacks and also excludes AutoAttack. AutoAttack is reported separately.}
+    \label{tab:cluster_refresh_schedule_ablation}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{ccccccc}
+        \toprule
+        Refresh interval & Seeds & Mean(8) $\uparrow$ & Worst(8) $\uparrow$ & AutoAttack $\uparrow$ & $\ell_2$-family avg $\uparrow$ & $\ell_\infty$-family avg $\uparrow$ \\
+        \midrule
+        1 epoch
+        & 3
+        & $62.38 \pm 0.14$
+        & $\mathbf{45.17 \pm 0.34}$
+        & $\mathbf{40.30 \pm 1.37}$
+        & $\mathbf{67.57 \pm 0.16}$
+        & $57.18 \pm 0.27$ \\
+
+        2 epochs
+        & 3
+        & $\mathbf{62.44 \pm 0.22}$
+        & $45.14 \pm 0.23$
+        & $39.45 \pm 0.68$
+        & $67.56 \pm 0.08$
+        & $\mathbf{57.31 \pm 0.35}$ \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+% Extra ablations removed from main flow; keep source text here for archive only.
+\iffalse
+\subsection{Cluster Feature Mode}
+
+\subsection{Sample-Level Regularizer}
+\fi

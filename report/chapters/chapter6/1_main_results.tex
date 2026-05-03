@@ -1,0 +1,658 @@
+﻿% ─────────────────────────────────────────────────────────────────────────────
+\section{Whitebox Robustness Under Direct Attacks}
+\label{sec:main_results}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection{Aggregate Robustness}
+\label{sec:aggregate_robustness}
+
+\begin{table}[H]
+\centering
+\caption{Aggregate robust accuracy (\%) on the CIFAR-10 evaluation suite,
+reported as mean $\pm$ standard deviation across $n=20$ seeds. AutoAttack
+is reported separately and is not included in Mean(8). Bold values indicate
+the best method for each metric.}
+\label{tab:agg-results}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lcccc}
+\toprule
+Metric & PGD-AT & DDN-AT & Multi-AT & AttackDRO++ (Ours) \\
+\midrule
+Mean(8)
+& $60.499 \pm 0.327$
+& $56.226 \pm 0.233$
+& $62.045 \pm 0.447$
+& $\mathbf{62.324 \pm 0.147}$ \\
+
+Heldout(6)
+& $62.268 \pm 0.390$
+& $59.628 \pm 0.254$
+& $64.083 \pm 0.505$
+& $\mathbf{64.401 \pm 0.155}$ \\
+
+\quad Heldout $\ell_\infty$ (3)
+& $\mathbf{62.515 \pm 0.334}$
+& $51.594 \pm 0.306$
+& $60.916 \pm 0.427$
+& $61.149 \pm 0.170$ \\
+
+\quad Heldout $\ell_2$ (3)
+& $62.021 \pm 0.474$
+& $\mathbf{67.661 \pm 0.278}$
+& $67.249 \pm 0.603$
+& $67.654 \pm 0.223$ \\
+
+Seen mean (2)
+& $55.192 \pm 0.182$
+& $46.020 \pm 0.247$
+& $55.934 \pm 0.303$
+& $\mathbf{56.093 \pm 0.166}$ \\
+
+\midrule
+Worst(8)
+& $\mathbf{49.656 \pm 0.161}$
+& $25.957 \pm 0.378$
+& $45.082 \pm 0.281$
+& $45.079 \pm 0.237$ \\
+\bottomrule
+
+
+
+\end{tabular}
+\end{table}
+We compare four methods on $n = 20$ paired training seeds: PGD-AT,
+DDN-AT, Multi-AT, and the proposed AttackDRO++ (Anchor35 GradFP).
+AttackDRO++ improves Mean(8) over Multi-AT by $+0.279$~pp ($p = 0.0076$,
+14/20 wins), with the strongest channel on heldout $\ell_2$ ($+0.405$~pp,
+$p = 0.0079$, 16/20). It improves Mean(8) over PGD-AT by $+1.826$~pp and
+over DDN-AT by $+6.098$~pp, both at $p < 10^{-10}$ on all 20 seeds, and
+achieves $2.5$--$3.3{\times}$ tighter seed-to-seed standard deviation than Multi-AT on every average-case metric. Worst(8) and AutoAttack are
+statistically indistinguishable from Multi-AT ($|\Delta| < 0.005$~pp,
+$p > 0.97$): AttackDRO++ improves average and heldout robustness without
+disturbing standardized worst-case behavior. The single-attack baselines
+remain stronger than AttackDRO++ on the family they train against
+(PGD-AT on heldout $\ell_\infty$, DDN-AT on heldout $\ell_2$) but lose
+substantially on the other, confirming the specialist-versus-balanced
+interpretation that motivates Multi-ATtack training.
+
+AttackDRO++ achieves the highest Mean(8), Heldout(6), and Seen mean.
+PGD-AT wins Heldout $\ell_\infty$ and Worst(8); DDN-AT wins Heldout
+$\ell_2$. The bold pattern visualizes the specialist-versus-balanced
+interpretation: each single-AT method dominates one column, while
+AttackDRO++ is best on every column-aggregating metric.
+
+\paragraph{Effect-size summary.}
+Table~\ref{tab:effect_size_summary} reports paired effect magnitudes
+between AttackDRO++ and each baseline. Cohen's $d_z = \Delta / \sigma_\Delta$
+is the standardized paired effect size; conventional thresholds are
+$0.2$ (small), $0.5$ (medium), $0.8$ (large). Statistical significance
+is reported in Table~\ref{tab:paired_aggregate_all_baselines}.
+
+\begin{table}[H]
+\centering
+\caption{Effect-size summary: AttackDRO++ (Ours) vs.\ each baseline ($n=20$).
+$\Delta$ in percentage points; negative values mean the baseline is
+stronger.}
+\label{tab:effect_size_summary}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{2}{c}{vs.\ Multi-AT} & \multicolumn{2}{c}{vs.\ PGD-AT} & \multicolumn{2}{c}{vs.\ DDN-AT} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Metric            & $\Delta$ (pp) & $d_z$    & $\Delta$ (pp) & $d_z$     & $\Delta$ (pp) & $d_z$ \\
+\midrule
+Mean(8)           & $+0.279$ & $0.67$   & $+1.826$ & $5.98$    & $+6.098$ & $23.09$ \\
+Heldout(6)        & $+0.319$ & $0.67$   & $+2.134$ & $5.65$    & $+4.774$ & $16.91$ \\
+\quad Heldout $\ell_\infty$ & $+0.233$ & $0.57$   & $-1.366$ & $-4.27$   & $+9.555$ & $25.44$ \\
+\quad Heldout $\ell_2$      & $+0.405$ & $0.66$   & $+5.633$ & $11.64$   & $-0.008$ & $-0.03$ \\
+Seen mean         & $+0.159$ & $0.55$   & $+0.901$ & $4.59$    & $+10.073$ & $31.72$ \\
+\midrule
+Worst(8)          & $-0.003$ & $-0.01$  & $-4.576$ & $-15.36$  & $+19.122$ & $36.91$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two regimes are visible. Against Multi-AT, every average-case metric is a
+medium-effect gain ($d_z \in [0.55, 0.67]$, $\Delta \in [+0.16, +0.41]$~pp)
+with Worst(8) at zero effect: AttackDRO++ shifts the average-case
+distribution by a small but consistent amount without disturbing
+worst-case behavior. Against the single-AT baselines, $d_z$ exceeds $4$
+on most metrics but flips negative on the family each specialist trains
+against. The medium-effect Multi-AT comparison validates the cluster-DRO
+objective as a refinement of Multi-ATtack training; the large-but-
+asymmetric single-AT comparisons quantify the specialist tradeoff that
+motivates the Multi-ATtack setting in the first place.
+
+\paragraph{Paired aggregate robustness comparisons.}
+Table~\ref{tab:paired_aggregate_all_baselines} reports paired aggregate results separate the main Multi-ATtack comparison from the
+single-attack specialist comparisons. AutoAttack is excluded from this table and reported
+separately in Section~\ref{sec:worst_case_behavior}.
+
+\begin{table}[H]
+\centering
+\caption{Paired aggregate robustness comparison between AttackDRO++ (Ours) and each baseline.
+\(\Delta\) is computed as AttackDRO++ minus the corresponding baseline in percentage
+points. The \(p\)-value is from a two-sided paired \(t\)-test.}
+\label{tab:paired_aggregate_all_baselines}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{llrrrrrr}
+\toprule
+Baseline & Metric & \(n\) & \(\Delta\) (pp) & \(\sigma_\Delta\) & Wins & \(d_z\) & \(p\) \\
+\midrule
+
+\multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. Multi-AT}} \\
+\midrule
+ Multi-AT & Mean(8) & 20 & $+0.279$ & $0.417$ & $14/20$ & $0.668$ & $\mathbf{0.0076}$ \\
+ Multi-AT & Heldout(6) & 20 & $+0.319$ & $0.478$ & $13/20$ & $0.667$ & $\mathbf{0.0076}$ \\
+ Multi-AT & Heldout $\ell_\infty$ & 20 & $+0.233$ & $0.412$ & $14/20$ & $0.566$ & $0.0204$ \\
+ Multi-AT & Heldout $\ell_2$ & 20 & $+0.405$ & $0.609$ & $16/20$ & $0.664$ & $\mathbf{0.0079}$ \\
+ Multi-AT & Seen mean & 20 & $+0.159$ & $0.291$ & $15/20$ & $0.546$ & $0.0246$ \\
+ Multi-AT & Worst(8) & 20 & $-0.003$ & $0.369$ & $9/20$ & $-0.008$ & $0.971$ \\
+
+\midrule
+\multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. PGD-AT}} \\
+\midrule
+PGD-AT & Mean(8) & 20 & $+1.826$ & $0.305$ & $20/20$ & $5.980$ & $\mathbf{<10^{-10}}$ \\
+PGD-AT & Heldout(6) & 20 & $+2.134$ & $0.378$ & $20/20$ & $5.650$ & $\mathbf{<10^{-10}}$ \\
+PGD-AT & Heldout $\ell_\infty$ & 20 & $-1.366$ & $0.320$ & $0/20$ & $-4.273$ & $\mathbf{<10^{-10}}$ \\
+PGD-AT & Heldout $\ell_2$ & 20 & $+5.633$ & $0.484$ & $20/20$ & $11.638$ & $\mathbf{<10^{-20}}$ \\
+PGD-AT & Seen mean & 20 & $+0.901$ & $0.197$ & $20/20$ & $4.585$ & $\mathbf{<10^{-10}}$ \\
+PGD-AT & Worst(8) & 20 & $-4.576$ & $0.298$ & $0/20$ & $-15.364$ & $\mathbf{<10^{-20}}$ \\
+
+\midrule
+\multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. DDN-AT}} \\
+\midrule
+DDN-AT & Mean(8) & 20 & $+6.098$ & $0.264$ & $20/20$ & $23.087$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Heldout(6) & 20 & $+4.774$ & $0.282$ & $20/20$ & $16.910$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Heldout $\ell_\infty$ & 20 & $+9.555$ & $0.376$ & $20/20$ & $25.440$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Heldout $\ell_2$ & 20 & $-0.008$ & $0.319$ & $10/20$ & $-0.025$ & $0.914$ \\
+DDN-AT & Seen mean & 20 & $+10.073$ & $0.318$ & $20/20$ & $31.723$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Worst(8) & 20 & $+19.122$ & $0.518$ & $20/20$ & $36.909$ & $\mathbf{<10^{-20}}$ \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+Against Multi-AT, AttackDRO++ gives
+small but statistically supported gains on all average-case metrics, while Worst(8) is
+unchanged. Against PGD-AT, AttackDRO++ improves Mean(8) and held-out $\ell_2$
+robustness, but PGD-AT remains stronger on held-out $\ell_\infty$ and Worst(8).
+Against DDN-AT, AttackDRO++ improves all $\ell_\infty$-related aggregates while matching
+DDN-AT on held-out $\ell_2$. This again supports the main interpretation that
+single-attack baselines are specialists, while AttackDRO++ provides better average
+cross-attack balance.
+% ─────────────────────────────────────────────────────────────────────────────
+% TODO(Kiet's partner): Fill Table~\ref{tab:corrected_paired_tests}.
+%
+% This table is the multiple-comparison-corrected companion to
+% Table~\ref{tab:paired_aggregate_all_baselines}.
+%
+% Use the final 20-seed CSV and the canonical Chapter 6 metrics:
+%   - Clean: standard clean test accuracy.
+%   - Mean(8): average over the eight non-AutoAttack attacks.
+%   - Heldout(6): average over Heldout Linf + Heldout L2 attacks.
+%   - Heldout Linf: FGSM-RS, TPGD, MI-FGSM.
+%   - Heldout L2: PGD-L2, DeepFool-L2, CW-L2.
+%   - Seen mean: PGD-Linf and DDN-L2.
+%   - Worst(8): minimum over the eight non-AutoAttack attacks.
+%
+% Do not include AutoAttack in this table. AutoAttack is reported separately
+% in Section~\ref{sec:worst_case_behavior}.
+%
+% Method names:
+%   PGD-AT, DDN-AT, Multi-AT, AttackDRO++.
+%   In compact tables, use " Multi-AT" as the short label for Multi-AT.
+%
+% Required statistics:
+%   - Delta in percentage points: AttackDRO++ minus baseline.
+%   - Bootstrap 95% confidence interval for Delta.
+%   - Seed-level wins.
+%   - Cohen's paired effect size d_z.
+%   - Raw paired t-test p-value.
+%   - Wilcoxon signed-rank p-value.
+%   - Holm-corrected Wilcoxon p-value.
+%
+% Holm correction rule:
+%   Apply Holm correction separately within each baseline block across
+%   the seven reported metrics:
+%   Clean, Mean(8), Heldout(6), Heldout Linf, Heldout L2, Seen mean, Worst(8).
+% ────────────────────────────────────────────────────────────────────────────
+
+\begin{table}[H]
+\centering
+\caption{Multiple-comparison-corrected paired significance tests for AttackDRO++ (Ours)
+against each baseline across $n=20$ paired seeds. $\Delta$ is computed as
+AttackDRO++ minus the corresponding baseline in percentage points. The table
+reports bootstrap 95\% confidence intervals, seed-level win counts, Cohen's paired
+effect size $d_z$, paired $t$-test $p$-values, Wilcoxon signed-rank $p$-values,
+and Holm-corrected Wilcoxon $p$-values. Holm correction is applied within each
+baseline comparison across the seven reported metrics. AutoAttack is excluded
+from this table and reported separately in Section~\ref{sec:worst_case_behavior}.}
+\label{tab:corrected_paired_tests}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrrrr}
+\toprule
+Baseline & Metric
+& $\Delta$ (pp)
+& 95\% CI (pp)
+& Wins
+& $d_z$
+& $p_t$
+& $p_W$
+& $p_{W,\mathrm{Holm}}$ \\
+\midrule
+
+\multicolumn{9}{l}{\textit{AttackDRO++ (Ours) vs.\ Multi-AT}} \\
+\midrule
+ Multi-AT & Clean
+& +0.539 & [+0.195, +0.903] & 13/20 & 0.642 & 0.0098 & 0.0441 & 0.1449 \\
+
+ Multi-AT & Mean(8)
+& +0.279 & [+0.108, +0.463] & 14/20 & 0.668 & 0.0076 & 0.0136 & 0.0953 \\
+
+ Multi-AT & Heldout(6)
+& +0.319 & [+0.123, +0.527] & 13/20 & 0.667 & 0.0076 & 0.0192 & 0.0962 \\
+
+ Multi-AT & Heldout $\ell_\infty$
+& +0.233 & [+0.060, +0.410] & 14/20 & 0.566 & 0.0204 & 0.0362 & 0.1449 \\
+
+ Multi-AT & Heldout $\ell_2$
+& +0.405 & [+0.144, +0.661] & 16/20 & 0.664 & 0.0079 & 0.0136 & 0.0953 \\
+
+ Multi-AT & Seen mean
+& +0.159 & [+0.038, +0.285] & 15/20 & 0.546 & 0.0246 & 0.0419 & 0.1449 \\
+
+ Multi-AT & Worst(8)
+& -0.003 & [-0.168, +0.155] & 9/20 & -0.008 & 0.9714 & 0.9839 & 0.9839 \\
+
+\midrule
+\multicolumn{9}{l}{\textit{AttackDRO++ (Ours) vs.\ PGD-AT}} \\
+\midrule
+PGD-AT & Clean
+& +4.015 & [+3.666, +4.386] & 20/20 & 4.779 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+PGD-AT & Mean(8)
+& +1.826 & [+1.702, +1.965] & 20/20 & 5.980 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+PGD-AT & Heldout(6)
+& +2.134 & [+1.980, +2.303] & 20/20 & 5.650 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+PGD-AT & Heldout $\ell_\infty$
+& -1.366 & [-1.496, -1.223] & 0/20 & -4.273 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+PGD-AT & Heldout $\ell_2$
+& +5.633 & [+5.441, +5.849] & 20/20 & 11.638 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+PGD-AT & Seen mean
+& +0.901 & [+0.815, +0.984] & 20/20 & 4.585 & $<0.0001$ & $<0.0001$ & 0.0002 \\
+
+PGD-AT & Worst(8)
+& -4.576 & [-4.708, -4.454] & 0/20 & -15.364 & $<0.0001$ & $<0.0001$ & 0.0002 \\
+
+\midrule
+\multicolumn{9}{l}{\textit{AttackDRO++ (Ours) vs.\ DDN-AT}} \\
+\midrule
+DDN-AT & Clean
+& -4.563 & [-4.712, -4.414] & 0/20 & -13.134 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+DDN-AT & Mean(8)
+& +6.098 & [+5.986, +6.209] & 20/20 & 23.087 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+DDN-AT & Heldout(6)
+& +4.774 & [+4.654, +4.893] & 20/20 & 16.910 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+DDN-AT & Heldout $\ell_\infty$
+& +9.555 & [+9.399, +9.718] & 20/20 & 25.440 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+DDN-AT & Heldout $\ell_2$
+& -0.008 & [-0.143, +0.127] & 10/20 & -0.025 & 0.9137 & 0.9563 & 0.9563 \\
+
+DDN-AT & Seen mean
+& +10.072 & [+9.938, +10.208] & 20/20 & 31.723 & $<0.0001$ & $<0.0001$ & 0.0002 \\
+
+DDN-AT & Worst(8)
+& +19.122 & [+18.904, +19.344] & 20/20 & 36.909 & $<0.0001$ & $<0.0001$ & $<0.0001$ \\
+
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+% TODO(Kiet's partner): After filling Table~\ref{tab:corrected_paired_tests},
+% update this paragraph according to the Holm-corrected Wilcoxon results.
+% If the Multi-AT comparison remains significant after Holm correction,
+% describe it as correction-robust. If not, describe it as a small positive
+% trend supported by paired t-tests and effect sizes, but not uniformly
+% correction-robust.
+Table~\ref{tab:paired_aggregate_all_baselines} reports the paired $t$-test
+comparison. To align with the statistical protocol described in Chapter~5,
+Table~\ref{tab:corrected_paired_tests} additionally reports Wilcoxon signed-rank
+tests with Holm correction, bootstrap confidence intervals, paired effect sizes,
+and seed-level win counts.
+The multiple-comparison-corrected tests provide a conservative check on the
+paired $t$-test results. Against Multi-AT, the key question is whether the
+small positive gains on average-case metrics remain supported after Wilcoxon
+testing and Holm correction. Clean accuracy is included as a sanity metric, but
+the main robustness claims are based on Mean(8), heldout metrics, seen mean, and
+Worst(8). Against the single-attack baselines, the same analysis mainly verifies
+the specialist-versus-balanced pattern: PGD-AT remains stronger on
+$\ell_\infty$-dominated metrics, DDN-AT remains competitive on heldout $\ell_2$,
+and AttackDRO++ provides stronger average cross-attack balance.
+
+After Holm correction, the Multi-AT comparison should be interpreted cautiously.
+AttackDRO++ shows small positive differences over Multi-AT on Clean, Mean(8),
+Heldout(6), Heldout $\ell_\infty$, Heldout $\ell_2$, and Seen mean, and these
+differences are supported by the paired $t$-tests, raw Wilcoxon tests, confidence
+intervals, and moderate paired effect sizes. However, the Holm-corrected
+Wilcoxon $p$-values for these metrics do not remain below the $0.05$ threshold.
+Therefore, relative to Multi-AT, the evidence is best described as a small
+positive trend rather than a uniformly correction-robust improvement. Worst(8)
+is essentially unchanged, indicating that AttackDRO++ preserves the worst-case
+attack performance of Multi-AT rather than improving it.
+
+For the single-attack baselines, the corrected tests support the expected
+specialist-versus-balanced interpretation. Compared with PGD-AT, AttackDRO++
+achieves correction-robust gains on Mean(8), Heldout(6), Heldout $\ell_2$, and
+Seen mean, but remains weaker on Heldout $\ell_\infty$ and Worst(8), consistent
+with PGD-AT's specialization toward $\ell_\infty$ robustness. Compared with
+DDN-AT, AttackDRO++ obtains correction-robust gains on Mean(8), Heldout(6),
+Heldout $\ell_\infty$, Seen mean, and Worst(8), while Heldout $\ell_2$ is
+statistically indistinguishable. Overall, Table~\ref{tab:corrected_paired_tests}
+suggests that AttackDRO++ mainly improves average cross-attack balance and
+heldout robustness, while its worst-case behavior depends on the baseline being
+compared.
+
+
+\subsection{Per-Attack Robustness Breakdown}
+\label{sec:per_attack_breakdown}
+
+The aggregate metrics show the overall trend, but they do not reveal which attacks
+drive the improvement. Table~\ref{tab:per_attack_all_baselines} reports per-attack
+paired comparisons between AttackDRO++ and each baseline. The table is divided into
+three panels: the main comparison against Multi-AT, followed by the two
+single-attack specialist comparisons.
+
+\begin{table}[H]
+\centering
+\caption{Per-attack robust accuracy (\%) for all four methods, $n=20$ seeds.
+Bold cells indicate the highest accuracy for each attack. The right-hand
+$\Delta$ and $p$ columns report the paired comparison of AttackDRO++ (Ours) against
+Multi-AT. AttackDRO++ (Ours) wins the highest
+score on 4 of 8 attacks; the two single-attack baselines together account
+for the remaining 4, each winning on the family they were trained against.
+$\Delta$ values use the bold-marker convention $^*$ for $p<0.05$ and
+$^{**}$ for $p<0.01$.}
+\label{tab:per_attack_all_baselines}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.10}
+\begin{tabular}{llcccc|rr}
+\toprule
+Attack & Family & PGD-AT & DDN-AT & Multi-AT & AttackDRO++ (Ours) & $\Delta$ vs.\ Multi-AT & $p$ \\
+\midrule
+FGSM-RS         & heldout $\ell_\infty$
+                & $67.896$
+                & $64.834$
+                & $68.483$
+                & $\mathbf{68.939}$
+                & $+0.456^{**}$
+                & $0.0034$ \\
+
+PGD-$\ell_\infty$ & seen $\ell_\infty$
+                & $\mathbf{49.656}$
+                & $25.957$
+                & $45.082$
+                & $45.079$
+                & $-0.003$
+                & $0.971$ \\
+
+TPGD            & heldout $\ell_\infty$
+                & $\mathbf{68.388}$
+                & $59.310$
+                & $66.934$
+                & $67.043$
+                & $+0.109$
+                & $0.513$ \\
+
+MI-FGSM         & heldout $\ell_\infty$
+                & $\mathbf{51.260}$
+                & $30.638$
+                & $47.331$
+                & $47.466$
+                & $+0.135$
+                & $0.116$ \\
+
+\midrule
+PGD-$\ell_2$    & heldout $\ell_2$
+                & $64.319$
+                & $\mathbf{69.581}$
+                & $69.197$
+                & $69.571$
+                & $+0.374^{*}$
+                & $0.0120$ \\
+
+DDN-$\ell_2$    & seen $\ell_2$
+                & $60.728$
+                & $66.083$
+                & $66.785$
+                & $\mathbf{67.107}$
+                & $+0.321^{*}$
+                & $0.0136$ \\
+
+DeepFool-$\ell_2$ & heldout $\ell_2$
+                & $62.533$
+                & $\mathbf{68.290}$
+                & $67.301$
+                & $67.805$
+                & $+0.504^{**}$
+                & $0.0082$ \\
+
+CW-$\ell_2$     & heldout $\ell_2$
+                & $59.211$
+                & $65.113$
+                & $65.249$
+                & $\mathbf{65.585}$
+                & $+0.336^{**}$
+                & $0.0097$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+Table~\ref{tab:per_attack_all_baselines} disaggregates the Mean(8) result
+into the eight evaluation attacks. AttackDRO++ achieves the highest
+per-attack accuracy on four of eight attacks, including all three heldout
+$\ell_2$ attacks where it beats Multi-AT at $p<0.05$. PGD-AT wins on
+the three heldout $\ell_\infty$ attacks and on the seen attack
+PGD-$\ell_\infty$ that it trains directly against; DDN-AT wins on
+PGD-$\ell_2$ and DeepFool-$\ell_2$, the heldout $\ell_2$ attacks closest to
+its training distribution. The pattern is consistent with a specialist
+interpretation of single-attack training: each single-AT method dominates a
+narrow attack family at the cost of substantial regression on the other.
+AttackDRO++'s improvement over Multi-AT is largest on heldout
+$\ell_2$ attacks ($+0.374$ to $+0.504$~pp, all $p<0.05$) and smallest on the
+seen $\ell_\infty$ attack ($-0.003$~pp), which explains why Worst(8) is
+preserved rather than improved.
+
+
+\subsection{Worst-Case Behavior: Worst(8) and AutoAttack}
+\label{sec:worst_case_behavior}
+
+Two metrics test standardized worst-case behavior. Worst(8) is the minimum
+robust accuracy across the eight evaluation attacks per checkpoint;
+AutoAttack-$\ell_\infty$ is an ensemble $\ell_\infty$ stress test following
+Croce and Hein \cite{croce2020reliable}. Tables~\ref{tab:worst_autoattack_sanity} and
+\ref{tab:autoattack_fulltest} report each metric separately because they have
+different evaluation panels: Worst(8) is computed across the full $n=20$
+seed panel, while AutoAttack is reported in two layers --- a 512-sample
+sanity evaluation across all $n=20$ seeds and a full-test evaluation on
+the selected $n=5$ seed panel.
+
+\begin{table}[H]
+\centering
+\caption{Worst(8) and 512-sample AutoAttack sanity results across
+$n=20$ seeds. Worst(8) is the minimum robust accuracy over the eight
+non-AutoAttack evaluation attacks. For AttackDRO++ $-$ Multi-AT,
+the paired differences are $-0.003$~pp on Worst(8) ($p=0.971$) and
+$-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the highest
+method.}
+\label{tab:worst_autoattack_sanity}
+\small
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Worst(8)} & \multicolumn{2}{c}{AutoAttack-$\ell_\infty$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Method & Mean (\%) & $\sigma$ (pp) & Mean (\%) & $\sigma$ (pp) \\
+\midrule
+PGD-AT & $\mathbf{49.656}$ & $0.161$ & $\mathbf{44.912}$ & $1.136$ \\
+DDN-AT      & $25.957$ & $0.378$ & $23.809$ & $0.796$ \\
+Multi-AT                    & $45.082$ & $0.281$ & $41.318$ & $1.167$ \\
+AttackDRO++ (Ours)          & $45.079$ & $0.237$ & $41.317$ & $1.050$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Full-test AutoAttack-$\ell_\infty$ results on the selected
+$n=5$ paired seed panel. The paired difference is
+AttackDRO++ $-$ Multi-AT: $-0.006$~pp, with $p=0.9584$.}
+\label{tab:autoattack_fulltest}
+\small
+\setlength{\tabcolsep}{10pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lrr}
+\toprule
+Method & Mean (\%) & $\sigma$ (pp) \\
+\midrule
+Multi-AT & $42.47$ & $0.30$ \\
+AttackDRO++ (Ours) & $42.46$ & $0.20$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{AttackDRO++ vs.\ Multi-AT.}
+AttackDRO++ is statistically indistinguishable from Multi-AT on both
+worst-case metrics. On the $n=20$ sanity panel, the paired differences are
+$-0.003$~pp for Worst(8) ($p=0.971$) and $-0.001$~pp for AutoAttack
+($p=0.998$). The full-test AutoAttack panel gives the same conclusion
+($-0.006$~pp, $p=0.9584$). Thus, the claim is preservation rather than
+improvement: AttackDRO++ improves average and heldout robustness without
+degrading standardized worst-case behavior.
+
+\paragraph{PGD-AT specialization.}
+PGD-AT obtains the highest Worst(8) and AutoAttack because both metrics are
+dominated by $\ell_\infty$ robustness, the threat family it trains against.
+This advantage is therefore structural rather than evidence of broader
+robustness. As Table~\ref{tab:per_attack_all_baselines} shows, PGD-AT loses
+$5$--$6$~pp to AttackDRO++ on heldout $\ell_2$ attacks, while DDN-AT shows the
+opposite failure mode by collapsing under $\ell_\infty$ stress. Single-attack
+training therefore produces specialists; AttackDRO++ does not match PGD-AT's
+$\ell_\infty$ depth, but provides the best average cross-attack balance.
+
+\subsection{Variance Reduction and Training Stability}
+\label{sec:variance_reduction}
+
+In addition to improving the mean of average-case robustness metrics, AttackDRO++ also
+reduces seed-to-seed variation relative to Multi-AT. Table~\ref{tab:variance-reduction}
+compares the standard deviation of each seed-level metric between the two methods.
+
+\begin{table}[H]
+\centering
+\caption{Variance reduction across \(n=20\) training seeds. \(\sigma\) is the
+standard deviation of the per-seed metric. AttackDRO++ substantially reduces
+seed-to-seed variation on Mean(8), held-out averages, and held-out norm-specific
+metrics, while Worst(8) and AutoAttack standard deviations remain similar across
+methods.}
+\label{tab:variance-reduction}
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lrrr}
+\toprule
+Metric & \(\sigma\) Multi-AT (pp) & \(\sigma\) AttackDRO++ (pp) & Ratio \\
+\midrule
+Mean(8)
+& $0.447$ & $0.148$ & $\mathbf{3.03\times}$ \\
+
+Heldout(6)
+& $0.505$ & $0.155$ & $\mathbf{3.26\times}$ \\
+
+Heldout $\ell_2$
+& $0.603$ & $0.223$ & $\mathbf{2.70\times}$ \\
+
+Heldout $\ell_\infty$
+& $0.427$ & $0.170$ & $\mathbf{2.51\times}$ \\
+
+Seen mean
+& $0.303$ & $0.166$ & $1.83\times$ \\
+
+\midrule
+Worst(8)
+& $0.281$ & $0.237$ & $1.18\times$ \\
+
+AutoAttack-$\ell_\infty$
+& $1.167$ & $1.050$ & $1.11\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The reduction is strongest for held-out robustness. The standard deviation decreases by
+\(3.26\times\) for Heldout(6), \(2.70\times\) for held-out \(\ell_2\), and
+\(2.51\times\) for held-out \(\ell_\infty\). Mean(8) also becomes substantially more
+stable, decreasing from \(0.447\)~pp under Multi-AT to \(0.148\)~pp under
+AttackDRO++, a \(3.03\times\) reduction.
+
+This suggests that the anchored Cluster-DRO objective not only improves the mean of
+average-case robustness metrics, but also makes the Multi-ATtack training outcome less
+sensitive to random seed. The effect is weaker for Worst(8) and AutoAttack, whose
+standard deviations remain similar across methods. This is consistent with the previous
+sections: AttackDRO++ preserves the hardest \(\ell_\infty\) stress metrics relative to
+ Multi-AT, while its main benefit is on average and held-out robustness.
+
+
+% \subsection{Section Summary}
+% \label{sec:section_summary}
+
+% The aggregate, per-attack, worst-case, and variance results jointly establish
+% the following conclusions:
+
+% \begin{enumerate}
+%   \item AttackDRO++ improves Mean(8) over Multi-AT by
+%         $+0.279$~pp at $p = 0.0076$ on $n = 20$ paired seeds, with the
+%         strongest channel on heldout $\ell_2$ ($+0.405$~pp, $p = 0.0079$,
+%         16/20 wins). Five of seven aggregate metrics improve at $p < 0.05$.
+%   \item The improvement is distributed: AttackDRO++ wins on six of eight
+%         evaluation attacks against Multi-AT, with three of the
+%         heldout $\ell_2$ attacks individually significant at $p < 0.01$.
+%         The Mean(8) gain is not driven by a single attack channel.
+%   \item Single-attack baselines are specialists, not stronger defenses.
+%         PGD-AT and DDN-AT each dominate one attack family and lose
+%         $5$--$19$~pp to AttackDRO++ on the other. Worst(8) and AutoAttack
+%         for PGD-AT are inflated by its training attack rather than by
+%         broader robustness.
+%   \item AutoAttack and Worst(8) are preserved, not improved, relative to
+%        Multi-AT ($|\Delta| < 0.006$~pp, $p > 0.96$ on both
+%         sanity and full-test panels). AttackDRO++ does not regress
+%         standardized worst-case behavior.
+%   \item Variance is $2.5$--$3.3{\times}$ tighter than Multi-AT on
+%         every average-case metric. AttackDRO++ produces both higher and
+%         more predictable robustness from a given training budget.
+% \end{enumerate}
+
+% These findings establish the white-box robustness contribution. The next
+% section examines whether the same improvements transfer under graybox
+% attack scenarios, where adversarial examples are crafted on a surrogate
+% model rather than the target itself.

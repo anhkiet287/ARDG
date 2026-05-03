@@ -1,0 +1,20 @@
+\section{Model Architecture}
+
+The primary architecture used in this study is ResNet-18, based on the residual learning
+framework of He et al.~\cite{he2016deep}, adapted for CIFAR-10 resolution. ResNet-18
+provides a useful balance between expressiveness and computational cost: it is large
+enough to support nontrivial adversarial training experiments, but still efficient enough
+to run repeated-seed comparisons and ablation studies.
+
+The classifier is denoted by ($f_\theta$). For an input image (x), the model outputs logits
+$$
+z = f_\theta(x) \in \mathbb{R}^{C},
+$$
+where (C=10) is the number of CIFAR-10 classes. In addition to logits, the proposed method requires access to the penultimate-layer representation
+$$
+h = \phi_\theta(x) \in \mathbb{R}^{d_h}.
+$$
+
+This feature vector is used for clustering adversarial examples in AttackDRO++ and for constructing the gradient-fingerprint augmented feature described in Chapter 4. For ResNet-18 on CIFAR-10, the penultimate representation dimension is (d\_h = 512). Therefore, the raw classifier-head gradient proxy has dimension (C d\_h = 10 \times 512 = 5120), which is later reduced by random projection.
+
+Unless otherwise stated, all main experiments use the same ResNet-18 architecture and differ only in the training objective. This controlled setup ensures that performance differences can be attributed to the training method rather than to architectural changes. Higher-capacity architectures are treated as scaling checks or future extensions rather than the main basis for comparison.

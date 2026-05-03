@@ -1,0 +1,131 @@
+% frontmatter.tex
+
+% ========== COVER PAGE ==========
+% frontmatter.tex
+\begin{titlepage}
+\AddToShipoutPictureBG*{%
+    \AtPageLowerLeft{%
+        \begin{tikzpicture}[overlay]
+            % Outer frame with width 2pt
+            \draw[line width=3pt]
+            (3cm, 2cm) rectangle (\paperwidth-2cm, \paperheight-2cm);
+            % Inner frame with width 1pt
+            \draw[line width=1pt]
+            (3.1cm, 2.1cm) rectangle (\paperwidth-2.1cm, \paperheight-2.1cm);
+        \end{tikzpicture}%
+    }%
+}
+
+\begin{center}
+    \vspace*{0cm}
+
+    \fontsize{15pt}{18pt}\selectfont
+    \textbf{VIETNAM NATIONAL UNIVERSITY HO CHI MINH CITY}
+    
+    \textbf{HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY}
+    
+    \textbf{FACULTY OF COMPUTER SCIENCE AND ENGINEERING}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.3]{figures/Logo_BK.png}
+    \end{figure}
+
+    \textbf{REPORT}
+
+    \textbf{CAPSTONE PROJECT}
+
+    \textbf{SEMESTER 251 ACADEMIC YEAR 2025-2026}
+
+    \rule{0.8\textwidth}{0.5pt}
+    
+    \fontsize{20pt}{18pt}\selectfont
+    \textcolor{blue}{\textbf{\MakeUppercase{DOMAIN GENERALIZATION FOR ADVERSARIAL ROBUSTNESS}}}
+    
+    \vspace{-0.3cm}
+    
+    \rule{0.8\textwidth}{0.5pt}
+
+
+    \fontsize{15pt}{18pt}\selectfont
+    \textbf{MAJOR: COMPUTER SCIENCE}
+
+    \begin{tabular}{l l}
+        \textbf{COUNCIL:} & <NAME> \\
+    \textbf{SUPERVISOR(s):} &
+        \begin{tabular}[t]{@{}l@{}}
+          \SupervisorOne \\
+          \SupervisorTwo
+        \end{tabular} \\
+    \textbf{REVIEWER:} &  \\
+
+    \end{tabular}
+    
+    \textbf{------o0o------}
+
+
+  \begin{tabular}{l l}
+    \textbf{STUDENT 1:} & \StudentOneName{} - \StudentOneID \\
+    \textbf{STUDENT 2:} & \StudentTwoName{} - \StudentTwoID \\
+    \textbf{STUDENT 3:} & \StudentThreeName{} - \StudentThreeID \\
+  \end{tabular}
+
+  \vfill
+
+  {\CoverPlaceTime}
+
+\end{center}
+\end{titlepage}
+
+
+% ========== DECLARATION ==========
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+I hereby declare that this Stage-1 thesis report titled
+\textit{"[Your Thesis Title]"} is my own work and has not been
+submitted in any form for another degree or qualification at
+any other university or institution. Where other sources of
+information have been used, they have been acknowledged.
+
+\vspace{2cm}
+
+\noindent
+%[Student Name]\\
+%[Date] \\
+
+% ========== ACKNOWLEDGEMENT ==========
+\chapter*{Acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+
+[Write your acknowledgement here.]
+
+% ========== ABSTRACT ==========
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+[300--500 words abstract:
+context, problem, Stage-1 objectives, methods, key results,
+and brief plan for Stage 2.]
+
+% ========== TABLES OF CONTENTS / LISTS ==========
+\tableofcontents
+\listoffigures
+\listoftables
+
+% ========== LIST OF ABBREVIATIONS ==========
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+\begin{tabular}{ll}
+AT        & Adversarial Training \\
+DG        & Domain Generalization \\
+PGD       & Projected Gradient Descent \\
+FGSM      & Fast Gradient Sign Method \\
+AA        & AutoAttack \\
+IRM       & Invariant Risk Minimization \\
+REx       & Risk Extrapolation \\
+DNN       & Deep Neural Network \\
+% Thêm các từ viết tắt khác tại đây
+\end{tabular}
+
+\cleardoublepage

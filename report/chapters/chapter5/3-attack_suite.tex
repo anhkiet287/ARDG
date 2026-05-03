@@ -1,0 +1,109 @@
+\section{Attack Suite and Configuration}
+Stage 2 evaluates whether robustness learned from a small set of source attacks generalizes to a broader attack suite. The attack suite is divided into two groups: source attacks used during training and evaluation attacks used only for validation or final testing.
+
+\subsection{Training attacks}
+The main training setup uses two source attacks:
+\[
+    \mathcal{A}_{\mathrm{src}}
+    =
+    \{\text{PGD-}\ell_\infty,\text{DDN-}\ell_2\}.
+\]
+PGD-\(\ell_\infty\) represents the standard first-order \(\ell_\infty\) adversarial
+training setting. It uses cross-entropy loss and perturbation budget
+\(\varepsilon_\infty = 8/255\). DDN-\(\ell_2\) is based on the Decoupled Direction and
+Norm attack of Rony et al.~\cite{rony2019decoupling}. DDN is an efficient gradient-based
+\(\ell_2\) attack that decouples the perturbation direction from its norm: the direction
+is updated using gradient information, while the perturbation norm is adapted depending
+on whether the current example is already adversarial.
+
+
+
+Table~\ref{tab:training_attacks} summarizes the source attacks used during training.
+Both attacks are used to generate mixed adversarial minibatches for Multi-ATtack
+ERM, AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method.
+
+\begin{table}[H]
+\centering
+\caption{Training attack configuration.}
+\label{tab:training_attacks}
+\begin{tabular}{llllll}
+\toprule
+Attack & Norm & Budget & Steps & Loss / objective & Role \\
+\midrule
+PGD-{$\ell_\infty$} & $\ell_\infty$ & $8/255$ & 20 & Cross-entropy & Source attack \\
+DDN-$\ell_2$ & $\ell_2$ & $0.5$ & 20 & DDN objective & Source attack \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ForMulti-ATtack training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction is also used by AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method. Thus, the compared methods share the same adversarial data generation process and differ mainly in how they weight or group the generated examples.
+
+\subsection{Evaluation Attacks}
+\label{sec:evaluation_attacks}
+
+The evaluation suite includes both source attacks and held-out attacks. The two source
+attacks used during training are also included in validation and test evaluation, while
+the remaining attacks are held out from training. This protocol directly tests the
+attacks-as-domains hypothesis: a robust model should not only perform well on the attacks
+used for optimization, but should also generalize to attacks with different perturbation
+geometries and optimization dynamics.
+
+
+For validation and final testing, we evaluate each checkpoint using the attack suite in
+Table~\ref{tab:evaluation_attacks}. The main aggregate metric, denoted Mean(8), is
+computed over the eight attacks in the table. AutoAttack is reported separately and is
+therefore not included in Mean(8).
+\begin{table}[H]
+\centering
+\caption{Validation and test attacks used for Mean(8).}
+\label{tab:evaluation_attacks}
+\renewcommand{\arraystretch}{1.08}
+\setlength{\tabcolsep}{7pt}
+\begin{tabular}{lcccc}
+\toprule
+Attack & Norm & Budget & Steps & Group \\
+\midrule
+FGSM-RS              & $\ell_\infty$ & $8/255$ & 1   & Held-out $\ell_\infty$ \\
+PGD-$\ell_\infty$   & $\ell_\infty$ & $8/255$ & 20  & Source \\
+TPGD                 & $\ell_\infty$ & $8/255$ & 10  & Held-out $\ell_\infty$ \\
+MI-FGSM              & $\ell_\infty$ & $8/255$ & 10  & Held-out $\ell_\infty$ \\
+PGD-$\ell_2$         & $\ell_2$      & $0.5$   & 10  & Held-out $\ell_2$ \\
+DDN-$\ell_2$         & $\ell_2$      & $0.5$   & 20  & Source \\
+DeepFool-$\ell_2$    & $\ell_2$      & $0.5$   & 50  & Held-out $\ell_2$ \\
+CW-$\ell_2$          & $\ell_2$      & $0.5$   & 200 & Held-out $\ell_2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For aggregate analysis, we report four summary metrics derived from the same eight
+attacks: Seen, Held-out \(\ell_\infty\), Held-out \(\ell_2\), and Mean(8). Their exact
+definitions are given in Section~\ref{sec:evaluation_metrics}.
+
+\paragraph{AutoAttack configuration}
+
+AutoAttack is used as an additional standardized \(\ell_\infty\) stress test following
+Croce and Hein~\cite{croce2020reliable}. It is not included in Mean(8), because it is
+computationally more expensive and follows a separate evaluation protocol.
+
+The AutoAttack configuration uses the standard \(\ell_\infty\) setting with perturbation
+budget \(\varepsilon_\infty = 8/255\). In early experiments and ablations, AutoAttack is
+sometimes evaluated on a subset of 512 test samples as a sanity check. These 512-sample
+results are useful for detecting severe robustness collapse, but they are not used as the
+primary ranking criterion because the sample size is smaller and the variance is higher.
+For the final stress test, AutoAttack is evaluated on the full test set for selected
+representative seeds.
+
+\begin{table}[H]
+\centering
+\caption{AutoAttack configuration.}
+\label{tab:autoattack_config}
+\renewcommand{\arraystretch}{1.08}
+\setlength{\tabcolsep}{10pt}
+\begin{tabular}{lccc}
+\toprule
+Attack & Norm & Budget & Role \\
+\midrule
+AutoAttack & $\ell_\infty$ & $8/255$ & Separate stress test \\
+\bottomrule
+\end{tabular}
+\end{table}

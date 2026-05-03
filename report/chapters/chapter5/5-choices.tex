@@ -1,0 +1,158 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Hyperparameter Choices and Ablation Factors}
+\label{sec:hyperparameters}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{table}[H]
+\centering
+\caption{Default hyperparameters for AttackDRO++ (Ours).}
+\label{tab:main_hyperparams}
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\centering\arraybackslash}p{0.14\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
+\toprule
+Hyperparameter & Symbol & Default value & Purpose \\
+\midrule
+
+Source attacks
+& $\mathcal{A}_{\mathrm{src}}$
+& PGD-20$_{\mathrm{CE}}$, DDN-$\ell_2$
+& Training attack domains. \\
+
+Number of clusters
+& $K$
+& 4
+& Latent group granularity. \\
+
+DRO anchor strength
+& $\lambda_{\mathrm{DRO}}$
+& 0.35
+& Balances ERM and Cluster-DRO. \\
+
+$q$ learning rate
+& $\eta_q$
+& $3 \times 10^{-4}$
+& Step size for $q$ update. \\
+
+$q$ floor
+& $q_{\min}$
+& 0.03
+& Prevents ignored clusters. \\
+
+$q$ warmup
+& $T_w$
+& 3 epochs
+& Delays early reweighting. \\
+
+Cluster refresh interval
+& $R$
+& 2 epochs
+& K-means refresh frequency. \\
+
+Feature bank size
+& $|\mathcal{F}|$
+& 4096
+& Stores detached features. \\
+
+Gradient projection dim.
+& $d_{\mathrm{proj}}$
+& 128
+& Compresses GradFP features. \\
+
+Gradient feature weight
+& $\lambda_{\mathrm{grad}}$
+& 0.1
+& Weights GradFP features. \\
+
+Label feature weight
+& $\lambda_{\mathrm{lbl}}$
+& 0.1
+& Weights label features. \\
+
+Clusterer
+& --
+& K-means
+& Assigns latent groups. \\
+
+$q$ refresh policy
+& --
+& Reset after refresh
+& Avoids stale cluster weights. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The number of clusters is set to $K=4$ as a moderate grouping resolution. Too few
+clusters may fail to capture meaningful difficulty structure, while too many clusters may
+fragment the minibatch and produce noisy group-loss estimates. The default anchor
+strength $\lambda_{\mathrm{DRO}}=0.35$ is chosen to keep theMulti-ATtack loss as
+the dominant stabilizing signal while still allowing cluster-level adaptive correction.
+
+The $q$-floor and warmup settings are included for stability. The floor projection
+prevents any cluster from being completely ignored, while the warmup period prevents the
+exponentiated-gradient update from acting on unreliable early cluster assignments. The
+feature bank and refresh interval control how quickly the clusterer adapts to evolving
+model representations. In the default setting, refreshing every two epochs provides a
+balance between stability and adaptivity.
+
+The gradient fingerprint is projected to $d_{\mathrm{proj}}=128$ dimensions for
+computational efficiency. For CIFAR-10 with ResNet-18, the classifier-head gradient proxy
+has raw dimension $C d_h = 10 \times 512 = 5120$. The fixed random projection reduces
+this dimension while retaining useful information about the optimization direction
+induced by each adversarial example.
+
+Table~\ref{tab:ablation_hyperparams} lists the main hyperparameters varied in ablation
+experiments. These ablations are used in Chapter~6 to justify the default configuration
+and to separate the effect of the proposed components from the strong uniform
+multi-attack baseline.
+
+\begin{table}[H]
+\centering
+\caption{Hyperparameters varied in ablation studies.}
+\label{tab:ablation_hyperparams}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+>{\raggedright\arraybackslash}p{0.32\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
+\toprule
+Ablation factor & Values / variants & Purpose \\
+\midrule
+
+Anchor strength
+& $\lambda_{\mathrm{DRO}} \in \{0.20, 0.35, 0.50\}$
+& Tests the uniform-anchor trade-off. \\
+
+Cluster count
+& $K \in \{2,4,6,10\}$
+& Tests sensitivity to group granularity. \\
+
+$q$ update
+& update $q$  vs. uniform $q$
+& Tests adaptive reweighting. \\
+
+Refresh schedule
+& 1 epoch vs. 2 epochs
+& Tests cluster-refresh frequency. \\
+
+Gradient fingerprint
+& With vs. without GradFP
+& Tests optimization-level features. \\
+
+Random clusters
+& Learned vs. random assignment
+& Negative control for clustering. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}

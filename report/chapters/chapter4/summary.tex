@@ -1,0 +1,18 @@
+% ─────────────────────────────────────────────────────────────────────────────
+% TODO: Convert numbered Chapter Summary into closing prose according to docs/06_style_rules.md.
+\section{Chapter Summary}
+\label{sec:ch4summary}
+% ─────────────────────────────────────────────────────────────────────────────
+
+This chapter introduced the proposed methodology for improving cross-attack adversarial
+robustness. Starting from the attacks-as-domains formulation, we defined Uniform
+Multi-Attack ERM as the main baseline, then introduced AttackDRO (GroupDRO over attack
+identities) and AttackDRO++ (GroupDRO over latent clusters). The gradient fingerprint
+augments clustering with optimization-level difficulty information, enabling discovery of
+hard subgroups that cut across attack boundaries. The uniform-anchored objective balances
+the adaptivity of Cluster-DRO with the stability of the uniform baseline.
+
+The main proposed method is \textbf{AttackDRO++ with Gradient Fingerprints and Uniform Anchor}. It is motivated by the hypothesis
+that gradient-fingerprint clusters discover adversarial difficulty structure that
+generalizes beyond the two source attacks to held-out attack families. Chapter~6
+evaluates this hypothesis across 20 random seeds.

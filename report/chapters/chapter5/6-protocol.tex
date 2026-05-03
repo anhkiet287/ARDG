@@ -1,0 +1,85 @@
+\section{Statistical Significance Protocol}
+\label{sec:statistical-significance-protocol}
+
+To ensure that the reported improvements are not caused by seed-specific randomness, this study applies a repeated-seed statistical protocol. Each method is trained and evaluated under the same set of seeds, dataset split, architecture, attack suite, and evaluation configuration. The seed-level result is used as the basic unit of analysis.
+
+For a given metric, let $x_i$ be the performance of AttackDRO++ under seed $i$, and let $y_i$ be the performance of a baseline method under the same seed. The paired difference is defined as:
+
+\begin{equation}
+    d_i = x_i - y_i.
+\end{equation}
+
+All statistical comparisons are performed on these paired differences. This paired design reduces the influence of random initialization, data shuffling, and optimization noise, allowing the analysis to focus on the relative performance difference between methods.
+
+The primary significance test is the Wilcoxon signed-rank test. This test is selected because it is non-parametric and does not assume that the paired differences are normally distributed. This property is important for repeated-seed adversarial robustness experiments, where the number of seeds is limited and the distribution of performance differences may be irregular. For directional comparisons, the alternative hypothesis is that AttackDRO++ achieves higher performance than the baseline:
+
+\begin{align}
+    H_0 &: \operatorname{median}(d_i) \leq 0, \\
+    H_1 &: \operatorname{median}(d_i) > 0.
+\end{align}
+
+A paired $t$-test is also reported as a secondary parametric check. While the paired $t$-test assumes approximate normality of the paired differences, it provides a useful sanity check. When both the Wilcoxon signed-rank test and the paired $t$-test support the same conclusion, the result is considered more stable. If the two tests disagree, the Wilcoxon test is prioritized because it is less dependent on distributional assumptions.
+
+In addition to $p$-values, this study reports the paired effect size using Cohen's $d_z$:
+
+\begin{equation}
+    d_z = \frac{\bar{d}}{s_d},
+\end{equation}
+
+where $\bar{d}$ is the mean paired difference and $s_d$ is the sample standard deviation of the paired differences. Cohen's $d_z$ is used to quantify the magnitude of the improvement. Conventional thresholds are used as rough guidance, with $0.2$, $0.5$, and $0.8$ corresponding to small, medium, and large effects, respectively. However, in adversarial robustness evaluation, even moderate effect sizes may be practically meaningful if the improvement is consistent across strong attacks or improves worst-case robustness.
+
+To estimate uncertainty, 95\% bootstrap confidence intervals are computed from seed-level results. For each method and metric, the seed-level values are resampled with replacement 10{,}000 times, and the mean is recomputed for each resample. The 2.5th and 97.5th percentiles of the bootstrap distribution are used as the confidence interval. Bootstrap confidence intervals are also computed for the paired difference $x_i - y_i$, as this directly estimates the uncertainty of the improvement over each baseline.
+
+Because multiple attacks, metrics, and baseline comparisons are evaluated, Holm--Bonferroni correction is applied within each metric family. Both raw and corrected $p$-values are reported, but corrected $p$-values are used for final significance interpretation. This correction reduces the risk of false positive findings while remaining less conservative than the standard Bonferroni correction.
+
+The reporting format used in the results chapter is summarized in Table~\ref{tab:statistical-reporting-format}.
+
+\begin{table}[H]
+\centering
+\caption{Reporting format for the statistical significance protocol.}
+\label{tab:statistical-reporting-format}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.26\textwidth}
+>{\raggedright\arraybackslash}p{0.30\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
+\toprule
+Quantity & Reported value & Purpose \\
+\midrule
+
+Mean performance
+& Mean across seeds
+& Reports average robustness. \\
+
+Seed variation
+& Standard deviation
+& Measures run-to-run variability. \\
+
+Uncertainty
+& 95\% bootstrap confidence interval
+& Estimates uncertainty of the mean. \\
+
+Primary test
+& Wilcoxon signed-rank test
+& Non-parametric paired comparison. \\
+
+Secondary test
+& Paired $t$-test
+& Parametric sanity check. \\
+
+Effect size
+& Cohen's $d_z$
+& Measures magnitude of improvement. \\
+
+Correction
+& Holm--Bonferroni correction
+& Controls multiple comparisons. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A comparison is considered statistically supported when AttackDRO++ improves the mean metric, obtains a corrected $p$-value below the significance threshold, and shows a non-trivial paired effect size. This protocol is applied consistently to white-box robustness, gray-box transfer robustness, aggregate robustness metrics, and ablation studies.

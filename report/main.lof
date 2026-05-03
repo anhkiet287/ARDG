@@ -1,0 +1,34 @@
+\babel@toc {english}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Whitebox per-attack robustness profile averaged over five seeds. The radar plot compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ (Ours) across the eight non-AutoAttack evaluation attacks. The shape of each curve highlights the specialization of the single-attack baselines and the more balanced profile of the multi-attack methods.}}{59}{figure.caption.37}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Absolute whitebox per-(class \(\times \) attack) robust accuracy for PGD-AT. Cells report robust accuracy (\%).}}{60}{figure.caption.39}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Absolute whitebox per-(class \(\times \) attack) robust accuracy for DDN-AT. Cells report robust accuracy (\%).}}{60}{figure.caption.40}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Absolute whitebox per-(class \(\times \) attack) robust accuracy for Multi-AT. Cells report robust accuracy (\%).}}{61}{figure.caption.41}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Absolute whitebox per-(class \(\times \) attack) robust accuracy for AttackDRO++ (Ours). Cells report robust accuracy (\%).}}{61}{figure.caption.42}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Whitebox per-(class $\times $ attack) delta of AttackDRO++ relative to Multi-AT. Each cell reports AttackDRO++ minus Multi-AT in percentage points, averaged over five seeds.}}{62}{figure.caption.44}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Whitebox per-(class $\times $ attack) delta of AttackDRO++ (Ours) relative to PGD-AT. Positive cells indicate where AttackDRO++ (Ours) improves over the PGD-$\ell _\infty $ specialist. The figure shows that AttackDRO++ (Ours) gains mainly on bounded $\ell _2$ attacks while PGD-AT remains stronger on several $\ell _\infty $ iterative cells.}}{63}{figure.caption.47}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Whitebox per-(class $\times $ attack) delta of AttackDRO++ (Ours) relative to DDN-AT. The large positive cells under PGD-$\ell _\infty $ and MI-FGSM show that AttackDRO++ (Ours) substantially corrects the $\ell _\infty $ weakness of the DDN-$\ell _2$ specialist, while several negative cells remain on DDN-AT's preferred $\ell _2$ family.}}{64}{figure.caption.48}%
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Attack-wise whitebox delta of AttackDRO++ relative to the three baselines.}}{65}{figure.caption.49}%
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Bottom-\(K\) whitebox class--attack lift of AttackDRO++ over each baseline. For each baseline, the bottom-\(K\) cells are the weakest class--attack cells of that baseline; bars report AttackDRO++ minus the baseline on those same cells.}}{66}{figure.caption.50}%
+\contentsline {figure}{\numberline {6.11}{\ignorespaces Method-level graybox transfer matrix on the \(n=5\) panel. Rows are target methods and columns are surrogate methods. Cell values are robust accuracy (\%) averaged over seeds and the eight evaluation attacks.}}{68}{figure.caption.52}%
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Per-attack graybox transfer matrices for the \(\ell _\infty \)-oriented attacks. Rows are target methods and columns are surrogate methods; cells report robust accuracy (\%).}}{69}{figure.caption.53}%
+\contentsline {figure}{\numberline {6.13}{\ignorespaces Per-attack graybox transfer matrices for the \(\ell _2\)-oriented attacks. Rows are target methods and columns are surrogate methods; cells report robust accuracy (\%).}}{70}{figure.caption.54}%
+\contentsline {figure}{\numberline {6.14}{\ignorespaces Whitebox--graybox gap heatmap for DDN-AT.}}{74}{figure.caption.59}%
+\contentsline {figure}{\numberline {6.15}{\ignorespaces Whitebox--graybox gap heatmap for PGD-AT.}}{75}{figure.caption.60}%
+\contentsline {figure}{\numberline {6.16}{\ignorespaces Whitebox--graybox gap heatmap for Multi-AT.}}{75}{figure.caption.61}%
+\contentsline {figure}{\numberline {6.17}{\ignorespaces Whitebox--graybox gap heatmap for AttackDRO++ (Ours).}}{76}{figure.caption.62}%
+\contentsline {figure}{\numberline {6.18}{\ignorespaces Per-(class \(\times \) attack) graybox delta heatmap for AttackDRO++ (Ours) minus Multi-AT. Green favors AttackDRO++ (Ours); red favors Multi-AT.}}{77}{figure.caption.64}%
+\contentsline {figure}{\numberline {6.19}{\ignorespaces Per-(class \(\times \) attack) graybox delta heatmap for AttackDRO++ (Ours) minus PGD-AT. Green favors AttackDRO++ (Ours); red favors PGD-AT.}}{78}{figure.caption.65}%
+\contentsline {figure}{\numberline {6.20}{\ignorespaces Per-(class \(\times \) attack) graybox delta heatmap for AttackDRO++ (Ours) minus DDN-AT. Green favors AttackDRO++ (Ours); red favors DDN-AT.}}{78}{figure.caption.66}%
+\contentsline {figure}{\numberline {6.21}{\ignorespaces Visual decomposition of AttackDRO++ improvement over the single-attack baselines into a multi-attack effect (Multi-AT minus single-AT) and a Cluster-DRO effect (AttackDRO++ minus Multi-AT) across whitebox, cross-method graybox, and bottom-10 cross-method graybox metrics, for the two single-AT decomposition paths.}}{80}{figure.caption.68}%
+\contentsline {figure}{\numberline {6.22}{\ignorespaces Ablation dashboard for AttackDRO++. The dashboard summarizes the sensitivity of M(8) robust accuracy to anchor strength, number of clusters, and cluster-refresh schedule. M(8) denotes the mean robust accuracy over the eight bounded evaluation attacks and excludes AutoAttack.}}{81}{figure.caption.69}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

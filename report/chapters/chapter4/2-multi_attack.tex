@@ -1,0 +1,51 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Uniform Multi-Attack ERM}
+\label{sec:erm}
+% ─────────────────────────────────────────────────────────────────────────────
+
+Uniform Multi-Attack ERM serves as the main baseline for this work. It trains on
+multiple source attacks within the same minibatch but assigns equal weight to all
+generated adversarial examples. This makes it a strong and simple reference point for
+evaluating whether adaptive reweighting provides additional benefit.
+
+Given a minibatch
+\[
+    \mathcal{B} = \{(\mathbf{x}_i,y_i)\}_{i=1}^{N},
+\]
+we partition it into \(M\) disjoint subsets
+\[
+    \mathcal{B}_1,\ldots,\mathcal{B}_M,
+    \qquad
+    \mathcal{B}_m \cap \mathcal{B}_{m'} = \emptyset
+    \;\; \text{for } m\ne m',
+    \qquad
+    \bigcup_{m=1}^{M}\mathcal{B}_m = \mathcal{B}.
+\]
+Each subset \(\mathcal{B}_m\) is assigned to one source attack \(A_m\). For each
+\((\mathbf{x}_i,y_i)\in\mathcal{B}_m\), we generate
+\[
+    \mathbf{x}_i^{\mathrm{adv}}
+    =
+    A_m(f_\theta,\mathbf{x}_i,y_i).
+\]
+
+The adversarial examples from all source attacks are then concatenated into one mixed
+adversarial batch. The uniform multi-attack loss is
+\begin{equation}
+    \mathcal{L}_{\mathrm{ERM}}
+    =
+    \frac{1}{N}
+    \sum_{i=1}^{N}
+    \ell\!\left(
+        f_\theta(\mathbf{x}_i^{\mathrm{adv}}),
+        y_i
+    \right).
+    \label{eq:erm_loss}
+\end{equation}
+
+In our main setting, the source attacks are PGD-\(\ell_\infty\) and DDN-\(\ell_2\),
+so the model is exposed to both \(\ell_\infty\) and \(\ell_2\) perturbation
+geometries during training. However, the objective in
+Equation~\eqref{eq:erm_loss} treats all adversarial examples equally. It does not
+explicitly identify which attack, class, or latent subgroup is harder. This limitation
+motivates the adaptive reweighting methods introduced in the following sections.

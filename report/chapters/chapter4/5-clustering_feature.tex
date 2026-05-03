@@ -1,0 +1,90 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Augmented Clustering with Gradient Fingerprints}
+\label{sec:augmented-clustering-features}
+\label{sec:gradfp}
+
+Representation-space clustering alone may not fully capture adversarial difficulty.
+Two adversarial examples can be close in feature space while inducing different
+optimization behavior. To capture this additional signal, AttackDRO++ constructs
+an augmented clustering feature that combines representation similarity, class
+information, and gradient-level training dynamics.
+
+For an adversarial example \(x_i^{\mathrm{adv}}\), let
+\[
+(z_i,h_i) = f_\theta(x_i^{\mathrm{adv}})
+\]
+denote the logits and penultimate-layer feature, and let
+\[
+p_i = \mathrm{softmax}(z_i)
+\]
+be the predicted class distribution.
+
+The first component is the normalized representation feature,
+\[
+\bar{h}_i = \mathrm{norm}(h_i),
+\]
+which captures semantic similarity in the model feature space.
+
+The second component is a class-aware label feature,
+\[
+\lambda_{\mathrm{lbl}}\mathrm{onehot}(y_i),
+\]
+which provides weak label structure during clustering.
+
+The third component is the gradient fingerprint. For a linear classifier head
+\[
+f_\theta(\cdot) = W\phi_\theta(\cdot) + b,
+\qquad
+W \in \mathbb{R}^{C \times d_h},
+\]
+the per-example gradient of the cross-entropy loss with respect to the classifier
+weight matrix is
+\[
+\nabla_W \ell(f_\theta(x_i^{\mathrm{adv}}),y_i)
+=
+\bigl(p_i-\mathrm{onehot}(y_i)\bigr)\otimes h_i
+\in \mathbb{R}^{C\times d_h}.
+\]
+We use this quantity as a gradient proxy and denote it by
+\[
+G_i =
+\bigl(p_i-\mathrm{onehot}(y_i)\bigr)\otimes h_i.
+\]
+
+Intuitively, \(G_i\) describes the training direction induced by sample \(i\).
+Thus, two adversarial examples may be grouped together not only because they are
+close in representation space, but also because they induce similar optimization
+updates.
+
+The raw gradient proxy has dimension \(C d_h\). For CIFAR-10 with a ResNet-18
+backbone, this corresponds to \(10 \times 512 = 5120\) dimensions. To make the
+fingerprint more compact and efficient for clustering, we use a fixed random
+projection matrix
+\[
+P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}}},
+\]
+and define the projected gradient fingerprint as
+\[
+g_i = \mathrm{vec}(G_i)P
+\in \mathbb{R}^{d_{\mathrm{proj}}}.
+\]
+In our default setting, \(d_{\mathrm{proj}}=128\). The projection is fixed throughout
+training and introduces no additional learnable parameters.
+
+The final augmented clustering feature is
+\[
+\psi_i =
+\left[
+\mathrm{norm}(h_i)
+\;\Vert\;
+\lambda_{\mathrm{lbl}}\mathrm{onehot}(y_i)
+\;\Vert\;
+\lambda_{\mathrm{grad}}\mathrm{norm}(g_i)
+\right].
+\]
+
+The three components play complementary roles. The representation feature captures
+semantic similarity, the label feature provides weak class-aware structure, and the
+gradient fingerprint captures optimization-level similarity. This allows AttackDRO++
+to discover latent adversarial groups that reflect both where examples lie in feature
+space and how they influence training.
