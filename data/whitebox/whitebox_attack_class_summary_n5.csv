@@ -1,0 +1,4 @@
+Baseline,Positive cells,Mean Δ (pp),Bottom-10 lift (pp),Best cell Δ (pp),Worst cell Δ (pp)
+Multi-AT,67/80,0.281,0.282,1.7,-2.64
+PGD-AT,47/80,1.782,0.726,13.06,-8.26
+DDN-AT,62/80,5.781,15.71,27.2,-7.72

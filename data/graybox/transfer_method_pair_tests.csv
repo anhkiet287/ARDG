@@ -1,0 +1,6 @@
+contrast,method_a,method_b,n_pairs,a_mean_pct,b_mean_pct,delta_pp,t,p_two_sided
+AttackDRO++ vs uniform,attackdro_pp_anchor035_gradfp_online_k4,multi_attack_pgd_linf_ddn_l2_mb,200,71.1672,70.61840000000001,0.5488000000000002,5.964957880965994,1.101422876825968e-08
+uniform vs single-PGD,multi_attack_pgd_linf_ddn_l2_mb,single_at_pgd_linf,200,73.0988,69.27000000000001,3.828799999999998,16.890535002456065,2.7117597867994733e-40
+uniform vs single-DDN,multi_attack_pgd_linf_ddn_l2_mb,single_at_ddn_l2,200,73.3624,73.654,-0.29160000000000097,-0.669030839435513,0.504251204672874
+AttackDRO++ vs single-PGD,attackdro_pp_anchor035_gradfp_online_k4,single_at_pgd_linf,200,73.7084,69.27359999999999,4.434799999999997,18.77928525878711,6.128580568714949e-46
+AttackDRO++ vs single-DDN,attackdro_pp_anchor035_gradfp_online_k4,single_at_ddn_l2,200,73.8752,73.6172,0.2579999999999987,0.6008832813865249,0.548601510776825
