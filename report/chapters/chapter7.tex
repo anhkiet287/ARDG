@@ -160,14 +160,14 @@ grouping choice will behave equally well in other settings.
 
 Future work should first test whether the same behavior holds across broader
 datasets and architectures, because these are the primary boundaries of the
-current evidence.  The
-current evidence should be repeated on CIFAR-100, Tiny ImageNet, and larger
-image datasets, where class structure and feature complexity are richer.  The
+current evidence. This evaluation should be extended to CIFAR-100, Tiny
+ImageNet, and larger image datasets, where class structure and feature
+complexity are richer. The
 architecture check should also be expanded across ResNet variants, WRN
 backbones, and possibly transformer-style models so that the interaction
 between model capacity and group-aware training can be measured systematically.
 
-Future evaluation should also include stronger and more adaptive attacks.  This
+Future evaluation should also include stronger and more adaptive attacks. This
 includes larger attack suites, additional norms, stronger AutoAttack settings,
 and attacks that explicitly account for the grouping mechanism.  Such evaluation
 would test whether the robustness balance observed here survives when the
