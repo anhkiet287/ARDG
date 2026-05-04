@@ -3,43 +3,30 @@
 \label{chap:methodology}
 \section{Methodology Overview}
 
-% TODO[Kiệt]:
-% Goal:
-% - Introduce the method components clearly without making result claims.
-% Flow:
-% - Start from Stage 1 cross-attack gap, then motivate attacks-as-domains.
-% - Preview Uniform Multi-AT, AttackDRO, AttackDRO++, gradient fingerprints, and uniform anchor.
-% Include:
-% - Use notation from docs/05_notation_registry.md.
-% - Consider adding a method pipeline figure if a suitable asset is created.
-% Avoid:
-% - Reporting Chapter 6 performance or ablation outcomes here.
-% Target length: 3-5 paragraphs.
+Stage 1 showed that adversarial robustness does not transfer uniformly across
+attack families. A model trained against one threat model can remain vulnerable
+to attacks with different perturbation geometries, optimization procedures, or
+loss objectives. This motivates the Stage 2 methodology: instead of treating all
+adversarial examples as samples from one homogeneous distribution, this chapter
+models attack-induced examples as domains and asks how training can emphasize
+weak domains or latent hard groups without losing the stability of the uniform
+multi-attack baseline.
 
-Stage 1 showed that adversarial robustness does not transfer uniformly across attack
-families. A model trained against one threat model may remain vulnerable to attacks with
-different perturbation geometries, optimization procedures, or loss objectives. This
-motivates the Stage 2 methodology: instead of viewing all adversarial examples as
-samples from a single homogeneous distribution, we treat attack-induced examples as
-coming from multiple adversarial domains and design training objectives that can
-emphasize weak domains or latent hard groups while preserving the stability of the
-uniform multi-attack baseline.
+The chapter develops this progression step by step. Section~\ref{sec:ch4_problem_formulation}
+first formulates multi-attack adversarial training under the attacks-as-domains
+perspective. Section~\ref{sec:ch4_multi_attack_erm} then defines Multi-AT, the
+uniform multi-attack baseline used alongside the single-attack PGD-AT and DDN-AT
+baselines. Section~\ref{sec:ch4_attackdro} introduces AttackDRO, which applies
+Group DRO over source attack identities, but this still assumes that each attack
+forms one homogeneous group.
 
-This chapter develops the proposed framework in five steps. First, Section~\ref{sec:ch4_problem_formulation}
-formulates multi-attack adversarial training under the attacks-as-domains perspective.
-Second, Section~\ref{sec:ch4_multi_attack_erm} defines Uniform Multi-Attack ERM, which serves as one of the
-main baseline beside single attack adversarial training like PGD or DDN. Third, Section~\ref{sec:ch4_attackdro} introduces AttackDRO, a GroupDRO
-formulation over attack identities. Fourth, Section~\ref{sec:ch4_attackdropp} extends this
-to AttackDRO++, which discovers latent adversarial groups through clustering.
-Section~\ref{sec:ch4_gradfp} introduces gradient fingerprints to enrich group discovery
-with optimization-level information, and Section~\ref{sec:ch4_anchor_objective} introduces the
-uniform-anchored Cluster-DRO objective to stabilize training.
-
-The final method evaluated in the main experiments is \textbf{AttackDRO++ with
-Gradient Fingerprints and Uniform Anchor}. In the experimental notation this corresponds
-to \texttt{attackdro\_pp\_anchor035\_gradfp\_online\_k4}, where \texttt{anchor035}
-indicates that the Cluster-DRO loss receives weight $\lambda_{\mathrm{DRO}} = 0.35$
-and the uniform multi-attack ERM loss serves as the stabilizing anchor.
+The remaining sections address that limitation. Section~\ref{sec:ch4_attackdropp}
+introduces AttackDRO++, which replaces attack identities with discovered
+clusters. Section~\ref{sec:ch4_gradfp} augments those clusters with gradient
+fingerprints so that grouping can reflect optimization-level difficulty, not
+only representation similarity. Finally, Section~\ref{sec:ch4_anchor_objective}
+adds a uniform anchor that keeps the final AttackDRO++ objective tied to the
+Multi-AT training signal while still allowing cluster-level correction.
 
 \input{chapters/chapter4/1-problem_formulation}
 \input{chapters/chapter4/2-multi_attack}

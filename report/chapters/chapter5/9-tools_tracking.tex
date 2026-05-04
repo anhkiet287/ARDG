@@ -96,7 +96,7 @@ as a separate result source. Each run records the method name, seed, dataset,
 backbone, source attacks, evaluation attacks, and key hyperparameters. During
 training, the pipeline logs loss, adversarial accuracy, validation robustness,
 learning rate, checkpoint state, and group-weight diagnostics when applicable.
-Figure~\ref{fig:ch5_wandb_core_metrics} shows representative W\&B exports for
+Figure~\ref{fig:ch5_wandb_core_metrics} provides representative W\&B exports for
 the core tracking metrics and the adaptive group-weight trajectory used as an
 AttackDRO++ diagnostic.
 
@@ -158,7 +158,7 @@ the basis for the result claims in Chapter~6.
 
 \begin{table}[H]
 \centering
-\caption{Summary of the experimental setup used in this report. Unless otherwise stated, the main whitebox results use CIFAR-10, ResNet-18, five random seeds, and the eight non-AutoAttack evaluation attacks.}
+\caption{Summary of the experimental setup used in this report. Unless otherwise stated, evaluations use CIFAR-10, ResNet-18, and the eight non-AutoAttack attacks for Mean(8), with AutoAttack-$\ell_\infty$ reported separately.}
 \label{tab:ch5_setup_summary}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -196,7 +196,7 @@ Secondary metrics
 & Worst robust accuracy over the same eight attacks, seen-source robustness, held-out $\ell_\infty$ robustness, held-out $\ell_2$ robustness, per-attack accuracy, per-class accuracy, and graybox transfer accuracy. \\
 
 Repeated-seed protocol
-& Five random seeds are used for the main repeated-seed comparisons. \\
+& Aggregate whitebox tables use paired random-seed comparisons; class-wise and graybox panels use five random seeds per method. \\
 
 Graybox protocol
 & Four method families are evaluated across five random seeds each, giving 20 random-seed checkpoints and 400 surrogate--target pairs. \\

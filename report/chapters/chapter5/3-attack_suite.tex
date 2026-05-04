@@ -9,7 +9,7 @@
 % - Ensure tables cover attack, norm, budget, steps, loss/objective, role, and whether used for training/evaluation.
 % - Cite docs/05_notation_registry.md names in formal table/caption text.
 % Avoid:
-% - Repeating code-style names like `PGD20-CE` in prose.
+% - Repeating code-style attack names in prose.
 % Target length: 4-6 paragraphs plus configuration tables.
 Stage 2 evaluates whether robustness learned from a small set of source attacks generalizes to a broader attack suite. The attack suite is divided into two groups: source attacks used during training and evaluation attacks used only for validation or final testing.
 
@@ -31,12 +31,12 @@ on whether the current example is already adversarial.
 
 
 Table~\ref{tab:ch5_training_attacks} summarizes the source attacks used during training.
-Both attacks are used to generate mixed adversarial minibatches for Multi-ATtack
-ERM, AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method.
+Both attacks are used to generate mixed adversarial minibatches for Multi-AT,
+AttackDRO, AttackDRO++, and AttackDRO++ (Ours).
 
 \begin{table}[H]
 \centering
-\caption{Training attack configuration.}
+\caption{Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for Multi-AT, AttackDRO, AttackDRO++, and AttackDRO++ (Ours).}
 \label{tab:ch5_training_attacks}
 \begin{tabular}{llllll}
 \toprule
@@ -48,7 +48,7 @@ DDN-$\ell_2$ & $\ell_2$ & $0.5$ & 20 & DDN objective & Source attack \\
 \end{tabular}
 \end{table}
 
-ForMulti-ATtack training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction is also used by AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method. Thus, the compared methods share the same adversarial data generation process and differ mainly in how they weight or group the generated examples.
+For Multi-AT training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction is also used by AttackDRO, AttackDRO++, and AttackDRO++ (Ours). Thus, the compared methods share the same adversarial data generation process and differ mainly in how they weight or group the generated examples.
 
 \subsection{Evaluation Attacks}
 \label{subsec:ch5_evaluation_attacks}
@@ -67,7 +67,7 @@ computed over the eight attacks in the table. AutoAttack is reported separately 
 therefore not included in Mean(8).
 \begin{table}[H]
 \centering
-\caption{Validation and test attacks used for Mean(8).}
+\caption{Validation and test attacks used to compute Mean(8), the average robust accuracy over the eight non-AutoAttack evaluation attacks. Source attacks are also used during training; held-out attacks are used only for validation and test evaluation.}
 \label{tab:ch5_evaluation_attacks}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{7pt}
@@ -107,7 +107,7 @@ random-seed panel.
 
 \begin{table}[H]
 \centering
-\caption{AutoAttack configuration.}
+\caption{AutoAttack-$\ell_\infty$ configuration used as a separate stress test. AutoAttack is reported separately from Mean(8).}
 \label{tab:ch5_autoattack_config}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{10pt}

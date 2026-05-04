@@ -33,7 +33,7 @@ Hyperparameter & Symbol & Default value & Purpose \\
 
 Source attacks
 & $\mathcal{A}_{\mathrm{src}}$
-& PGD-20$_{\mathrm{CE}}$, DDN-$\ell_2$
+& PGD-$\ell_\infty$, DDN-$\ell_2$
 & Training attack domains. \\
 
 Number of clusters
@@ -103,7 +103,7 @@ $q$ refresh policy
 The number of clusters is set to $K=4$ as a moderate grouping resolution. Too few
 clusters may fail to capture meaningful difficulty structure, while too many clusters may
 fragment the minibatch and produce noisy group-loss estimates. The default anchor
-strength $\lambda_{\mathrm{DRO}}=0.35$ is chosen to keep theMulti-ATtack loss as
+strength $\lambda_{\mathrm{DRO}}=0.35$ is chosen to keep the Multi-AT loss as
 the dominant stabilizing signal while still allowing cluster-level adaptive correction.
 
 The $q$-floor and warmup settings are included for stability. The floor projection

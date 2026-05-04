@@ -1,117 +1,118 @@
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{\numberline {1}Introduction}{15}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Adversarial Robustness and the Cross-Attack Gap}{15}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Stage 1 Findings and Their Limitations}{15}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Problem Statement}{15}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Research Questions and Hypotheses}{15}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Contributions of This Work}{15}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Scope and Limitations}{15}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Report Organization}{15}{section.1.7}%
-\contentsline {chapter}{\numberline {2}Background}{16}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Notation and Learning Setting}{16}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Deep Neural Networks and Supervised Classification}{16}{subsection.2.1.1}%
-\contentsline {subsection}{\numberline {2.1.2}Loss Functions and Gradient-Based Optimization}{17}{subsection.2.1.2}%
-\contentsline {section}{\numberline {2.2}Adversarial Examples and Threat Models}{18}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Lp-Norm Perturbation Sets}{18}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Whitebox, Graybox, and Blackbox Access}{20}{subsection.2.2.2}%
-\contentsline {paragraph}{White-box threat model}{21}{paragraph*.7}%
-\contentsline {paragraph}{Gray-box threat model}{21}{paragraph*.8}%
-\contentsline {paragraph}{Black-box threat model}{22}{paragraph*.9}%
-\contentsline {section}{\numberline {2.3}Adversarial Attack Algorithms}{23}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Fast Gradient Sign Method with Random Start (FGSM-RS)}{23}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Projected Gradient Descent (PGD)}{23}{subsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.3.3}Carlini--Wagner Attack (CW)}{23}{subsection.2.3.3}%
-\contentsline {subsection}{\numberline {2.3.4}DeepFool}{23}{subsection.2.3.4}%
-\contentsline {subsection}{\numberline {2.3.5}Decoupled Direction and Norm (DDN)}{23}{subsection.2.3.5}%
-\contentsline {subsection}{\numberline {2.3.6}Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}{23}{subsection.2.3.6}%
-\contentsline {subsection}{\numberline {2.3.7}Targeted Projected Gradient Descent (TPGD)}{23}{subsection.2.3.7}%
-\contentsline {subsection}{\numberline {2.3.8}AutoAttack}{23}{subsection.2.3.8}%
-\contentsline {section}{\numberline {2.4}Adversarial Training as Min-Max Optimization}{23}{section.2.4}%
-\contentsline {paragraph}{Single-attack adversarial training.}{23}{paragraph*.10}%
-\contentsline {paragraph}{Multi-attack adversarial training.}{23}{paragraph*.11}%
-\contentsline {paragraph}{Trade-off intuition.}{23}{paragraph*.12}%
-\contentsline {section}{\numberline {2.5}Distributionally Robust Optimization}{23}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}From ERM to Worst-Group Risk}{23}{subsection.2.5.1}%
-\contentsline {subsection}{\numberline {2.5.2}Group DRO Formulation}{23}{subsection.2.5.2}%
-\contentsline {paragraph}{Exponentiated-gradient updates.}{23}{paragraph*.13}%
-\contentsline {paragraph}{Regularization in overparameterized models.}{23}{paragraph*.14}%
-\contentsline {paragraph}{DRO in adversarial training.}{24}{paragraph*.15}%
-\contentsline {section}{\numberline {2.6}Domain Generalization and Clustering}{24}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Domain Generalization: Learning Beyond Known Distributions}{24}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}K-Means Clustering for Group Discovery}{24}{subsection.2.6.2}%
-\contentsline {section}{\numberline {2.7}Statistical Tools for Multi-Seed Evaluation}{24}{section.2.7}%
-\contentsline {subsection}{\numberline {2.7.1}Paired Tests and Bootstrap Confidence Intervals}{24}{subsection.2.7.1}%
-\contentsline {subsection}{\numberline {2.7.2}Effect Size and Multiple-Comparison Correction}{24}{subsection.2.7.2}%
-\contentsline {paragraph}{Repeated random-seed evaluation.}{24}{paragraph*.16}%
-\contentsline {chapter}{\numberline {3}Related Work}{25}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Multi-Attack Adversarial Training}{25}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Group DRO Applied to Robustness}{25}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Domain Generalization and Adversarial Robustness}{25}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Cluster Discovery in Robust Training Pipelines}{25}{section.3.4}%
-\contentsline {section}{\numberline {3.5}The Remaining Gap and Motivation for This Work}{25}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Proposed Methodology}{26}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Methodology Overview}{26}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Multi-Attack Training as a Domain Problem}{27}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Setup and Notation}{27}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Multi-Attack Risk and Its Limitations}{28}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Uniform Multi-Attack ERM Baseline}{28}{section.4.3}%
-\contentsline {section}{\numberline {4.4}AttackDRO: Group DRO Over Attack Identities}{29}{section.4.4}%
-\contentsline {section}{\numberline {4.5}AttackDRO++: Group DRO Over Discovered Clusters}{30}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Augmented Clustering with Gradient Fingerprints}{32}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Uniform-Anchored Training Objective}{34}{section.4.7}%
-\contentsline {section}{\numberline {4.8}Complete Training Framework}{35}{section.4.8}%
-\contentsline {subsection}{\numberline {4.8.1}Progression from Stage 1 to the Final Method}{38}{subsection.4.8.1}%
-\contentsline {subsection}{\numberline {4.8.2}Implementation and Computational Considerations}{38}{subsection.4.8.2}%
-\contentsline {chapter}{\numberline {5}Experimental Setup}{39}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Dataset and Preprocessing}{39}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Model Architecture}{40}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Attack Suite and Configuration}{40}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Training Attacks}{40}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}Evaluation Attacks}{41}{subsection.5.3.2}%
-\contentsline {paragraph}{AutoAttack configuration}{42}{paragraph*.20}%
-\contentsline {section}{\numberline {5.4}Training Configuration}{42}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Hyperparameter Choices and Ablation Factors}{44}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Statistical Significance Protocol}{46}{section.5.6}%
-\contentsline {section}{\numberline {5.7}Evaluation Metrics and Robustness Definitions}{48}{section.5.7}%
-\contentsline {section}{\numberline {5.8}Graybox Transfer Protocol}{50}{section.5.8}%
-\contentsline {section}{\numberline {5.9}Tools, Platforms, and Experiment Tracking}{52}{section.5.9}%
-\contentsline {paragraph}{Summary.}{54}{paragraph*.31}%
-\contentsline {chapter}{\numberline {6}Results and Analysis}{56}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Whitebox Robustness Under Direct Attacks}{56}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Aggregate Comparison Across Methods}{56}{subsection.6.1.1}%
-\contentsline {paragraph}{Effect-size summary.}{57}{paragraph*.34}%
-\contentsline {paragraph}{Paired aggregate robustness comparisons.}{58}{paragraph*.36}%
-\contentsline {subsection}{\numberline {6.1.2}Per-Attack Accuracy: Where Do Methods Diverge?}{60}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Robustness Under the Hardest Evaluation Cases}{61}{subsection.6.1.3}%
-\contentsline {paragraph}{AttackDRO++ vs.\ Multi-AT.}{62}{paragraph*.42}%
-\contentsline {paragraph}{PGD-AT specialization.}{62}{paragraph*.43}%
-\contentsline {subsection}{\numberline {6.1.4}Training Stability: How Predictable Is the Outcome?}{63}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Class-wise Whitebox Robustness Across Attacks}{64}{section.6.2}%
-\contentsline {paragraph}{Absolute per-class heatmaps with a shared scale.}{65}{paragraph*.46}%
-\contentsline {subsection}{\numberline {6.2.1}Class-Level Gains and Persistent Difficulties}{67}{subsection.6.2.1}%
-\contentsline {paragraph}{Attack-Class Delta Against Multi-AT Baseline}{67}{paragraph*.51}%
-\contentsline {paragraph}{Attack-Class Delta Against Single-AT Baselines}{68}{paragraph*.53}%
-\contentsline {paragraph}{Attack-family interpretation.}{70}{paragraph*.57}%
-\contentsline {subsection}{\numberline {6.2.2}Tail-Class Robustness: Do the Weakest Cells Improve?}{71}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Graybox Robustness Across Surrogate Models}{72}{section.6.3}%
-\contentsline {paragraph}{Random-seed checkpoint panel and whitebox sanity check.}{72}{paragraph*.60}%
-\contentsline {subsection}{\numberline {6.3.1}Cross-Method Transfer Structure}{73}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over?}{75}{subsection.6.3.2}%
-\contentsline {paragraph}{Per-attack transfer behavior.}{77}{paragraph*.66}%
-\contentsline {paragraph}{Whitebox--graybox gap and specialist inflation.}{78}{paragraph*.69}%
-\contentsline {subsection}{\numberline {6.3.3}Class-Level Transfer Patterns}{81}{subsection.6.3.3}%
-\contentsline {paragraph}{Method contribution decomposition.}{84}{paragraph*.79}%
-\contentsline {section}{\numberline {6.4}Sensitivity to Key Hyperparameters}{85}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Number of Clusters: How Many Groups Are Needed?}{85}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Anchor Strength: Finding a Stable Trade-off}{86}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Recluster Frequency: How Often Should Groups Update?}{87}{subsection.6.4.3}%
-\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{88}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Summary of Contributions}{88}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Answers to Research Questions}{88}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitations of the Current Study}{88}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Directions for Future Work}{88}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Closing Remarks}{88}{section.7.5}%
-\contentsline {chapter}{\numberline {A}Illustrative Pseudo-code and Flowcharts}{90}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Experimental Logs and Configurations}{91}{appendix.B}%
-\contentsline {chapter}{\numberline {C}Additional Tables and Visualizations}{92}{appendix.C}%
-\contentsline {chapter}{\numberline {D}Compute Resources and Environment Notes}{93}{appendix.D}%
+\contentsline {chapter}{\numberline {1}Introduction}{16}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Adversarial Robustness and the Cross-Attack Gap}{16}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Stage 1 Findings and Their Limitations}{16}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Problem Statement}{16}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Research Questions and Hypotheses}{16}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Contributions of This Work}{16}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Scope and Limitations}{16}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Report Organization}{16}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Background}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Notation and Learning Setting}{17}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Deep Neural Networks and Supervised Classification}{17}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Loss Functions and Gradient-Based Optimization}{18}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Adversarial Examples and Threat Models}{19}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Lp-Norm Perturbation Sets}{19}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Whitebox, Graybox, and Blackbox Access}{21}{subsection.2.2.2}%
+\contentsline {paragraph}{White-box threat model}{22}{paragraph*.7}%
+\contentsline {paragraph}{Gray-box threat model}{22}{paragraph*.8}%
+\contentsline {paragraph}{Black-box threat model}{23}{paragraph*.9}%
+\contentsline {section}{\numberline {2.3}Adversarial Attack Algorithms}{24}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Fast Gradient Sign Method with Random Start (FGSM-RS)}{24}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Projected Gradient Descent (PGD)}{24}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Carlini--Wagner Attack (CW)}{24}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}DeepFool}{24}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}Decoupled Direction and Norm (DDN)}{24}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}{24}{subsection.2.3.6}%
+\contentsline {subsection}{\numberline {2.3.7}Targeted Projected Gradient Descent (TPGD)}{24}{subsection.2.3.7}%
+\contentsline {subsection}{\numberline {2.3.8}AutoAttack}{24}{subsection.2.3.8}%
+\contentsline {section}{\numberline {2.4}Adversarial Training as Min-Max Optimization}{24}{section.2.4}%
+\contentsline {paragraph}{Single-attack adversarial training.}{24}{paragraph*.10}%
+\contentsline {paragraph}{Multi-attack adversarial training.}{24}{paragraph*.11}%
+\contentsline {paragraph}{Trade-off intuition.}{24}{paragraph*.12}%
+\contentsline {section}{\numberline {2.5}Distributionally Robust Optimization}{24}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}From ERM to Worst-Group Risk}{24}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Group DRO Formulation}{24}{subsection.2.5.2}%
+\contentsline {paragraph}{Exponentiated-gradient updates.}{24}{paragraph*.13}%
+\contentsline {paragraph}{Regularization in overparameterized models.}{24}{paragraph*.14}%
+\contentsline {paragraph}{DRO in adversarial training.}{25}{paragraph*.15}%
+\contentsline {section}{\numberline {2.6}Domain Generalization and Clustering}{25}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Domain Generalization: Learning Beyond Known Distributions}{25}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}K-Means Clustering for Group Discovery}{25}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Statistical Tools for Multi-Seed Evaluation}{25}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Paired Tests and Bootstrap Confidence Intervals}{25}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Effect Size and Multiple-Comparison Correction}{25}{subsection.2.7.2}%
+\contentsline {paragraph}{Repeated random-seed evaluation.}{25}{paragraph*.16}%
+\contentsline {chapter}{\numberline {3}Related Work}{26}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Multi-Attack Adversarial Training}{26}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Group DRO Applied to Robustness}{26}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Domain Generalization and Adversarial Robustness}{26}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Cluster Discovery in Robust Training Pipelines}{26}{section.3.4}%
+\contentsline {section}{\numberline {3.5}The Remaining Gap and Motivation for This Work}{26}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Proposed Methodology}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Methodology Overview}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Multi-Attack Training as a Domain Problem}{28}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Setup and Notation}{28}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Multi-Attack Risk and Its Limitations}{29}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}Uniform Multi-Attack ERM Baseline}{29}{section.4.3}%
+\contentsline {section}{\numberline {4.4}AttackDRO: Group DRO Over Attack Identities}{30}{section.4.4}%
+\contentsline {section}{\numberline {4.5}AttackDRO++: Group DRO Over Discovered Clusters}{31}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Augmented Clustering with Gradient Fingerprints}{33}{section.4.6}%
+\contentsline {section}{\numberline {4.7}Uniform-Anchored Training Objective}{35}{section.4.7}%
+\contentsline {section}{\numberline {4.8}Complete Training Framework}{36}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Progression from Stage 1 to the Final Method}{39}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Implementation and Computational Considerations}{39}{subsection.4.8.2}%
+\contentsline {chapter}{\numberline {5}Experimental Setup}{41}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Dataset and Preprocessing}{41}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Model Architecture}{42}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Attack Suite and Configuration}{42}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Training Attacks}{43}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Evaluation Attacks}{43}{subsection.5.3.2}%
+\contentsline {paragraph}{AutoAttack configuration}{44}{paragraph*.20}%
+\contentsline {section}{\numberline {5.4}Training Configuration}{45}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Hyperparameter Choices and Ablation Factors}{47}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Statistical Significance Protocol}{49}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Evaluation Metrics and Robustness Definitions}{51}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Graybox Transfer Protocol}{53}{section.5.8}%
+\contentsline {section}{\numberline {5.9}Tools, Platforms, and Experiment Tracking}{55}{section.5.9}%
+\contentsline {paragraph}{Summary.}{57}{paragraph*.31}%
+\contentsline {chapter}{\numberline {6}Results and Analysis}{59}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Whitebox Robustness Under Direct Attacks}{59}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Aggregate Comparison Across Methods}{59}{subsection.6.1.1}%
+\contentsline {paragraph}{Effect-size summary.}{60}{paragraph*.34}%
+\contentsline {paragraph}{Paired aggregate robustness comparisons.}{61}{paragraph*.36}%
+\contentsline {subsection}{\numberline {6.1.2}Per-Attack Accuracy: Where Do Methods Diverge?}{63}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Robustness Under the Hardest Evaluation Cases}{64}{subsection.6.1.3}%
+\contentsline {paragraph}{AttackDRO++ vs.\ Multi-AT.}{65}{paragraph*.42}%
+\contentsline {paragraph}{PGD-AT specialization.}{65}{paragraph*.43}%
+\contentsline {subsection}{\numberline {6.1.4}Training Stability: How Predictable Is the Outcome?}{66}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Class-wise Whitebox Robustness Across Attacks}{67}{section.6.2}%
+\contentsline {paragraph}{Absolute per-class heatmaps with a shared scale.}{68}{paragraph*.46}%
+\contentsline {subsection}{\numberline {6.2.1}Class-Level Gains and Persistent Difficulties}{70}{subsection.6.2.1}%
+\contentsline {paragraph}{Attack-Class Delta Against Multi-AT Baseline}{70}{paragraph*.51}%
+\contentsline {paragraph}{Attack-Class Delta Against Single-AT Baselines}{71}{paragraph*.53}%
+\contentsline {paragraph}{Attack-family interpretation.}{73}{paragraph*.57}%
+\contentsline {subsection}{\numberline {6.2.2}Tail-Class Robustness: Do the Weakest Cells Improve?}{74}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Graybox Robustness Across Surrogate Models}{76}{section.6.3}%
+\contentsline {paragraph}{Random-seed checkpoint panel and whitebox sanity check.}{76}{paragraph*.60}%
+\contentsline {subsection}{\numberline {6.3.1}Cross-Method Transfer Structure}{77}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over?}{79}{subsection.6.3.2}%
+\contentsline {paragraph}{Per-attack transfer behavior.}{81}{paragraph*.66}%
+\contentsline {paragraph}{Whitebox--graybox gap and specialist inflation.}{82}{paragraph*.69}%
+\contentsline {subsection}{\numberline {6.3.3}Class-Level Transfer Patterns}{85}{subsection.6.3.3}%
+\contentsline {paragraph}{Method contribution decomposition.}{88}{paragraph*.79}%
+\contentsline {section}{\numberline {6.4}Sensitivity to Key Hyperparameters}{89}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Number of Clusters: How Many Groups Are Needed?}{90}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Anchor Strength: Finding a Stable Trade-off}{91}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Recluster Frequency: How Often Should Groups Update?}{92}{subsection.6.4.3}%
+\contentsline {paragraph}{Supplementary architecture check.}{94}{paragraph*.88}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{95}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Summary of Contributions}{95}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Answers to Research Questions}{95}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitations of the Current Study}{95}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Directions for Future Work}{95}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Closing Remarks}{95}{section.7.5}%
+\contentsline {chapter}{\numberline {A}Illustrative Pseudo-code and Flowcharts}{97}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Experimental Logs and Configurations}{98}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Additional Tables and Visualizations}{99}{appendix.C}%
+\contentsline {chapter}{\numberline {D}Compute Resources and Environment Notes}{101}{appendix.D}%

@@ -1,27 +1,10 @@
-% ─────────────────────────────────────────────────────────────────────────────
-% TODO: Convert numbered Chapter Summary into closing prose according to docs/06_style_rules.md.
-% TODO[Kiệt]:
-% Goal:
-% - Convert this numbered chapter summary into closing prose in a later writing patch.
-% Flow:
-% - Recap the method components and end by pointing to Chapter 5's evaluation setup.
-% Include:
-% - No new method details, labels, equations, or result claims.
-% Avoid:
-% - A section-level summary once style cleanup is applied.
-% Target length: 100-200 words.
-% Chapter 4 closing synthesis should be written here as plain prose, not as a numbered section.
-% ─────────────────────────────────────────────────────────────────────────────
+This chapter formulated cross-attack adversarial training as a domain-aware
+optimization problem and introduced the progression from Multi-AT to AttackDRO
+and AttackDRO++. The final method combines cluster-based grouping, gradient
+fingerprints, and a uniform anchor to emphasize difficult adversarial groups
+while retaining the stability of the uniform multi-attack baseline.
 
-This chapter introduced the proposed methodology for improving cross-attack adversarial
-robustness. Starting from the attacks-as-domains formulation, we defined Uniform
-Multi-Attack ERM as the main baseline, then introduced AttackDRO (GroupDRO over attack
-identities) and AttackDRO++ (GroupDRO over latent clusters). The gradient fingerprint
-augments clustering with optimization-level difficulty information, enabling discovery of
-hard subgroups that cut across attack boundaries. The uniform-anchored objective balances
-the adaptivity of Cluster-DRO with the stability of the uniform baseline.
-
-The main proposed method is \textbf{AttackDRO++ with Gradient Fingerprints and Uniform Anchor}. It is motivated by the hypothesis
-that gradient-fingerprint clusters discover adversarial difficulty structure that
-generalizes beyond the two source attacks to held-out attack families. Chapter~6
-evaluates this hypothesis across 20 random seeds.
+The chapter has defined the method and its training pipeline, but it has not yet
+established how the method behaves empirically. Chapter~\ref{chap:experimental_setup}
+therefore specifies the dataset, attacks, metrics, and evaluation protocols used
+to evaluate the proposed method.

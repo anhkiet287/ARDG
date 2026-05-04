@@ -1,12 +1,23 @@
-% TODO[Kiệt]:
-% Goal:
-% - Write the Chapter 6 closing synthesis.
-% Flow:
-% - Answer the result story in order: aggregate whitebox, class/attack drilldown, graybox transfer, and ablation sensitivity.
-% - State the strongest supported finding and the main limitations.
-% - Transition into Chapter 7 conclusions and future work.
-% Include:
-% - No new tables, figures, labels, or numerical claims.
-% Avoid:
-% - A numbered `Section Summary` or new result interpretation not supported earlier.
-% Target length: 100-200 words.
+Chapter~\ref{chap:results_analysis} evaluated AttackDRO++ through four connected
+evidence panels. The aggregate whitebox results first showed that the proposed
+method improves average and held-out robustness relative to Multi-AT while
+leaving the strongest standardized checks broadly unchanged. The per-attack and
+class-wise drilldowns then clarified where this behavior comes from: the method
+acts less like a single-norm specialist and more like a balanced multi-attack
+model, although hard animal-class cells under strong \(\ell_\infty\) attacks
+remain persistent failure cases.
+
+The graybox analysis tested whether the same pattern survives transferred
+attacks from independently trained surrogate checkpoints. It supported the
+whitebox interpretation while also showing that transfer accuracy must be read
+carefully because specialist models can appear strong when attacks transfer
+poorly across threat geometries. Finally, the ablation section examined whether
+the observed behavior depends on key design choices, treating cluster count,
+anchor strength, and refresh frequency as sensitivity checks rather than
+standalone proof.
+
+Overall, the supported conclusion is conservative: within the CIFAR-10 and
+ResNet-18 setting studied here, AttackDRO++ improves cross-attack balance over
+the uniform multi-attack baseline without establishing universal dominance over
+single-attack specialists. Chapter~\ref{chap:conclusion} summarizes these
+findings, states the limitations, and outlines future extensions.

@@ -34,43 +34,44 @@
 \centering
 \caption[Aggregate robust accuracy on the CIFAR-10 evaluation suite]{Aggregate robust accuracy (\%) on the CIFAR-10 evaluation suite,
 reported as mean $\pm$ standard deviation across 20 random-seed runs.
-Mean(8) averages the eight non-AutoAttack evaluation attacks. The held-out
-attack mean averages the six evaluation attacks not used as source attacks:
-FGSM-RS, TPGD, MI-FGSM, PGD-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$.
-The held-out $\ell_\infty$ mean averages FGSM-RS, TPGD, and MI-FGSM; the
-held-out $\ell_2$ mean averages PGD-$\ell_2$, DeepFool-$\ell_2$, and
-CW-$\ell_2$. The seen-source mean averages PGD-$\ell_\infty$ and
-DDN-$\ell_2$. AutoAttack is reported separately and is not included in
-Mean(8). Bold values indicate the best method for each metric.}
+Mean robust accuracy denotes Mean(8), the average robust accuracy over the
+eight non-AutoAttack evaluation attacks. Worst-case robust accuracy denotes
+Worst(8), the lowest robust accuracy among those same eight attacks. The
+held-out attack mean averages FGSM-RS, TPGD, MI-FGSM, PGD-$\ell_2$,
+DeepFool-$\ell_2$, and CW-$\ell_2$. The held-out $\ell_\infty$ mean averages
+FGSM-RS, TPGD, and MI-FGSM; the held-out $\ell_2$ mean averages PGD-$\ell_2$,
+DeepFool-$\ell_2$, and CW-$\ell_2$. The seen-source mean averages
+PGD-$\ell_\infty$ and DDN-$\ell_2$. AutoAttack is reported separately and is
+not included in Mean(8). Bold values indicate the best method for each metric.}
 \label{tab:ch6_aggregate_results}
 \footnotesize
-\setlength{\tabcolsep}{2.5pt}
+\setlength{\tabcolsep}{1.25pt}
 \renewcommand{\arraystretch}{1.08}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 Metric & PGD-AT & DDN-AT & Multi-AT & AttackDRO++ (Ours) \\
 \midrule
-Mean(8)
+Mean robust accuracy
 & $60.499 \pm 0.327$
 & $56.226 \pm 0.233$
 & $62.045 \pm 0.447$
-& $\mathbf{62.324 \pm 0.147}$ \\
+& \bestval{62.324 $\pm$ 0.147} \\
 
 Held-out attack mean
 & $62.268 \pm 0.390$
 & $59.628 \pm 0.254$
 & $64.083 \pm 0.505$
-& $\mathbf{64.401 \pm 0.155}$ \\
+& \bestval{64.401 $\pm$ 0.155} \\
 
-\quad Held-out $\ell_\infty$ mean
-& $\mathbf{62.515 \pm 0.334}$
+\hspace{1em}Held-out $\ell_\infty$ mean
+& \bestval{62.515 $\pm$ 0.334}
 & $51.594 \pm 0.306$
 & $60.916 \pm 0.427$
 & $61.149 \pm 0.170$ \\
 
-\quad Held-out $\ell_2$ mean
+\hspace{1em}Held-out $\ell_2$ mean
 & $62.021 \pm 0.474$
-& $\mathbf{67.661 \pm 0.278}$
+& \bestval{67.661 $\pm$ 0.278}
 & $67.249 \pm 0.603$
 & $67.654 \pm 0.223$ \\
 
@@ -78,11 +79,11 @@ Seen-source mean
 & $55.192 \pm 0.182$
 & $46.020 \pm 0.247$
 & $55.934 \pm 0.303$
-& $\mathbf{56.093 \pm 0.166}$ \\
+& \bestval{56.093 $\pm$ 0.166} \\
 
 \midrule
-Worst(8)
-& $\mathbf{49.656 \pm 0.161}$
+Worst-case robust accuracy
+& \bestval{49.656 $\pm$ 0.161}
 & $25.957 \pm 0.378$
 & $45.082 \pm 0.281$
 & $45.079 \pm 0.237$ \\
@@ -92,10 +93,10 @@ Worst(8)
 
 \end{tabular}
 \end{table}
-We compare four methods on $n = 20$ paired training seeds: PGD-AT,
-DDN-AT, Multi-AT, and the proposed AttackDRO++ (Anchor35 GradFP).
+We compare four methods on 20 paired random-seed runs: PGD-AT,
+DDN-AT, Multi-AT, and AttackDRO++ (Ours).
 AttackDRO++ improves Mean(8) over Multi-AT by $+0.279$~pp ($p = 0.0076$,
-14/20 wins), with the strongest channel on held-out $\ell_2$ attacks ($+0.405$~pp,
+14/20 wins), with the strongest channel on the held-out $\ell_2$ mean ($+0.405$~pp,
 $p = 0.0079$, 16/20). It improves Mean(8) over PGD-AT by $+1.826$~pp and
 over DDN-AT by $+6.098$~pp, both at $p < 10^{-10}$ on all 20 seeds, and
 achieves $2.5$--$3.3{\times}$ tighter seed-to-seed standard deviation than Multi-AT on every average-case metric. Worst(8) and AutoAttack are
@@ -103,9 +104,9 @@ statistically indistinguishable from Multi-AT ($|\Delta| < 0.005$~pp,
 $p > 0.97$): AttackDRO++ improves average and held-out robustness without
 disturbing standardized worst-case behavior. The single-attack baselines
 remain stronger than AttackDRO++ on the family they train against
-(PGD-AT on held-out $\ell_\infty$, DDN-AT on held-out $\ell_2$) but lose
+(PGD-AT on the held-out $\ell_\infty$ mean, DDN-AT on the held-out $\ell_2$ mean) but lose
 substantially on the other, confirming the specialist-versus-balanced
-interpretation that motivates Multi-ATtack training.
+interpretation that motivates multi-attack training.
 
 AttackDRO++ achieves the highest Mean(8), held-out attack mean, and
 seen-source mean. PGD-AT wins the held-out $\ell_\infty$ mean and Worst(8);
@@ -122,7 +123,7 @@ is reported in Table~\ref{tab:ch6_paired_aggregate_all_baselines}.
 
 \begin{table}[H]
 \centering
-\caption{Effect-size summary: AttackDRO++ (Ours) vs.\ each baseline ($n=20$).
+\caption{Effect-size summary for AttackDRO++ (Ours) against each baseline across 20 paired random-seed runs.
 $\Delta$ in percentage points; negative values mean the baseline is
 stronger.}
 \label{tab:ch6_effect_size_summary}
@@ -153,18 +154,18 @@ distribution by a small but consistent amount without disturbing
 worst-case behavior. Against the single-AT baselines, $d_z$ exceeds $4$
 on most metrics but flips negative on the family each specialist trains
 against. The medium-effect Multi-AT comparison validates the cluster-DRO
-objective as a refinement of Multi-ATtack training; the large-but-
+objective as a refinement of Multi-AT; the large-but-
 asymmetric single-AT comparisons quantify the specialist tradeoff that
-motivates the Multi-ATtack setting in the first place.
+motivates the multi-attack setting in the first place.
 
 \paragraph{Paired aggregate robustness comparisons.}
-Table~\ref{tab:ch6_paired_aggregate_all_baselines} reports paired aggregate results separate the main Multi-ATtack comparison from the
+Table~\ref{tab:ch6_paired_aggregate_all_baselines} separates the main Multi-AT comparison from the
 single-attack specialist comparisons. AutoAttack is excluded from this table and reported
 separately in Section~\ref{subsec:ch6_hardest_evaluation_cases}.
 
 \begin{table}[H]
 \centering
-\caption{Paired aggregate robustness comparison between AttackDRO++ (Ours) and each baseline.
+\caption{Paired aggregate robustness comparison between AttackDRO++ (Ours) and each baseline across 20 paired random-seed runs.
 \(\Delta\) is computed as AttackDRO++ minus the corresponding baseline in percentage
 points. The \(p\)-value is from a two-sided paired \(t\)-test.}
 \label{tab:ch6_paired_aggregate_all_baselines}
@@ -178,32 +179,32 @@ Baseline & Metric & \(n\) & \(\Delta\) (pp) & \(\sigma_\Delta\) & Wins & \(d_z\)
 
 \multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. Multi-AT}} \\
 \midrule
- Multi-AT & Mean(8) & 20 & $+0.279$ & $0.417$ & $14/20$ & $0.668$ & $\mathbf{0.0076}$ \\
- Multi-AT & Held-out attack mean & 20 & $+0.319$ & $0.478$ & $13/20$ & $0.667$ & $\mathbf{0.0076}$ \\
+ Multi-AT & Mean(8) & 20 & $+0.279$ & $0.417$ & $14/20$ & $0.668$ & $0.0076$ \\
+ Multi-AT & Held-out attack mean & 20 & $+0.319$ & $0.478$ & $13/20$ & $0.667$ & $0.0076$ \\
  Multi-AT & Held-out $\ell_\infty$ mean & 20 & $+0.233$ & $0.412$ & $14/20$ & $0.566$ & $0.0204$ \\
- Multi-AT & Held-out $\ell_2$ mean & 20 & $+0.405$ & $0.609$ & $16/20$ & $0.664$ & $\mathbf{0.0079}$ \\
+ Multi-AT & Held-out $\ell_2$ mean & 20 & $+0.405$ & $0.609$ & $16/20$ & $0.664$ & $0.0079$ \\
  Multi-AT & Seen-source mean & 20 & $+0.159$ & $0.291$ & $15/20$ & $0.546$ & $0.0246$ \\
  Multi-AT & Worst(8) & 20 & $-0.003$ & $0.369$ & $9/20$ & $-0.008$ & $0.971$ \\
 
 \midrule
 \multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. PGD-AT}} \\
 \midrule
-PGD-AT & Mean(8) & 20 & $+1.826$ & $0.305$ & $20/20$ & $5.980$ & $\mathbf{<10^{-10}}$ \\
-PGD-AT & Held-out attack mean & 20 & $+2.134$ & $0.378$ & $20/20$ & $5.650$ & $\mathbf{<10^{-10}}$ \\
-PGD-AT & Held-out $\ell_\infty$ mean & 20 & $-1.366$ & $0.320$ & $0/20$ & $-4.273$ & $\mathbf{<10^{-10}}$ \\
-PGD-AT & Held-out $\ell_2$ mean & 20 & $+5.633$ & $0.484$ & $20/20$ & $11.638$ & $\mathbf{<10^{-20}}$ \\
-PGD-AT & Seen-source mean & 20 & $+0.901$ & $0.197$ & $20/20$ & $4.585$ & $\mathbf{<10^{-10}}$ \\
-PGD-AT & Worst(8) & 20 & $-4.576$ & $0.298$ & $0/20$ & $-15.364$ & $\mathbf{<10^{-20}}$ \\
+PGD-AT & Mean(8) & 20 & $+1.826$ & $0.305$ & $20/20$ & $5.980$ & $<10^{-10}$ \\
+PGD-AT & Held-out attack mean & 20 & $+2.134$ & $0.378$ & $20/20$ & $5.650$ & $<10^{-10}$ \\
+PGD-AT & Held-out $\ell_\infty$ mean & 20 & $-1.366$ & $0.320$ & $0/20$ & $-4.273$ & $<10^{-10}$ \\
+PGD-AT & Held-out $\ell_2$ mean & 20 & $+5.633$ & $0.484$ & $20/20$ & $11.638$ & $<10^{-20}$ \\
+PGD-AT & Seen-source mean & 20 & $+0.901$ & $0.197$ & $20/20$ & $4.585$ & $<10^{-10}$ \\
+PGD-AT & Worst(8) & 20 & $-4.576$ & $0.298$ & $0/20$ & $-15.364$ & $<10^{-20}$ \\
 
 \midrule
 \multicolumn{8}{l}{\textit{AttackDRO++ (Ours) vs. DDN-AT}} \\
 \midrule
-DDN-AT & Mean(8) & 20 & $+6.098$ & $0.264$ & $20/20$ & $23.087$ & $\mathbf{<10^{-20}}$ \\
-DDN-AT & Held-out attack mean & 20 & $+4.774$ & $0.282$ & $20/20$ & $16.910$ & $\mathbf{<10^{-20}}$ \\
-DDN-AT & Held-out $\ell_\infty$ mean & 20 & $+9.555$ & $0.376$ & $20/20$ & $25.440$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Mean(8) & 20 & $+6.098$ & $0.264$ & $20/20$ & $23.087$ & $<10^{-20}$ \\
+DDN-AT & Held-out attack mean & 20 & $+4.774$ & $0.282$ & $20/20$ & $16.910$ & $<10^{-20}$ \\
+DDN-AT & Held-out $\ell_\infty$ mean & 20 & $+9.555$ & $0.376$ & $20/20$ & $25.440$ & $<10^{-20}$ \\
 DDN-AT & Held-out $\ell_2$ mean & 20 & $-0.008$ & $0.319$ & $10/20$ & $-0.025$ & $0.914$ \\
-DDN-AT & Seen-source mean & 20 & $+10.073$ & $0.318$ & $20/20$ & $31.723$ & $\mathbf{<10^{-20}}$ \\
-DDN-AT & Worst(8) & 20 & $+19.122$ & $0.518$ & $20/20$ & $36.909$ & $\mathbf{<10^{-20}}$ \\
+DDN-AT & Seen-source mean & 20 & $+10.073$ & $0.318$ & $20/20$ & $31.723$ & $<10^{-20}$ \\
+DDN-AT & Worst(8) & 20 & $+19.122$ & $0.518$ & $20/20$ & $36.909$ & $<10^{-20}$ \\
 
 \bottomrule
 \end{tabular}
@@ -429,7 +430,7 @@ single-attack specialist comparisons.
 
 \begin{table}[H]
 \centering
-\caption{Per-attack robust accuracy (\%) for all four methods, $n=20$ seeds.
+\caption{Per-attack robust accuracy (\%) for all four methods across 20 paired random-seed runs.
 Bold cells indicate the highest accuracy for each attack. The right-hand
 $\Delta$ and $p$ columns report the paired comparison of AttackDRO++ (Ours) against
 Multi-AT. AttackDRO++ (Ours) wins the highest
@@ -450,12 +451,12 @@ FGSM-RS         & held-out $\ell_\infty$
                 & $67.896$
                 & $64.834$
                 & $68.483$
-                & $\mathbf{68.939}$
+                & \bestval{68.939}
                 & $+0.456^{**}$
                 & $0.0034$ \\
 
 PGD-$\ell_\infty$ & seen $\ell_\infty$
-                & $\mathbf{49.656}$
+                & \bestval{49.656}
                 & $25.957$
                 & $45.082$
                 & $45.079$
@@ -463,7 +464,7 @@ PGD-$\ell_\infty$ & seen $\ell_\infty$
                 & $0.971$ \\
 
 TPGD            & held-out $\ell_\infty$
-                & $\mathbf{68.388}$
+                & \bestval{68.388}
                 & $59.310$
                 & $66.934$
                 & $67.043$
@@ -471,7 +472,7 @@ TPGD            & held-out $\ell_\infty$
                 & $0.513$ \\
 
 MI-FGSM         & held-out $\ell_\infty$
-                & $\mathbf{51.260}$
+                & \bestval{51.260}
                 & $30.638$
                 & $47.331$
                 & $47.466$
@@ -481,7 +482,7 @@ MI-FGSM         & held-out $\ell_\infty$
 \midrule
 PGD-$\ell_2$    & held-out $\ell_2$
                 & $64.319$
-                & $\mathbf{69.581}$
+                & \bestval{69.581}
                 & $69.197$
                 & $69.571$
                 & $+0.374^{*}$
@@ -491,13 +492,13 @@ DDN-$\ell_2$    & seen $\ell_2$
                 & $60.728$
                 & $66.083$
                 & $66.785$
-                & $\mathbf{67.107}$
+                & \bestval{67.107}
                 & $+0.321^{*}$
                 & $0.0136$ \\
 
 DeepFool-$\ell_2$ & held-out $\ell_2$
                 & $62.533$
-                & $\mathbf{68.290}$
+                & \bestval{68.290}
                 & $67.301$
                 & $67.805$
                 & $+0.504^{**}$
@@ -507,7 +508,7 @@ CW-$\ell_2$     & held-out $\ell_2$
                 & $59.211$
                 & $65.113$
                 & $65.249$
-                & $\mathbf{65.585}$
+                & \bestval{65.585}
                 & $+0.336^{**}$
                 & $0.0097$ \\
 \bottomrule
@@ -559,7 +560,7 @@ the selected $n=5$ seed panel.
 \begin{table}[H]
 \centering
 \caption{Worst(8) and 512-sample AutoAttack sanity results across
-$n=20$ seeds. Worst(8) is the minimum robust accuracy over the eight
+20 paired random-seed runs. Worst(8) is the minimum robust accuracy over the eight
 non-AutoAttack evaluation attacks. For AttackDRO++ $-$ Multi-AT,
 the paired differences are $-0.003$~pp on Worst(8) ($p=0.971$) and
 $-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the highest
@@ -574,7 +575,7 @@ method.}
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Method & Mean (\%) & $\sigma$ (pp) & Mean (\%) & $\sigma$ (pp) \\
 \midrule
-PGD-AT & $\mathbf{49.656}$ & $0.161$ & $\mathbf{44.912}$ & $1.136$ \\
+PGD-AT & \bestval{49.656} & $0.161$ & \bestval{44.912} & $1.136$ \\
 DDN-AT      & $25.957$ & $0.378$ & $23.809$ & $0.796$ \\
 Multi-AT                    & $45.082$ & $0.281$ & $41.318$ & $1.167$ \\
 AttackDRO++ (Ours)          & $45.079$ & $0.237$ & $41.317$ & $1.050$ \\
@@ -641,7 +642,7 @@ compares the standard deviation of each seed-level metric between the two method
 
 \begin{table}[H]
 \centering
-\caption{Variance reduction across \(n=20\) training seeds. \(\sigma\) is the
+\caption{Variance reduction across 20 paired random-seed runs. \(\sigma\) is the
 standard deviation of the per-seed metric. AttackDRO++ substantially reduces
 seed-to-seed variation on Mean(8), held-out averages, and held-out norm-specific
 metrics, while Worst(8) and AutoAttack standard deviations remain similar across
@@ -655,16 +656,16 @@ methods.}
 Metric & \(\sigma\) Multi-AT (pp) & \(\sigma\) AttackDRO++ (pp) & Ratio \\
 \midrule
 Mean(8)
-& $0.447$ & $0.148$ & $\mathbf{3.03\times}$ \\
+& $0.447$ & $0.148$ & $3.03\times$ \\
 
 Held-out attack mean
-& $0.505$ & $0.155$ & $\mathbf{3.26\times}$ \\
+& $0.505$ & $0.155$ & $3.26\times$ \\
 
 Held-out $\ell_2$ mean
-& $0.603$ & $0.223$ & $\mathbf{2.70\times}$ \\
+& $0.603$ & $0.223$ & $2.70\times$ \\
 
 Held-out $\ell_\infty$ mean
-& $0.427$ & $0.170$ & $\mathbf{2.51\times}$ \\
+& $0.427$ & $0.170$ & $2.51\times$ \\
 
 Seen-source mean
 & $0.303$ & $0.166$ & $1.83\times$ \\
@@ -686,11 +687,19 @@ stable, decreasing from \(0.447\)~pp under Multi-AT to \(0.148\)~pp under
 AttackDRO++, a \(3.03\times\) reduction.
 
 This suggests that the anchored Cluster-DRO objective not only improves the mean of
-average-case robustness metrics, but also makes the Multi-ATtack training outcome less
+average-case robustness metrics, but also makes the Multi-AT training outcome less
 sensitive to random seed. The effect is weaker for Worst(8) and AutoAttack, whose
 standard deviations remain similar across methods. This is consistent with the previous
 sections: AttackDRO++ preserves the hardest \(\ell_\infty\) stress metrics relative to
  Multi-AT, while its main benefit is on average and held-out robustness.
+
+The whitebox results give the main aggregate evidence: AttackDRO++ improves
+average and held-out robustness relative to Multi-AT while preserving the hardest
+standardized checks. However, aggregate and per-attack metrics can still hide
+which CIFAR-10 classes and attack--class cells drive the remaining failures. The
+next section therefore drills down into class-wise whitebox robustness to test
+whether the observed gains are broad or concentrated in a small part of the
+evaluation grid.
 
 
 % \subsection{Section Summary}

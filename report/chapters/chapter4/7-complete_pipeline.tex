@@ -131,14 +131,24 @@ reported both per attack and through aggregate robustness metrics.
 \subsection{Implementation and Computational Considerations}
 
 % TODO[Kiệt]:
-% Goal:
-% - Add implementation and compute notes that help readers reproduce the method.
-% Flow:
-% - Explain feature-bank memory, clustering refresh cost, attack-generation cost, and repeated-seed practicality.
-% Include:
-% - Mention hardware/software only if it is finalized in Chapter 5.9.
-% Avoid:
-% - New performance claims or runtime numbers unless sourced from actual logs.
-% Target length: 2-4 paragraphs.
+The final implementation evaluated in the main experiments is AttackDRO++ with
+gradient fingerprints, an online K-means refresh policy, \(K=4\) clusters, and
+uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). In configuration files,
+this setting is recorded as
+\texttt{attackdro\_pp\_anchor035\_gradfp\_online\_k4}. The identifier is used
+only as a reproducibility handle; the report-facing method name is
+AttackDRO++ (Ours).
 
-% TODO: Add implementation and computational considerations without rewriting method prose.
+The main additional state introduced by AttackDRO++ is the feature bank used for
+cluster refresh. The bank stores detached augmented features, so clustering does
+not backpropagate through past minibatches. K-means is refitted only at the
+configured refresh interval, and the cluster weights are reset or refreshed after
+the cluster identities change. This keeps the adaptive grouping mechanism tied to
+recent model representations while avoiding a per-step clustering cost.
+
+The dominant computational cost remains adversarial example generation, because
+all compared multi-attack methods use the same mixed source attacks. The
+AttackDRO++ additions therefore change the training objective and bookkeeping
+rather than the threat model or evaluation protocol. Chapter~\ref{chap:experimental_setup}
+specifies the concrete training configuration, software stack, and evaluation
+procedures used to run this implementation.

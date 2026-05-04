@@ -29,7 +29,39 @@
 \label{app:extras}
 % Mục tiêu: bảng phụ (ablation, sweep), hình phụ (training curves, extra qualitative grids),
 %          các plot không đưa vào main chapters.
+\begin{table}[H]
+\centering
+\caption{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are
+robust accuracy (\%) from a single run and are therefore not included in the
+main paired claims. Mean(8) and Worst(8) are computed over the eight
+non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately. Bold values indicate the best method for each metric.}
+\label{tab:app_wrn2810_architecture_check}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{lccc}
+\toprule
+Method & Mean(8) $\uparrow$ & Worst(8) $\uparrow$ & AutoAttack $\uparrow$ \\
+\midrule
+Multi-AT
+& \bestval{64.87}
+& \bestval{47.99}
+& \bestval{44.92} \\
 
+AttackDRO++ (Ours)
+& $64.68$
+& $47.72$
+& $43.16$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{figures/ablations/wrn2810_architecture_check.png}
+    \caption{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately.}
+    \label{fig:app_wrn2810_architecture_check}
+\end{figure}
 
 %===========================================================
 % APPENDIX D – COMPUTE RESOURCES AND ENVIRONMENT
