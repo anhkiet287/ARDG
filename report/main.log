@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 13:46
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 14:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1894,7 +1894,7 @@ Overfull \hbox (15.19872pt too wide) detected at line 78
  []
 
 [48]) (chapters/chapter5/8-graybox_transfer.tex [49] [50])
-(chapters/chapter5/9-tools_tracking.tex [51]
+(chapters/chapter5/9-tools_tracking.tex [51] [52]
 File: figures/wandb/wb_train_loss.png Graphic file (type bmp)
 <figures/wandb/wb_train_loss.png>
 File: figures/wandb/wb_train_acc.png Graphic file (type bmp)
@@ -1908,38 +1908,39 @@ File: figures/wandb/wb_ddn_l2_acc.png Graphic file (type bmp)
 File: figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.
 png Graphic file (type bmp)
 <figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png>
- [52] [53])) [54]
+ [53] [54])) [55]
 \openout2 = `chapters/chapter6.aux'.
 
 
 (chapters/chapter6.tex
 Chapter 6.
-(chapters/chapter6/1_main_results.tex [55
+(chapters/chapter6/1_main_results.tex [56
 
 
 
 
-] [56]
-LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 353
+] [57] [58]
+LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 360
 .
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.66765pt on input line 353.
+(Font)              scaled to size 8.66765pt on input line 360.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.06732pt on input line 353.
+(Font)              scaled to size 6.06732pt on input line 360.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 4.33382pt on input line 353.
+(Font)              scaled to size 4.33382pt on input line 360.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.6658pt on input line 353.
+(Font)              scaled to size 8.6658pt on input line 360.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.06602pt on input line 353.
+(Font)              scaled to size 6.06602pt on input line 360.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.33289pt on input line 353.
- [57] [58]
-Overfull \hbox (35.65198pt too wide) in paragraph at lines 436--506
- [][] 
+(Font)              scaled to size 4.33289pt on input line 360.
+ [59]
+Underfull \hbox (badness 1314) in paragraph at lines 396--407
+\TU/TimesNewRoman(0)/m/n/13 versus-balanced interpretation. Compared with PGD-A
+T, AttackDRO++ achieves
  []
 
-[59] [60] [61]) (chapters/chapter6/4_whitebox.tex [62]
+[60] [61] [62]) (chapters/chapter6/4_whitebox.tex [63]
 Underfull \hbox (badness 1558) in paragraph at lines 18--19
 \TU/TimesNewRoman(0)/m/n/13 The aggregate results in Section [][]6.1[][] show t
 hat AttackDRO++ improves average
@@ -1948,7 +1949,7 @@ hat AttackDRO++ improves average
 File: figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png Graphic file (
 type bmp)
 <figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png>
-[63]
+[64]
 File: figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png>
@@ -1958,16 +1959,16 @@ e bmp)
 File: figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png Graphic file (t
 ype bmp)
 <figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png>
- [64]
+ [65]
 File: figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png Graphic fil
 e (type bmp)
 <figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png>
- [65]
+ [66]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n
 5.png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png
 >
- [66]
+ [67]
 Overfull \hbox (3.48567pt too wide) in paragraph at lines 106--140
  [][] 
  []
@@ -1978,24 +1979,24 @@ png Graphic file (type bmp)
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png>
-[67] [68]
+[68] [69]
 File: figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png Gra
 phic file (type bmp)
 <figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png>
- [69]
+ [70]
 File: figures/whitebox/whitebox_bottomk_lift_bar_n5.png Graphic file (type bmp)
 
 <figures/whitebox/whitebox_bottomk_lift_bar_n5.png>
-) (chapters/chapter6/2_graybox_results.tex [70]
+) (chapters/chapter6/2_graybox_results.tex [71]
 Overfull \hbox (13.36092pt too wide) in paragraph at lines 64--82
  [][] 
  []
 
-[71]
+[72]
 File: figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png>
- [72]
+ [73]
 File: figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png Graphi
 c file (type bmp)
 <figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png>
@@ -2020,47 +2021,47 @@ phic file (type bmp)
 File: figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png Graphic f
 ile (type bmp)
 <figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png>
- [73] [74] [75] [76] [77]
+ [74] [75] [76] [77] [78]
 File: figures/graybox/whitebox_graybox_gap_DDNAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_DDNAT.png>
 File: figures/graybox/whitebox_graybox_gap_PGDAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_PGDAT.png>
- [78]
+ [79]
 File: figures/graybox/whitebox_graybox_gap_MultiAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_MultiAT.png>
 File: figures/graybox/whitebox_graybox_gap_AttackDROpp.png Graphic file (type b
 mp)
 <figures/graybox/whitebox_graybox_gap_AttackDROpp.png>
- [79] [80]
+ [80] [81]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png
  Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png>
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.png>
- [81]
+ [82]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.png>
- [82] [83]
+ [83] [84]
 File: figures/graybox/method_decomposition_three_panel_science.png Graphic file
  (type bmp)
 <figures/graybox/method_decomposition_three_panel_science.png>
 )
-(chapters/chapter6/3_ablation.tex [84]
+(chapters/chapter6/3_ablation.tex [85]
 File: figures/anchor_strength_ablation.png Graphic file (type bmp)
 <figures/anchor_strength_ablation.png>
- [85]) (chapters/chapter6/6_summary.tex)) [86]
+ [86]) (chapters/chapter6/6_summary.tex)) [87]
 \openout2 = `chapters/chapter7.aux'.
 
  (chapters/chapter7.tex
 Chapter 7.
-) [87
+) [88
 
 
 
 
-] (main.bbl) [88
+] (main.bbl) [89
 
 
 
@@ -2069,20 +2070,20 @@ Chapter 7.
 
  (appendices.tex
 Appendix A.
-[89
+[90
 
 
 ]
 Appendix B.
-[90
-
-]
-Appendix C.
 [91
 
 ]
+Appendix C.
+[92
+
+]
 Appendix D.
-) [92
+) [93
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2102,10 +2103,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  38064 strings out of 402987
  755454 string characters out of 5448525
- 1408601 words of memory out of 5000000
+ 1397416 words of memory out of 5000000
  65954 multiletter control sequences out of 15000+600000
  636988 words of font info for 158 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,18n,107p,1058b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (93 pages).
+Output written on main.pdf (94 pages).
