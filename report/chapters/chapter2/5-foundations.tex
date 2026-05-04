@@ -1,21 +1,34 @@
 \section{Statistical Tools for Multi-Seed Evaluation}
 
-% TODO[ĐA]:
-% Goal:
-% - Explain the statistical tools used in Chapter 6 without turning this into a statistics textbook.
-% Flow:
-% - Define paired comparisons, confidence intervals, effect sizes, correction, and standard deviation.
-% - Explain why repeated seeds make paired tests appropriate.
-% Include:
-% - Consider a small table of statistical terms: mean, standard deviation, confidence interval, p-value, effect size, correction.
-% - Keep wording consistent with Chapter 5 statistical protocol.
-% Avoid:
-% - Long derivations of tests or assumptions not used in the report.
-% Target length: 4-6 paragraphs plus optional table.
+Robustness comparisons are noisy because training depends on initialization, data order, attack sampling, and optimizer dynamics. This report uses five random seeds as a pragmatic basis for paired multi-seed reporting under the available compute budget. The purpose of the statistical protocol is to compare methods under matched randomness wherever possible, not to claim that a small seed panel eliminates all uncertainty.
 
 \subsection{Paired Tests and Bootstrap Confidence Intervals}
 
+For two methods $A$ and $B$ evaluated under the same seed $s$, let $m_{A,s}$ and $m_{B,s}$ denote a metric such as robust accuracy or Mean(8). The paired difference is
+\[
+d_s=m_{A,s}-m_{B,s}.
+\]
+Paired analysis focuses on the distribution of $d_s$ rather than on two unrelated sets of scores. This is appropriate when each method is evaluated on the same seed panel because common random variation can be removed from the comparison.
+
+The paired $t$-test evaluates whether the mean paired difference is distinguishable from zero under an approximate normality assumption for the differences \cite{student1908probable}. If $\bar{d}$ is the sample mean of the paired differences, $s_d$ is their sample standard deviation, and $S$ is the number of seeds, the statistic is
+\[
+t=\frac{\bar{d}}{s_d/\sqrt{S}}.
+\]
+The Wilcoxon signed-rank test is a nonparametric alternative that ranks the magnitudes of nonzero paired differences and tests whether their signs are symmetrically distributed around zero \cite{wilcoxon1945individual}. It is useful when the paired differences are few or visibly non-Gaussian, although it also has limited power for small seed panels.
+
+Confidence intervals describe uncertainty in an estimated effect size or mean difference. A paired confidence interval can be formed analytically from the paired $t$ distribution, or by bootstrap resampling of the paired differences. Bootstrap intervals repeatedly resample the set of seed-level differences with replacement and recompute the statistic of interest. In this report, confidence intervals are interpreted as uncertainty summaries around the observed seed panel, not as guarantees about all possible training runs.
+
 \subsection{Effect Size and Multiple-Comparison Correction}
 
+A $p$-value measures how unusual the observed statistic would be under a specified null hypothesis, but it does not measure the practical size of the effect. Effect sizes therefore accompany significance tests. For paired comparisons, a common standardized effect size is
+\[
+d_z=\frac{\bar{d}}{s_d},
+\]
+which scales the mean paired difference by the standard deviation of the paired differences \cite{cohen1988statistical}. Reporting both the raw paired difference and a standardized effect size helps separate practical magnitude from sampling variability.
+
+When many attacks and metrics are compared, isolated small $p$-values can occur by chance. Multiple-comparison correction adjusts the interpretation of significance tests to account for the number of related hypotheses being examined. The correction should be read together with the direction of the paired difference, confidence intervals, and effect sizes, because statistical significance alone can overstate a small or unstable improvement.
+
 \paragraph{Repeated random-seed evaluation.}
-% TODO[DA]: Explain why repeated random seeds support paired comparisons without listing exact seed IDs.
+Random seeds are treated as paired experimental units throughout the evaluation protocol. For each attack metric, the comparison is made seed by seed, then summarized across the seed panel. This design supports statements about consistency across repeated training runs while avoiding exact seed identifiers in the thesis text.
+
+The practical interpretation is deliberately conservative. A method comparison is most persuasive when the paired differences have the same direction across most seeds, the confidence interval is reasonably separated from zero, the effect size is meaningful, and the result remains coherent after accounting for multiple comparisons \cite{cumming2014new}. No single statistic is treated as sufficient on its own.

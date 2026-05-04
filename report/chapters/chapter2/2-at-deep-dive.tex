@@ -1,145 +1,98 @@
 \section{Adversarial Attack Algorithms}
 
-% TODO[DA]:
-% Goal:
-% - Cover the attack algorithms needed for Chapters 4-6.
-% Flow:
-% - For each attack: intuition -> threat model/norm -> update or objective if needed -> role in this report.
-% Include:
-% - One attack-summary table with columns: Attack, Norm, Iterative?, Targeted?, Used for training?, Used for evaluation?, Role.
-% - FGSM-RS, PGD-$\ell_\infty$, CW-$\ell_2$, DeepFool-$\ell_2$, DDN-$\ell_2$, MI-FGSM, TPGD, and AutoAttack-$\ell_\infty$.
-% Avoid:
-% - Overlong derivations or code-level attack settings that belong in Chapter 5.
-% Target length: 3-4 pages including the table.
+The attacks used in this report are best understood as different approximations to the same inner maximization problem. They vary in norm constraint, objective, update rule, and evaluation role. Chapter~\ref{chap:experimental_setup} gives the concrete configuration values; this section defines the algorithms conceptually so that later comparisons can refer to them without reintroducing their mechanics.
 
 \subsection{Fast Gradient Sign Method with Random Start (FGSM-RS)}
 
-% TODO[DA]:
-% Goal:
-% - Explain vanilla FGSM briefly, then explain why the random-start variant is used.
-% Flow:
-% - Intuition -> one-step gradient sign update -> random start -> role in evaluation.
-% Include:
-% - Keep FGSM as prose inside this subsection; do not create a separate numbered FGSM subsection.
-% Avoid:
-% - Treating FGSM-RS as a training method.
-% Target length: 2-3 paragraphs.
+The Fast Gradient Sign Method (FGSM) is a one-step whitebox attack that perturbs the input in the sign direction of the loss gradient \cite{goodfellow2015explaining}. For an $\ell_\infty$ budget, the basic update is
+\[
+x^{\mathrm{adv}}=
+\Pi_{[0,1]^d}
+\left(
+x+\varepsilon\,\mathrm{sign}\left(\nabla_x \ell(f_\theta(x),y)\right)
+\right),
+\]
+where $\Pi_{[0,1]^d}$ clips the result to the valid input range. FGSM is computationally cheap, but a deterministic single step can be a weak test of robustness when used alone.
+
+FGSM-RS adds a random initialization inside the perturbation set before taking the gradient step. If $\delta_0$ is sampled from the $\ell_\infty$ ball, the update starts from $x+\delta_0$ and then projects back to the feasible region after the sign step. Random starts are used to reduce sensitivity to the local geometry at the clean point and to make the one-step attack less brittle \cite{wong2020fast}. In this report, FGSM-RS is an evaluation attack, not a training method.
 
 \subsection{Projected Gradient Descent (PGD)}
 
-% TODO[DA]:
-% Goal:
-% - Explain PGD as an iterative projected gradient attack.
-% Flow:
-% - Objective -> iterative update -> projection -> PGD-$\ell_\infty$ and PGD-$\ell_2$ roles.
-% Include:
-% - Distinguish PGD-$\ell_\infty$ as an attack from PGD-AT as a training method.
-% Avoid:
-% - Repeating Chapter 5 step counts except as a pointer to the attack configuration table.
-% Target length: 3-4 paragraphs.
+Projected Gradient Descent (PGD) extends FGSM by taking multiple gradient-ascent steps on the input and projecting after each step \cite{madry2019towards}. For an $\ell_\infty$ attack, a typical update is
+\[
+x_{t+1}^{\mathrm{adv}}=
+\Pi_{(x+\mathcal{S}_\infty(\varepsilon))\cap[0,1]^d}
+\left(
+x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}
+\left(\nabla_x \ell(f_\theta(x_t^{\mathrm{adv}}),y)\right)
+\right).
+\]
+For an $\ell_2$ attack, the gradient direction is normalized and the projection is performed onto the $\ell_2$ ball. The repeated update makes PGD a strong first-order baseline for both evaluation and adversarial training.
 
-\subsection{Carlini--Wagner Attack (CW)}
+The report uses PGD-$\ell_\infty$ and PGD-$\ell_2$ as attacks. PGD-AT, by contrast, is a training method that uses PGD-generated adversarial examples inside the adversarial-training objective. This separation between attack algorithm and training method is important because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share the same source attacks in Chapter~\ref{chap:methodology}.
 
-% TODO[DA]:
-% Goal:
-% - Explain CW as an optimization-based attack.
-% Flow:
-% - Intuition -> objective-level description -> why it complements gradient-step attacks.
-% Include:
-% - Use CW-$\ell_2$ when referring to this report's evaluation attack.
-% Avoid:
-% - Long derivations of the original CW objective.
-% Target length: 2-3 paragraphs.
+\subsection{Carlini-Wagner Attack (CW)}
+
+The Carlini-Wagner attack is an optimization-based attack designed to search for small perturbations that satisfy a margin-style misclassification objective \cite{carlini2017towards}. Instead of following only a fixed number of projected gradient steps on cross-entropy, CW directly optimizes a surrogate objective that trades perturbation size against attack success.
+
+In this report, CW-$\ell_2$ is used as a held-out evaluation attack. Its role is to complement step-based gradient attacks by testing the model under a different loss formulation and norm geometry. It is not used as a source training attack.
 
 \subsection{DeepFool}
 
-% TODO[DA]:
-% Goal:
-% - Explain DeepFool as a boundary-oriented attack.
-% Flow:
-% - Local decision boundary approximation -> perturbation direction -> role as a held-out $\ell_2$ attack.
-% Include:
-% - Use DeepFool-$\ell_2$ when referring to this report's evaluation attack.
-% Avoid:
-% - Overstating it as a full robustness certificate.
-% Target length: 2-3 paragraphs.
+DeepFool estimates the direction to a nearby decision boundary by locally linearizing the classifier and iteratively moving the input toward that boundary \cite{moosavi2016deepfool}. For nonlinear networks, the method repeats this local approximation until the predicted class changes or the iteration budget is reached.
+
+DeepFool-$\ell_2$ is useful as an evaluation attack because it emphasizes boundary proximity rather than cross-entropy maximization alone. It should not be interpreted as a robustness certificate: it is an attack procedure that approximates a nearby boundary crossing, not a proof that no smaller perturbation exists.
 
 \subsection{Decoupled Direction and Norm (DDN)}
 
-% TODO[DA]:
-% Goal:
-% - Explain DDN as an $\ell_2$ attack that decouples direction search from norm adjustment.
-% Flow:
-% - Direction update -> norm adjustment -> role in DDN-AT and evaluation.
-% Include:
-% - Distinguish DDN-$\ell_2$ as an attack from DDN-AT as a training method.
-% Avoid:
-% - Treating DDN-AT and DDN-$\ell_2$ as interchangeable.
-% Target length: 2-3 paragraphs.
+The Decoupled Direction and Norm (DDN) attack searches for adversarial examples under an $\ell_2$ geometry by separating the update direction from the perturbation norm \cite{rony2019decoupling}. The direction is updated using gradient information, while the norm is increased or decreased depending on whether the current perturbation succeeds.
+
+DDN-$\ell_2$ is both a source attack and an evaluation attack in this report. DDN-AT refers to a training baseline that adversarially trains using DDN-generated examples. The attack and the training method are therefore related, but not interchangeable: the former generates inputs, while the latter defines how those inputs are used during model optimization.
 
 \subsection{Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}
 
-% TODO[DA]:
-% Goal:
-% - Explain why momentum can improve transferability and attack strength.
-% Flow:
-% - FGSM/PGD connection -> accumulated gradient direction -> role in evaluation.
-% Include:
-% - Use MI-FGSM as the report-facing name.
-% Avoid:
-% - Code-style naming.
-% Target length: 2-3 paragraphs.
+MI-FGSM adds momentum to iterative sign-gradient attacks \cite{dong2018boosting}. Instead of using only the current gradient, it maintains an accumulated direction that stabilizes the update across iterations. This can improve transferability and reduce oscillation in the perturbation trajectory.
 
-\subsection{Targeted Projected Gradient Descent (TPGD)}
+In the evaluation suite, MI-FGSM provides another $\ell_\infty$ first-order stress condition. It is close enough to PGD to test iterative gradient robustness, but different enough to reveal whether robustness depends on a particular update rule. It is not one of the source training attacks used by the main methods.
 
-% TODO[DA]:
-% Goal:
-% - Explain targeted PGD as a targeted variant of projected gradient attack.
-% Flow:
-% - Targeted objective -> contrast with untargeted PGD -> role in evaluation diversity.
-% Include:
-% - Keep the description compact because PGD has already been defined.
-% Avoid:
-% - Creating a separate threat-model subsection here.
-% Target length: 1-2 paragraphs.
+\subsection{TRADES-Style Projected Gradient Descent (TPGD)}
+
+The name TPGD is overloaded across libraries and papers. In the code and protocol used for this report, TPGD refers to a TRADES-style PGD attack based on a KL-divergence objective between clean and perturbed predictions, rather than to a target-label PGD attack. This interpretation is aligned with the TRADES objective, which separates natural classification loss from a robustness regularization term \cite{zhang2019trades}.
+
+TPGD is included in the main evaluation suite to test a loss objective that differs from ordinary cross-entropy PGD. This helps the evaluation avoid depending only on attacks that optimize the same loss used by common adversarial-training baselines.
 
 \subsection{AutoAttack}
 
-% TODO[DA]:
-% Goal:
-% - Explain AutoAttack as a standardized ensemble stress test.
-% Flow:
-% - Motivation -> ensemble nature -> why this report reports AutoAttack-$\ell_\infty$ separately.
-% Include:
-% - State that AutoAttack-$\ell_\infty$ is not part of Mean(8).
-% Avoid:
-% - Treating AutoAttack as one of the training attacks.
-% Target length: 2-3 paragraphs.
+AutoAttack is a standardized ensemble evaluation that combines complementary attacks and reduces the need for manual attack tuning \cite{croce2020reliable}. Its purpose is to provide a stronger robustness check than any single configured attack can usually provide on its own.
+
+This report evaluates AutoAttack-$\ell_\infty$ separately from the main eight-attack mean. The Mean(8) metric covers FGSM-RS, PGD-$\ell_\infty$, TPGD, MI-FGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$. AutoAttack-$\ell_\infty$ is therefore a separate stress metric rather than part of the primary Mean(8) ranking, and AutoAttack-512 is treated as a sanity or stress check rather than as the main comparison criterion.
 
 \section{Adversarial Training as Min-Max Optimization}
 
-% TODO[DA]:
-% Goal:
-% - Explain adversarial training as min-max optimization.
-% Flow:
-% - Inner maximization generates hard adversarial examples; outer minimization updates the model.
-% - Explain why this improves robustness but can specialize to the attack used for training.
-% - Move from single-attack AT to Multi-AT as the natural baseline.
-% Include:
-% - Add an equation only if it is referenced later.
-% - Distinguish PGD-$\ell_\infty$ as an attack from PGD-AT as a training method.
-% - Distinguish DDN-$\ell_2$ as an attack from DDN-AT as a training method.
-% - Use `Multi-AT` as the report-facing method name.
-% Avoid:
-% - Introducing AttackDRO++ details before Chapter 4.
-% - Reporting Chapter 6 numerical results here.
-% Target length: 4-6 paragraphs.
+Adversarial training replaces ERM with a min-max objective in which an inner adversary generates difficult perturbed examples and an outer optimizer updates the model to classify them correctly \cite{madry2019towards}. A standard formulation is
+\[
+\min_{\theta}
+\frac{1}{n}\sum_{i=1}^{n}
+\max_{\delta_i\in\mathcal{S}_p(\varepsilon)}
+\ell(f_\theta(x_i+\delta_i),y_i).
+\]
+The inner maximization approximates the worst local perturbation for the current model, while the outer minimization trains the model against those perturbations.
 
 \paragraph{Single-attack adversarial training.}
-% TODO[DA]: Explain PGD-AT and DDN-AT as strong but attack-specific baselines.
+Single-attack adversarial training chooses one source attack for the inner maximization. PGD-AT uses PGD-generated adversarial examples, while DDN-AT uses DDN-generated adversarial examples. These baselines are important because they isolate the effect of a strong source threat model, but they can also specialize the learned robustness to the attack family, norm, loss, and optimization path used during training.
 
 \paragraph{Multi-attack adversarial training.}
-% TODO[DA]: Explain why uniform multi-attack training is the strong baseline and why uniform mixing may still under-emphasize weak groups.
+Multi-AT extends the source set by training on a uniform mixture of source attacks. In this report, Multi-AT uses PGD-$\ell_\infty$ and DDN-$\ell_2$ as source attacks, matching the source attacks used by AttackDRO, Cluster-DRO, and AttackDRO++. A compact objective is
+\[
+\min_{\theta}
+\frac{1}{n}\sum_{i=1}^{n}
+\frac{1}{|\mathcal{E}|}
+\sum_{e\in\mathcal{E}}
+\ell(f_\theta(\mathcal{A}_e(x_i,y_i,f_\theta)),y_i),
+\]
+where $\mathcal{E}$ is the source-attack set. This objective broadens attack coverage relative to a single-source baseline, but uniform averaging does not decide whether weak attack conditions, hard classes, or latent subgroups should receive additional emphasis.
 
 \paragraph{Trade-off intuition.}
-% TODO[DA]: Explain clean accuracy, robust accuracy, attack diversity, and stability trade-offs without Chapter 6 results.
+Adversarial training has become one of the most widely used empirical defenses, but it introduces practical trade-offs. Training against stronger inner attacks increases computational cost, and improving adversarial accuracy can reduce clean accuracy or shift errors across groups \cite{zhang2019trades,rice2020overfitting,zhao2024adversarialtraining}. Multi-attack training adds another trade-off: expanding the source attack set can improve coverage, but it may also dilute training pressure if all sources are weighted uniformly despite unequal difficulty.
+
+The later methodology builds on this background by asking how source attacks and discovered groups should be weighted during training. Chapter~\ref{chap:related_work} reviews prior work that motivates this question, and Chapter~\ref{chap:methodology} defines the specific group-aware methods evaluated in this report.

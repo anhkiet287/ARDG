@@ -1,28 +1,49 @@
 \section{Distributionally Robust Optimization}
 
-% TODO[ĐA]:
-% Goal:
-% - Explain ERM, DRO, and Group DRO as the optimization background for AttackDRO.
-% Flow:
-% - Start with ERM, then contrast DRO and Group DRO.
-% - Explain how group weights emphasize harder groups.
-% - End by connecting attack identities and latent clusters to groups.
-% Include:
-% - Consider a small comparison table: ERM, AT, DRO, Group DRO, Role in this report.
-% - Keep notation aligned with docs/05_notation_registry.md.
-% Avoid:
-% - Proof-heavy DRO treatment or unrelated robustness theory.
-% Target length: 4-6 paragraphs plus optional comparison table.
+Distributionally robust optimization (DRO) replaces average-case optimization with objectives that are sensitive to unfavorable distributions or groups. In its classical form, DRO minimizes the worst expected loss over an ambiguity set $\mathcal{U}$ around a reference distribution:
+\[
+\min_{\theta}
+\sup_{Q\in\mathcal{U}}
+\mathbb{E}_{(x,y)\sim Q}
+\left[\ell(f_\theta(x),y)\right].
+\]
+The ambiguity set can be defined in many ways, but the shared principle is that the model should not be optimized only for the empirical average when plausible shifts may expose higher-risk subpopulations \cite{hashimoto2018fairness,duchi2021learning}.
 
 \subsection{From ERM to Worst-Group Risk}
 
+Group DRO specializes the robust objective to a finite collection of groups. Suppose each example belongs to a group $g\in\mathcal{G}$, and let $R_g(\theta)$ denote the expected loss on group $g$. The worst-group objective is
+\[
+\min_{\theta}
+\max_{g\in\mathcal{G}}
+R_g(\theta).
+\]
+Equivalently, the maximum can be written as an optimization over the probability simplex:
+\[
+\min_{\theta}
+\max_{q\in\Delta^{|\mathcal{G}|}}
+\sum_{g\in\mathcal{G}} q_g R_g(\theta),
+\]
+where $q_g$ is the weight assigned to group $g$. This form makes clear how Group DRO differs from ERM: ERM weights examples according to their empirical frequency, while Group DRO can emphasize a small group if it has high loss \cite{sagawa2019groupdro}.
+
 \subsection{Group DRO Formulation}
 
-\paragraph{Exponentiated-gradient updates.}
-% TODO[DA]: Explain the simplex weight update only as much as needed for AttackDRO in Chapter 4.
+In practice, Group DRO alternates between estimating group losses and updating group weights. A common exponentiated-gradient update has the form
+\[
+q_g^{(t+1)}
+=
+\frac{
+q_g^{(t)}\exp(\eta_q \hat{R}_g^{(t)})
+}{
+\sum_{h\in\mathcal{G}}
+q_h^{(t)}\exp(\eta_q \hat{R}_h^{(t)})
+},
+\]
+where $\hat{R}_g^{(t)}$ is the current estimated loss for group $g$ and $\eta_q$ is a group-weight learning rate \cite{kivinen1997exponentiated,sagawa2019groupdro}. Groups with higher loss receive larger future weights, which increases their influence on the parameter update.
 
 \paragraph{Regularization in overparameterized models.}
-% TODO[DA]: Keep this as supporting context, not a separate numbered subsection.
+In overparameterized neural networks, simply optimizing the worst empirical group loss can overfit small or noisy groups. Prior Group DRO work therefore emphasizes the role of regularization, validation-based model selection, and careful group construction when training high-capacity models \cite{sagawa2019groupdro}. This point is especially relevant for adversarial training because the inner attack already increases optimization difficulty and computational cost.
 
 \paragraph{DRO in adversarial training.}
-% TODO[DA]: Connect attack identities and latent clusters to groups without introducing Chapter 6 results.
+The group variable in adversarial training can be defined in multiple ways. AttackDRO uses fixed source attack identities as groups, so the group weights adapt over PGD-$\ell_\infty$ and DDN-$\ell_2$ source conditions. Cluster-DRO instead uses discovered latent clusters as groups. Both choices inherit the same central constraint from Group DRO: the objective can only emphasize groups that have been meaningfully defined. If groups are too coarse, the optimizer may miss hard subpopulations inside them; if groups are too noisy, weight updates can chase unstable loss estimates.
+
+Later chapters introduce q-flooring and uniform anchoring as method-specific stabilization ideas rather than as standard Group DRO theory. The key background point is simpler: Group DRO supplies an adaptive weighting mechanism, but its usefulness depends on the granularity and reliability of the group definitions supplied to it.

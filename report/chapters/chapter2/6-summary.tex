@@ -1,13 +1,3 @@
-% TODO: Convert numbered Chapter Summary into closing prose according to docs/06_style_rules.md.
-% TODO[ĐA]:
-% Goal:
-% - Close Chapter 2 by consolidating only the background needed for Chapters 3 and 4.
-% Flow:
-% - Recap notation, attacks/threat models, adversarial training, DRO, clustering, and statistical tools.
-% - End with a transition that Chapter 3 reviews what prior work has and has not solved.
-% Include:
-% - No new equations, claims, or results.
-% Avoid:
-% - A section-level summary style after this is converted into closing prose.
-% Target length: 100-200 words.
-% Chapter 2 closing synthesis should be written here as plain prose, not as a numbered section.
+This chapter established the technical background used by the rest of the report. It introduced the supervised classification notation, adversarial perturbation sets, threat-model assumptions, and attack algorithms needed to interpret the training and evaluation protocols. It then framed adversarial training as min-max optimization, with PGD-AT, DDN-AT, and Multi-AT serving as baselines that differ in how source attacks are used.
+
+The chapter also defined the DRO and Group DRO machinery that later supports AttackDRO and Cluster-DRO, emphasizing that adaptive weighting depends on meaningful group definitions. The domain-generalization and clustering discussion explained why attacks can be treated as domain-like shifts without equating adversarial robustness with general domain generalization. Finally, the statistical section fixed the paired multi-seed vocabulary used for Chapter~\ref{chap:results_analysis}. Chapter~\ref{chap:related_work} next reviews the prior work that motivates the remaining gap, and Chapter~\ref{chap:methodology} defines AttackDRO++ as the final proposed method.

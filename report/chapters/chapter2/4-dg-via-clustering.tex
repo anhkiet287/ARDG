@@ -1,19 +1,25 @@
 \section{Domain Generalization and Clustering}
 
-% TODO[ĐA]:
-% Goal:
-% - Explain why attack conditions can be viewed as domains and why clustering can discover latent groups.
-% Flow:
-% - Define the domains intuition, then explain clustering as a way to find hidden structure.
-% - Explain K-means only enough to support AttackDRO++.
-% - Point readers to Chapter 4 for the full feature construction and training pipeline.
-% Include:
-% - A short example of attacks or classes sharing a failure mode.
-% - Optional small conceptual diagram: attacks/classes -> features -> clusters -> group weights.
-% Avoid:
-% - Deep clustering survey; Chapter 3 handles related work.
-% Target length: 4-5 paragraphs plus optional figure.
+Domain generalization studies learning under multiple observed training environments with the goal of improving performance on unseen environments. In a standard formulation, each environment $e\in\mathcal{E}$ has its own data distribution $P_e$, and the learner must avoid relying only on features that are predictive in the observed environments but unstable under distribution shift \cite{arjovsky2019irm,gulrajani2021domainbed}. This report does not aim to solve general domain generalization. It uses the domain-generalization vocabulary more narrowly to describe how different adversarial attacks can induce distinct training and evaluation conditions.
 
 \subsection{Domain Generalization: Learning Beyond Known Distributions}
 
+The attacks-as-domains view treats each attack generator $\mathcal{A}_e$ as producing a distribution of adversarial examples from the same clean data. PGD-$\ell_\infty$, DDN-$\ell_2$, MI-FGSM, DeepFool-$\ell_2$, and CW-$\ell_2$ do not correspond to natural domains such as cameras or hospitals, but they do create algorithm-induced shifts in geometry, loss objective, and optimization trajectory. This view helps explain why robustness to one attack may not fully transfer to another \cite{tramer2019adversarial,maini2020adversarial}.
+
+Adversarial robustness differs from standard domain generalization in an important way. Evaluation is threat-model-aware: each attack is constructed with a perturbation set, loss, and access assumption, and the examples are generated against the model rather than passively sampled from an external distribution. Consequently, domain-generalization concepts are useful as an organizing language, but adversarial evaluation still requires explicit attack definitions and robust evaluation protocols \cite{croce2020reliable,gulrajani2021domainbed}.
+
 \subsection{K-Means Clustering for Group Discovery}
+
+Group DRO requires group labels, but many hard subpopulations are not annotated. Hidden-group methods address this problem by inferring groups from representations, losses, or environment structure, then using those inferred groups to guide robust optimization \cite{sohoni2020no,creager2021environment,liu2021just}. In the adversarial setting, hidden groups can arise from class-specific failure modes, attack-specific geometry, or interactions between the two.
+
+K-means clustering is a simple group-discovery tool that partitions feature vectors into $K$ clusters by minimizing within-cluster squared distance:
+\[
+\min_{\{c_i\},\{\mu_k\}}
+\sum_{i=1}^{n}
+\left\|z_i-\mu_{c_i}\right\|_2^2,
+\]
+where $z_i$ is the feature vector for sample $i$, $c_i$ is its cluster assignment, and $\mu_k$ is the centroid of cluster $k$. In robust training pipelines, the feature vector may come from model representations, attack metadata, losses, gradients, or combinations of these signals. The resulting clusters can then be treated as candidate groups for Group DRO.
+
+Representation-only clustering is useful but incomplete for the setting studied here. Two samples can be close in representation space while producing different optimization behavior under adversarial perturbation, and two attacks can have similar representation effects while generating different gradients or loss trajectories. Prior work on input gradients and representation behavior suggests that these optimization-level signals can contain information not captured by activations alone \cite{charpiat2019input,paul2021deep}.
+
+This motivates the later use of augmented clustering and gradient fingerprints. Chapter~\ref{chap:methodology} defines how Cluster-DRO and AttackDRO++ construct groups for the report's training pipeline. The background role of this section is only to establish why discovered groups are plausible and why representation-only discovery may need optimization-aware features in a multi-attack adversarial setting.
