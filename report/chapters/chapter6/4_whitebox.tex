@@ -63,8 +63,8 @@ for AttackDRO++ (Ours). Cells report robust accuracy (\%).}
 \end{figure}
 PGD-AT is stronger on several $\ell_\infty$ cells, while DDN-AT is more biased toward bounded $\ell_2$ attacks and visibly weaker on PGD-$\ell_\infty$ and MI-FGSM. Compared with the specialists, Multi-AT and AttackDRO++ show a more balanced cross-attack profile. AttackDRO++ largely preserves the Multi-AT structure while slightly lifting many cells, especially outside the hardest $\ell_\infty$ animal-class tail.
 
-\subsection{Per-Class Whitebox Robustness Pattern}
-\label{subsec:ch6_whitebox_per_class}
+\subsection{Class-Level Gains and Persistent Difficulties}
+\label{subsec:ch6_class_level_gains}
 
 % TODO[Kiệt]:
 % Goal:
@@ -158,8 +158,7 @@ The comparison against PGD-AT shows the expected specialist trade-off. AttackDRO
 
 The comparison against DDN-AT is even more asymmetric. AttackDRO++ improves 62/80 cells and gains $+5.781$ percentage points on average, with a large $+15.710$ percentage-point improvement on the bottom-10 cells. The largest improvements occur under $\ell_\infty$ attacks: PGD20-CE on \textit{ship} ($+27.20$ pp), PGD20-CE on \textit{frog} ($+26.04$ pp), MI-FGSM on \textit{frog} ($+23.68$ pp), and MI-FGSM on \textit{ship} ($+23.62$ pp). These large deltas show that DDN-AT develops a strong $\ell_2$ bias and leaves many $\ell_\infty$ attack--class cells under-protected. At the same time, DDN-AT remains stronger on some $\ell_2$ boundary/optimization cells, especially CW-$\ell_2$ and DeepFool-$\ell_2$ for \textit{deer}, \textit{cat}, and \textit{bird}. Thus, AttackDRO++ improves cross-attack balance but does not completely dominate the strongest single-norm specialist on its preferred family.
 
-\subsection{Attack-Family Interpretation}
-\label{subsec:ch6_whitebox_attack_family}
+\paragraph{Attack-family interpretation.}
 
 % TODO[Kiệt]:
 % Goal:
@@ -184,8 +183,8 @@ The Multi-AT comparison is more balanced: most attack averages are positive, but
 \vspace{-0.5cm}
 This result supports the main claim of the chapter. AttackDRO++ should not be interpreted as a replacement for a single specialist when the deployment threat model is known exactly. Instead, it is a cross-attack robustness method: it sacrifices some of the peak strength of a specialist in exchange for a more even robustness profile across attacks and classes. 
 
-\subsection{Bottom-\(K\) Whitebox Tail Robustness}
-\label{subsec:ch6_whitebox_tail_robustness}
+\subsection{Tail-Class Robustness: Do the Weakest Cells Improve?}
+\label{subsec:ch6_tail_class_robustness}
 
 % TODO[Kiệt]:
 % Goal:

@@ -1,71 +1,145 @@
-\section{Adversarial Training Deep Dive}
+\section{Adversarial Attack Algorithms}
 
-% TODO[ĐA]:
+% TODO[DA]:
 % Goal:
-% - Cover the attack algorithms and adversarial-training concepts needed for Chapters 4-6.
+% - Cover the attack algorithms needed for Chapters 4-6.
 % Flow:
 % - For each attack: intuition -> threat model/norm -> update or objective if needed -> role in this report.
-% - Then explain how adversarial training uses attacks inside the training loop.
 % Include:
 % - One attack-summary table with columns: Attack, Norm, Iterative?, Targeted?, Used for training?, Used for evaluation?, Role.
 % - FGSM-RS, PGD-$\ell_\infty$, CW-$\ell_2$, DeepFool-$\ell_2$, DDN-$\ell_2$, MI-FGSM, TPGD, and AutoAttack-$\ell_\infty$.
 % Avoid:
 % - Overlong derivations or code-level attack settings that belong in Chapter 5.
-% Target length: 3-5 pages including the table.
+% Target length: 3-4 pages including the table.
 
-\subsection{Min-max formulation}
+\subsection{Fast Gradient Sign Method with Random Start (FGSM-RS)}
 
-% TODO[ĐA]:
+% TODO[DA]:
+% Goal:
+% - Explain vanilla FGSM briefly, then explain why the random-start variant is used.
+% Flow:
+% - Intuition -> one-step gradient sign update -> random start -> role in evaluation.
+% Include:
+% - Keep FGSM as prose inside this subsection; do not create a separate numbered FGSM subsection.
+% Avoid:
+% - Treating FGSM-RS as a training method.
+% Target length: 2-3 paragraphs.
+
+\subsection{Projected Gradient Descent (PGD)}
+
+% TODO[DA]:
+% Goal:
+% - Explain PGD as an iterative projected gradient attack.
+% Flow:
+% - Objective -> iterative update -> projection -> PGD-$\ell_\infty$ and PGD-$\ell_2$ roles.
+% Include:
+% - Distinguish PGD-$\ell_\infty$ as an attack from PGD-AT as a training method.
+% Avoid:
+% - Repeating Chapter 5 step counts except as a pointer to the attack configuration table.
+% Target length: 3-4 paragraphs.
+
+\subsection{Carlini--Wagner Attack (CW)}
+
+% TODO[DA]:
+% Goal:
+% - Explain CW as an optimization-based attack.
+% Flow:
+% - Intuition -> objective-level description -> why it complements gradient-step attacks.
+% Include:
+% - Use CW-$\ell_2$ when referring to this report's evaluation attack.
+% Avoid:
+% - Long derivations of the original CW objective.
+% Target length: 2-3 paragraphs.
+
+\subsection{DeepFool}
+
+% TODO[DA]:
+% Goal:
+% - Explain DeepFool as a boundary-oriented attack.
+% Flow:
+% - Local decision boundary approximation -> perturbation direction -> role as a held-out $\ell_2$ attack.
+% Include:
+% - Use DeepFool-$\ell_2$ when referring to this report's evaluation attack.
+% Avoid:
+% - Overstating it as a full robustness certificate.
+% Target length: 2-3 paragraphs.
+
+\subsection{Decoupled Direction and Norm (DDN)}
+
+% TODO[DA]:
+% Goal:
+% - Explain DDN as an $\ell_2$ attack that decouples direction search from norm adjustment.
+% Flow:
+% - Direction update -> norm adjustment -> role in DDN-AT and evaluation.
+% Include:
+% - Distinguish DDN-$\ell_2$ as an attack from DDN-AT as a training method.
+% Avoid:
+% - Treating DDN-AT and DDN-$\ell_2$ as interchangeable.
+% Target length: 2-3 paragraphs.
+
+\subsection{Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}
+
+% TODO[DA]:
+% Goal:
+% - Explain why momentum can improve transferability and attack strength.
+% Flow:
+% - FGSM/PGD connection -> accumulated gradient direction -> role in evaluation.
+% Include:
+% - Use MI-FGSM as the report-facing name.
+% Avoid:
+% - Code-style naming.
+% Target length: 2-3 paragraphs.
+
+\subsection{Targeted Projected Gradient Descent (TPGD)}
+
+% TODO[DA]:
+% Goal:
+% - Explain targeted PGD as a targeted variant of projected gradient attack.
+% Flow:
+% - Targeted objective -> contrast with untargeted PGD -> role in evaluation diversity.
+% Include:
+% - Keep the description compact because PGD has already been defined.
+% Avoid:
+% - Creating a separate threat-model subsection here.
+% Target length: 1-2 paragraphs.
+
+\subsection{AutoAttack}
+
+% TODO[DA]:
+% Goal:
+% - Explain AutoAttack as a standardized ensemble stress test.
+% Flow:
+% - Motivation -> ensemble nature -> why this report reports AutoAttack-$\ell_\infty$ separately.
+% Include:
+% - State that AutoAttack-$\ell_\infty$ is not part of Mean(8).
+% Avoid:
+% - Treating AutoAttack as one of the training attacks.
+% Target length: 2-3 paragraphs.
+
+\section{Adversarial Training as Min-Max Optimization}
+
+% TODO[DA]:
 % Goal:
 % - Explain adversarial training as min-max optimization.
 % Flow:
 % - Inner maximization generates hard adversarial examples; outer minimization updates the model.
 % - Explain why this improves robustness but can specialize to the attack used for training.
+% - Move from single-attack AT to Multi-AT as the natural baseline.
 % Include:
 % - Add an equation only if it is referenced later.
 % - Distinguish PGD-$\ell_\infty$ as an attack from PGD-AT as a training method.
 % - Distinguish DDN-$\ell_2$ as an attack from DDN-AT as a training method.
-% Avoid:
-% - Introducing AttackDRO++ details before Chapter 4.
-% Target length: 4-6 paragraphs.
-
-\subsection{PGD-AT and its limitations}
-
-% TODO[ĐA]:
-% Goal:
-% - Explain why PGD-AT is a strong but narrow baseline.
-% Flow:
-% - Describe PGD-AT, then identify cross-attack and norm-specific limitations.
-% Include:
-% - Connect limitations to the need for Multi-AT and group-aware objectives.
-% Avoid:
-% - Treating PGD-$\ell_\infty$ and PGD-AT as interchangeable terms.
-% Target length: 3-4 paragraphs.
-
-\subsection{Multi-attack AT approaches}
-
-% TODO[ĐA]:
-% Goal:
-% - Explain why multi-attack adversarial training is the natural next baseline.
-% Flow:
-% - Start from single-attack specialization, then explain mixed-source training.
-% - End with the limitation that uniform mixing cannot emphasize weak groups.
-% Include:
 % - Use `Multi-AT` as the report-facing method name.
 % Avoid:
-% - Claiming Multi-AT is weak; it is the strong uniform baseline.
-% Target length: 3-4 paragraphs.
-
-\subsection{Trade-off analysis}
-
-% TODO[ĐA]:
-% Goal:
-% - Explain the trade-offs among clean accuracy, robust accuracy, attack diversity, and stability.
-% Flow:
-% - Discuss why improving one attack or group can affect another.
-% - Set up why Chapter 4 needs anchored adaptive reweighting.
-% Include:
-% - Mention that empirical trade-offs are evaluated in Chapter 6.
-% Avoid:
+% - Introducing AttackDRO++ details before Chapter 4.
 % - Reporting Chapter 6 numerical results here.
-% Target length: 2-3 paragraphs.
+% Target length: 4-6 paragraphs.
+
+\paragraph{Single-attack adversarial training.}
+% TODO[DA]: Explain PGD-AT and DDN-AT as strong but attack-specific baselines.
+
+\paragraph{Multi-attack adversarial training.}
+% TODO[DA]: Explain why uniform multi-attack training is the strong baseline and why uniform mixing may still under-emphasize weak groups.
+
+\paragraph{Trade-off intuition.}
+% TODO[DA]: Explain clean accuracy, robust accuracy, attack diversity, and stability trade-offs without Chapter 6 results.

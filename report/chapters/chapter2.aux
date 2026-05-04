@@ -1,38 +1,47 @@
 \relax 
 \providecommand\hyper@newdestlabel[2]{}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Background}{15}{chapter.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Background}{16}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\newlabel{chap:background}{{2}{15}{Background}{chapter.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Preliminaries}{15}{section.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Deep Neural Networks and Classification}{15}{subsection.2.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Adversarial examples}{17}{subsection.2.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.3}Threat models}{19}{subsection.2.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{White-box threat model}{19}{paragraph*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Gray-box threat model}{20}{paragraph*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Black-box threat model}{21}{paragraph*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Adversarial Training Deep Dive}{22}{section.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Min-max formulation}{22}{subsection.2.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}PGD-AT and its limitations}{22}{subsection.2.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.3}Multi-attack AT approaches}{22}{subsection.2.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.4}Trade-off analysis}{22}{subsection.2.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Distributionally Robust Optimization}{22}{section.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Classical DRO formulation}{22}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Group DRO}{22}{subsection.2.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Exponentiated gradient on simplex}{22}{subsection.2.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}Regularization in overparameterized models}{22}{subsection.2.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}DRO in adversarial training context}{22}{subsection.2.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Domain Generalization via Clustering}{22}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Clustering-based domain discovery}{22}{subsection.2.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Attack-as-domains perspective}{22}{subsection.2.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Statistical Foundations}{22}{section.2.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Paired t-test, Welch t-test}{22}{paragraph*.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Effect size vs p-value}{22}{paragraph*.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why 5-seed is the minimum standard in AT}{22}{paragraph*.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.6}Chapter Summary}{22}{section.2.6}\protected@file@percent }
+\newlabel{chap:background}{{2}{16}{Background}{chapter.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Notation and Learning Setting}{16}{section.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Deep Neural Networks and Supervised Classification}{16}{subsection.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Loss Functions and Gradient-Based Optimization}{17}{subsection.2.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Adversarial Examples and Threat Models}{18}{section.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Lp-Norm Perturbation Sets}{18}{subsection.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Whitebox, Graybox, and Blackbox Access}{20}{subsection.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{White-box threat model}{21}{paragraph*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Gray-box threat model}{21}{paragraph*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Black-box threat model}{22}{paragraph*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Adversarial Attack Algorithms}{23}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Fast Gradient Sign Method with Random Start (FGSM-RS)}{23}{subsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Projected Gradient Descent (PGD)}{23}{subsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Carlini--Wagner Attack (CW)}{23}{subsection.2.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}DeepFool}{23}{subsection.2.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.5}Decoupled Direction and Norm (DDN)}{23}{subsection.2.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.6}Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}{23}{subsection.2.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.7}Targeted Projected Gradient Descent (TPGD)}{23}{subsection.2.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.8}AutoAttack}{23}{subsection.2.3.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Adversarial Training as Min-Max Optimization}{23}{section.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-attack adversarial training.}{23}{paragraph*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Multi-attack adversarial training.}{23}{paragraph*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Trade-off intuition.}{23}{paragraph*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Distributionally Robust Optimization}{23}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}From ERM to Worst-Group Risk}{23}{subsection.2.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Group DRO Formulation}{23}{subsection.2.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Exponentiated-gradient updates.}{23}{paragraph*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Regularization in overparameterized models.}{23}{paragraph*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{DRO in adversarial training.}{24}{paragraph*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Domain Generalization and Clustering}{24}{section.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.1}Domain Generalization: Learning Beyond Known Distributions}{24}{subsection.2.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6.2}K-Means Clustering for Group Discovery}{24}{subsection.2.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.7}Statistical Tools for Multi-Seed Evaluation}{24}{section.2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.1}Paired Tests and Bootstrap Confidence Intervals}{24}{subsection.2.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7.2}Effect Size and Multiple-Comparison Correction}{24}{subsection.2.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Repeated random-seed evaluation.}{24}{paragraph*.16}\protected@file@percent }
 \@setckpt{chapters/chapter2}{
-\setcounter{page}{23}
+\setcounter{page}{25}
 \setcounter{equation}{0}
 \setcounter{enumi}{0}
 \setcounter{enumii}{0}
@@ -42,8 +51,8 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{2}
-\setcounter{section}{6}
-\setcounter{subsection}{0}
+\setcounter{section}{7}
+\setcounter{subsection}{2}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
@@ -74,6 +83,6 @@
 \setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
 \setcounter{Hy@AnnotLevel}{0}
-\setcounter{bookmark@seq@number}{29}
+\setcounter{bookmark@seq@number}{34}
 \setcounter{lstlisting}{0}
 }

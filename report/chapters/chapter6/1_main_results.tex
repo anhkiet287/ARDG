@@ -16,8 +16,8 @@
 % Target length: 5-8 pages depending on final table density.
 % ─────────────────────────────────────────────────────────────────────────────
 
-\subsection{Aggregate Robustness}
-\label{subsec:ch6_aggregate_robustness}
+\subsection{Aggregate Comparison Across Methods}
+\label{subsec:ch6_aggregate_comparison}
 
 % TODO[Kiệt]:
 % Goal:
@@ -154,7 +154,7 @@ motivates the Multi-ATtack setting in the first place.
 \paragraph{Paired aggregate robustness comparisons.}
 Table~\ref{tab:ch6_paired_aggregate_all_baselines} reports paired aggregate results separate the main Multi-ATtack comparison from the
 single-attack specialist comparisons. AutoAttack is excluded from this table and reported
-separately in Section~\ref{subsec:ch6_worst_case_behavior}.
+separately in Section~\ref{subsec:ch6_hardest_evaluation_cases}.
 
 \begin{table}[H]
 \centering
@@ -229,7 +229,7 @@ cross-attack balance.
 %   - Worst(8): minimum over the eight non-AutoAttack attacks.
 %
 % Do not include AutoAttack in this table. AutoAttack is reported separately
-% in Section~\ref{subsec:ch6_worst_case_behavior}.
+% in Section~\ref{subsec:ch6_hardest_evaluation_cases}.
 %
 % Method names:
 %   PGD-AT, DDN-AT, Multi-AT, AttackDRO++.
@@ -259,7 +259,7 @@ reports bootstrap 95\% confidence intervals, seed-level win counts, Cohen's pair
 effect size $d_z$, paired $t$-test $p$-values, Wilcoxon signed-rank $p$-values,
 and Holm-corrected Wilcoxon $p$-values. Holm correction is applied within each
 baseline comparison across the seven reported metrics. AutoAttack is excluded
-from this table and reported separately in Section~\ref{subsec:ch6_worst_case_behavior}.}
+from this table and reported separately in Section~\ref{subsec:ch6_hardest_evaluation_cases}.}
 \label{tab:ch6_corrected_paired_tests}
 \scriptsize
 \setlength{\tabcolsep}{2.5pt}
@@ -398,8 +398,8 @@ heldout robustness, while its worst-case behavior depends on the baseline being
 compared.
 
 
-\subsection{Per-Attack Robustness Breakdown}
-\label{subsec:ch6_per_attack_breakdown}
+\subsection{Per-Attack Accuracy: Where Do Methods Diverge?}
+\label{subsec:ch6_per_attack_accuracy}
 
 % TODO[Kiệt]:
 % Goal:
@@ -520,8 +520,8 @@ seen $\ell_\infty$ attack ($-0.003$~pp), which explains why Worst(8) is
 preserved rather than improved.
 
 
-\subsection{Worst-Case Behavior: Worst(8) and AutoAttack}
-\label{subsec:ch6_worst_case_behavior}
+\subsection{Robustness Under the Hardest Evaluation Cases}
+\label{subsec:ch6_hardest_evaluation_cases}
 
 % TODO[Kiệt]:
 % Goal:
@@ -533,6 +533,8 @@ preserved rather than improved.
 % Avoid:
 % - Claiming AutoAttack is part of Mean(8).
 % Target length: 3-4 paragraphs.
+
+This subsection examines two complementary stress indicators: the lowest robust accuracy across the eight main evaluation attacks and the separate AutoAttack-$\ell_\infty$ evaluation.
 
 Two metrics test standardized worst-case behavior. Worst(8) is the minimum
 robust accuracy across the eight evaluation attacks per checkpoint;
@@ -609,8 +611,8 @@ opposite failure mode by collapsing under $\ell_\infty$ stress. Single-attack
 training therefore produces specialists; AttackDRO++ does not match PGD-AT's
 $\ell_\infty$ depth, but provides the best average cross-attack balance.
 
-\subsection{Variance Reduction and Training Stability}
-\label{subsec:ch6_variance_reduction}
+\subsection{Training Stability: How Predictable Is the Outcome?}
+\label{subsec:ch6_training_stability}
 
 % TODO[Kiệt]:
 % Goal:

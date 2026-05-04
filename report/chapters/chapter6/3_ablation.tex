@@ -1,10 +1,10 @@
 \section{Sensitivity to Key Hyperparameters}
 
-% TODO[Kiệt]:
+% TODO[Kiet]:
 % Goal:
 % - Explain ablations as sensitivity checks, not as a separate results dump.
 % Flow:
-% - Anchor strength, q-frozen behavior, cluster count, refresh schedule, feature mode, and regularizer.
+% - Cluster count, anchor strength, and recluster frequency.
 % - For each: result -> interpretation -> limitation.
 % Include:
 % - Cite `fig:ch6_ablation_dashboard`, `tab:ch6_ablation_num_clusters`, and `tab:ch6_cluster_refresh_schedule_ablation` where relevant.
@@ -13,56 +13,10 @@
 % - Adding extra ablation files back into the main flow without user confirmation.
 % Target length: 4-6 pages depending on final ablation scope.
 
-\subsection{Anchor Strength}
-\label{subsec:ch6_ablation_anchor_strength}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain why the selected anchor strength is a stability trade-off.
-% Flow:
-% - Interpret the dashboard, then connect the chosen setting to Chapter 4's anchor objective.
-% Include:
-% - Reference `fig:ch6_ablation_dashboard`.
-% Avoid:
-% - Claiming exact optimum unless the ablation supports it.
-% Target length: 2-3 paragraphs.
-
-The anchor-strength ablation examines the interpolation between the uniform
-multi-attack ERM loss and the adaptive Cluster-DRO loss. A smaller anchor gives
-more weight to the uniform baseline, while a larger anchor increases the influence of
-cluster-level reweighting. Figure~\ref{fig:ch6_ablation_dashboard} provides the dashboard
-view of the ablation results, with the anchor-strength comparison shown as the first
-sensitivity check. Figure~\ref{fig:ch6_ablation_dashboard} reports the corresponding
-numeric summary.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{figures/anchor_strength_ablation}
-    \caption{Ablation dashboard for AttackDRO++. The dashboard summarizes the
-    sensitivity of M(8) robust accuracy to anchor strength, number of clusters, and
-    cluster-refresh schedule. M(8) denotes the mean robust accuracy over the eight
-    bounded evaluation attacks and excludes AutoAttack.}
-    \label{fig:ch6_ablation_dashboard}
-\end{figure}
-
-
-Overall, the ablation supports using a moderate anchor rather than relying entirely on
-either uniform ERM or aggressive Cluster-DRO weighting. The default
-$\lambda_{\mathrm{DRO}}=0.35$ is retained because it provides a practical balance: the
-uniform multi-attack signal remains dominant, while the cluster-level correction can still
-emphasize harder latent groups. Since some settings are evaluated with fewer seeds, the
-observed differences should be interpreted as a sensitivity trend rather than a definitive
-ranking.
-
-% Extra ablation removed from main flow; keep source text here for archive only.
-\iffalse
-\subsection{q-Frozen Ablation}
-\fi
-
-\subsection{Number of Clusters}
+\subsection{Number of Clusters: How Many Groups Are Needed?}
 \label{subsec:ch6_ablation_num_clusters}
 
-% TODO[Kiệt]:
+% TODO[Kiet]:
 % Goal:
 % - Explain sensitivity to cluster count without overfitting the narrative to one value.
 % Flow:
@@ -104,10 +58,55 @@ can arise when clusters become too small. The results should be read as evidence
 the method is reasonably robust around the default cluster granularity, not as proof that
 $K=4$ is universally optimal.
 
-\subsection{Cluster-Refresh Schedule}
-\label{subsec:ch6_ablation_cluster_refresh}
+\subsection{Anchor Strength: Finding a Stable Trade-off}
+\label{subsec:ch6_ablation_anchor_strength}
 
-% TODO[Kiệt]:
+% TODO[Kiet]:
+% Goal:
+% - Explain why the selected anchor strength is a stability trade-off.
+% Flow:
+% - Interpret the dashboard, then connect the chosen setting to Chapter 4's anchor objective.
+% Include:
+% - Reference `fig:ch6_ablation_dashboard`.
+% Avoid:
+% - Claiming exact optimum unless the ablation supports it.
+% Target length: 2-3 paragraphs.
+
+The anchor-strength ablation examines the interpolation between the uniform
+multi-attack ERM loss and the adaptive Cluster-DRO loss. A smaller anchor gives
+more weight to the uniform baseline, while a larger anchor increases the influence of
+cluster-level reweighting. Figure~\ref{fig:ch6_ablation_dashboard} provides the dashboard
+view of the ablation results, with the anchor-strength comparison shown as the first
+sensitivity check. Figure~\ref{fig:ch6_ablation_dashboard} reports the corresponding
+numeric summary.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/anchor_strength_ablation}
+    \caption{Ablation dashboard for AttackDRO++. The dashboard summarizes the
+    sensitivity of M(8) robust accuracy to anchor strength, number of clusters, and
+    cluster-refresh schedule. M(8) denotes the mean robust accuracy over the eight
+    bounded evaluation attacks and excludes AutoAttack.}
+    \label{fig:ch6_ablation_dashboard}
+\end{figure}
+
+Overall, the ablation supports using a moderate anchor rather than relying entirely on
+either uniform ERM or aggressive Cluster-DRO weighting. The default
+$\lambda_{\mathrm{DRO}}=0.35$ is retained because it provides a practical balance: the
+uniform multi-attack signal remains dominant, while the cluster-level correction can still
+emphasize harder latent groups. Since some settings are evaluated with fewer seeds, the
+observed differences should be interpreted as a sensitivity trend rather than a definitive
+ranking.
+
+% Extra ablation removed from main flow; keep source text here for archive only.
+\iffalse
+\paragraph{q-frozen ablation.}
+\fi
+
+\subsection{Recluster Frequency: How Often Should Groups Update?}
+\label{subsec:ch6_ablation_recluster_frequency}
+
+% TODO[Kiet]:
 % Goal:
 % - Explain how refresh frequency affects cluster stability and adaptivity.
 % Flow:
@@ -170,7 +169,7 @@ overly frequent cluster refitting.
 \end{table}
 % Extra ablations removed from main flow; keep source text here for archive only.
 \iffalse
-\subsection{Cluster Feature Mode}
+\paragraph{Cluster feature mode.}
 
-\subsection{Sample-Level Regularizer}
+\paragraph{Sample-level regularizer.}
 \fi
