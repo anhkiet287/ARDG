@@ -1,14 +1,43 @@
 \section{Cluster Discovery in Robust Training Pipelines}
 
-% TODO[Thành]:
-% Goal:
-% - Review clustering or representation-based group discovery methods relevant to robust training.
-% Flow:
-% - Explain why learned representations can reveal hidden groups.
-% - Compare representation-only grouping with the gradient-fingerprint idea.
-% - End with the limitation that prior grouping may not capture optimization-level difficulty.
-% Include:
-% - Mention K-means only as needed for the report's method.
-% Avoid:
-% - A broad clustering survey.
-% Target length: 3-5 paragraphs.
+Cluster discovery becomes relevant when visible group labels are missing or too
+coarse to describe the actual failure modes of a model. Hidden stratification
+work shows that coarse class labels can contain meaningful subgroups with very
+different error rates, and that learned representations can help expose those
+subgroups. GEORGE is a representative example: it clusters representation space
+to estimate latent subclasses and then applies a robust objective over the
+discovered groups \cite{sohoni2020no}. Environment inference methods make a
+related point from the domain-generalization side by inferring environments
+that can be used by invariant objectives when the environment labels are not
+known \cite{creager2021environment}.
+
+These methods are important for multi-attack robustness because they weaken the
+assumption that useful groups must be supplied by the dataset designer. In an
+adversarial training pipeline, the obvious supplied labels are class labels and
+source attack identities, but neither is assured to match the robust failure
+structure. A representation-based cluster may identify subgroups that cut
+across attacks, classes, or both. This motivates Cluster-DRO as an intermediate
+baseline in this report: Group DRO over discovered clusters rather than over
+fixed source attack identities.
+
+Representation geometry, however, is only one signal. Other work shows that
+training dynamics and gradients can reveal example difficulty that is not
+captured by semantic similarity alone. Just Train Twice uses high-loss examples
+from an initial model to identify groups that average-risk training overlooks
+\cite{liu2021just}. Data Diet and related gradient-based scoring work show that
+early-training gradient or error signals can identify examples that are
+disproportionately influential for learning \cite{paul2021deep}. Charpiat et
+al.\ similarly define input similarity through the effect of parameter updates,
+which makes sample relations explicitly optimization-sensitive
+\cite{charpiat2019input}.
+
+For adversarial robustness, this distinction matters. A cluster built only from
+penultimate representations may capture semantic or visual similarity while
+missing the optimization-level difficulty created by adversarial generation.
+Two adversarial examples can be close in representation space but differ in
+margin, gradient direction, or attack sensitivity; conversely, examples that
+look semantically different may create similar training pressure. The cluster
+literature therefore motivates latent group discovery, but it also motivates
+augmenting representation-based clusters with optimization-aware features.
+Chapter~\ref{chap:methodology} uses this opening to introduce gradient
+fingerprints and augmented clustering features for AttackDRO++.

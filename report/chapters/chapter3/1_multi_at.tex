@@ -1,19 +1,56 @@
 \section{Multi-Attack Adversarial Training}
 
-% TODO[Thành]:
-% Goal:
-% - Explain how prior work trains against multiple attacks and where uniform or fixed attack mixing falls short.
-% Flow:
-% - Summarize the main strategy families, then compare them to this report's Multi-AT baseline.
-% - End with the limitation that attack diversity alone does not discover hard latent groups.
-% Include:
-% - Representative works only where they support the gap argument.
-% Avoid:
-% - Paper-by-paper listing without synthesis.
-% Target length: 4-6 paragraphs.
+Adversarial training has become one of the most widely used empirical defenses
+because it turns robustness into an optimization problem over adversarially
+constructed examples. The early line from fast gradient methods to PGD-style
+min-max training made this dependence explicit: a defense is trained and
+evaluated relative to a specified perturbation set, attack objective, and
+optimization procedure \cite{goodfellow2015explaining,madry2019towards}.
+Recent surveys emphasize that adversarial-training outcomes depend not only on
+the attack used to generate adversarial examples, but also on data construction,
+model design, and training-configuration choices
+\cite{zhao2024adversarialtraining}. This broader view matters for a
+multi-attack setting because the training attack is only one part of a larger
+robustness pipeline.
 
-%Table comparing: attacks used, objective function, sampling strategy
-%Tramer 2019, Maini 2020 (MSD), Madaan 2021 (DPP), Laidlaw 2021
+The threat-model dependence of adversarial training also created a parallel
+literature on robust evaluation. Defenses that appear effective under weak or
+misconfigured attacks can fail under stronger optimization, and gradient
+masking can make measured robustness misleading
+\cite{uesato2018adversarial,athalye2018obfuscated}. AutoAttack and related
+benchmarking work respond to this problem by emphasizing standardized,
+diverse, and difficult attack suites rather than relying on a single attack
+implementation \cite{croce2020reliable,dai2023multirobustbench}. For this
+report, the lesson is that a training method should be judged under attacks
+that differ from the source attacks used during optimization, because apparent
+robustness under one attack family does not necessarily transfer to another.
 
+Multi-attack adversarial training is a natural response to this limitation.
+Instead of optimizing against one perturbation family, it exposes the model to
+several attack sources or to a union of perturbation models during training.
+Prior work on multiple perturbations shows that robustness against one
+\(\ell_p\) geometry or spatial transformation can trade off against robustness
+to another, while work on the union of perturbation models directly studies
+how to train against heterogeneous threat sets
+\cite{tramer2019adversarial,maini2020adversarial}. Later methods and
+benchmarks further show that different perturbation types can form distinct
+distributions, so multi-attack robustness is not simply a matter of adding more
+samples to a standard adversarial training loop
+\cite{maini2022perturbation,dai2023multirobustbench}.
 
+This literature establishes the role of Multi-AT in the present report. Multi-AT
+is the uniform multi-attack adversarial training baseline: it trains on a
+balanced mixture of PGD-\(\ell_\infty\) and DDN-\(\ell_2\) source attacks while
+using the same architecture and training budget as the group-aware variants.
+It is stronger and more relevant than a single-attack baseline when the
+evaluation suite spans multiple attack families. However, its weighting rule is
+still fixed. Each source attack receives uniform treatment regardless of
+whether the current model is failing more severely on one attack, one class, or
+one latent subgroup of adversarial examples.
 
+Broader attack coverage therefore does not by itself decide how training
+emphasis should be allocated. A method can train on multiple attacks and still
+average away the examples that define the weakest robust behavior. The next
+section turns to Group DRO because it offers a principled way to focus on weak
+groups, but it also introduces a new question: what should count as a group in
+a multi-attack adversarial training pipeline?

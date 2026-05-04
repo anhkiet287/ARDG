@@ -1,63 +1,28 @@
-%=========================
-% CHAPTER 3 – RELATED WORK
-%=========================
 \chapter{Related Work}
 \label{chap:related_work}
-% ---------- Intro paragraph for Chapter 3 ----------
 
-% TODO[Thành]:
-% Goal:
-% - Introduce related work as a structured gap argument, not a paper-by-paper list.
-% Flow:
-% - State the review dimensions: multi-attack training, Group DRO, domain generalization, clustering, and the remaining gap.
-% - Explain that each section should end by identifying what prior work leaves unresolved for this report.
-% Include:
-% - Keep method names and attack names consistent with docs/05_notation_registry.md.
-% Avoid:
-% - Detailed experimental claims that belong in Chapter 6.
-% Target length: 2-3 intro paragraphs.
+Chapter~\ref{chap:introduction} framed this work around the cross-attack
+robustness gap: adversarial robustness can depend strongly on the attack used
+during training, and a single robustness score can hide uneven behavior across
+threat models. This chapter reviews the related work through that lens. The
+goal is not to list every adversarial training variant, but to identify which
+parts of the literature motivate the method developed in
+Chapter~\ref{chap:methodology} and which assumptions remain insufficient for
+the practical multi-attack setting studied in this report.
 
-% TODO[Team]:
-% Goal:
-% - Decide whether to add one related-work comparison table.
-% Flow:
-% - Use columns: Work, Setting, Grouping assumption, Attack coverage, Limitation, Relation to this report.
-% Include:
-% - Only papers already discussed in the surrounding sections.
-% Avoid:
-% - A table that becomes a citation dump without a clear gap argument.
-% Target length: 1 compact table if added later.
+The chapter proceeds in five steps. Section~3.1 reviews how adversarial
+training moved from single-threat training toward multi-attack and
+multi-perturbation objectives. Section~3.2 discusses Group DRO as a mechanism
+for emphasizing weak groups, while also highlighting its dependence on useful
+group definitions. Section~3.3 connects the attacks-as-domains view to domain
+generalization, but distinguishes standard domain generalization from
+threat-model-aware adversarial evaluation. Section~3.4 turns to hidden-group
+and cluster-discovery methods, which motivate latent grouping but also expose
+the limits of representation-only clusters. Section~3.5 synthesizes these
+threads into the gap addressed by AttackDRO++.
 
-
-
-% =========================================================
-% 3.1 Multi-Attack Adversarial Training
-% =========================================================
 \input{chapters/chapter3/1_multi_at}
-
-% =========================================================
-% 3.2 Group DRO for Robustness
-% =========================================================
 \input{chapters/chapter3/2_group_dro}
-
-% =========================================================
-% 3.3 Domain Generalization Meets Adversarial Robustness
-% =========================================================
 \input{chapters/chapter3/3_dg_ar}
-
-% =========================================================
-% 3.4 Cluster Discovery and Representation Learning
-% =========================================================
 \input{chapters/chapter3/4_cluster}
-
-% =========================================================
-% 3.5 Research Gap
-% =========================================================
 \input{chapters/chapter3/5_gap}
-
-% ========================= END OF CHAPTER 3 =========================
-
-
-
-
-

@@ -1,14 +1,46 @@
 \section{The Remaining Gap and Motivation for This Work}
 
-% TODO[Thành]:
-% Goal:
-% - Synthesize the previous related-work sections into the exact gap this report addresses.
-% Flow:
-% - Multi-attack training gives diversity but not adaptive hard-group emphasis.
-% - Group DRO gives adaptive emphasis but depends on useful group definitions.
-% - Domain/clustering ideas suggest group discovery, but robustness needs attack-aware evaluation.
-% Include:
-% - A clear final paragraph that makes Chapter 4 feel necessary.
-% Avoid:
-% - Introducing new papers that were not discussed earlier.
-% Target length: 3-4 paragraphs.
+The related work leaves a layered gap rather than a single missing citation.
+Single-attack adversarial training gives a clear min-max formulation, but it
+can specialize to the training threat model. Multi-attack adversarial training
+broadens attack coverage, but common formulations still rely on fixed source
+attacks, fixed perturbation definitions, or uniform mixtures
+\cite{madry2019towards,tramer2019adversarial,maini2020adversarial}. Group DRO
+adds adaptive weak-group emphasis, but its behavior depends on whether the
+chosen groups reflect the relevant failures \cite{sagawa2019groupdro}. Domain
+generalization and hidden-group discovery suggest that useful groups may be
+latent, but adversarial robustness still requires threat-model-aware evaluation
+and grouping signals that reflect optimization difficulty
+\cite{gulrajani2021domainbed,sohoni2020no,creager2021environment}.
+
+This combination motivates the method progression used in the rest of the
+report. Multi-AT serves as the uniform multi-attack adversarial training
+baseline. AttackDRO applies Group DRO over fixed source attack identities,
+testing whether adaptive attack-level weighting changes robustness relative to
+uniform mixing.
+Cluster-DRO then moves the grouping unit from source attack identities to
+discovered clusters, addressing the possibility that robust failure modes cut
+across attack labels. AttackDRO++ denotes only the final proposed method:
+uniform-anchored Cluster-DRO with gradient fingerprints, where the anchor keeps
+the objective tied to the Multi-AT signal and the gradient fingerprints make
+the clusters sensitive to optimization-level difficulty.
+
+The prior strands motivate this combination but do not by themselves provide
+it. Multi-attack training explains why several attacks should be present during
+optimization; Group DRO explains why the weakest groups should receive
+additional emphasis; domain generalization explains why attacks can be viewed
+as domain-like shifts; and cluster discovery explains why the grouping variable
+need not be supplied in advance. What remains is a practical multi-attack
+adversarial training method that combines these ideas without treating fixed
+attack identities as the final grouping granularity.
+
+The novelty claim is therefore deliberately conservative. This report addresses
+a practical multi-attack adversarial training setting, not robustness against
+arbitrary attacks or a general solution to domain generalization. This
+conservative framing is consistent with recent survey evidence that
+adversarial training remains shaped by practical challenges such as
+catastrophic overfitting, fairness, robustness-accuracy trade-offs, and
+computational cost \cite{zhao2024adversarialtraining}. Chapter~\ref{chap:methodology}
+introduces the AttackDRO++ method that addresses the gap identified here, and
+Chapter~\ref{chap:experimental_setup} defines the protocol used to evaluate it
+without previewing the numerical results.
