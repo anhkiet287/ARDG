@@ -21,6 +21,13 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{szegedy2014intriguing}
+\BIBentryALTinterwordspacing
+C.~Szegedy, W.~Zaremba, I.~Sutskever, J.~Bruna, D.~Erhan, I.~Goodfellow, and
+  R.~Fergus, ``Intriguing properties of neural networks,'' 2014. [Online].
+  Available: \url{https://arxiv.org/abs/1312.6199}
+\BIBentrySTDinterwordspacing
+
 \bibitem{goodfellow2015explaining}
 \BIBentryALTinterwordspacing
 I.~J. Goodfellow, J.~Shlens, and C.~Szegedy, ``Explaining and harnessing
@@ -35,12 +42,18 @@ A.~Madry, A.~Makelov, L.~Schmidt, D.~Tsipras, and A.~Vladu, ``Towards deep
   Available: \url{https://arxiv.org/abs/1706.06083}
 \BIBentrySTDinterwordspacing
 
-\bibitem{szegedy2014intriguing}
+\bibitem{sagawa2019groupdro}
 \BIBentryALTinterwordspacing
-C.~Szegedy, W.~Zaremba, I.~Sutskever, J.~Bruna, D.~Erhan, I.~Goodfellow, and
-  R.~Fergus, ``Intriguing properties of neural networks,'' 2014. [Online].
-  Available: \url{https://arxiv.org/abs/1312.6199}
+S.~Sagawa, P.~W. Koh, T.~B. Hashimoto, and P.~Liang, ``Distributionally robust
+  neural networks for group shifts: On the importance of regularization for
+  worst-case generalization,'' \emph{arXiv preprint arXiv:1911.08731}, 2019.
+  [Online]. Available: \url{https://arxiv.org/abs/1911.08731}
 \BIBentrySTDinterwordspacing
+
+\bibitem{croce2020reliable}
+F.~Croce and M.~Hein, ``Reliable evaluation of adversarial robustness with an
+  ensemble of diverse parameter-free attacks,'' in \emph{International
+  Conference on Machine Learning}, 2020, pp. 2206--2216.
 
 \bibitem{tramer2019adversarial}
 \BIBentryALTinterwordspacing
@@ -59,11 +72,6 @@ P.~Maini, E.~Wong, and Z.~Kolter, ``Adversarial robustness against the union of
   2020, pp. 6640--6650. [Online]. Available:
   \url{https://proceedings.mlr.press/v119/maini20a.html}
 \BIBentrySTDinterwordspacing
-
-\bibitem{croce2020reliable}
-F.~Croce and M.~Hein, ``Reliable evaluation of adversarial robustness with an
-  ensemble of diverse parameter-free attacks,'' in \emph{International
-  Conference on Machine Learning}, 2020, pp. 2206--2216.
 
 \bibitem{athalye2018obfuscated}
 \BIBentryALTinterwordspacing
@@ -154,14 +162,6 @@ T.~Hashimoto, M.~Srivastava, H.~Namkoong, and P.~Liang, ``Fairness without
 J.~C. Duchi and H.~Namkoong, ``Learning models with uniform performance via
   distributionally robust optimization,'' \emph{The Annals of Statistics},
   vol.~49, no.~3, pp. 1378--1406, 2021.
-
-\bibitem{sagawa2019groupdro}
-\BIBentryALTinterwordspacing
-S.~Sagawa, P.~W. Koh, T.~B. Hashimoto, and P.~Liang, ``Distributionally robust
-  neural networks for group shifts: On the importance of regularization for
-  worst-case generalization,'' \emph{arXiv preprint arXiv:1911.08731}, 2019.
-  [Online]. Available: \url{https://arxiv.org/abs/1911.08731}
-\BIBentrySTDinterwordspacing
 
 \bibitem{kivinen1997exponentiated}
 J.~Kivinen and M.~K. Warmuth, ``Exponentiated gradient versus gradient descent
