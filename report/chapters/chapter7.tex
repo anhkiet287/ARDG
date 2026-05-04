@@ -7,9 +7,9 @@ This report studied cross-attack adversarial robustness: the problem that a
 model trained to resist one adversarial threat may not resist another threat
 with a different norm, objective, or optimization behavior.  The central
 motivation was not simply to raise one robustness score, but to understand how
-robustness is distributed across attack families and to develop a training
-mechanism that improves this distribution under a controlled experimental
-protocol.  In this framing, attack-induced examples behave like domain-like
+robustness is distributed across attack families and to develop and test a
+training mechanism aimed at improving this distribution under a controlled
+experimental protocol.  In this framing, attack-induced examples behave like domain-like
 groups, and a training procedure should be evaluated by how well it balances
 these groups rather than by how strongly it specializes to one source attack.
 
@@ -31,19 +31,21 @@ additional emphasis.  The resulting AttackDRO++ configuration is therefore best
 understood as a refinement of Multi-AT rather than as a separate replacement for
 multi-attack training.
 
-It is important to distinguish between the methodological contribution and the
-empirical claim.  The contribution of AttackDRO++ is the group-aware training
-mechanism itself---the combination of latent cluster discovery, gradient
-fingerprints, and uniform-anchored Cluster-DRO.  The empirical claim is
-narrower: this mechanism improves robustness balance in the evaluated
-CIFAR-10 and ResNet-18 setting under the fixed protocol defined in
-Chapter~\ref{chap:experimental_setup}.  The report evaluated the methods
+The contribution of this work should be read at two connected levels:
+methodologically, AttackDRO++ introduces a group-aware multi-attack training
+mechanism built from latent cluster discovery, gradient fingerprints, and a
+uniform anchor; empirically, the report tests whether that mechanism improves
+robustness balance under the fixed CIFAR-10 and ResNet-18 protocol.  The
+empirical claim is therefore narrower than the method itself: the evidence
+supports an improvement in robustness balance in the evaluated CIFAR-10 and
+ResNet-18 setting, not a general claim of robustness across datasets,
+architectures, or attack configurations.  The report evaluates this claim
 through aggregate whitebox robustness, per-attack breakdowns, per-class and
-attack--class drilldowns, graybox transfer, statistical comparisons, and
-hyperparameter sensitivity studies.  This report did not aim to establish
-universal robustness or broad architecture generalization.  Instead, it aimed
-to test whether group-aware multi-attack training can improve robustness
-balance under a fixed and reproducible experimental protocol.
+attack-by-class drilldowns, graybox transfer, statistical comparisons, and
+hyperparameter sensitivity studies.  It does not aim to establish universal
+robustness or broad architecture generalization; instead, it tests whether
+group-aware multi-attack training can improve robustness balance under a fixed
+and reproducible experimental protocol.
 
 \section{Answers to Research Questions}
 
@@ -84,7 +86,8 @@ threat geometries, yet the Chapter~\ref{chap:results_analysis} drilldowns show
 that some attack families and CIFAR-10 classes remain systematically harder
 than others even under uniform averaging.
 
-The third answer is deliberately conservative.  AttackDRO++ improves average
+The third answer requires the most careful reading because its strength varies
+across the evidence panels.  AttackDRO++ improves average
 cross-attack balance and reduces seed-to-seed variation relative to Multi-AT in
 the main whitebox panel.  This answer is strongest for the aggregate and
 held-out whitebox metrics, where paired differences are statistically supported
@@ -96,23 +99,23 @@ trend over Multi-AT, while also showing that transfer accuracy can be inflated
 by specialist geometry mismatch.  The WRN-28-10 check in
 Appendix~\ref{app:extras} is supplementary only: it is a single-run result that
 is useful mainly because it prevents the conclusion from becoming stronger than
-the evidence supports.  Overall, the third answer describes a bounded
-improvement in robustness balance, not a general claim of robustness across
-architectures or attack configurations.
+the evidence supports.  Taken together, the RQ3 evidence supports a bounded
+improvement in average robustness balance under the evaluated protocol, not a
+claim that transfers across architectures or attack configurations.
 
-The fourth answer confirms that AttackDRO++ is not highly sensitive to the
-tested hyperparameter ranges, but the ablation panels are smaller than the
-main aggregate panel and should be interpreted as practical configuration
-guidance rather than as exhaustive optimization evidence.
+The fourth answer indicates that the selected configuration is not highly
+sensitive to the tested hyperparameter ranges.  However, because the ablation
+panels are smaller than the main aggregate panel, they should be read as
+practical configuration guidance rather than as evidence that the configuration
+was exhaustively optimized.
 
 \section{Limitations of the Current Study}
 
-The following limitations define the boundary of the evidence presented in this
-report rather than invalidating the result.  They describe where the
-experimental scope ends and where future work must extend the evaluation before
-broader claims can be made.
+These limitations define the boundary of the current evidence rather than
+invalidating the result; they mark where the experimental scope ends and where
+future work must extend the evaluation before broader claims can be made.
 
-The first limitation is dataset scope.  The main experiments use CIFAR-10, which
+The most immediate boundary is dataset scope.  The main experiments use CIFAR-10, which
 is a standard benchmark for adversarial training but still a small,
 low-resolution image dataset.  The observed behavior may not transfer directly
 to CIFAR-100, Tiny ImageNet, ImageNet-scale data, or non-image domains.  Larger
@@ -120,7 +123,7 @@ datasets may change both the difficulty of the attack suite and the usefulness
 of cluster-based group discovery, particularly if the number of meaningful
 latent groups scales with dataset complexity.
 
-The second limitation is architecture scope.  The main evidence uses ResNet-18,
+Architecture scope is a related constraint.  The main evidence uses ResNet-18,
 so the central empirical claims are bounded to that backbone.
 Appendix~\ref{app:extras} includes a WRN-28-10 architecture check, but it is a
 single-run supplementary experiment and does not support a broad
@@ -129,7 +132,7 @@ useful because it prevents the conclusion from being stronger than the data
 support, but it also means that architecture generalization remains an open
 question.
 
-The third limitation is attack-suite scope.  The evaluation covers a fixed set
+The evaluation is also bounded by its attack suite.  The evaluation covers a fixed set
 of whitebox and graybox attacks, with AutoAttack-$\ell_\infty$ reported
 separately as a standardized stress test.  This does not establish certified
 robustness, full adaptive robustness, or robustness against every possible
@@ -137,7 +140,7 @@ attack implementation.  In particular, an attacker aware of the grouping
 mechanism could design adaptive tests that are not covered by the present
 protocol.
 
-The fourth limitation is statistical and panel scope.  The main aggregate
+Statistical power varies across the evidence panels.  The main aggregate
 comparisons use 20 paired random-seed evaluations, but the class-wise analysis
 uses five seeds, the graybox analysis uses a focused surrogate panel, and the
 ablation studies use three runs per setting.  These smaller panels are
@@ -145,7 +148,7 @@ sufficient to identify trends and failure modes, but they carry less statistical
 power than the main paired aggregate comparisons and should be interpreted
 accordingly.
 
-Finally, the method itself introduces additional complexity.  AttackDRO++ depends
+The method's own complexity is a practical constraint.  AttackDRO++ depends
 on feature banks, clustering quality, gradient-fingerprint construction, and a
 reasonable anchor strength.  These components make the method more expressive
 than uniform multi-attack training, but they also add implementation and tuning
@@ -155,7 +158,9 @@ grouping choice will behave equally well in other settings.
 
 \section{Directions for Future Work}
 
-A natural next step is to broaden the dataset and architecture scope.  The
+Future work should first test whether the same behavior holds across broader
+datasets and architectures, because these are the primary boundaries of the
+current evidence.  The
 current evidence should be repeated on CIFAR-100, Tiny ImageNet, and larger
 image datasets, where class structure and feature complexity are richer.  The
 architecture check should also be expanded across ResNet variants, WRN
@@ -192,8 +197,8 @@ AttackDRO++ more practical for larger models and datasets.
 
 \section{Closing Remarks}
 
-Cross-attack robustness is not only a question of maximizing one attack score.
-It is a question of how robustness is distributed across threat geometries,
+Cross-attack robustness is not reducible to a single attack score; it depends
+on how robustness is distributed across threat geometries,
 classes, and evaluation conditions.  Under the CIFAR-10 and ResNet-18 protocol
 used in this report, AttackDRO++ supports the view that group-aware
 multi-attack training can improve robustness balance over a uniform multi-attack
@@ -205,6 +210,6 @@ conditional: broader datasets, stronger adaptive attacks, additional
 architectures, and larger transfer settings are all needed before making
 general claims.
 
-The main conclusion is therefore focused but useful: adversarial robustness
-should be evaluated and optimized as a multi-domain problem, not as a
-single-attack score.
+The main conclusion is therefore not that AttackDRO++ establishes universal
+robustness, but that adversarial robustness is better evaluated and optimized
+as a multi-domain problem than as a single-attack score.
