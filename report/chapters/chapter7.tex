@@ -39,7 +39,7 @@ narrower: this mechanism improves robustness balance in the evaluated
 CIFAR-10 and ResNet-18 setting under the fixed protocol defined in
 Chapter~\ref{chap:experimental_setup}.  The report evaluated the methods
 through aggregate whitebox robustness, per-attack breakdowns, per-class and
-per-attack--class drilldowns, graybox transfer, statistical comparisons, and
+attack--class drilldowns, graybox transfer, statistical comparisons, and
 hyperparameter sensitivity studies.  This report did not aim to establish
 universal robustness or broad architecture generalization.  Instead, it aimed
 to test whether group-aware multi-attack training can improve robustness
@@ -70,7 +70,7 @@ RQ & Answer & Main evidence \\
 \midrule
 RQ1 & Single-attack adversarial training produces attack-dependent robustness: PGD-AT and DDN-AT each protect their source attack family more strongly than attacks outside their training objective. & Whitebox aggregate and per-attack results in Section~\ref{sec:ch6_whitebox}. \\
 RQ2 & Uniform multi-attack training improves balance across seen and held-out attacks compared with single-attack baselines, but uniform averaging does not fully remove hard attack-specific and class-specific failure modes. & Aggregate and per-attack comparisons in Sections~\ref{subsec:ch6_aggregate_comparison} and~\ref{subsec:ch6_per_attack_accuracy}. \\
-RQ3 & AttackDRO++ improves average robustness and training stability over the uniform multi-attack baseline in the main whitebox panel, while hardest-case, full-test AutoAttack, graybox, and architecture-transfer evidence requires conservative interpretation. & Whitebox aggregate, stability, class-wise, and graybox analyses in Sections~\ref{sec:ch6_whitebox}--\ref{sec:ch6_graybox}; supplementary WRN-28-10 check in Appendix~\ref{app:extras}. \\
+RQ3 & AttackDRO++ improves average robustness and training stability over the uniform multi-attack baseline in the main whitebox panel, while evidence from hardest-case checks, full-test AutoAttack-$\ell_\infty$, graybox transfer, and supplementary architecture checks requires conservative interpretation. & Whitebox aggregate, stability, class-wise, and graybox analyses in Sections~\ref{sec:ch6_whitebox}--\ref{sec:ch6_graybox}; supplementary WRN-28-10 check in Appendix~\ref{app:extras}. \\
 RQ4 & The selected configuration is supported by sensitivity studies: moderate clustering, a moderate uniform anchor, and a two-epoch refresh schedule provide a stable practical setting. & Ablation results in Section~\ref{sec:ch6_ablation}. \\
 \bottomrule
 \end{tabularx}
@@ -198,7 +198,7 @@ classes, and evaluation conditions.  Under the CIFAR-10 and ResNet-18 protocol
 used in this report, AttackDRO++ supports the view that group-aware
 multi-attack training can improve robustness balance over a uniform multi-attack
 baseline.  The improvement is clearest on average and held-out robustness
-metrics; the hardest-case and AutoAttack behavior is statistically
+metrics; the hardest-case and AutoAttack-$\ell_\infty$ behavior is statistically
 indistinguishable from Multi-AT and does not meaningfully degrade in the
 evaluated panel, but it does not improve either.  The results remain
 conditional: broader datasets, stronger adaptive attacks, additional
