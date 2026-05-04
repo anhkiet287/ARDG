@@ -17,6 +17,49 @@
 
 \chapter{Experimental Logs and Configurations}
 \label{app:logs}
+\begin{figure}[p]
+\centering
+\captionsetup{font=footnotesize}
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/wb_train_loss.png}
+\caption{Training loss.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/wb_train_acc.png}
+\caption{Training accuracy.}
+\end{subfigure}
+
+\vspace{0.35em}
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/wb_val_clean_acc.png}
+\caption{Clean validation accuracy.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/wb_pgd_linf_acc.png}
+\caption{PGD-$\ell_\infty$ validation accuracy.}
+\end{subfigure}
+
+\vspace{0.35em}
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/wb_ddn_l2_acc.png}
+\caption{DDN-$\ell_2$ validation accuracy.}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.45\linewidth}
+\centering
+\includegraphics[width=0.95\linewidth]{figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png}
+\caption{Group-weight trajectory.}
+\end{subfigure}
+\caption{Representative W\&B dashboard exports for experiment tracking. Panels (a)--(e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell_\infty$ and DDN-$\ell_2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}
+\label{fig:app_wandb_core_metrics}
+\end{figure}
 % Mục tiêu: lưu cấu hình chạy, seed, split policy, attack config, training schedule,
 %          JSON logs, command line (nếu có), và các bảng tóm tắt config.
 

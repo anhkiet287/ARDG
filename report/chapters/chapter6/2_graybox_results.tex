@@ -1,19 +1,7 @@
-% ─────────────────────────────────────────────────────────────────────────────
+﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 \newpage
 \section{Graybox Robustness Across Surrogate Models}
 \label{sec:ch6_graybox}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain graybox robustness as transfer behavior, not just another accuracy table.
-% Flow:
-% - Start with protocol sanity, then transfer matrices, pairwise comparisons, gap analysis, per-cell analysis, and decomposition.
-% Include:
-% - Cite active figures/tables from docs/04_figure_table_registry.md, especially currently unreferenced graybox tables/figures if kept.
-% Avoid:
-% - Overclaiming deployment transfer beyond the surrogate/target protocol.
-% Target length: 6-9 pages depending on consolidation.
-% ─────────────────────────────────────────────────────────────────────────────
 
 The whitebox results in Section~\ref{sec:ch6_whitebox} show that
 AttackDRO++ improves average and held-out robustness over Multi-AT on
@@ -24,17 +12,6 @@ are generated on one checkpoint and evaluated on an independently trained
 target checkpoint.
 
 \paragraph{Random-seed checkpoint panel and whitebox sanity check.}
-
-% TODO[Kiệt]:
-% Goal:
-% - Justify the random-seed checkpoint panel and show it is consistent with the main whitebox trends.
-% Flow:
-% - Explain the fixed random-seed panel, then interpret `tab:ch6_graybox_whitebox_sanity`.
-% Include:
-% - State clearly that this is a sanity check, not the main 20-seed whitebox result.
-% Avoid:
-% - Repeating full Chapter 6.1 results.
-% Target length: 2-3 paragraphs.
 
 The graybox analysis uses 20 random-seed checkpoints to define the
 surrogate--target evaluation panel. These checkpoints come from four method
@@ -58,8 +35,8 @@ columns use diagonal graybox entries, where surrogate and target are the
 same checkpoint. The 20-random-seed columns report the main whitebox results
 from Table~\ref{tab:ch6_aggregate_results}. Bold values indicate the best method for each metric.}
 \label{tab:ch6_graybox_whitebox_sanity}
-\small
-\setlength{\tabcolsep}{6pt}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.08}
 \begin{tabular}{lrrrr}
 \toprule
@@ -91,17 +68,6 @@ main evaluation protocol and supports the cross-method analyses below.
 
 \subsection{Cross-Method Transfer Structure}
 \label{subsec:ch6_graybox_transfer_structure}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain how to read the graybox transfer matrices and what off-diagonal transfer means.
-% Flow:
-% - Define row/column roles, then interpret aggregate and per-attack matrices.
-% Include:
-% - Reference `fig:ch6_graybox_transfer_matrix`, `fig:ch6_graybox_transfer_linf`, and `fig:ch6_graybox_transfer_l2`.
-% Avoid:
-% - Treating diagonal whitebox cells as graybox evidence.
-% Target length: 3-5 paragraphs.
 
 We aggregate the per-attack per-class transfer table into a method-level
 $4 \times 4$ transfer matrix. Rows index the target method being evaluated, and columns index the
@@ -224,17 +190,6 @@ improving over Multi-AT on most \(\ell_2\)-oriented transfer cells.
 \subsection{Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over?}
 \label{subsec:ch6_paired_graybox_comparisons}
 
-% TODO[Kiệt]:
-% Goal:
-% - Compare AttackDRO++ against the strongest uniform multi-attack baseline under graybox transfer.
-% Flow:
-% - Interpret paired graybox tests, then identify where the advantage is robust or limited.
-% Include:
-% - Reference `tab:ch6_paired_graybox_two_panel` and `tab:ch6_graybox_attack_family`.
-% Avoid:
-% - Ignoring corrected p-values or effect size when discussing differences.
-% Target length: 3-5 paragraphs.
-
 The main graybox comparison is between AttackDRO++ and Multi-AT.
 Both methods train on the same source attacks
 $\{\text{PGD-}\ell_\infty,\ \text{DDN-}\ell_2\}$ and use the same backbone
@@ -344,17 +299,6 @@ this asymmetry in Section~\ref{subsec:ch6_paired_graybox_comparisons}.
 
 \paragraph{Per-attack transfer behavior.}
 
-% TODO[Kiệt]:
-% Goal:
-% - Identify which attacks drive graybox transfer differences.
-% Flow:
-% - Discuss per-attack table, then connect attack-family behavior to whitebox findings.
-% Include:
-% - Reference `tab:ch6_graybox_per_attack` if retained in the main flow.
-% Avoid:
-% - Duplicating the transfer-matrix discussion.
-% Target length: 2-4 paragraphs.
-
 To check whether the $+0.549$~pp Mean(8) gain over Multi-AT is
 broad or concentrated, we report paired graybox deltas attack by attack
 on the same $n=200$ pair set. Each attack contributes $25$ paired
@@ -435,18 +379,6 @@ Multi-AT on every attack family, while DDN-AT and PGD-AT each
 remain narrow specialists under transfer.
 
 \paragraph{Whitebox--graybox gap and specialist inflation.}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain the gap between direct whitebox robustness and transferred robustness.
-% Flow:
-% - Define the gap sign, interpret `tab:ch6_graybox_gap`, then use heatmaps for method-specific patterns.
-% Include:
-% - Reference gap heatmaps from `fig:ch6_graybox_gap_ddnat` to `fig:ch6_graybox_gap_attackdropp`.
-% - Add caption polish later for sign/unit/averaging conditions.
-% Avoid:
-% - Treating large whitebox scores alone as evidence of transferable robustness.
-% Target length: 3-5 paragraphs.
 
 The DDN-AT target row in Figure~\ref{fig:ch6_graybox_transfer_matrix} and
 the DDN-AT row in Table~\ref{tab:ch6_graybox_attack_family} are the highest
@@ -535,17 +467,6 @@ more balanced gap patterns, with AttackDRO++ avoiding the severe
 specialist inflation observed for DDN-AT.
 \subsection{Class-Level Transfer Patterns}
 \label{subsec:ch6_class_level_transfer_patterns}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain fine-grained graybox gains and failures by class and attack.
-% Flow:
-% - Interpret `tab:ch6_graybox_per_cell`, then use delta heatmaps to show where gains concentrate.
-% Include:
-% - Reference `fig:ch6_graybox_delta_multiat`, `fig:ch6_graybox_delta_pgdat`, and `fig:ch6_graybox_delta_ddnat` if all remain in the main flow.
-% Avoid:
-% - Listing every class-attack cell.
-% Target length: 3-5 paragraphs.
 
 We complement the aggregate analysis with a paired per-cell test. For
 each of the $80$ attack--class cells, we compare the graybox accuracy of
@@ -660,17 +581,6 @@ AttackDRO++ (Ours) minus DDN-AT. Green favors AttackDRO++ (Ours); red favors DDN
 \newpage
 \paragraph{Method contribution decomposition.}
 
-% TODO[Kiệt]:
-% Goal:
-% - Explain the contribution split between multi-attack training and Cluster-DRO components.
-% Flow:
-% - Interpret the decomposition table first, then use the figure as visual support.
-% Include:
-% - Reference `tab:ch6_graybox_decomposition` and `fig:ch6_method_decomposition` if kept.
-% Avoid:
-% - Treating decomposition as causal proof beyond the available comparisons.
-% Target length: 2-4 paragraphs.
-
 The whitebox results of Section~\ref{sec:ch6_whitebox} compare AttackDRO++
 against Multi-AT and against the two single-attack baselines as
 three separate contrasts. Under graybox transfer, we can additionally
@@ -752,63 +662,3 @@ interpretation as the direct whitebox evaluation, but transfer matrices and
 paired comparisons do not identify which design choices make AttackDRO++ stable.
 The next section therefore turns to hyperparameter sensitivity, focusing on
 cluster granularity, anchor strength, and refresh frequency.
-
-% Section summary removed from the numbered structure.
-\iffalse
-% Disabled graybox section summary removed from the numbered structure.
-
-% TODO[Kiệt]:
-% Goal:
-% - Remove or convert this section-level summary in a later style cleanup.
-% Flow:
-% - Replace with a short transition paragraph or move synthesis into `6_summary.tex`.
-% Include:
-% - No new results.
-% Avoid:
-% - Keeping section-level summaries against docs/06_style_rules.md.
-% Target length: 0 paragraphs here after cleanup; use Chapter 6 summary instead.
-
-The graybox transfer results jointly establish the following
-conclusions:
-
-\begin{enumerate}
-  \item The graybox random-seed checkpoint panel preserves the whitebox
-        trend: it reproduces the Mean(8) ranking AttackDRO++ $>$ Multi-AT
-        $>$ PGD-AT $>$ DDN-AT to within $1.0$~pp.
-  \item AttackDRO++ improves on Multi-AT by $+0.549$~pp under
-        symmetric cross-method graybox transfer at $p \approx 1.1
-        \times 10^{-8}$ ($d_z = 0.42$, $n=200$), roughly twice the
-        whitebox delta on the same panel. The Cluster-DRO improvement
-        therefore strengthens rather than disappears under transfer.
-  \item The graybox gain is broad: AttackDRO++ produces a positive
-        per-attack delta against Multi-AT on all eight
-        evaluation attacks, with five attacks individually significant
-        at $p<0.05$ and the largest gain on DeepFool-$\ell_2$
-        ($+1.47$~pp, $p<10^{-3}$). It is the only method that meets or
-        exceeds Multi-AT on every attack family.
-  \item DDN-AT's row-leading graybox accuracy is structural rather
-        than substantive.. Its whitebox--graybox gap is $+18.20$~pp,
-        roughly twice that of every other method, because $\ell_\infty$
-        adversarial examples generated by alternative surrogates
-        transfer poorly to a purely-$\ell_2$-trained target. The strong
-        graybox row should not be confused with broader robustness;
-        DDN-AT's whitebox Mean(8) and Worst(8) remain the lowest of
-        the four methods.
-  \item The per-cell drilldown shows that AttackDRO++ exceeds        Multi-AT on $59$ of $80$ attack--class cells, with a bottom-10
-        lift of $+0.779$~pp on Multi-AT's weakest cells. The
-        Cluster-DRO contribution decomposes as approximately $+0.18$~pp
-        on whitebox Mean(8), $+0.56$~pp on cross-graybox Mean(8), and
-        $+0.80$~pp on the bottom-10 cross-graybox metric, supporting
-        the design intent that the objective primarily reshapes
-        worst-cell behavior.
-\end{enumerate}
-
-These graybox results corroborate the whitebox conclusions of
-Section~\ref{sec:ch6_whitebox}: the AttackDRO++ improvement over
-Multi-AT reflects a broader cross-attack robustness profile, not a
-defense narrowly tuned to its own gradients. The single-attack baselines
-remain specialists under both whitebox and graybox attack, and DDN-AT's
-apparent graybox strength is exposed as a transfer-mismatch artefact by
-the whitebox--graybox gap analysis. The next section examines how these
-behaviors emerge during training.
-\fi

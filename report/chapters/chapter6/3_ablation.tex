@@ -77,7 +77,7 @@ Very fine grouping
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_num_clusters.png}
-    \caption{Sensitivity of AttackDRO++ to the number of clusters. Mean(8), Worst(8), and AutoAttack-$\ell_\infty$ are reported in percent. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately.}
+    \caption{Sensitivity of AttackDRO++ to the number of clusters. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks.}
     \label{fig:ch6_ablation_num_clusters}
 \end{figure}
 
@@ -147,7 +147,7 @@ $0.50$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_anchor_strength.png}
-    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. Mean(8), Worst(8), and AutoAttack-$\ell_\infty$ are reported in percent. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
+    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
     \label{fig:ch6_ablation_anchor_strength}
 \end{figure}
 
@@ -221,7 +221,7 @@ Refresh interval
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_recluster_frequency.png}
-    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. Mean(8), Worst(8), and AutoAttack-$\ell_\infty$ are reported in percent. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
+    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
     \label{fig:ch6_ablation_recluster_frequency}
 \end{figure}
 

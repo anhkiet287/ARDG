@@ -1,19 +1,6 @@
-% ─────────────────────────────────────────────────────────────────────────────
+﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 \section{Complete Training Framework}
 \label{sec:ch4_complete_pipeline}
-
-% TODO[Kiệt]:
-% Goal:
-% - Make the complete AttackDRO++ pipeline reproducible at the algorithm level.
-% Flow:
-% - Walk through mixed-batch attack generation, feature construction, cluster assignment, loss computation, q update, and cluster refresh.
-% Include:
-% - Check whether the existing algorithm block is enough or whether a pipeline figure would improve readability.
-% - Ensure table hyperparameters match Chapter 5 setup tables.
-% Avoid:
-% - Adding implementation details that belong in Chapter 5 unless they clarify the algorithm.
-% Target length: 4-6 paragraphs plus existing table/algorithm.
-% ─────────────────────────────────────────────────────────────────────────────
 
 Algorithm~\ref{alg:ch4_attackdropp} summarizes the complete AttackDRO++ training
 pipeline. The method combines mixed adversarial batch generation, augmented
@@ -130,7 +117,6 @@ reported both per attack and through aggregate robustness metrics.
 
 \subsection{Implementation and Computational Considerations}
 
-% TODO[Kiệt]:
 The final implementation evaluated in the main experiments is AttackDRO++ with
 gradient fingerprints, an online K-means refresh policy, \(K=4\) clusters, and
 uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). In configuration files,

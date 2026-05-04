@@ -1,19 +1,6 @@
-% ─────────────────────────────────────────────────────────────────────────────
+﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 \section{Evaluation Metrics and Robustness Definitions}
 \label{sec:ch5_evaluation_metrics}
-
-% TODO[Kiệt]:
-% Goal:
-% - Define every metric used in Chapter 6 before result interpretation begins.
-% Flow:
-% - Clean accuracy, per-attack robust accuracy, Mean(8), Worst(8), seen/held-out groups, AutoAttack, graybox accuracy, and per-class/per-attack accuracy.
-% Include:
-% - State which metrics are allowed as shorthand after definition.
-% - Keep equation labels only for metrics referenced later.
-% Avoid:
-% - Using metric shorthand in section titles.
-% Target length: 5-7 paragraphs plus metric summary table.
-% ─────────────────────────────────────────────────────────────────────────────
 
 This section defines the metrics used to compare all methods. Let
 \[
@@ -63,18 +50,21 @@ eight non-AutoAttack evaluation attacks:
 \end{equation}
 where
 \[
+\begin{aligned}
 \mathcal{A}_{8}
 =
-\{
+\{&
 \text{FGSM-RS},
 \text{PGD-}\ell_\infty,
 \text{TPGD},
-\text{MI-FGSM},
+\text{MI-FGSM},\\
+&
 \text{PGD-}\ell_2,
 \text{DDN-}\ell_2,
 \text{DeepFool-}\ell_2,
 \text{CW-}\ell_2
 \}.
+\end{aligned}
 \]
 
 We also report the worst robust accuracy across the same eight attacks:

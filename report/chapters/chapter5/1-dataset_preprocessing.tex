@@ -1,15 +1,4 @@
-\section{Dataset and Preprocessing}
-
-% TODO[Kiệt]:
-% Goal:
-% - Make dataset split and preprocessing choices fully reproducible.
-% Flow:
-% - Dataset identity, split sizes, augmentation, normalization, validation/test separation.
-% Include:
-% - State clearly that all methods use identical dataloaders and preprocessing.
-% Avoid:
-% - Method comparison or result interpretation.
-% Target length: 3-5 paragraphs.
+﻿\section{Dataset and Preprocessing}
 
 The experiments are conducted on CIFAR-10, a standard image-classification benchmark consisting of ten object categories. Each image has spatial resolution \(32 \times 32\) with three color channels. The dataset is divided into training, validation, and test subsets. In our experimental pipeline, 40,000 images are used for training, 10,000 images are used for validation and checkpoint selection, and 10,000 images are reserved for final test-set evaluation.
 

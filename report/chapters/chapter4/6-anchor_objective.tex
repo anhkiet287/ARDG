@@ -1,19 +1,6 @@
-% ─────────────────────────────────────────────────────────────────────────────
+﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 \section{Uniform-Anchored Training Objective}
 \label{sec:ch4_anchor_objective}
-
-% TODO[Kiệt]:
-% Goal:
-% - Explain why the uniform anchor stabilizes adaptive Cluster-DRO.
-% Flow:
-% - Define the instability risk, then introduce anchor interpolation, q-floor, and warmup.
-% - Connect each mechanism to a specific stability concern.
-% Include:
-% - Keep all hyperparameter values consistent with Chapter 5 tables.
-% Avoid:
-% - Presenting ablation conclusions here.
-% Target length: 4-6 paragraphs.
-% ─────────────────────────────────────────────────────────────────────────────
 
 A pure Cluster-DRO objective can become unstable when the cluster weights
 \(\mathbf{q}\) concentrate too strongly on a small number of hard clusters. We refer
