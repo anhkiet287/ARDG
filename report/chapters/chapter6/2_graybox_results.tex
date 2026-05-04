@@ -16,7 +16,8 @@ target checkpoint.
 The graybox analysis uses 20 random-seed checkpoints to define the
 surrogate--target evaluation panel. These checkpoints come from four method
 families evaluated across five random seeds each and are fixed before graybox
-transfer is analyzed. The diagonal sanity check below compares this
+transfer is analyzed. The diagonal sanity check in
+Table~\ref{tab:ch6_graybox_whitebox_sanity} compares this
 random-seed checkpoint panel against the full whitebox panel to verify that the
 main method ordering is preserved.
 
@@ -64,7 +65,8 @@ $1.0$~pp. More importantly, the paired Mean(8) delta of AttackDRO++ minus
 Multi-AT is $+0.184$~pp on the $n=5$ graybox panel and
 $+0.279$~pp on the full $n=20$ panel: both are positive and of the same
 order of magnitude. The graybox cache is therefore consistent with the
-main evaluation protocol and supports the cross-method analyses below.
+main evaluation protocol and supports the cross-method analyses in the following
+subsections.
 
 \subsection{Cross-Method Transfer Structure}
 \label{subsec:ch6_graybox_transfer_structure}
@@ -136,7 +138,8 @@ This grouping makes the specialist behavior more explicit.
 
 \caption{Per-attack graybox transfer matrices for the
 \(\ell_\infty\)-oriented attacks. Rows are target methods and columns
-are surrogate methods; cells report robust accuracy (\%).}
+are surrogate methods; cells report robust accuracy (\%) averaged over
+target--surrogate seed pairs.}
 \label{fig:ch6_graybox_transfer_linf}
 \end{figure}
 
@@ -175,7 +178,8 @@ family-specific transfer specialization rather than uniform robustness.
 
 \caption{Per-attack graybox transfer matrices for the
 \(\ell_2\)-oriented attacks. Rows are target methods and columns are
-surrogate methods; cells report robust accuracy (\%).}
+surrogate methods; cells report robust accuracy (\%) averaged over
+target--surrogate seed pairs.}
 \label{fig:ch6_graybox_transfer_l2}
 \end{figure}
 On the \(\ell_2\) attacks, the DDN-AT target row is consistently strong,
@@ -278,7 +282,7 @@ DDN-AT
 
 The AttackDRO++ vs. Multi-AT contrast is the headline result of
 this section: under symmetric cross-method graybox transfer,
-AttackDRO++ improves onMulti-AT by $+0.549$~pp at
+AttackDRO++ improves on Multi-AT by $+0.549$~pp at
 $p \approx 1.1 \times 10^{-8}$, with a small-to-medium paired effect size
 of $d_z \approx 0.42$. This effect is roughly twice the corresponding
 whitebox delta of $+0.279$~pp on the same seed panel and is significant
@@ -308,6 +312,7 @@ triples (one per surrogate--target seed combination).
 \centering
 \caption{Per-attack symmetric graybox comparison between AttackDRO++
 and Multi-AT. Each attack uses \(n=25\) paired seed combinations.
+\(\Delta\) is computed as AttackDRO++ minus Multi-AT in percentage points.
 Significance is reported in the \(p\)-value column.}
 \label{tab:ch6_graybox_per_attack}
 \small
@@ -315,7 +320,7 @@ Significance is reported in the \(p\)-value column.}
 \renewcommand{\arraystretch}{1.10}
 \begin{tabular}{llrrrr}
 \toprule
-Attack          & Family              & A mean (\%) & B mean (\%) & $\Delta$ (pp) & $p$ \\
+Attack          & Family              & Ours mean (\%) & Multi-AT mean (\%) & $\Delta$ (pp) & $p$ \\
 \midrule
 FGSM-RS         & held-out $\ell_\infty$ & $73.32$ & $72.86$ & $+0.454$ & $0.0114$ \\
 PGD-$\ell_\infty$ & seen $\ell_\infty$    & $57.17$ & $57.07$ & $+0.102$ & $0.307$  \\
@@ -356,7 +361,7 @@ Bold values indicate the best method for each metric.}
 \renewcommand{\arraystretch}{1.08}
 \begin{tabular}{lrrrrr}
 \toprule
-Target method     & Seen $\ell_\infty$ & Seen $\ell_2$ & Heldout $\ell_\infty$ & Heldout $\ell_2$ & Mean(8) \\
+Target method     & Seen $\ell_\infty$ & Seen $\ell_2$ & Held-out $\ell_\infty$ & Held-out $\ell_2$ & Mean(8) \\
 \midrule
 PGD-AT & \bestval{61.48} & $72.61$ & $68.93$           & $74.60$           & $70.59$ \\
 DDN-AT      & $56.58$          & \bestval{84.03} & $68.60$ & \bestval{84.85}  & \bestval{75.12} \\
@@ -434,28 +439,28 @@ same target.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/whitebox_graybox_gap_DDNAT.png}
-\caption{Whitebox--graybox gap heatmap for DDN-AT.}
+\caption{Whitebox--graybox gap heatmap for DDN-AT. Cells report graybox robust accuracy minus whitebox robust accuracy in percentage points; positive values indicate that transferred attacks are weaker than direct whitebox attacks.}
 \label{fig:ch6_graybox_gap_ddnat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/whitebox_graybox_gap_PGDAT.png}
-\caption{Whitebox--graybox gap heatmap for PGD-AT.}
+\caption{Whitebox--graybox gap heatmap for PGD-AT. Cells report graybox robust accuracy minus whitebox robust accuracy in percentage points; positive values indicate that transferred attacks are weaker than direct whitebox attacks.}
 \label{fig:ch6_graybox_gap_pgdat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/whitebox_graybox_gap_MultiAT.png}
-\caption{Whitebox--graybox gap heatmap for Multi-AT.}
+\caption{Whitebox--graybox gap heatmap for Multi-AT. Cells report graybox robust accuracy minus whitebox robust accuracy in percentage points; positive values indicate that transferred attacks are weaker than direct whitebox attacks.}
 \label{fig:ch6_graybox_gap_multiat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/whitebox_graybox_gap_AttackDROpp.png}
-\caption{Whitebox--graybox gap heatmap for AttackDRO++ (Ours).}
+\caption{Whitebox--graybox gap heatmap for AttackDRO++ (Ours). Cells report graybox robust accuracy minus whitebox robust accuracy in percentage points; positive values indicate that transferred attacks are weaker than direct whitebox attacks.}
 \label{fig:ch6_graybox_gap_attackdropp}
 \end{figure}
 
@@ -478,7 +483,7 @@ $t$-test is computed per cell.
 \centering
 \caption{Per-(class \(\times\) attack) graybox tests comparing
 AttackDRO++ against each baseline. \(\Delta\) is computed as
-AttackDRO++ minus the baseline.}
+AttackDRO++ minus the baseline in percentage points.}
 \label{tab:ch6_graybox_per_cell}
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
@@ -557,8 +562,9 @@ and the AttackDRO++ vs.\ DDN-AT heatmap is mixed.
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png}
 \caption{Per-(class \(\times\) attack) graybox delta heatmap for
-AttackDRO++ (Ours) minus Multi-AT. Green favors AttackDRO++ (Ours); red favors
-Multi-AT.}
+AttackDRO++ (Ours) minus Multi-AT. Values are percentage-point differences
+averaged over the five-seed graybox panel; green favors AttackDRO++ (Ours) and
+red favors Multi-AT.}
 \label{fig:ch6_graybox_delta_multiat}
 \end{figure}
 
@@ -566,7 +572,9 @@ Multi-AT.}
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.png}
 \caption{Per-(class \(\times\) attack) graybox delta heatmap for
-AttackDRO++ (Ours) minus PGD-AT. Green favors AttackDRO++ (Ours); red favors PGD-AT.}
+AttackDRO++ (Ours) minus PGD-AT. Values are percentage-point differences
+averaged over the five-seed graybox panel; green favors AttackDRO++ (Ours) and
+red favors PGD-AT.}
 \label{fig:ch6_graybox_delta_pgdat}
 \end{figure}
 
@@ -574,7 +582,9 @@ AttackDRO++ (Ours) minus PGD-AT. Green favors AttackDRO++ (Ours); red favors PGD
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.png}
 \caption{Per-(class \(\times\) attack) graybox delta heatmap for
-AttackDRO++ (Ours) minus DDN-AT. Green favors AttackDRO++ (Ours); red favors DDN-AT.}
+AttackDRO++ (Ours) minus DDN-AT. Values are percentage-point differences
+averaged over the five-seed graybox panel; green favors AttackDRO++ (Ours) and
+red favors DDN-AT.}
 \label{fig:ch6_graybox_delta_ddnat}
 \end{figure}
 
@@ -604,14 +614,14 @@ behavior, which is most sensitive to the AttackDRO++ objective.
 
 \begin{table}[H]
 \centering
-\caption{AttackDRO++ (Ours) gain decomposition. Values are percentage-point changes.}
+\caption{AttackDRO++ (Ours) gain decomposition. Values are percentage-point changes; positive values indicate higher robust accuracy for the method named by the corresponding component.}
 \label{tab:ch6_graybox_decomposition}
 \small
 \setlength{\tabcolsep}{6pt}
 \renewcommand{\arraystretch}{1.10}
 \begin{tabular}{llrrr}
 \toprule
-Metric & Base & Multi-AT & DRO++ & Total \\
+Metric & Base & Multi-AT & Cluster-DRO & Total \\
 \midrule
 Whitebox Mean(8)        & PGD-AT & $+0.934$ & $+0.184$ & $+1.118$ \\
 Whitebox Mean(8)        & DDN-AT & $+5.536$ & $+0.184$ & $+5.720$ \\
@@ -652,7 +662,7 @@ multi-attack training alone or DDN-AT's structural graybox advantage.
 single-attack baselines into a multi-attack effect (Multi-AT
 minus single-AT) and a Cluster-DRO effect (AttackDRO++ minus Multi-AT) across whitebox, cross-method graybox, and bottom-10
 cross-method graybox metrics, for the two single-AT decomposition
-paths.}
+paths. Values are percentage-point differences.}
 \label{fig:ch6_method_decomposition}
 \end{figure}
 

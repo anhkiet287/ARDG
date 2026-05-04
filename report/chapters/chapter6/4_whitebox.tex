@@ -10,7 +10,7 @@ This analysis has two purposes. First, it identifies whether AttackDRO++ behaves
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.78\linewidth]{figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png}
-\caption{Whitebox per-attack robustness profile averaged over five seeds. The radar plot compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ (Ours) across the eight non-AutoAttack evaluation attacks. The shape of each curve highlights the specialization of the single-attack baselines and the more balanced profile of the multi-attack methods.}
+\caption{Whitebox per-attack robust accuracy (\%) averaged over five seeds. The radar plot compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ (Ours) across the eight non-AutoAttack evaluation attacks. The curve shapes summarize the specialist profile of the single-attack baselines and the more balanced profile of the multi-attack methods.}
 \label{fig:ch6_whitebox_radar_per_attack_accuracy}
 \end{figure}
 
@@ -21,7 +21,7 @@ Before analyzing deltas, we first report the raw per-(class $\times$ attack) rob
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
-for PGD-AT. Cells report robust accuracy (\%).}
+for PGD-AT, averaged over five seeds. Cells report robust accuracy (\%).}
 \label{fig:ch6_whitebox_abs_pgdat}
 \end{figure}
 
@@ -29,7 +29,7 @@ for PGD-AT. Cells report robust accuracy (\%).}
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_DDNAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
-for DDN-AT. Cells report robust accuracy (\%).}
+for DDN-AT, averaged over five seeds. Cells report robust accuracy (\%).}
 \label{fig:ch6_whitebox_abs_ddnat}
 \end{figure}
 
@@ -37,7 +37,7 @@ for DDN-AT. Cells report robust accuracy (\%).}
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
-for Multi-AT. Cells report robust accuracy (\%).}
+for Multi-AT, averaged over five seeds. Cells report robust accuracy (\%).}
 \label{fig:ch6_whitebox_abs_multiat}
 \end{figure}
 
@@ -45,7 +45,7 @@ for Multi-AT. Cells report robust accuracy (\%).}
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
-for AttackDRO++ (Ours). Cells report robust accuracy (\%).}
+for AttackDRO++ (Ours), averaged over five seeds. Cells report robust accuracy (\%).}
 \label{fig:ch6_whitebox_abs_attackdropp}
 \end{figure}
 PGD-AT is stronger on several $\ell_\infty$ cells, while DDN-AT is more biased toward bounded $\ell_2$ attacks and visibly weaker on PGD-$\ell_\infty$ and MI-FGSM. Compared with the specialists, Multi-AT and AttackDRO++ show a more balanced cross-attack profile. AttackDRO++ largely preserves the Multi-AT structure while slightly lifting many cells, especially outside the hardest $\ell_\infty$ animal-class tail.
@@ -121,14 +121,14 @@ DDN-AT
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png}
-\caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to PGD-AT. Positive cells indicate where AttackDRO++ (Ours) improves over the PGD-$\ell_\infty$ specialist. Gains are concentrated mainly on bounded $\ell_2$ attacks, while PGD-AT remains stronger on several $\ell_\infty$ iterative cells.}
+\caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to PGD-AT, averaged over five seeds. Cells report AttackDRO++ minus PGD-AT in percentage points; positive values indicate where AttackDRO++ (Ours) improves over the PGD-$\ell_\infty$ specialist.}
 \label{fig:ch6_whitebox_delta_vs_pgdat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png}
-\caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to DDN-AT. The large positive cells under PGD-$\ell_\infty$ and MI-FGSM show that AttackDRO++ (Ours) substantially corrects the $\ell_\infty$ weakness of the DDN-$\ell_2$ specialist, while several negative cells remain on DDN-AT's preferred $\ell_2$ family.}
+\caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to DDN-AT, averaged over five seeds. Cells report AttackDRO++ minus DDN-AT in percentage points; positive values indicate where AttackDRO++ (Ours) improves over the DDN-$\ell_2$ specialist.}
 \label{fig:ch6_whitebox_delta_vs_ddnat}
 \end{figure}
 
@@ -144,7 +144,7 @@ The Multi-AT comparison is more balanced: most attack averages are positive, but
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png}
-\caption{Attack-wise whitebox delta of AttackDRO++ relative to the three baselines.}
+\caption{Attack-wise whitebox delta of AttackDRO++ relative to the three baselines, averaged over five seeds. Values are AttackDRO++ minus the baseline in percentage points.}
 \label{fig:ch6_whitebox_radar_delta_vs_baselines}
 \end{figure}
 \vspace{-0.5cm}
@@ -168,7 +168,7 @@ sacrificing its weakest cells.
 \caption{Weakest-\(K\) whitebox class--attack lift of AttackDRO++ over each
 baseline. For each baseline, the weakest-\(K\) cells are the lowest-accuracy
 class--attack cells of that baseline; bars report AttackDRO++ minus the
-baseline on those same cells.}
+baseline on those same cells in percentage points, averaged over five seeds.}
 \label{fig:ch6_whitebox_bottomk_lift}
 \end{figure}
 

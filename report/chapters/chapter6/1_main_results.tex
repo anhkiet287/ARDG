@@ -1,4 +1,4 @@
-﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 \section{Whitebox Robustness Under Direct Attacks}
 \label{sec:ch6_whitebox}
 
@@ -9,9 +9,9 @@
 \centering
 \caption[Aggregate robust accuracy on the CIFAR-10 evaluation suite]{Aggregate robust accuracy (\%) on the CIFAR-10 evaluation suite,
 reported as mean $\pm$ standard deviation across 20 random-seed runs.
-Mean robust accuracy denotes Mean(8), the average robust accuracy over the
-eight non-AutoAttack evaluation attacks. Worst-case robust accuracy denotes
-Worst(8), the lowest robust accuracy among those same eight attacks. The
+Mean(8) is the average robust accuracy over the
+eight non-AutoAttack evaluation attacks. Worst(8) is the lowest robust accuracy
+among those same eight attacks. The
 held-out attack mean averages FGSM-RS, TPGD, MI-FGSM, PGD-$\ell_2$,
 DeepFool-$\ell_2$, and CW-$\ell_2$. The held-out $\ell_\infty$ mean averages
 FGSM-RS, TPGD, and MI-FGSM; the held-out $\ell_2$ mean averages PGD-$\ell_2$,
@@ -26,7 +26,7 @@ not included in Mean(8). Bold values indicate the best method for each metric.}
 \toprule
 Metric & PGD-AT & DDN-AT & Multi-AT & AttackDRO++ (Ours) \\
 \midrule
-Mean robust accuracy
+Mean(8)
 & $60.499 \pm 0.327$
 & $56.226 \pm 0.233$
 & $62.045 \pm 0.447$
@@ -57,7 +57,7 @@ Seen-source mean
 & \bestval{56.093 $\pm$ 0.166} \\
 
 \midrule
-Worst-case robust accuracy
+Worst(8)
 & \bestval{49.656 $\pm$ 0.161}
 & $25.957 \pm 0.378$
 & $45.082 \pm 0.281$
@@ -351,7 +351,7 @@ single-attack specialist comparisons.
 \begin{table}[H]
 \centering
 \caption{Per-attack robust accuracy (\%) for all four methods across 20 paired random-seed runs.
-Bold cells indicate the highest accuracy for each attack. The right-hand
+Bold values indicate the best method for each attack. The right-hand
 $\Delta$ and $p$ columns report the paired comparison of AttackDRO++ (Ours) against
 Multi-AT. AttackDRO++ (Ours) wins the highest
 score on 4 of 8 attacks; the two single-attack baselines together account
@@ -472,8 +472,8 @@ the selected $n=5$ seed panel.
 20 paired random-seed runs. Worst(8) is the minimum robust accuracy over the eight
 non-AutoAttack evaluation attacks. For AttackDRO++ $-$ Multi-AT,
 the paired differences are $-0.003$~pp on Worst(8) ($p=0.971$) and
-$-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the highest
-method.}
+$-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the best method
+for each metric.}
 \label{tab:ch6_worst_autoattack_sanity}
 \small
 \setlength{\tabcolsep}{8pt}

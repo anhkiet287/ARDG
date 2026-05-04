@@ -717,7 +717,7 @@ Required assets:
 
 | Asset | Status | Notes |
 |---|---|---|
-| RQ answer table | planned | Maps RQ, answer, evidence. |
+| RQ answer table (`tab:ch7_rq_answers`) | active | Maps RQ, answer, evidence. |
 
 ---
 

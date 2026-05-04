@@ -29,7 +29,7 @@ In addition to $p$-values, this study reports the paired effect size using Cohen
 
 where $\bar{d}$ is the mean paired difference and $s_d$ is the sample standard deviation of the paired differences. Cohen's $d_z$ is used to quantify the magnitude of the improvement. Conventional thresholds are used as rough guidance, with $0.2$, $0.5$, and $0.8$ corresponding to small, medium, and large effects, respectively. However, in adversarial robustness evaluation, even moderate effect sizes may be practically meaningful if the improvement is consistent across strong attacks or improves worst-case robustness.
 
-To estimate uncertainty, 95\% bootstrap confidence intervals are computed from seed-level results. For each method and metric, the seed-level values are resampled with replacement 10{,}000 times, and the mean is recomputed for each resample. The 2.5th and 97.5th percentiles of the bootstrap distribution are used as the confidence interval. Bootstrap confidence intervals are also computed for the paired difference $x_i - y_i$, as this directly estimates the uncertainty of the improvement over each baseline.
+To estimate uncertainty, 95\% bootstrap confidence intervals are computed from seed-level results. For each method and metric, the seed-level values are resampled with replacement 10{,}000 times, and the mean is recomputed for each resample. The 2.5th and 97.5th percentiles of the bootstrap distribution are used as the confidence interval. Bootstrap confidence intervals are also computed for the paired difference $x_i - y_i$, as this directly estimates the uncertainty of the improvement over each baseline. In result tables, CI denotes confidence interval, and paired differences are reported in percentage points (pp).
 
 Because multiple attacks, metrics, and baseline comparisons are evaluated, Holm--Bonferroni correction is applied within each metric family. Both raw and corrected $p$-values are reported, but corrected $p$-values are used for final significance interpretation. This correction reduces the risk of false positive findings while remaining less conservative than the standard Bonferroni correction.
 
@@ -37,7 +37,7 @@ The reporting format used in the results chapter is summarized in Table~\ref{tab
 
 \begin{table}[H]
 \centering
-\caption{Reporting format for the statistical significance protocol.}
+\caption{Reporting format for the statistical significance protocol used in Chapter~\ref{chap:results_analysis}.}
 \label{tab:ch5_statistical_reporting_format}
 \footnotesize
 \setlength{\tabcolsep}{4pt}

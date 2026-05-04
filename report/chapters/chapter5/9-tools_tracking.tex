@@ -96,7 +96,8 @@ as a separate result source. Each run records the method name, seed, dataset,
 backbone, source attacks, evaluation attacks, and key hyperparameters. During
 training, the pipeline logs loss, adversarial accuracy, validation robustness,
 learning rate, checkpoint state, and group-weight diagnostics when applicable.
-Representative W\&B tracking exports are provided in Appendix~\ref{app:logs}.
+Representative Weights \& Biases (W\&B) tracking exports are provided in
+Appendix~\ref{app:logs}.
 
 All test-set claims in Chapter~6 are based on saved checkpoints that are loaded
 after training and evaluated using fixed evaluation scripts. The main result
@@ -143,10 +144,10 @@ Separate stress test
 & AutoAttack-$\ell_\infty$, reported separately from Mean(8). \\
 
 Primary aggregate metric
-& Mean robust accuracy over the eight non-AutoAttack evaluation attacks. \\
+& Mean(8): mean robust accuracy over the eight non-AutoAttack evaluation attacks. \\
 
 Secondary metrics
-& Worst robust accuracy over the same eight attacks, seen-source robustness, held-out $\ell_\infty$ robustness, held-out $\ell_2$ robustness, per-attack accuracy, per-class accuracy, and graybox transfer accuracy. \\
+& Worst(8), seen-source robustness, held-out $\ell_\infty$ robustness, held-out $\ell_2$ robustness, per-attack accuracy, per-class accuracy, and graybox transfer accuracy. \\
 
 Repeated-seed protocol
 & Aggregate whitebox tables use paired random-seed comparisons; class-wise and graybox panels use five random seeds per method. \\

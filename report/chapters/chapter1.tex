@@ -3,104 +3,229 @@
 
 \section{Adversarial Robustness and the Cross-Attack Gap}
 
-% TODO[Kiệt]:
-% Goal:
-% - Open with a compact motivation for adversarial robustness and the cross-attack gap.
-% Flow:
-% - Start from image classification reliability, then explain why robustness to one attack is not enough.
-% - Bridge quickly to the Stage 1 observation that attacks differ by norm, objective, and optimization behavior.
-% Include:
-% - One concrete example of cross-attack mismatch.
-% - A restrained statement of why this matters for evaluating robust models.
-% Avoid:
-% - Long background that belongs in Chapter 2.
-% - Unsupported broad claims about security or deployment.
-% Target length: 2-3 paragraphs.
+Modern neural networks achieve high accuracy on standard image classification
+benchmarks, yet they can be sensitive to small, carefully crafted perturbations
+of their inputs.  These adversarial perturbations are often imperceptible to
+human observers, but they can change the model's prediction with high
+reliability.  The phenomenon has motivated a large body of work on adversarial
+training, which augments the training process with adversarial examples so that
+the resulting classifier learns to resist such perturbations.
 
+Adversarial training has become the dominant empirical defense against
+adversarial attacks.  However, the effectiveness of adversarial training
+typically depends on the attack used during training.  Different attacks employ
+different perturbation norms, optimization objectives, and step-size schedules,
+and a model trained against one attack may not transfer its robustness to
+attacks with different characteristics.  For example, a model that is robust
+under a projected gradient descent attack in the $\ell_\infty$ norm may remain
+vulnerable to optimization-based attacks in the $\ell_2$ norm, and vice versa.
+This creates what this report calls the \emph{cross-attack robustness gap}: the
+difference in a model's robustness when evaluated under attacks that differ from
+the one used during training.
+
+The cross-attack gap is not merely a theoretical concern.  Evaluation suites
+that include attacks from multiple norms, step counts, and optimization
+objectives routinely show that single-attack adversarial training produces
+models whose robustness is concentrated on the source threat family.  Once the
+evaluation moves outside that family, performance can degrade substantially.
+This observation suggests that robustness should be measured not by a single
+attack score but by how well a model performs across a diverse set of threat
+models.
+
+One natural response is to train the model against multiple attacks
+simultaneously.  Multi-attack adversarial training constructs adversarial
+examples from more than one source attack during each training step and averages
+the resulting losses.  This strategy provides broader coverage than single-attack
+training, but it treats all attack-induced examples uniformly.  If some attacks
+or attack-induced subgroups are systematically harder than others, uniform
+averaging can hide those failure modes behind an improved overall mean.
+
+This report focuses on improving the balance of robustness across a fixed attack
+suite rather than claiming universal robustness against arbitrary perturbations.
+The experimental scope is bounded to CIFAR-10 image classification with a
+defined set of evaluation attacks, and the claims are conditioned on the
+specific training and evaluation protocol described in later chapters.  This
+motivates the central question of this report: whether adversarial training can
+be made less dependent on a single source attack by treating attacks and
+attack-induced failures as structured domains.
 
 \section{Stage 1 Findings and Their Limitations}
 
-% TODO[Kiệt]:
-% Goal:
-% - Use Stage 1 as the bridge from diagnosis to this report's method.
-% Flow:
-% - Summarize what Stage 1 found, then state what Stage 1 could not solve.
-% - End by motivating multi-attack and group-aware training.
-% Include:
-% - Mention that Stage 1 informs the attack suite and evaluation discipline.
-% - Keep any quantitative claim tied to an existing result or table if added later.
-% Avoid:
-% - Repeating full Stage 1 experiments.
-% Target length: 2 paragraphs.
+The present work continues from a Stage~1 investigation that diagnosed
+attack-dependent robustness under single-attack adversarial training.  Stage~1
+trained classifiers using individual source attacks and evaluated them against a
+broader attack suite.  The main observation was that single-attack training
+tends to specialize: a model trained against an $\ell_\infty$ source attack
+achieved strong robustness under held-out $\ell_\infty$ attacks but weaker
+performance under $\ell_2$ attacks, and symmetrically for an $\ell_2$ source
+attack.
+
+Stage~1 also established an evaluation discipline that carries forward into the
+present report.  The attack suite, the use of repeated random seeds, and the
+separation of source and held-out attacks were all informed by Stage~1
+observations.  However, Stage~1 was primarily evaluative and diagnostic: it
+measured the cross-attack gap but did not propose a training method to reduce
+it.
+
+The limitation of Stage~1 is therefore clear.  Diagnosis alone does not produce
+a training intervention.  Knowing that single-attack robustness is
+attack-dependent motivates the search for a training strategy that balances
+robustness across attacks, but the strategy itself must be designed, implemented,
+and tested.  Stage~2 addresses this gap by introducing a progression of
+multi-attack and group-aware training methods, evaluated under a controlled
+experimental protocol.
+
+The present report therefore moves from diagnosis to intervention.  It takes the
+cross-attack gap observed in Stage~1 as its starting point and develops a
+method that treats attack-induced adversarial examples as domain-like groups.
+The goal is to shift training emphasis toward harder groups without abandoning
+the stability of a uniform multi-attack baseline.
 
 \section{Problem Statement}
 
-% TODO[Kiệt]:
-% Goal:
-% - State the precise problem this report addresses.
-% Flow:
-% - Define the gap: single-attack robustness does not reliably generalize across attacks.
-% - State the desired behavior: improve robustness across source and held-out attacks without relying on one attack family.
-% Include:
-% - Distinguish attack names from training-method names using docs/05_notation_registry.md.
-% Avoid:
-% - Introducing method details that belong in Chapter 4.
-% Target length: 1-2 paragraphs.
+The problem studied in this report is supervised image classification on
+CIFAR-10, where a classifier is trained under adversarial examples generated by
+two source attacks: PGD-$\ell_\infty$ and DDN-$\ell_2$.  Each source attack
+induces a different distribution of adversarial examples, and these distributions
+can be viewed as domain-like groups with distinct loss landscapes and failure
+patterns.  The trained model is then evaluated under a broader suite of eight
+attacks spanning both the $\ell_\infty$ and $\ell_2$ families, along with a
+separate AutoAttack-$\ell_\infty$ stress test.
 
+Uniformly averaging the losses across source attacks during training can hide
+hard attacks, hard classes, or latent subgroups that consistently receive higher
+loss.  If certain attack-induced regions are systematically underweighted, the
+resulting model may appear robust on average while remaining vulnerable in
+specific evaluation cells.  This motivates the need for a training objective
+that can detect and emphasize difficult groups during optimization.
+
+The problem studied in this report is not to solve adversarial robustness in
+general, but to improve the balance of robustness across a predefined attack
+suite under a reproducible training and evaluation protocol.  The goal is to
+improve average robustness across seen and held-out attacks while avoiding severe
+degradation on the hardest evaluation cases, all within the computational and
+dataset constraints of CIFAR-10 and ResNet-18.
 
 \section{Research Questions and Hypotheses}
 
-% TODO[Kiệt]:
-% Goal:
-% - Present a small set of research questions that Chapter 6 can answer directly.
-% Flow:
-% - RQ1: aggregate whitebox robustness.
-% - RQ2: class-wise or attack-wise robustness gaps.
-% - RQ3: graybox transfer robustness.
-% - RQ4: sensitivity to key AttackDRO++ components.
-% Include:
-% - A matching hypothesis for each RQ only if Chapter 6 has supporting evidence.
-% Avoid:
-% - Questions that require experiments not in the report.
-% Target length: 1 concise list plus 1 transition paragraph.
+This report is organized around four research questions, each targeting a
+different aspect of cross-attack robustness.  These questions are designed so
+that the experimental evidence in Chapter~\ref{chap:results_analysis} can
+address them directly, and Chapter~\ref{chap:conclusion} can synthesize the
+answers.
 
+\textbf{RQ1: How large is the cross-attack robustness gap under single-attack
+training?}  The hypothesis is that single-attack adversarial training will
+produce attack-dependent robustness profiles, with each single-attack method
+protecting its own source family more strongly than attacks outside that
+training objective.
+
+\textbf{RQ2: Does multi-attack training improve robustness across seen and
+held-out attacks?}  The hypothesis is that Multi-AT, a uniform multi-attack
+adversarial training baseline, will improve robustness balance compared with
+single-attack baselines by covering both source threat geometries, though
+uniform averaging may not fully remove hard attack-specific or class-specific
+failure modes.
+
+\textbf{RQ3: Can group-aware training improve robustness and stability beyond
+uniform multi-attack training?}  The hypothesis is that AttackDRO++, which
+discovers latent hard groups and upweights them during training, will improve
+average robustness and training stability over Multi-AT in the main setting.
+However, hardest-case robustness and transfer behavior should be interpreted
+conservatively, as the advantage may be more limited under those evaluation
+conditions.
+
+\textbf{RQ4: Which design choices are responsible for the final behavior?}  The
+hypothesis is that moderate cluster count, moderate anchor strength, and a
+stable cluster-refresh schedule should produce better robustness balance than
+extreme settings, providing practical configuration guidance for the method.
 
 \section{Contributions of This Work}
 
-% TODO[Kiệt]:
-% Goal:
-% - List contributions in a way that matches the actual implementation and results.
-% Flow:
-% - Method contribution, evaluation contribution, and empirical finding contribution.
-% Include:
-% - AttackDRO++ (Ours), gradient fingerprints, uniform anchor, repeated-seed evaluation.
-% Avoid:
-% - Claiming theoretical guarantees or untested deployment benefits.
-% Target length: 3-5 bullets or 1 compact paragraph.
+This report makes the following contributions within the bounded experimental
+setting of CIFAR-10 and ResNet-18:
+
+\begin{enumerate}
+\item It proposes an \emph{attacks-as-domains} framing for cross-attack
+robustness, in which adversarial examples generated by different source attacks
+are treated as domain-like groups whose losses can be balanced during training.
+
+\item It implements a progression of training methods: a uniform Multi-AT
+baseline, AttackDRO with group distributionally robust optimization (DRO) over
+source attack identities, and AttackDRO++ with group DRO over discovered latent
+clusters.
+
+\item It introduces gradient fingerprint clustering features that augment the
+standard penultimate representation with projected classifier-head gradients,
+enabling the grouping mechanism to reflect optimization-level difficulty rather
+than representation similarity alone.
+
+\item It introduces a uniform-anchored training objective that keeps the
+AttackDRO++ objective tied to the Multi-AT training signal while still allowing
+difficult discovered groups to receive additional emphasis.
+
+\item It evaluates the proposed method through a reproducible protocol that
+includes aggregate whitebox comparisons, per-attack and per-class drilldowns,
+graybox transfer analysis across independently trained surrogate models,
+statistical significance testing with paired seeds, and hyperparameter
+sensitivity studies.
+\end{enumerate}
 
 \section{Scope and Limitations}
 
-% TODO[Kiệt]:
-% Goal:
-% - Set honest boundaries before the method/results chapters.
-% Flow:
-% - Dataset/model scope, attack-suite scope, compute/repeated-seed scope, and what is not claimed.
-% Include:
-% - CIFAR-10 and ResNet-18 as the main setting.
-% - AutoAttack as a separate sanity/stress test rather than part of Mean(8).
-% Avoid:
-% - Apologetic wording; state limitations as design boundaries.
-% Target length: 2-3 paragraphs.
+The experimental scope of this report is bounded in several ways that should be
+stated before the method and results chapters.
+
+The dataset used throughout is CIFAR-10, a standard benchmark for adversarial
+training research but a small, low-resolution image dataset.  The main
+architecture is ResNet-18, adapted for CIFAR-10 resolution.  All central claims
+are conditioned on this dataset and architecture combination.
+
+The source attacks used during training are PGD-$\ell_\infty$ and
+DDN-$\ell_2$.  The evaluation suite includes eight attacks spanning both
+$\ell_\infty$ and $\ell_2$ families, plus a separate
+AutoAttack-$\ell_\infty$ stress test that is reported independently from the
+main aggregate metrics.  The evaluation does not include certified robustness,
+full adaptive robustness, or robustness against attacks outside the defined
+suite.
+
+Graybox transfer evaluation is included, using independently trained surrogate
+models from the same method families.  This tests whether robustness behavior
+remains stable under transferred attacks, but it is still bounded to the chosen
+model families and attack suite.  Supplementary architecture evidence from a
+single WRN-28-10 run is provided in Appendix~\ref{app:extras}, but it is not
+part of the main paired claims and does not support a broad architecture-level
+generalization.
+
+This report does not claim universal robustness.  It does not establish that the
+proposed method generalizes to other datasets, architectures, or attack
+configurations beyond those tested.  The conclusions are intended to be useful
+within the defined protocol and to motivate further investigation under broader
+conditions.
 
 \section{Report Organization}
 
-% TODO[Kiệt]:
-% Goal:
-% - Preview the seven-chapter flow in one short roadmap.
-% Flow:
-% - One sentence each for Chapters 2-7.
-% Include:
-% - Make Chapter 2 background, Chapter 3 gap, Chapter 4 method, Chapter 5 setup, Chapter 6 results, and Chapter 7 conclusion feel connected.
-% Avoid:
-% - A separate Chapter 1 summary.
-% Target length: 1 paragraph.
+The remainder of this report is organized as follows.
+Chapter~\ref{chap:background} provides the background needed to understand the
+proposed method, covering adversarial attacks, adversarial training, distributionally
+robust optimization (DRO), domain generalization, clustering,
+and the statistical tools used for multi-seed evaluation.
+Chapter~\ref{chap:related_work} reviews related work on multi-attack adversarial
+training, group-aware robustness, domain generalization, and cluster-based
+training, and identifies the remaining gap that this report addresses.
+
+Chapter~\ref{chap:methodology} presents the proposed methodology in a
+progression from the attacks-as-domains formulation through Multi-AT, AttackDRO,
+and AttackDRO++, including gradient fingerprint clustering and the
+uniform-anchored objective.  Chapter~\ref{chap:experimental_setup} defines the
+experimental protocol: dataset, architecture, attack suite, training
+configuration, hyperparameters, statistical significance protocol, evaluation
+metrics, and graybox transfer design.
+
+Chapter~\ref{chap:results_analysis} presents the results and analysis, moving
+from aggregate whitebox robustness to class-wise drilldowns, graybox transfer,
+and hyperparameter sensitivity studies.  Chapter~\ref{chap:conclusion} concludes
+the report with answers to the research questions, a discussion of limitations,
+and directions for future work.  The report therefore moves from motivation and
+background to method design, then to a controlled empirical evaluation and a
+final discussion of what the evidence supports.
