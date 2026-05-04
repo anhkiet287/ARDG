@@ -12,7 +12,7 @@
 \contentsline {subsection}{\numberline {2.1.1}Deep Neural Networks and Supervised Classification}{24}{subsection.2.1.1}%
 \contentsline {subsection}{\numberline {2.1.2}Loss Functions and Gradient-Based Optimization}{24}{subsection.2.1.2}%
 \contentsline {section}{\numberline {2.2}Adversarial Examples and Threat Models}{25}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Lp-Norm Perturbation Sets}{25}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.1}Norm-Bounded Perturbation Sets}{25}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}Whitebox, Graybox, and Blackbox Access}{26}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}Adversarial Attack Algorithms}{27}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Fast Gradient Sign Method with Random Start (FGSM-RS)}{27}{subsection.2.3.1}%
@@ -39,6 +39,7 @@
 \contentsline {subsection}{\numberline {2.7.1}Paired Tests and Bootstrap Confidence Intervals}{34}{subsection.2.7.1}%
 \contentsline {subsection}{\numberline {2.7.2}Effect Size and Multiple-Comparison Correction}{35}{subsection.2.7.2}%
 \contentsline {paragraph}{Repeated random-seed evaluation.}{35}{paragraph*.12}%
+\contentsline {section}{\numberline {2.8}Chapter Summary}{35}{section.2.8}%
 \contentsline {chapter}{\numberline {3}Related Work}{37}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Multi-Attack Adversarial Training}{37}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Group DRO Applied to Robustness}{39}{section.3.2}%

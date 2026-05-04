@@ -1,6 +1,6 @@
 \section{Notation and Learning Setting}
 
-This chapter fixes the technical vocabulary used by the later methodology and evaluation chapters. The goal is not to survey every defense or attack, but to define the optimization setting in which adversarial examples, multi-attack training, group reweighting, clustering, and multi-seed evaluation are used. The notation follows the registry in Appendix-style project documentation and is kept deliberately close to the notation used in Chapters~\ref{chap:methodology} and~\ref{chap:experimental_setup}.
+This chapter fixes the technical vocabulary used by the later methodology and evaluation chapters. The goal is not to survey every defense or attack, but to define the optimization setting in which adversarial examples, multi-attack training, group reweighting, clustering, and multi-seed evaluation are used. The notation is kept deliberately close to the notation used in Chapters~\ref{chap:methodology} and~\ref{chap:experimental_setup}.
 
 We consider supervised classification with input space $\mathcal{X}\subseteq\mathbb{R}^{d}$ and label space $\mathcal{Y}=\{1,\ldots,C\}$. A training set is denoted by
 \[
@@ -54,7 +54,7 @@ x^{\mathrm{adv}}=x+\delta .
 \]
 In an untargeted attack, the adversary searches for a perturbation that makes the classifier predict any class other than $y$. In a targeted attack, the adversary instead tries to force prediction of a chosen target class $y_{\mathrm{target}}\neq y$. This report primarily uses untargeted robustness evaluation, with TPGD treated according to the TRADES-style implementation described in Chapter~\ref{chap:experimental_setup}.
 
-\subsection{Lp-Norm Perturbation Sets}
+\subsection{Norm-Bounded Perturbation Sets}
 
 Most image-classification robustness evaluations constrain $\delta$ by an $\ell_p$ budget. The feasible perturbation set is
 \[
