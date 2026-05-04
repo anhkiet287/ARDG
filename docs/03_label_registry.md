@@ -42,10 +42,10 @@ Status values:
 | `chap:introduction` | `report/chapters/chapter1.tex` | Chapter 1: Introduction | active, unused | Prefix ok. |
 | `chap:background` | `report/chapters/chapter2.tex` | Chapter 2: Background | active, unused | Prefix ok. |
 | `chap:related_work` | `report/chapters/chapter3.tex` | Chapter 3: Related Work | active, unused | Standardized chapter label. |
-| `chap:methodology` | `report/chapters/chapter4.tex` | Chapter 4: Proposed Methodology | active, unused | Standardized chapter label. |
-| `chap:experimental_setup` | `report/chapters/chapter5.tex` | Chapter 5: Experimental Setup | active, unused | Added for Chapter 5. |
+| `chap:methodology` | `report/chapters/chapter4.tex` | Chapter 4: Proposed Methodology | active, referenced | Referenced from Chapter 6 ablation interpretation. |
+| `chap:experimental_setup` | `report/chapters/chapter5.tex` | Chapter 5: Experimental Setup | active, referenced | Referenced from Chapters 4 and 6. |
 | `chap:results_analysis` | `report/chapters/chapter6.tex` | Chapter 6: Results and Analysis | active, referenced | Standardized chapter label. |
-| `chap:conclusion` | `report/chapters/chapter7.tex` | Chapter 7: Conclusion and Future Work | active, unused | Prefix ok. |
+| `chap:conclusion` | `report/chapters/chapter7.tex` | Chapter 7: Conclusion and Future Work | active, referenced | Referenced from Chapter 6 closing synthesis. |
 | `chap:analysis` | `report/chapters/chapter7_old_analysis_discussion.tex` | Archived old Chapter 7: Analysis and Discussion | inactive | Do not rename unless archive is reactivated. |
 
 ### Section labels
@@ -53,51 +53,48 @@ Status values:
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `sec:ch4_problem_formulation` | `report/chapters/chapter4/1-problem_formulation.tex` | Multi-Attack Training as a Domain Problem | active, referenced | Standardized section label. |
-| `sec:ch4_multi_attack_erm` | `report/chapters/chapter4/2-multi_attack.tex` | Uniform Multi-Attack ERM | active, referenced | Standardized section label. |
+| `sec:ch4_multi_attack_erm` | `report/chapters/chapter4/2-multi_attack.tex` | Uniform Multi-Attack ERM Baseline | active, referenced | Standardized section label. |
 | `sec:ch4_attackdro` | `report/chapters/chapter4/3-attackDRO.tex` | AttackDRO: Group DRO Over Attack Identities | active, referenced | Standardized section label. |
 | `sec:ch4_attackdropp` | `report/chapters/chapter4/4-attackDRO++.tex` | AttackDRO++: Group DRO Over Discovered Clusters | active, referenced | Standardized section label. |
 | `sec:ch4_gradfp` | `report/chapters/chapter4/5-clustering_feature.tex` | Augmented Clustering with Gradient Fingerprints | active, referenced | Duplicate old clustering label removed. |
 | `sec:ch4_anchor_objective` | `report/chapters/chapter4/6-anchor_objective.tex` | Uniform-Anchored Training Objective | active, referenced | Renamed from `sec:anchor`. |
 | `sec:ch4_complete_pipeline` | `report/chapters/chapter4/7-complete_pipeline.tex` | Complete Training Framework | active, unused | Renamed from `sec:pipeline`. |
-| `sec:ch4_summary` | `report/chapters/chapter4/summary.tex` | Chapter Summary | active, unused | Keep only while this remains a numbered section. |
 | `sec:ch5_hyperparameters` | `report/chapters/chapter5/5-choices.tex` | Hyperparameter Choices and Ablation Factors | active, unused | Renamed from `sec:hyperparameters`. |
 | `sec:ch5_statistical_protocol` | `report/chapters/chapter5/6-protocol.tex` | Statistical Significance Protocol | active, unused | Renamed from `sec:statistical-significance-protocol`. |
 | `sec:ch5_evaluation_metrics` | `report/chapters/chapter5/7-eval_metrics.tex` | Evaluation Metrics and Robustness Definitions | active, referenced | Renamed from `sec:evaluation_metrics`. |
 | `sec:ch5_graybox_protocol` | `report/chapters/chapter5/8-graybox_transfer.tex` | Graybox Transfer Protocol | active, referenced | Renamed from `sec:graybox-design`. |
 | `sec:ch5_tools_platforms` | `report/chapters/chapter5/9-tools_tracking.tex` | Tools, Platforms, and Experiment Tracking | active, unused | New Chapter 5.9 section label. |
-| `sec:ch6_whitebox` | `report/chapters/chapter6/1_main_results.tex` | Whitebox Robustness Under Direct Attacks | active, referenced | Renamed from `sec:main_results`. |
+| `sec:ch6_whitebox` | `report/chapters/chapter6/1_main_results.tex` | Whitebox Robustness Under Direct Attacks | active, referenced | Chapter-aware section label. |
 | `sec:ch6_whitebox_class_attack` | `report/chapters/chapter6/4_whitebox.tex` | Class-wise Whitebox Robustness Across Attacks | active, unused | Renamed from `sec:whitebox_class_attack`. |
 | `sec:ch6_graybox` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox Robustness Across Surrogate Models | active, unused | Renamed from `sec:graybox_transfer_results`. |
+| `sec:ch6_ablation` | `report/chapters/chapter6/3_ablation.tex` | Sensitivity to Key Hyperparameters | active, unused | Chapter-aware section label. |
 
 ### Subsection labels
 
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `subsec:ch5_evaluation_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Evaluation Attacks | active, unused | Renamed from `sec:evaluation_attacks`. |
-| `subsec:ch6_aggregate_robustness` | `report/chapters/chapter6/1_main_results.tex` | Aggregate Robustness | active, unused | Renamed from `sec:aggregate_robustness`. |
-| `subsec:ch6_per_attack_breakdown` | `report/chapters/chapter6/1_main_results.tex` | Per-Attack Robustness Breakdown | active, referenced | Renamed from `sec:per_attack_breakdown`. |
-| `subsec:ch6_worst_case_behavior` | `report/chapters/chapter6/1_main_results.tex` | Worst-Case Behavior: Worst(8) and AutoAttack | active, referenced | Renamed from `sec:worst_case_behavior`. |
-| `subsec:ch6_variance_reduction` | `report/chapters/chapter6/1_main_results.tex` | Variance Reduction and Training Stability | active, unused | Renamed from `sec:variance_reduction`. |
-| `subsec:ch6_whitebox_per_class` | `report/chapters/chapter6/4_whitebox.tex` | Per-Class Whitebox Robustness Pattern | active, unused | Renamed from `sec:whitebox_per_class`. |
-| `subsec:ch6_whitebox_attack_family` | `report/chapters/chapter6/4_whitebox.tex` | Attack-Family Interpretation | active, unused | Renamed from `sec:whitebox_attack_family_interpretation`. |
-| `subsec:ch6_whitebox_tail_robustness` | `report/chapters/chapter6/4_whitebox.tex` | Bottom-K Whitebox Tail Robustness | active, unused | Renamed from `sec:whitebox_bottomk`. |
-| `subsec:ch6_graybox_panel` | `report/chapters/chapter6/2_graybox_results.tex` | Seed Selection and Whitebox Sanity Check | active, unused | Renamed from `sec:graybox_panel`. |
-| `subsec:ch6_graybox_matrix` | `report/chapters/chapter6/2_graybox_results.tex` | Cross-Method Transfer Matrix | active, unused | Renamed from `sec:graybox_matrix`. |
-| `subsec:ch6_graybox_headline` | `report/chapters/chapter6/2_graybox_results.tex` | AttackDRO++ vs. Multi-AT | active, referenced | Renamed from `sec:graybox_headline`. |
-| `subsec:ch6_graybox_per_attack` | `report/chapters/chapter6/2_graybox_results.tex` | Per-Attack Analysis | active, unused | Renamed from `sec:graybox_per_attack`. |
-| `subsec:ch6_graybox_gap` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox--Graybox Gap and Specialist Inflation | active, referenced | Renamed from `sec:graybox_gap`. |
-| `subsec:ch6_graybox_per_cell` | `report/chapters/chapter6/2_graybox_results.tex` | Per-(Class-Attack) Analysis | active, unused | Renamed from `sec:graybox_per_cell`. |
-| `subsec:ch6_graybox_decomposition` | `report/chapters/chapter6/2_graybox_results.tex` | Method Contribution Decomposition | active, unused | Renamed from `sec:graybox_decomposition`. |
-| `subsec:ch6_graybox_section_summary` | `report/chapters/chapter6/2_graybox_results.tex` | Disabled Section Summary block | inactive | Inside `\iffalse...\fi`; not compiled. |
-| `subsec:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | Anchor Strength | active, unused | Chapter-aware rename. |
-| `subsec:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | Number of Clusters | active, unused | Chapter-aware rename. |
-| `subsec:ch6_ablation_cluster_refresh` | `report/chapters/chapter6/3_ablation.tex` | Cluster-Refresh Schedule | active, unused | Chapter-aware rename. |
+| `subsec:ch6_aggregate_comparison` | `report/chapters/chapter6/1_main_results.tex` | Aggregate Comparison Across Methods | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_per_attack_accuracy` | `report/chapters/chapter6/1_main_results.tex` | Per-Attack Accuracy: Where Do Methods Diverge? | active, referenced | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_hardest_evaluation_cases` | `report/chapters/chapter6/1_main_results.tex` | Robustness Under the Hardest Evaluation Cases | active, referenced | Approved replacement for the old metric-heavy 6.1.3 title. |
+| `subsec:ch6_training_stability` | `report/chapters/chapter6/1_main_results.tex` | Training Stability: How Predictable Is the Outcome? | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_class_level_gains` | `report/chapters/chapter6/4_whitebox.tex` | Class-Level Gains and Persistent Difficulties | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_tail_class_robustness` | `report/chapters/chapter6/4_whitebox.tex` | Tail-Class Robustness: Do the Weakest Cells Improve? | active, unused | Old Bottom-K heading folded into prose. |
+| `subsec:ch6_graybox_transfer_structure` | `report/chapters/chapter6/2_graybox_results.tex` | Cross-Method Transfer Structure | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_paired_graybox_comparisons` | `report/chapters/chapter6/2_graybox_results.tex` | Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over? | active, referenced | Granular graybox comparisons folded under this subsection. |
+| `subsec:ch6_class_level_transfer_patterns` | `report/chapters/chapter6/2_graybox_results.tex` | Class-Level Transfer Patterns | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | Number of Clusters: How Many Groups Are Needed? | active, referenced | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | Anchor Strength: Finding a Stable Trade-off | active, unused | Aligned with `docs/01_outline.md`. |
+| `subsec:ch6_ablation_recluster_frequency` | `report/chapters/chapter6/3_ablation.tex` | Recluster Frequency: How Often Should Groups Update? | active, unused | Renamed from cluster-refresh schedule to match outline. |
 
 ### Figure labels
 
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
-| `fig:ch6_ablation_dashboard` | `report/chapters/chapter6/3_ablation.tex` | Ablation dashboard for AttackDRO++ | active, referenced | Chapter-aware rename. |
+| `fig:app_wandb_core_metrics` | `report/appendices.tex` | W&B core logging metrics and Q-trajectory dashboard exports | active, unused | Moved from Chapter 5 to Appendix B as tracking telemetry. |
+| `fig:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | Number-of-clusters ablation figure | active, unused | Specific Chapter 6 ablation figure. |
+| `fig:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | Anchor-strength ablation figure | active, unused | Specific Chapter 6 ablation figure. |
+| `fig:ch6_ablation_recluster_frequency` | `report/chapters/chapter6/3_ablation.tex` | Cluster-refresh interval ablation figure | active, unused | Specific Chapter 6 ablation figure. |
 | `fig:ch6_whitebox_radar_per_attack_accuracy` | `report/chapters/chapter6/4_whitebox.tex` | Whitebox per-attack radar | active, unused | Chapter-aware rename. |
 | `fig:ch6_whitebox_abs_pgdat` | `report/chapters/chapter6/4_whitebox.tex` | Absolute whitebox class-attack heatmap for PGD-AT | active, unused | Chapter-aware rename. |
 | `fig:ch6_whitebox_abs_ddnat` | `report/chapters/chapter6/4_whitebox.tex` | Absolute whitebox class-attack heatmap for DDN-AT | active, unused | Chapter-aware rename. |
@@ -119,6 +116,7 @@ Status values:
 | `fig:ch6_graybox_delta_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs PGD-AT | active, unused | Middle of figure range. |
 | `fig:ch6_graybox_delta_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs DDN-AT | active, referenced | End of figure range. |
 | `fig:ch6_method_decomposition` | `report/chapters/chapter6/2_graybox_results.tex` | Visual decomposition of AttackDRO++ improvement | active, unused | Chapter-aware rename. |
+| `fig:app_wrn2810_architecture_check` | `report/appendices.tex` | Supplementary WRN-28-10 architecture check figure | active, unused | Appendix C figure label. |
 
 ### Table labels
 
@@ -154,7 +152,9 @@ Status values:
 | `tab:ch6_graybox_per_cell` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox per-cell tests | active, unused | Chapter-aware rename. |
 | `tab:ch6_graybox_decomposition` | `report/chapters/chapter6/2_graybox_results.tex` | AttackDRO++ gain decomposition | active, unused | Chapter-aware rename. |
 | `tab:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | Number-of-clusters ablation | active, referenced | Chapter-aware rename. |
+| `tab:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | Anchor-strength ablation | active, referenced | Added for active Chapter 6 ablation table. |
 | `tab:ch6_cluster_refresh_schedule_ablation` | `report/chapters/chapter6/3_ablation.tex` | Cluster-refresh schedule ablation | active, referenced | Chapter-aware rename. |
+| `tab:app_wrn2810_architecture_check` | `report/appendices.tex` | Supplementary WRN-28-10 architecture check | active, unused | Appendix C table label. |
 
 ### Algorithm labels
 
@@ -185,8 +185,8 @@ Status values:
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `app:pseudocode` | `report/appendices.tex` | Appendix A: Illustrative Pseudo-code and Flowcharts | active, unused | Prefix ok. |
-| `app:logs` | `report/appendices.tex` | Appendix B: Experimental Logs and Configurations | active, unused | Prefix ok. |
-| `app:extras` | `report/appendices.tex` | Appendix C: Additional Tables and Visualizations | active, unused | Prefix ok. |
+| `app:logs` | `report/appendices.tex` | Appendix B: Experimental Logs and Configurations | active, referenced | Referenced from Chapter 5.9 after moving the W&B tracking figure. |
+| `app:extras` | `report/appendices.tex` | Appendix C: Additional Tables and Visualizations | active, referenced | Referenced from Chapter 6.4 supplementary architecture note. |
 | `app:compute` | `report/appendices.tex` | Appendix D: Compute Resources and Environment Notes | active, unused | Prefix ok. |
 
 ### Other / unknown labels
@@ -202,6 +202,7 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | Reference | Type | File | Target exists? | Notes |
 |---|---|---|---|---|
 | `chap:results_analysis` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex` | yes | Chapter 5.9 transition to results. |
+| `chap:conclusion` | `\ref` | `report/chapters/chapter6/6_summary.tex` | yes | Chapter 6 transition to conclusion. |
 | `alg:ch4_attackdropp` | `\ref` | `report/chapters/chapter4/7-complete_pipeline.tex` | yes | Algorithm reference. |
 | `eq:avg_risk` | `\eqref` | `report/chapters/chapter4/1-problem_formulation.tex` | yes | Equation reference. |
 | `eq:erm_loss` | `\eqref` | `report/chapters/chapter4/2-multi_attack.tex` | yes | Equation reference. |
@@ -215,10 +216,13 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | `sec:ch5_evaluation_metrics` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter6/2_graybox_results.tex` | yes | Metric definitions. |
 | `sec:ch5_graybox_protocol` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox protocol reference. |
 | `sec:ch6_whitebox` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex`; `report/chapters/chapter6/4_whitebox.tex` | yes | Whitebox result reference. |
-| `subsec:ch6_per_attack_breakdown` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Per-attack subsection reference. |
-| `subsec:ch6_worst_case_behavior` | `\ref` | `report/chapters/chapter6/1_main_results.tex` | yes | Worst-case subsection reference. |
-| `subsec:ch6_graybox_gap` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox gap subsection reference. |
-| `subsec:ch6_graybox_headline` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox headline subsection reference. |
+| `chap:experimental_setup` | `\ref` | `report/chapters/chapter4/summary.tex`; `report/chapters/chapter6/3_ablation.tex` | yes | Setup chapter references. |
+| `chap:methodology` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Method chapter reference. |
+| `app:logs` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex` | yes | Appendix B tracking export reference. |
+| `app:extras` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Appendix C supplementary architecture reference. |
+| `subsec:ch6_per_attack_accuracy` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Per-attack whitebox subsection reference. |
+| `subsec:ch6_hardest_evaluation_cases` | `\ref` | `report/chapters/chapter6/1_main_results.tex` | yes | Hardest-evaluation subsection reference. |
+| `subsec:ch6_paired_graybox_comparisons` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox comparison subsection reference. |
 | `tab:ch4_hparams` | `\ref` | `report/chapters/chapter4/7-complete_pipeline.tex` | yes | Table reference. |
 | `tab:ch5_training_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
 | `tab:ch5_evaluation_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
@@ -241,8 +245,8 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | `tab:ch6_paired_graybox_two_panel` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Table reference. |
 | `tab:ch6_graybox_attack_family` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Table reference. |
 | `tab:ch6_ablation_num_clusters` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Table reference. |
+| `tab:ch6_ablation_anchor_strength` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Table reference. |
 | `tab:ch6_cluster_refresh_schedule_ablation` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Table reference. |
-| `fig:ch6_ablation_dashboard` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Figure reference. |
 | `fig:ch6_graybox_transfer_matrix` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Figure reference. |
 | `fig:ch6_graybox_transfer_linf` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Figure reference. |
 | `fig:ch6_graybox_transfer_l2` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Figure reference. |
@@ -258,7 +262,7 @@ Audit findings:
 - Active references to archived files or inactive sections: none.
 - Active labels with `sec:` attached to a subsection: none.
 - Active hyphenated labels: none.
-- Inactive labels noted but not renamed: `chap:analysis` in archived old Chapter 7, and `subsec:ch6_graybox_section_summary` inside a disabled block.
+- Inactive labels noted but not renamed: `chap:analysis` in archived old Chapter 7.
 - Equation labels that are never referenced: `eq:attack_acc`, `eq:attack_class_acc`, `eq:attackdro_floor`, `eq:cluster_dro_loss`, `eq:cluster_loss`, `eq:eg`, `eq:floor`, `eq:graybox_acc`, `eq:mean8`, `eq:worst8`.
 - Several active figure and table labels are unused because the objects are shown in sequence but not directly referenced in prose.
 
@@ -272,7 +276,6 @@ Audit findings:
 
 ### Needs user confirmation
 
-- Whether to remove `sec:ch4_summary` when Chapter 4 summary is converted from a numbered section to closing prose.
 - Whether to add labels to Chapter 1, Chapter 2, and Chapter 3 sections after those chapters are rewritten.
 - Whether unused figure/table labels should remain for future prose references or be removed later.
 

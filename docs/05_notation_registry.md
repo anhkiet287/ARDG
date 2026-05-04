@@ -24,7 +24,7 @@ Scope: built from the current 7-chapter flow in `report/main.tex`, the included 
 | `Multi-AT` | `Multi-AT`; old prose `Multi-ATtack`; sometimes `Uniform Multi-AT`; methodology name `Uniform Multi-Attack ERM`. | Uniform multi-attack adversarial training baseline over PGD-$\ell_\infty$ and DDN-$\ell_2$ source attacks. | `report/chapters/chapter4/2-multi_attack.tex`; `report/chapters/chapter5/4-configuration.tex`, `tab:method_training_summary`. | Use `Multi-AT`. | `Uniform Multi-Attack ERM` is useful in Chapter 4 when defining the objective; formal results should use `Multi-AT`. |
 | `AttackDRO` | `AttackDRO`; `GroupDRO over attack identity`. | Group DRO over source attack identities. | `report/chapters/chapter4/3-attackDRO.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `AttackDRO`. | Prefer `Group DRO` over `GroupDRO` in prose. |
 | `AttackDRO++` | `AttackDRO++`; `Cluster-DRO`; cluster-based variant. | Group DRO over discovered latent clusters. | `report/chapters/chapter4/4-attackDRO++.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `AttackDRO++` when referring to the method family or cluster-DRO baseline. | May be alternated with "the proposed method" after first definition when context is clear. |
-| `AttackDRO++ (Ours)` | `attackdro_pp_anchor035_gradfp_online_k4`; `anchor035`; `Anchor35 GradFP`; sometimes shortened to `DRO++` in decomposition tables. | Final proposed configuration: AttackDRO++ with uniform anchor, gradient fingerprints, online K-means refresh, and `K=4`. | `report/chapters/chapter4.tex` methodology overview; `report/chapters/chapter5/4-configuration.tex`, `tab:method_training_summary`. | Use `AttackDRO++ (Ours)`. | Formal tables/captions should not use `AttackDRO++ Anchor35 GradFP` unless mapping to a config identifier. |
+| `AttackDRO++ (Ours)` | `attackdro_pp_anchor035_gradfp_online_k4`; `anchor035`; `Anchor35 GradFP`; sometimes shortened to `DRO++` in decomposition tables. | Final proposed configuration: AttackDRO++ with uniform anchor, gradient fingerprints, online K-means refresh, and `K=4`. | `report/chapters/chapter4/7-complete_pipeline.tex` implementation note; `report/chapters/chapter5/4-configuration.tex`, `tab:method_training_summary`. | Use `AttackDRO++ (Ours)`. | Formal tables/captions should not use `AttackDRO++ Anchor35 GradFP` unless mapping to a config identifier. |
 | `q`-frozen variant | `q-Frozen`, `Q-frozen`, `uniform q`, `update q vs. uniform q`. | Ablation where adaptive `q` reweighting is disabled or kept uniform. | `report/chapters/chapter5/5-choices.tex`, `tab:ablation_hyperparams`; inactive source heading in `report/chapters/chapter6/3_ablation.tex`. | Do not use in active main-flow tables unless the ablation is restored. | Current Chapter 6 `q-Frozen Ablation` heading is inside `\iffalse`; treat as inactive source. |
 | `Anchor35` / anchor variants | `Anchor35`; `anchor035`; `\lambda_{\mathrm{DRO}}=0.35`; anchor strengths `{0.20, 0.35, 0.50}`. | Uniform-anchor setting controlling the strength of the Cluster-DRO correction. | `report/chapters/chapter4/6-anchor_objective.tex`; `report/chapters/chapter5/5-choices.tex`. | In formal results use `AttackDRO++ (Ours)`; in ablation tables use `\lambda_{\mathrm{DRO}}`. | `Anchor35` is acceptable as a config shorthand only after it is mapped to `\lambda_{\mathrm{DRO}}=0.35`. |
 
@@ -58,11 +58,13 @@ Important method naming rules:
 | Robust accuracy | `\mathrm{Acc}(A)` | Accuracy under adversarial attack `A`. | `eq:attack_acc` | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 result tables. | General metric name can appear in titles; formula label is currently unreferenced per `docs/03_label_registry.md`. |
 | Per-attack robust accuracy | `\mathrm{Acc}(A)` per attack | Robust accuracy reported separately for each attack. | `eq:attack_acc` | `tab:per_attack_all_baselines`; graybox per-attack tables. | Preferred in subsection titles over code attack names. |
 | Mean robust accuracy over eight attacks | `Mean(8)`; `\mathrm{Mean}(8)` | Average robust accuracy over the eight non-AutoAttack evaluation attacks. | `eq:mean8` | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate/graybox/ablation tables. | Main aggregate robustness metric. Do not use `Mean(8)` in section/subsection titles. |
-| `Mean(8)` shorthand | `Mean(8)` | Shorthand for mean robust accuracy over the eight bounded non-AutoAttack attacks. | `eq:mean8` | Tables, captions, metric-definition paragraphs. | `M(8)` appears in Chapter 6 ablation captions/tables and should be expanded or explicitly mapped. |
+| `Mean(8)` shorthand | `Mean(8)` | Shorthand for mean robust accuracy over the eight bounded non-AutoAttack attacks. | `eq:mean8` | Tables, captions, metric-definition paragraphs. | Use `Mean(8)` rather than shorter variants such as `M(8)`. |
 | Worst-case robust accuracy over eight attacks | `Worst(8)`; `\mathrm{Worst}(8)` | Minimum robust accuracy over the same eight non-AutoAttack attacks. | `eq:worst8` | `report/chapters/chapter5/7-eval_metrics.tex`; `tab:worst_autoattack_sanity`; Chapter 6 tables. | Do not use `Worst(8)` in subsection titles; use a readable title and define metric in body. |
-| `Worst(8)` shorthand | `Worst(8)` | Shorthand for worst robust accuracy across the eight bounded non-AutoAttack attacks. | `eq:worst8` | Tables/captions and body text after definition. | Current subsection `Worst-Case Behavior: Worst(8) and AutoAttack` should be renamed later. |
-| Mean $\ell_\infty$ | `Heldout_{\ell_\infty}` or $\ell_\infty$-family average | Average over $\ell_\infty$ attack family. Chapter 5 defines held-out $\ell_\infty$ as FGSM-RS, TPGD, and MI-FGSM; some ablation tables use broader family wording. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate/ablation tables. | Clarify whether a table includes source PGD-$\ell_\infty$ or only held-out attacks. |
-| Mean $\ell_2$ | `Heldout_{\ell_2}` or $\ell_2$-family average | Average over $\ell_2$ attack family. Chapter 5 defines held-out $\ell_2$ as PGD-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$; some ablation tables may include DDN-$\ell_2$ as family average. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate/ablation tables. | Clarify whether a table includes source DDN-$\ell_2$ or only held-out attacks. |
+| `Worst(8)` shorthand | `Worst(8)` | Shorthand for worst robust accuracy across the eight bounded non-AutoAttack attacks. | `eq:worst8` | Tables/captions and body text after definition. | The active Chapter 6 heading uses the readable title `Robustness Under the Hardest Evaluation Cases`. |
+| Held-out attack mean | held-out attack mean | Average over the six evaluation attacks not used as source attacks: FGSM-RS, TPGD, MI-FGSM, PGD-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate tables. | Use this readable name in visible table labels instead of attack-count suffixes. |
+| Held-out $\ell_\infty$ mean | `Heldout_{\ell_\infty}`; held-out $\ell_\infty$ mean | Average over FGSM-RS, TPGD, and MI-FGSM. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate/ablation tables. | Use this readable name in visible table labels instead of attack-count suffixes. |
+| Held-out $\ell_2$ mean | `Heldout_{\ell_2}`; held-out $\ell_2$ mean | Average over PGD-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate/ablation tables. | Use this readable name in visible table labels instead of attack-count suffixes. |
+| Seen-source mean | seen-source mean | Average over the source attacks PGD-$\ell_\infty$ and DDN-$\ell_2$. | None. | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 aggregate tables. | Use this readable name in visible table labels instead of attack-count suffixes. |
 | AutoAttack-$\ell_\infty$ 512-sample sanity metric | `AutoAttack`; `AutoAttack-512` if needed | Robust accuracy under AutoAttack-$\ell_\infty$ on 512 test samples for sanity checks. | None. | `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter6/1_main_results.tex`. | Not included in Mean(8) and not part of the 20-seed paired aggregate panel. |
 | Full-test AutoAttack-$\ell_\infty$ | `AutoAttack` | Robust accuracy under AutoAttack-$\ell_\infty$ on the full test set for a fixed random-seed panel. | None. | `tab:autoattack_fulltest`. | Report separately from Mean(8). |
 | Graybox accuracy | `\mathrm{Acc}_{s \rightarrow t}(A)` | Target-model accuracy on adversarial examples generated by surrogate model `s`. | `eq:graybox_acc` | `report/chapters/chapter5/7-eval_metrics.tex`; Chapter 6 graybox section. | Equation label is currently unreferenced per `docs/03_label_registry.md`. |
@@ -145,7 +147,7 @@ Metric title rule:
 | `DRO` | Distributionally Robust Optimization | `report/chapters/chapter2/3-dro.tex`; `report/chapters/chapter4/3-attackDRO.tex`. | Missing from current abbreviation list even though central to the report. |
 | `ERM` | Empirical Risk Minimization | `report/chapters/chapter2/1-preliminaries.tex`; Chapter 4 method sections. | Missing from current abbreviation list. |
 | `DG` | Domain Generalization | `report/outsider/list-of-abbreviations.tex`; Chapter 2/3 headings. | Already in abbreviation list. |
-| `W&B` | Weights & Biases | Planned in `docs/01_outline.md` Chapter 5.9. | Not present in active LaTeX source yet. |
+| `W&B` | Weights & Biases | `report/chapters/chapter5/9-tools_tracking.tex`; Appendix B tracking figure in `report/appendices.tex`. | Used for experiment logging and run tracking. |
 | `GPU` | Graphics Processing Unit | Appendix D comment in `report/appendices.tex`. | Not active prose yet; add if compute section is written. |
 | `CIFAR` | Canadian Institute For Advanced Research | Used through dataset name `CIFAR-10`. | Usually the dataset name is enough; expand only if required by school style. |
 | `CNN` | Convolutional Neural Network | Not found in active report source; not in current abbreviation list. | Add only if Chapter 2 architecture background uses it. |
@@ -167,25 +169,25 @@ Metric title rule:
 |---|---|---|---|
 | `CIFAR-10` | Dataset | Main image-classification benchmark. | Defined in `report/chapters/chapter5/1-dataset_preprocessing.tex`; 40k train / 10k validation / 10k test in current setup prose. |
 | `ResNet-18` | Model architecture | Main backbone for all active experiments. | Defined in `report/chapters/chapter5/2-architectures.tex`; adapted for CIFAR-10. |
-| `WRN-28-10` | Model architecture | Supplementary/scaling evidence in outline only. | Mentioned in `docs/01_outline.md` scope notes; not found in active LaTeX source. Do not claim broad architecture generalization from it without final evidence. |
+| `WRN-28-10` | Model architecture | Supplementary architecture check in Appendix C. | Values are from a single run and are not part of the main paired claims. Do not claim broad architecture generalization from this check. |
 | Higher-capacity architectures | Model family | Future extension / scaling check. | Mentioned generically in `report/chapters/chapter5/2-architectures.tex`; no active named model besides ResNet-18. |
 
 ### Tools and platforms
 
 | Tool/platform | Role | Where to mention | Notes |
 |---|---|---|---|
-| Google Colab | Experiment execution platform. | Planned Chapter 5.9 tools/platform section. | Mention only as reproducibility context. Not in active LaTeX source yet. |
-| Google Drive | Checkpoint/result persistence. | Planned Chapter 5.9 tools/platform section. | Not in active LaTeX source yet. |
-| Weights & Biases / W&B | Experiment logging and run tracking. | Planned Chapter 5.9 tools/platform section. | Define acronym at first use. Not in active LaTeX source yet. |
-| PyTorch | Model training framework. | Planned Chapter 5.9 tools/platform section or Appendix B/D. | Not in active LaTeX source yet. |
-| torchvision | Dataset/model utility package. | Planned Chapter 5.9 tools/platform section. | Not in active LaTeX source yet. |
-| TorchAttacks | Attack implementation package. | Planned Chapter 5.9; Appendix D comment. | Current `report/appendices.tex` only has a compute-environment comment. |
-| AutoAttack package | AutoAttack-$\ell_\infty$ evaluator. | Planned Chapter 5.9 or AutoAttack configuration note. | Current Chapter 5 defines AutoAttack protocol but not package source. |
-| adv-lib | Possible DDN-$\ell_2$ implementation source. | Planned Chapter 5.9 if actually used. | Confirm actual implementation before adding to report prose. |
-| scikit-learn | K-means clustering implementation. | Planned Chapter 5.9 or implementation notes. | Active source mentions K-means but not scikit-learn. |
-| pandas | Analysis table processing. | Planned Chapter 5.9. | Not in active LaTeX source yet. |
-| NumPy | Numeric analysis. | Planned Chapter 5.9. | Not in active LaTeX source yet. |
-| matplotlib | Plot generation. | Planned Chapter 5.9; figure-font guidance in `docs/01_outline.md`. | Not in active LaTeX source yet. |
+| Google Colab | Experiment execution platform. | Chapter 5.9 tools/platform section. | Mention only as reproducibility context. |
+| Google Drive | Checkpoint/result persistence. | Chapter 5.9 tools/platform section. | Stores checkpoints, cached adversarial examples, figures, and results. |
+| Weights & Biases / W&B | Experiment logging and run tracking. | Chapter 5.9 tools/platform section; Appendix B tracking exports. | Tracking telemetry only, not result evidence. |
+| PyTorch | Model training framework. | Chapter 5.9 tools/platform section. | Core training and automatic differentiation framework. |
+| torchvision | Dataset/model utility package. | Chapter 5.9 tools/platform section. | CIFAR-10 loading, transforms, and model utilities. |
+| TorchAttacks | Attack implementation package. | Chapter 5.9 tools/platform section. | Provides most gradient-based and optimization-based attacks. |
+| AutoAttack package | AutoAttack-$\ell_\infty$ evaluator. | Chapter 5.9 tools/platform section and AutoAttack configuration note. | Used for the separate AutoAttack evaluation. |
+| adv-lib | DDN-$\ell_2$ implementation source. | Chapter 5.9 tools/platform section. | Used for DDN-$\ell_2$ adversarial example generation. |
+| scikit-learn | K-means clustering implementation. | Chapter 5.9 tools/platform section. | Provides MiniBatch K-means for cluster discovery. |
+| pandas | Analysis table processing. | Chapter 5.9 tools/platform section. | Used with NumPy to aggregate result tables. |
+| NumPy | Numeric analysis. | Chapter 5.9 tools/platform section. | Used for numerical processing and aggregation. |
+| matplotlib | Plot generation. | Chapter 5.9 tools/platform section. | Used with SciencePlots for report figures. |
 | MiKTeX | Local LaTeX build distribution. | Handoff compile notes only, unless Appendix D includes build environment. | Mention in report only if local reproducibility environment is documented. |
 | VS Code / Antigravity | Editor/IDE. | Not currently relevant to report reproducibility. | Not found in active source or outline; avoid adding unless user wants environment notes. |
 | RTX 5070 Ti | Hardware. | Appendix D / compute resources only if actually used. | Not found in active source or planning files. |
@@ -196,38 +198,38 @@ Metric title rule:
 
 | Issue | Found form | Preferred form | File/location | Suggested action |
 |---|---|---|---|---|
-| Old multi-attack method wording. | `Multi-ATtack` | `Multi-AT` for method name; `multi-attack training` for generic prose. | `report/chapters/chapter5/1-dataset_preprocessing.tex`; `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter5/5-choices.tex`; `report/chapters/chapter6/1_main_results.tex`. | Safe automatic cleanup in a later prose/naming patch. |
-| Missing spaces around old method wording. | `ForMulti-ATtack`, `theMulti-ATtack`, `onMulti-AT` | `For Multi-AT`, `the Multi-AT`, `on Multi-AT`, or rephrased prose. | `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter5/5-choices.tex`; `report/chapters/chapter6/2_graybox_results.tex`. | Safe typo cleanup later. |
-| Alternate baseline name in results prose. | `Uniform Multi-AT` | `Multi-AT` in formal results; `uniform multi-attack baseline` in prose if needed. | `report/chapters/chapter6/2_graybox_results.tex`. | Normalize after deciding whether style docs should keep `Uniform Multi-AT` or locked user decision `Multi-AT`. |
-| Code-style attack name in prose. | `PGD20-CE` | `PGD-$\ell_\infty$`; define once as 20-step cross-entropy PGD in Chapter 5. | `report/chapters/chapter6/4_whitebox.tex`. | Safe naming cleanup later. |
+| Old multi-attack method wording. | `Multi-ATtack` | `Multi-AT` for method name; `multi-attack training` for generic prose. | Previously in Chapter 5 and Chapter 6 active prose. | Cleaned in the active Chapter 4--6 flow. |
+| Missing spaces around old method wording. | `ForMulti-ATtack`, `theMulti-ATtack`, `onMulti-AT` | `For Multi-AT`, `the Multi-AT`, `on Multi-AT`, or rephrased prose. | Previously in Chapter 5 and Chapter 6 active prose. | Cleaned in the active Chapter 4--6 flow. |
+| Alternate baseline name in results prose. | `Uniform Multi-AT` | `Multi-AT` in formal results; `uniform multi-attack baseline` in prose if needed. | Previously in `report/chapters/chapter6/2_graybox_results.tex`. | Cleaned in active results prose. |
+| Code-style attack name in prose. | `PGD20-CE` | `PGD-$\ell_\infty$`; define once as 20-step cross-entropy PGD in Chapter 5. | Previously in `report/chapters/chapter6/4_whitebox.tex`. | Cleaned in active results prose. |
 | Config-table PGD spelling. | `PGD-20$_{\mathrm{CE}}$` | `PGD-$\ell_\infty$ (20 steps, cross-entropy)` or table-specific config wording. | `report/chapters/chapter5/5-choices.tex`. | Safe cleanup if table width allows. |
-| Short metric shorthand. | `M(8)` | `Mean(8)` or define `M(8)` explicitly in the same caption/table. | `report/chapters/chapter6/3_ablation.tex`. | Safe table/caption cleanup later. |
-| Metric shorthand in heading. | `Worst-Case Behavior: Worst(8) and AutoAttack` | Readable title such as `Worst-Case Preservation Under Strong Checks`. | `report/chapters/chapter6/1_main_results.tex`. | Rename heading later; preserve label unless references are updated. |
-| Math/internal shorthand in heading. | `Bottom-\(K\) Whitebox Tail Robustness` | `Tail-Class Robustness Under Hard Whitebox Cells` or similar. | `report/chapters/chapter6/4_whitebox.tex`. | Rename later; this also removes the hyperref bookmark warning. |
-| Variant name used as formal method name. | `AttackDRO++ Anchor35 GradFP`; `AttackDRO++ (Anchor35 GradFP)` | `AttackDRO++ (Ours)` in formal tables/captions; map config separately. | `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter6/1_main_results.tex`. | Normalize later without changing numerical results. |
+| Short metric shorthand. | `M(8)` | `Mean(8)` or define `M(8)` explicitly in the same caption/table. | Previously in `report/chapters/chapter6/3_ablation.tex`. | Cleaned in active Chapter 6 ablation captions and tables. |
+| Metric shorthand in heading. | `Worst-Case Behavior: Worst(8) and AutoAttack` | Readable title such as `Robustness Under the Hardest Evaluation Cases`. | Previously in `report/chapters/chapter6/1_main_results.tex`. | Cleaned in active Chapter 6 headings. |
+| Math/internal shorthand in heading. | `Bottom-\(K\) Whitebox Tail Robustness` | `Tail-Class Robustness: Do the Weakest Cells Improve?` | Previously in `report/chapters/chapter6/4_whitebox.tex`. | Cleaned in active Chapter 6 headings. |
+| Variant name used as formal method name. | `AttackDRO++ Anchor35 GradFP`; `AttackDRO++ (Anchor35 GradFP)` | `AttackDRO++ (Ours)` in formal tables/captions; map config separately. | Previously in Chapter 5 and Chapter 6 active prose. | Cleaned in report-facing prose; the code identifier remains only in the Chapter 4 implementation note. |
 | DRO acronym styling. | `GroupDRO` | `Group DRO` | `report/chapters/chapter4/3-attackDRO.tex`; `report/chapters/chapter4/summary.tex`; `report/chapters/chapter5/4-configuration.tex`. | Safe prose/table cleanup later. |
 | Acronym list incomplete. | Current abbreviation list omits `DRO`, `ERM`, `DDN`, `MI-FGSM`, `TPGD`, `SGD`, `CI`, `Std`, `pp`. | Add recurring acronyms and remove unused ones if needed. | `report/outsider/list-of-abbreviations.tex`. | Needs a front-matter cleanup patch. |
 | Notation formatting drift. | `(x)`, `(C=10)`, `(d\_h = 512)` | `\(x\)`, `\(C=10\)`, `\(d_h=512\)`. | `report/chapters/chapter5/2-architectures.tex`. | Safe LaTeX formatting cleanup later. |
 | Class/cluster symbol ambiguity. | `K` means classes in Chapter 2 but clusters in Chapter 4. | Prefer `C` for classes and `K` for clusters. | `report/chapters/chapter2/1-preliminaries.tex`; Chapter 4/5 methodology. | Needs user/author confirmation because it changes notation in foundational prose. |
-| Tool/platform section missing. | Tools are only planned in outline or appendix comments. | Add Chapter 5.9 with actual tools used. | `docs/01_outline.md`; `report/appendices.tex`. | Needs user confirmation of actual packages/platforms. |
+| Tool/platform section now active. | Tools and tracking are summarized in Chapter 5.9, with representative W&B exports moved to Appendix B. | Chapter 5.9 plus Appendix B. | `report/chapters/chapter5/9-tools_tracking.tex`; `report/appendices.tex`. | Keep tool versions and hardware details out unless verified. |
 | Inactive ablation names remain in source. | `q-Frozen Ablation`, `Cluster Feature Mode`, `Sample-Level Regularizer`. | Keep inactive or move to appendix if final. | `report/chapters/chapter6/3_ablation.tex` inside `\iffalse`. | Postpone until content decision. |
 
 ## 9. Recommended cleanup later
 
 ### Safe automatic cleanup
 
-- Replace `Multi-ATtack`, `ForMulti-ATtack`, `theMulti-ATtack`, and `onMulti-AT` with correct report-facing wording.
-- Replace active prose uses of `PGD20-CE` with `PGD-$\ell_\infty$` after the Chapter 5 configuration table defines the 20-step cross-entropy setting.
-- Expand or replace `M(8)` with `Mean(8)` in Chapter 6 ablation captions/tables.
-- Rename headings that contain `Worst(8)`, `Bottom-\(K\)`, or other shorthand, preserving existing labels where references work.
+- Keep report-facing wording such as `Multi-AT` and `multi-attack training`; do not reintroduce `Multi-ATtack`, `ForMulti-ATtack`, or `theMulti-ATtack`.
+- Keep active prose uses of the main PGD attack as `PGD-$\ell_\infty$`; do not reintroduce `PGD20-CE` outside code/configuration context.
+- Keep `Mean(8)` as the active shorthand in Chapter 6 ablation captions/tables; avoid reintroducing `M(8)`.
+- Keep headings free of `Worst(8)`, `Bottom-\(K\)`, and other internal metric shorthand.
 - Normalize `GroupDRO` to `Group DRO`.
 - Fix simple LaTeX math formatting drift in `report/chapters/chapter5/2-architectures.tex`.
 - Update `report/outsider/list-of-abbreviations.tex` for recurring acronyms after confirming which ones remain in final prose.
 
 ### Needs user confirmation
 
-- Resolve the style-document tension between `Multi-AT` and `Uniform Multi-AT`; current locked user decision and report tables use `Multi-AT`.
-- Decide whether `AttackDRO++ (Ours)` should completely replace `AttackDRO++ Anchor35 GradFP` outside configuration/implementation notes.
+- Preserve `Multi-AT` as the formal method name; use "uniform multi-attack baseline" only as explanatory prose.
+- Preserve `AttackDRO++ (Ours)` outside configuration/implementation notes.
 - Decide whether Chapter 2 should change class-count notation from `K` to `C` to avoid conflict with the Chapter 4 cluster count `K`.
 - Confirm actual tools/platforms before adding Chapter 5.9: Colab, Drive, W&B, PyTorch, torchvision, TorchAttacks, AutoAttack package, adv-lib, scikit-learn, pandas, NumPy, matplotlib, hardware, and environment.
 - Confirm whether `TPGD` means targeted PGD in this report before expanding the acronym in prose/front matter.

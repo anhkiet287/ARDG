@@ -1,0 +1,3 @@
+experiment,setting_key,setting_value,runs,mean8_pct_mean,mean8_pct_std,worst8_pct_mean,worst8_pct_std,autoattack_linf_pct_mean,autoattack_linf_pct_std,l2_family_avg_pct_mean,l2_family_avg_pct_std,linf_family_avg_pct_mean,linf_family_avg_pct_std
+recluster_frequency,refresh_interval_epochs,1,3,62.376250,0.139575,45.166667,0.335012,40.300000,1.369635,67.570000,0.156983,57.182500,0.274146
+recluster_frequency,refresh_interval_epochs,2,3,62.435833,0.215585,45.136667,0.230940,39.450000,0.675500,67.563333,0.082171,57.308333,0.353627

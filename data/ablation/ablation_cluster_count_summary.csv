@@ -1,0 +1,5 @@
+experiment,setting_key,setting_value,runs,mean8_pct_mean,mean8_pct_std,worst8_pct_mean,worst8_pct_std,autoattack_linf_pct_mean,autoattack_linf_pct_std,l2_family_avg_pct_mean,l2_family_avg_pct_std,linf_family_avg_pct_mean,linf_family_avg_pct_std
+cluster_count,K,2,3,62.326250,0.059385,45.126667,0.267644,40.950000,0.900666,67.491667,0.057572,57.160833,0.061458
+cluster_count,K,4,3,62.347917,0.196740,45.326667,0.249867,41.143333,1.145440,67.399167,0.223220,57.296667,0.210243
+cluster_count,K,6,3,62.280000,0.139883,45.166667,0.470567,40.950000,1.302881,67.404167,0.206781,57.155833,0.227436
+cluster_count,K,10,2,62.353750,0.086621,45.170000,0.084853,40.625000,1.110158,67.570000,0.173241,57.137500,0.000000

@@ -34,10 +34,10 @@ Each results section should draw from a named evidence panel. Do not mix evidenc
 
 | Panel | Description | Seeds / Scale | Primary section | Status |
 |---|---|---:|---|---|
-| A | Paired aggregate whitebox results | n=20 paired seeds | 6.1 | needs source table check |
-| B | Per-(class × attack) whitebox analysis | 5 random seeds | 6.2 | available |
-| C | Graybox transfer analysis | 5 random seeds; 400 surrogate-target pairs; 32k rows | 6.3 | available |
-| D | Hyperparameter sensitivity and ablations | 3 seeds each | 6.4 | needs final table check |
+| A | Paired aggregate whitebox results | 20 random-seed checkpoints with paired random-seed runs | 6.1 | final |
+| B | Per-(class × attack) whitebox analysis | five random seeds | 6.2 | final |
+| C | Graybox transfer analysis | five random seeds; 20 random-seed checkpoints; 400 surrogate-target pairs | 6.3 | final |
+| D | Hyperparameter sensitivity and ablations | three runs per ablation setting or available runs | 6.4 | final |
 
 Status options:
 
@@ -93,10 +93,10 @@ Usage rules:
 - Define these names once in Chapter 5 in the compared-methods table.
 ```
 
-Suggested table label for Chapter 5:
+Active table label for Chapter 5:
 
 ```latex
-\label{tab:ch5_compared_methods}
+\label{tab:ch5_method_training_summary}
 ```
 
 ---
@@ -286,13 +286,13 @@ Transition out:
     2.2.1 Lp-Norm Perturbation Sets
     2.2.2 Whitebox, Graybox, and Blackbox Access
 2.3 Adversarial Attack Algorithms
-    2.3.1 FGSM and Its Random-Start Variant
-    2.3.2 Projected Gradient Descent
-    2.3.3 Carlini–Wagner Attack
+    2.3.1 Fast Gradient Sign Method with Random Start (FGSM-RS)
+    2.3.2 Projected Gradient Descent (PGD)
+    2.3.3 Carlini--Wagner Attack (CW)
     2.3.4 DeepFool
-    2.3.5 Decoupled Direction and Norm
-    2.3.6 Momentum Iterative FGSM
-    2.3.7 Targeted PGD
+    2.3.5 Decoupled Direction and Norm (DDN)
+    2.3.6 Momentum Iterative Fast Gradient Sign Method (MI-FGSM)
+    2.3.7 Targeted Projected Gradient Descent (TPGD)
     2.3.8 AutoAttack
 2.4 Adversarial Training as Min-Max Optimization
 2.5 Distributionally Robust Optimization
@@ -447,7 +447,7 @@ Notes:
 | 5.4 | Training Configuration | Optimizer, LR schedule, epochs, batch size, checkpointing. | 400–550 w |
 | 5.5 | Hyperparameter Choices and Ablation Factors | Default configuration and ablation ranges. | 500–700 w |
 | 5.6 | Statistical Significance Protocol | Paired tests, bootstrap CI, effect size, Holm-Bonferroni, reporting. | 600–800 w |
-| 5.7 | Evaluation Metrics and Robustness Definitions | Mean(8), Worst(8), seen/heldout groups, AutoAttack sanity check. | 500–700 w |
+| 5.7 | Evaluation Metrics and Robustness Definitions | Mean(8), Worst(8), seen-source and held-out groups, AutoAttack sanity check. | 500–700 w |
 | 5.8 | Graybox Transfer Protocol | Surrogate-target transfer setup, 400 pairs, transfer regimes. | 600–800 w |
 | 5.9 | Tools, Platforms, and Experiment Tracking | Colab, Google Drive, W&B, PyTorch, TorchAttacks, AutoAttack, adv-lib, scikit-learn, pandas, matplotlib. | 400–600 w |
 
@@ -455,18 +455,18 @@ Required tables:
 
 | Label | Content | Status |
 |---|---|---|
-| `tab:ch5_training_attacks` | Training attack configuration | needs check |
-| `tab:ch5_attack_configurations` | Full evaluation attack configuration; source of truth for attack naming | needs check |
-| `tab:ch5_autoattack_config` | AutoAttack configuration | needs check |
-| `tab:ch5_training_config` | General training configuration | needs check |
-| `tab:ch5_compared_methods` | Summary of compared training methods | needs check |
-| `tab:ch5_attackdro_defaults` | AttackDRO++ default hyperparameters | needs check |
-| `tab:ch5_ablation_factors` | Hyperparameters varied in ablation studies | needs check |
-| `tab:ch5_reporting_format` | Statistical reporting format | needs check |
-| `tab:ch5_eval_metrics` | Summary of evaluation metrics | needs check |
-| `tab:ch5_graybox_transfer_regimes` | Transfer regimes | needs check |
-| `tab:ch5_tools_platforms` | Tools, platforms, packages, and tracking systems | planned |
-| `tab:ch5_setup_summary` | Setup recap table | planned |
+| `tab:ch5_training_attacks` | Training attack configuration | active |
+| `tab:ch5_evaluation_attacks` | Evaluation attack configuration and source-of-truth attack naming | active |
+| `tab:ch5_autoattack_config` | AutoAttack configuration | active |
+| `tab:ch5_training_config` | General training configuration | active |
+| `tab:ch5_method_training_summary` | Summary of compared training methods | active |
+| `tab:ch5_main_hyperparams` | AttackDRO++ default hyperparameters | active |
+| `tab:ch5_ablation_hyperparams` | Hyperparameters varied in ablation studies | active |
+| `tab:ch5_statistical_reporting_format` | Statistical reporting format | active |
+| `tab:ch5_evaluation_metrics_summary` | Summary of evaluation metrics | active |
+| `tab:ch5_graybox_transfer_regimes` | Transfer regimes | active |
+| `tab:ch5_tools_platforms` | Tools, platforms, packages, and tracking systems | active |
+| `tab:ch5_setup_summary` | Setup recap table | active |
 
 Notes for 5.9:
 
@@ -518,7 +518,7 @@ result → interpretation → limitation → motivation for next section
 6.1 Whitebox Robustness Under Direct Attacks
     6.1.1 Aggregate Comparison Across Methods
     6.1.2 Per-Attack Accuracy: Where Do Methods Diverge?
-    6.1.3 Worst-Case Preservation: AutoAttack and Worst(8)
+    6.1.3 Robustness Under the Hardest Evaluation Cases
     6.1.4 Training Stability: How Predictable Is the Outcome?
 6.2 Class-wise Whitebox Robustness Across Attacks
     6.2.1 Class-Level Gains and Persistent Difficulties
@@ -539,25 +539,29 @@ result → interpretation → limitation → motivation for next section
 
 **Panel:** A
 
-**Status:** needs source table check
+**Status:** final
 
-**Purpose:** Present aggregate whitebox robustness, per-attack breakdown, worst-case preservation, and variance reduction.
+**Purpose:** Present aggregate whitebox robustness, per-attack breakdown, hardest-case behavior, and variance reduction.
 
 | # | Title | Purpose | Target |
 |---|---|---|---:|
-| 6.1.1 | Aggregate Comparison Across Methods | Mean(8), seen/heldout splits, method comparison, paired statistical tests. | 400–550 w |
+| 6.1.1 | Aggregate Comparison Across Methods | Mean(8), seen-source and held-out splits, method comparison, paired statistical tests. | 400–550 w |
 | 6.1.2 | Per-Attack Accuracy: Where Do Methods Diverge? | Per-attack accuracy and attack-family-specific behavior. | 400–550 w |
-| 6.1.3 | Worst-Case Preservation: AutoAttack and Worst(8) | Worst(8) and AutoAttack as preservation/sanity checks. | 300–400 w |
+| 6.1.3 | Robustness Under the Hardest Evaluation Cases | Analyze the weakest attack behavior and the separate AutoAttack stress test without putting metric names in the heading. | 300–400 w |
 | 6.1.4 | Training Stability: How Predictable Is the Outcome? | Seed variance and stability interpretation. | 300–400 w |
 
 Required tables and figures:
 
 | Label | Content | Status |
 |---|---|---|
-| `tab:ch6_main_aggregate` | Main robustness table, mean ± std | needs source table check |
-| `tab:ch6_paired_aggregate` | Paired comparisons: Δ, CI, p-values, effect size, win counts | needs source table check |
-| `fig:ch6_per_attack_profile` | Per-attack accuracy profile | needs check |
-| `fig:ch6_forest_plot` | Paired-difference forest plot | needs check |
+| `tab:ch6_aggregate_results` | Aggregate robust accuracy, mean ± standard deviation | final |
+| `tab:ch6_effect_size_summary` | Effect-size summary for aggregate comparisons | final |
+| `tab:ch6_paired_aggregate_all_baselines` | Paired aggregate comparisons against all baselines | final |
+| `tab:ch6_corrected_paired_tests` | Multiple-comparison-corrected paired tests | final |
+| `tab:ch6_per_attack_all_baselines` | Per-attack robust accuracy across methods | final |
+| `tab:ch6_worst_autoattack_sanity` | Hardest-case and AutoAttack sanity results | final |
+| `tab:ch6_autoattack_fulltest` | Full-test AutoAttack results | final |
+| `tab:ch6_variance_reduction` | Training stability and variance reduction | final |
 
 Allowed claim direction:
 
@@ -635,23 +639,26 @@ Notes:
 
 **Panel:** D
 
-**Status:** needs final table check
+**Status:** final
 
 **Purpose:** Give practical configuration guidance.
 
-| # | Title | Seeds | Purpose | Target |
+| # | Title | Runs | Purpose | Target |
 |---|---:|---:|---|---:|
-| 6.4.1 | Number of Clusters: How Many Groups Are Needed? | 3 | Sensitivity to $K$. | 300–400 w |
-| 6.4.2 | Anchor Strength: Finding a Stable Trade-off | 3 | Sensitivity to anchor strength. | 300–400 w |
-| 6.4.3 | Recluster Frequency: How Often Should Groups Update? | 3 | Sensitivity to cluster refresh schedule. | 300–400 w |
+| 6.4.1 | Number of Clusters: How Many Groups Are Needed? | available runs | Sensitivity to $K$. | 300–400 w |
+| 6.4.2 | Anchor Strength: Finding a Stable Trade-off | three runs per setting | Sensitivity to anchor strength. | 300–400 w |
+| 6.4.3 | Recluster Frequency: How Often Should Groups Update? | three runs per setting | Sensitivity to cluster refresh schedule. | 300–400 w |
 
 Required tables and figures:
 
 | Label | Content | Status |
 |---|---|---|
-| `tab:ch6_ablation_clusters` | Mean(8), Worst(8), and variance across K values | needs final table check |
-| `tab:ch6_ablation_anchor` | Mean(8), Worst(8), and variance across anchor strengths | needs final table check |
-| `tab:ch6_ablation_recluster` | Mean(8), Worst(8), and variance across refresh schedules | needs final table check |
+| `tab:ch6_ablation_num_clusters` | Mean(8), Worst(8), and AutoAttack across K values | final |
+| `tab:ch6_ablation_anchor_strength` | Mean(8), Worst(8), and AutoAttack across anchor strengths | final |
+| `tab:ch6_cluster_refresh_schedule_ablation` | Mean(8), Worst(8), AutoAttack, and family averages across refresh schedules | final |
+| `fig:ch6_ablation_num_clusters` | Mean(8) sensitivity across K values with min--max range | final |
+| `fig:ch6_ablation_anchor_strength` | Mean(8) sensitivity across anchor strengths with min--max range | final |
+| `fig:ch6_ablation_recluster_frequency` | Mean(8) sensitivity across refresh schedules with min--max range | final |
 
 Notes:
 
@@ -729,14 +736,14 @@ Appendix C — Additional Tables and Visualizations
 | Appendix | Content | Status |
 |---|---|---|
 | A | Additional algorithms, if not included in Chapter 4 | optional |
-| B | Full configs, seed protocol, compute environment, tool versions | include |
+| B | Full configs, seed protocol, compute environment, tool versions, and representative W&B tracking exports | include |
 | C | Extra transfer matrices and full per-class tables | optional/include if useful |
 
 Diagnostics decision:
 
 ```text
-q-trajectory logs, cluster entropy plots, and detailed diagnostic curves are removed from the main report outline.
-They should not be included unless the advisor explicitly asks for them later.
+q-trajectory logs, cluster entropy plots, and detailed diagnostic curves are removed from the main Chapter 5--6 flow.
+Representative W&B tracking exports may be kept in Appendix B as reproducibility telemetry, not as result evidence.
 ```
 
 ---
@@ -888,7 +895,7 @@ LaTeX insertion:
 \begin{table}[t]
 \centering
 \caption{Mean robust accuracy (\%) under the main whitebox evaluation suite. Higher is better.}
-\label{tab:ch6_main_aggregate}
+\label{tab:ch6_aggregate_results}
 \begin{tabular}{lccc}
 \toprule
 Method & Mean(8) & Mean $\ell_\infty$ & Mean $\ell_2$ \\
@@ -917,7 +924,7 @@ Recommended main-text table style:
 \begin{table}[t]
 \centering
 \caption{Mean robust accuracy (\%) under the main whitebox evaluation suite. Higher is better. The best value per column is bolded.}
-\label{tab:ch6_main_aggregate}
+\label{tab:ch6_aggregate_results}
 \begin{tabular}{lccc}
 \toprule
 Method & Mean(8) & Mean $\ell_\infty$ & Mean $\ell_2$ \\

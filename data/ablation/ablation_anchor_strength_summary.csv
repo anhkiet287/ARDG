@@ -1,0 +1,4 @@
+experiment,setting_key,setting_value,runs,mean8_pct_mean,mean8_pct_std,worst8_pct_mean,worst8_pct_std,autoattack_linf_pct_mean,autoattack_linf_pct_std,l2_family_avg_pct_mean,l2_family_avg_pct_std,linf_family_avg_pct_mean,linf_family_avg_pct_std
+anchor_strength,lambda_DRO,0.20,3,62.283333,0.087610,45.013333,0.398790,41.080000,1.660813,67.432500,0.096469,57.134167,0.099289
+anchor_strength,lambda_DRO,0.35,3,62.347917,0.196740,45.326667,0.249867,41.143333,1.145440,67.399167,0.223220,57.296667,0.210243
+anchor_strength,lambda_DRO,0.50,3,62.237917,0.176800,45.240000,0.401497,40.236667,1.088409,67.276667,0.260784,57.199167,0.127704
