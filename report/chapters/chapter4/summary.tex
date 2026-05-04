@@ -1,8 +1,11 @@
 This chapter formulated cross-attack adversarial training as a domain-aware
 optimization problem and introduced the progression from Multi-AT to AttackDRO
-and AttackDRO++. The final method combines cluster-based grouping, gradient
-fingerprints, and a uniform anchor to emphasize difficult adversarial groups
-while retaining the stability of the uniform multi-attack baseline.
+and AttackDRO++. The final method is not a collection of independent additions. Each
+component addresses a limitation of the previous step: Multi-AT provides source attack
+coverage, AttackDRO introduces group-aware reweighting, cluster-level DRO replaces coarse
+attack identities with latent groups, gradient fingerprints make grouping
+optimization-aware, and the uniform anchor keeps the adaptive objective tied to the
+stable multi-attack baseline.
 
 The chapter has defined the method and its training pipeline, but it has not yet
 established how the method behaves empirically. Chapter~\ref{chap:experimental_setup}

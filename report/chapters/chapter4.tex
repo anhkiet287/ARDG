@@ -21,12 +21,14 @@ group distributionally robust optimization (Group DRO) over source attack
 identities, but this still assumes that each attack forms one homogeneous group.
 
 The remaining sections address that limitation. Section~\ref{sec:ch4_attackdropp}
-introduces AttackDRO++, which replaces attack identities with discovered
-clusters. Section~\ref{sec:ch4_gradfp} augments those clusters with gradient
-fingerprints so that grouping can reflect optimization-level difficulty, not
-only representation similarity. Finally, Section~\ref{sec:ch4_anchor_objective}
-adds a uniform anchor that keeps the final AttackDRO++ objective tied to the
-Multi-AT training signal while still allowing cluster-level correction.
+introduces a cluster-level DRO component that replaces fixed attack identities
+with discovered latent clusters. Section~\ref{sec:ch4_gradfp} augments those
+clusters with gradient fingerprints so that grouping can reflect optimization-level
+difficulty, not only representation similarity. Section~\ref{sec:ch4_anchor_objective}
+adds a uniform anchor that stabilizes the adaptive cluster-level correction.
+In this report, AttackDRO++ denotes the final complete method: latent cluster
+discovery, augmented clustering features, gradient fingerprints, and a
+uniform-anchored Cluster-DRO objective.
 
 \input{chapters/chapter4/1-problem_formulation}
 \input{chapters/chapter4/2-multi_attack}

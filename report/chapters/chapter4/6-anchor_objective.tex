@@ -1,4 +1,4 @@
-﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% --------------------------------------------------------------------------
 \section{Uniform-Anchored Training Objective}
 \label{sec:ch4_anchor_objective}
 
@@ -45,8 +45,7 @@ uniform loss, the correction is small. If some clusters are substantially harder
 correction becomes larger, but its influence remains controlled by
 \(\lambda_{\mathrm{DRO}}\).
 
-In the main experiments, we use \(\lambda_{\mathrm{DRO}}=0.35\), referred to as
-the \texttt{Anchor35} setting. This value keeps the uniform multi-attack objective as
+In the main experiments, we use \(\lambda_{\mathrm{DRO}}=0.35\), used as the default anchor strength in the main configuration. This value keeps the uniform multi-attack objective as
 the dominant stabilizing term while still allowing the model to adapt toward harder
 clusters. Intuitively, this suggests an inverted-U behavior: a small amount of
 Cluster-DRO pressure can improve robustness by emphasizing hard groups, whereas
@@ -59,10 +58,12 @@ projected so that every cluster keeps at least \(q_{\min}\) mass:
     q_k \ge q_{\min}, \qquad \sum_{k=1}^{K} q_k = 1.
     \label{eq:floor}
 \end{equation}
-This prevents any cluster from being completely ignored. In our default setting,
-\(q_{\min}=0.03\). Together, the uniform anchor and the floor projection ensure that
-training receives both a stable per-sample ERM signal and an adaptive cluster-level
-correction.
+
+The anchor controls how much the adaptive cluster loss can influence the total objective,
+while the floor projection controls the cluster weights themselves. Together, they
+prevent the adaptive component from collapsing onto a small number of clusters and keep
+all discovered groups represented during training. In our default setting,
+\(q_{\min}=0.03\).
 
 Finally, the \(q\)-update is delayed during the early training phase. For the first
 \(T_w\) epochs, \(\mathbf{q}\) remains uniform while the model representation and

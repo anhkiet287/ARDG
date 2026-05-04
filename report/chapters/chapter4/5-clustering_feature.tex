@@ -1,4 +1,4 @@
-﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% --------------------------------------------------------------------------
 \section{Augmented Clustering with Gradient Fingerprints}
 \label{sec:ch4_gradfp}
 
@@ -82,8 +82,10 @@ The final augmented clustering feature is
 \right].
 \]
 
-The three components play complementary roles. The representation feature captures
-semantic similarity, the label feature provides weak class-aware structure, and the
-gradient fingerprint captures optimization-level similarity. This allows AttackDRO++
-to discover latent adversarial groups that reflect both where examples lie in feature
-space and how they influence training.
+The three components play complementary roles. Representation features describe where
+an example lies in feature space, whereas gradient fingerprints describe how the
+classifier head would need to change to classify that example correctly. Combining
+representation, label, and gradient information makes the clustering signal both
+representation-aware and optimization-aware. This allows AttackDRO++ to discover
+latent adversarial groups that reflect both structural similarity and optimization
+difficulty.

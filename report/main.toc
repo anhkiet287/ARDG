@@ -56,7 +56,7 @@
 \contentsline {subsection}{\numberline {4.2.2}Multi-Attack Risk and Its Limitations}{35}{subsection.4.2.2}%
 \contentsline {section}{\numberline {4.3}Uniform Multi-Attack ERM Baseline}{35}{section.4.3}%
 \contentsline {section}{\numberline {4.4}AttackDRO: Group DRO Over Attack Identities}{36}{section.4.4}%
-\contentsline {section}{\numberline {4.5}AttackDRO++: Group DRO Over Discovered Clusters}{37}{section.4.5}%
+\contentsline {section}{\numberline {4.5}Cluster-Level DRO: Discovering Latent Groups}{37}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Augmented Clustering with Gradient Fingerprints}{39}{section.4.6}%
 \contentsline {section}{\numberline {4.7}Uniform-Anchored Training Objective}{41}{section.4.7}%
 \contentsline {section}{\numberline {4.8}Complete Training Framework}{42}{section.4.8}%

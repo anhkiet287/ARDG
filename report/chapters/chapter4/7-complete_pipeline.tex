@@ -1,9 +1,11 @@
-﻿% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% --------------------------------------------------------------------------
 \section{Complete Training Framework}
 \label{sec:ch4_complete_pipeline}
 
-Algorithm~\ref{alg:ch4_attackdropp} summarizes the complete AttackDRO++ training
-pipeline. The method combines mixed adversarial batch generation, augmented
+In this report, AttackDRO++ denotes the complete method: latent cluster discovery,
+augmented clustering features, gradient fingerprints, and a uniform-anchored
+Cluster-DRO objective. Algorithm~\ref{alg:ch4_attackdropp} summarizes this pipeline.
+The method combines mixed adversarial batch generation, augmented
 feature construction, cluster-level reweighting, \(q\)-updates, and a
 uniform-anchored loss. Table~\ref{tab:ch4_hparams} lists the default hyperparameters
 used in the main experiments.
@@ -28,8 +30,8 @@ Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradF
 Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of label component in \(\psi\) \\
 Feature bank size        & \(|\mathcal{F}|\)           & 4{,}096 & Buffer used to refit K-means \\
 Cluster refresh interval & \(R\)                       & 2 epochs & Default K-means refit frequency \\
-\(q\)-refresh policy     & --                          & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
-Bootstrap assignment     & --                          & random & Used before the first K-means refit \\
+\(q\)-refresh policy     & N/A                         & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
+Bootstrap assignment     & N/A                         & random & Used before the first K-means refit \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -95,21 +97,16 @@ reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
 
 This methodology directly extends the attacks-as-domains framework from Stage 1,
 which diagnosed the cross-attack robustness gap. Stage 2 moves from diagnosis to
-intervention. The progression is:
-\begin{enumerate}
-    \item \textbf{Single-AT}: trains against one source attack and can leave a large
-    cross-attack robustness gap.
-    \item \textbf{Uniform ERM}: trains on multiple source attacks with equal weighting;
-    it is strong but cannot adapt to weak groups.
-    \item \textbf{AttackDRO}: reweights attack-level groups, but remains limited by the
-    assumption that each attack group is homogeneous.
-    \item \textbf{AttackDRO++}: discovers latent cross-attack groups using K-means over
-    adversarial representations.
-    \item \textbf{Gradient Fingerprints}: enrich clustering with optimization-level
-    difficulty information.
-    \item \textbf{Uniform Anchor}: stabilizes Cluster-DRO by preserving the strong
-    uniform multi-attack training signal.
-\end{enumerate}
+intervention. The progression builds sequentially: Single-AT diagnoses the cross-attack
+gap by training against one source attack, which leaves a large vulnerability to other
+threat models. Uniform multi-attack ERM covers multiple source attacks with equal
+weighting, providing a strong baseline but failing to adapt to weak groups. AttackDRO
+introduces attack-level reweighting but assumes each attack identity is homogeneous.
+To resolve this, the cluster-DRO component replaces fixed attack identities with
+discovered latent groups. Gradient fingerprints enrich this grouping with
+optimization-level information, and the uniform anchor stabilizes the adaptive objective
+by preserving the strong multi-attack training signal. Together, these form the
+final AttackDRO++ method.
 
 The evaluation discipline from Stage 1 is preserved throughout: source attacks are
 fixed during training, heldout attacks are never used for optimization, and results are
@@ -117,13 +114,10 @@ reported both per attack and through aggregate robustness metrics.
 
 \subsection{Implementation and Computational Considerations}
 
-The final implementation evaluated in the main experiments is AttackDRO++ with
-gradient fingerprints, an online K-means refresh policy, \(K=4\) clusters, and
-uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). In configuration files,
-this setting is recorded as
-\texttt{attackdro\_pp\_anchor035\_gradfp\_online\_k4}. The identifier is used
-only as a reproducibility handle; the report-facing method name is
-AttackDRO++ (Ours).
+The final implementation evaluated in the main experiments uses gradient
+fingerprints, an online K-means refresh policy, \(K=4\) clusters, and
+uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). Chapter~\ref{chap:experimental_setup}
+documents the full training configuration, software stack, and evaluation protocol.
 
 The main additional state introduced by AttackDRO++ is the feature bank used for
 cluster refresh. The bank stores detached augmented features, so clustering does
