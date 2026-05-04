@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 17:23
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 17:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2058,7 +2058,7 @@ Chapter 7.
 
 
 
-] [103] [104]) [105] [106] (main.bbl) [107
+] [103] [104] [105] [106]) [107] (main.bbl) [108
 
 
 
@@ -2067,7 +2067,7 @@ Chapter 7.
 
  (appendices.tex
 Appendix A.
-[108
+[109
 
 
 ]
@@ -2085,17 +2085,17 @@ File: figures/wandb/wb_ddn_l2_acc.png Graphic file (type bmp)
 File: figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.
 png Graphic file (type bmp)
 <figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png>
-[109
+[110
 
-] [110]
+] [111]
 Appendix C.
 File: figures/ablations/wrn2810_architecture_check.png Graphic file (type bmp)
 <figures/ablations/wrn2810_architecture_check.png>
-[111
+[112
 
-] [112]
+] [113]
 Appendix D.
-) [113
+) [114
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2115,10 +2115,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  38090 strings out of 402987
  756739 string characters out of 5448525
- 1413738 words of memory out of 5000000
+ 1413804 words of memory out of 5000000
  65976 multiletter control sequences out of 15000+600000
  636988 words of font info for 158 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,18n,107p,1067b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (114 pages).
+Output written on main.pdf (115 pages).
