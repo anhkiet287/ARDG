@@ -82,8 +82,8 @@ The single-attack baselines confirm the expected specialist pattern.
 PGD-AT wins the held-out $\ell_\infty$ mean and Worst(8); DDN-AT wins the
 held-out $\ell_2$ mean. Each therefore dominates one threat family but
 loses substantially on the other, while AttackDRO++ achieves the highest
-Mean(8), held-out attack mean, and seen-source mean --- the metrics that
-average across both families.
+Mean(8), held-out attack mean, and seen-source mean (the metrics that
+average across both families).
 
 \paragraph{Effect-size summary.}
 Table~\ref{tab:ch6_effect_size_summary} reports paired effect magnitudes
@@ -461,7 +461,7 @@ AutoAttack-$\ell_\infty$ is an ensemble $\ell_\infty$ stress test following
 Croce and Hein \cite{croce2020reliable}. Tables~\ref{tab:ch6_worst_autoattack_sanity} and
 \ref{tab:ch6_autoattack_fulltest} report each metric separately because they have
 different evaluation panels: Worst(8) is computed across the full $n=20$
-seed panel, while AutoAttack is reported in two layers --- a 512-sample
+seed panel, while AutoAttack is reported in two layers: a 512-sample
 sanity evaluation across all $n=20$ seeds and a full-test evaluation on
 the selected $n=5$ seed panel.
 

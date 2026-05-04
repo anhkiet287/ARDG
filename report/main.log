@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 18:25
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 18:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1937,15 +1937,10 @@ sults across 20 paired random-
  []
 
 [71] [72]) (chapters/chapter6/4_whitebox.tex [73]
-Underfull \hbox (badness 1558) in paragraph at lines 5--6
-\TU/TimesNewRoman(0)/m/n/13 The aggregate results in Section [][]6.1[][] show t
-hat AttackDRO++ improves average
- []
-
 File: figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png Graphic file (
 type bmp)
 <figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png>
-[74]
+ [74]
 File: figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png>
@@ -1971,7 +1966,8 @@ png Graphic file (type bmp)
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png>
- [78] [79]
+ [78]
+[79]
 File: figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png Gra
 phic file (type bmp)
 <figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png>
@@ -1979,8 +1975,7 @@ phic file (type bmp)
 File: figures/whitebox/whitebox_bottomk_lift_bar_n5.png Graphic file (type bmp)
 
 <figures/whitebox/whitebox_bottomk_lift_bar_n5.png>
-) [81]
-(chapters/chapter6/2_graybox_results.tex [82] [83]
+) [81] (chapters/chapter6/2_graybox_results.tex [82] [83]
 File: figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png>
@@ -2009,8 +2004,8 @@ phic file (type bmp)
 File: figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png Graphic f
 ile (type bmp)
 <figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png>
- [85] [86] [87] [88]
-[89]
+
+[85] [86] [87] [88] [89]
 File: figures/graybox/whitebox_graybox_gap_DDNAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_DDNAT.png>
 File: figures/graybox/whitebox_graybox_gap_PGDAT.png Graphic file (type bmp)
@@ -2036,8 +2031,8 @@ ng Graphic file (type bmp)
 File: figures/graybox/method_decomposition_three_panel_science.png Graphic file
  (type bmp)
 <figures/graybox/method_decomposition_three_panel_science.png>
-) (chapters/chapter6/3_ablation.tex
-[97]
+)
+(chapters/chapter6/3_ablation.tex [97]
 File: figures/ablations/ablation_num_clusters.png Graphic file (type bmp)
 <figures/ablations/ablation_num_clusters.png>
  [98] [99]
@@ -2047,11 +2042,11 @@ File: figures/ablations/ablation_anchor_strength.png Graphic file (type bmp)
 File: figures/ablations/ablation_recluster_frequency.png Graphic file (type bmp
 )
 <figures/ablations/ablation_recluster_frequency.png>
- [101]) (chapters/chapter6/6_summary.tex)) [102]
+ [101])
+(chapters/chapter6/6_summary.tex)) [102]
 \openout2 = `chapters/chapter7.aux'.
 
-
-(chapters/chapter7.tex
+ (chapters/chapter7.tex
 Chapter 7.
 [103
 
