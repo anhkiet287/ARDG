@@ -45,7 +45,7 @@ uniform loss, the correction is small. If some clusters are substantially harder
 correction becomes larger, but its influence remains controlled by
 \(\lambda_{\mathrm{DRO}}\).
 
-In the main experiments, we use \(\lambda_{\mathrm{DRO}}=0.35\), used as the default anchor strength in the main configuration. This value keeps the uniform multi-attack objective as
+In the main experiments, we set \(\lambda_{\mathrm{DRO}}=0.35\) as the default anchor strength. This value keeps the uniform multi-attack objective as
 the dominant stabilizing term while still allowing the model to adapt toward harder
 clusters. Intuitively, this suggests an inverted-U behavior: a small amount of
 Cluster-DRO pressure can improve robustness by emphasizing hard groups, whereas

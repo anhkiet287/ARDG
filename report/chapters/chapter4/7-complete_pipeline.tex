@@ -88,7 +88,7 @@ Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}
 \end{algorithm}
 
 
-The refresh condition is written as a policy rather than a fixed operation. It can be
+The cluster refresh schedule is treated as a configurable training choice rather than a fixed mathematical requirement. It can be
 instantiated using either epoch-based or step-based schedules. Unless otherwise
 specified, the main experiments use an epoch-based schedule with \(R=2\) epochs and
 reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
@@ -108,7 +108,7 @@ optimization-level information, and the uniform anchor stabilizes the adaptive o
 by preserving the strong multi-attack training signal. Together, these form the
 final AttackDRO++ method.
 
-The evaluation discipline from Stage 1 is preserved throughout: source attacks are
+The evaluation discipline from Stage 1 carries through the method design: source attacks are
 fixed during training, heldout attacks are never used for optimization, and results are
 reported both per attack and through aggregate robustness metrics.
 
