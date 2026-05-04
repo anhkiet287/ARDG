@@ -1,22 +1,14 @@
 % appendices.tex
 
-\appendix
+\input{appendices/algorithms}
 
 %===========================================================
-% APPENDIX A – ILLUSTRATIVE PSEUDO-CODE AND FLOWCHARTS
-%===========================================================
-
-\chapter{Illustrative Pseudo-code and Flowcharts}
-\label{app:pseudocode}
-
-
-
-%===========================================================
-% APPENDIX B – EXPERIMENTAL LOGS AND CONFIGURATIONS
+% APPENDIX B: EXPERIMENTAL LOGS AND CONFIGURATIONS
 %===========================================================
 
 \chapter{Experimental Logs and Configurations}
 \label{app:logs}
+
 \begin{figure}[p]
 \centering
 \captionsetup{font=footnotesize}
@@ -57,21 +49,23 @@
 \includegraphics[width=0.95\linewidth]{figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png}
 \caption{Group-weight trajectory.}
 \end{subfigure}
-\caption{Representative W\&B dashboard exports for experiment tracking. Panels (a)--(e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell_\infty$ and DDN-$\ell_2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}
+\caption{Representative W\&B dashboard exports for experiment tracking. Panels (a)\textendash(e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell_\infty$ and DDN-$\ell_2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}
 \label{fig:app_wandb_core_metrics}
 \end{figure}
-% Mục tiêu: lưu cấu hình chạy, seed, split policy, attack config, training schedule,
-%          JSON logs, command line (nếu có), và các bảng tóm tắt config.
 
+% Goal: store run configuration, seed policy, split policy, attack configuration,
+% training schedule, JSON logs, command lines if available, and compact config tables.
 
 %===========================================================
-% APPENDIX C – ADDITIONAL TABLES AND VISUALIZATIONS
+% APPENDIX C: ADDITIONAL TABLES AND VISUALIZATIONS
 %===========================================================
 
 \chapter{Additional Tables and Visualizations}
 \label{app:extras}
-% Mục tiêu: bảng phụ (ablation, sweep), hình phụ (training curves, extra qualitative grids),
-%          các plot không đưa vào main chapters.
+
+% Goal: store supplementary ablation tables, sweep summaries, training curves,
+% qualitative grids, and plots that are not part of the main chapters.
+
 \begin{table}[H]
 \centering
 \caption{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are
@@ -91,7 +85,7 @@ Multi-AT
 & \bestval{47.99}
 & \bestval{44.92} \\
 
-AttackDRO++ (Ours)
+AttackDRO++
 & $64.68$
 & $47.72$
 & $43.16$ \\
@@ -107,10 +101,11 @@ AttackDRO++ (Ours)
 \end{figure}
 
 %===========================================================
-% APPENDIX D – COMPUTE RESOURCES AND ENVIRONMENT
+% APPENDIX D: COMPUTE RESOURCES AND ENVIRONMENT
 %===========================================================
 
 \chapter{Compute Resources and Environment Notes}
 \label{app:compute}
-% Mục tiêu: GPU/CPU, RAM, OS, CUDA/cuDNN, library versions (Torch, TorchAttacks, ART),
-%          runtime measurement policy, reproducibility notes.
+
+% Goal: document GPU/CPU, RAM, operating system, CUDA/cuDNN, library versions,
+% runtime measurement policy, and reproducibility notes if verified.

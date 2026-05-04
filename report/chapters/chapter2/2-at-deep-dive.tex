@@ -1,24 +1,29 @@
 \section{Adversarial Attack Algorithms}
 
-The attacks used in this report are best understood as different approximations to the same inner maximization problem. They vary in norm constraint, objective, update rule, and evaluation role. Chapter~\ref{chap:experimental_setup} gives the concrete configuration values; this section defines the algorithms conceptually so that later comparisons can refer to them without reintroducing their mechanics.
+The attacks used in this report are best understood as different approximations to the same inner maximization problem. They vary in perturbation norm, attacker access, optimization objective, update rule, and role in training or evaluation. Chapter~\ref{chap:experimental_setup} gives the concrete configuration values; this section defines the algorithms conceptually so that later comparisons can refer to them without reintroducing their mechanics. Appendix~\ref{app:algorithms} provides compact pseudocode for the attack and training procedures used throughout the report.
 
 \subsection{Fast Gradient Sign Method with Random Start (FGSM-RS)}
 
-The Fast Gradient Sign Method (FGSM) is a one-step whitebox attack that perturbs the input in the sign direction of the loss gradient \cite{goodfellow2015explaining}. For an $\ell_\infty$ budget, the basic update is
+Fast Gradient Sign Method with Random Start (FGSM-RS) is motivated by the need for a cheap first-order evaluation attack. It operates in the whitebox $\ell_\infty$ threat model: the adversary can access the model gradient and must keep the perturbation inside an $\ell_\infty$ ball around the clean input. The base FGSM attack uses a single gradient-sign step to increase the cross-entropy loss \cite{goodfellow2015explaining}.
+
+The objective is the usual untargeted inner maximization of $\ell(f_\theta(x+\delta),y)$ over an $\ell_\infty$ budget. FGSM-RS first samples a random initial perturbation $\delta_0\in\mathcal{S}_\infty(\varepsilon)$ and then takes one sign-gradient step:
 \[
 x^{\mathrm{adv}}=
-\Pi_{[0,1]^d}
+\Pi_{(x+\mathcal{S}_\infty(\varepsilon))\cap[0,1]^d}
 \left(
-x+\varepsilon\,\mathrm{sign}\left(\nabla_x \ell(f_\theta(x),y)\right)
-\right),
+x+\delta_0+\alpha\,\mathrm{sign}
+\left(\nabla_x \ell(f_\theta(x+\delta_0),y)\right)
+\right).
 \]
-where $\Pi_{[0,1]^d}$ clips the result to the valid input range. FGSM is computationally cheap, but a deterministic single step can be a weak test of robustness when used alone.
+The random start reduces dependence on the clean point's immediate gradient direction and makes the one-step attack less brittle than deterministic FGSM \cite{wong2020fast}.
 
-FGSM-RS adds a random initialization inside the perturbation set before taking the gradient step. If $\delta_0$ is sampled from the $\ell_\infty$ ball, the update starts from $x+\delta_0$ and then projects back to the feasible region after the sign step. Random starts are used to reduce sensitivity to the local geometry at the clean point and to make the one-step attack less brittle \cite{wong2020fast}. In this report, FGSM-RS is an evaluation attack, not a training method.
+FGSM-RS is fast and useful for exposing obvious failures, but it is weaker than multi-step attacks and should not be treated as a complete robustness evaluation. In this thesis it is used only as a held-out $\ell_\infty$ evaluation attack. It is not a source training attack and does not define a training method.
 
 \subsection{Projected Gradient Descent (PGD)}
 
-Projected Gradient Descent (PGD) extends FGSM by taking multiple gradient-ascent steps on the input and projecting after each step \cite{madry2019towards}. For an $\ell_\infty$ attack, a typical update is
+Projected Gradient Descent (PGD) is the standard iterative first-order attack used to approximate the adversarial inner maximization \cite{madry2019towards}. It is a whitebox attack because each step uses the current input gradient. In this report, PGD-$\ell_\infty$ is both a source training attack and an evaluation attack, while PGD-$\ell_2$ is used only for evaluation.
+
+For an untargeted $\ell_\infty$ attack, PGD repeatedly ascends the loss and projects the result back to the feasible perturbation set:
 \[
 x_{t+1}^{\mathrm{adv}}=
 \Pi_{(x+\mathcal{S}_\infty(\varepsilon))\cap[0,1]^d}
@@ -27,45 +32,114 @@ x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}
 \left(\nabla_x \ell(f_\theta(x_t^{\mathrm{adv}}),y)\right)
 \right).
 \]
-For an $\ell_2$ attack, the gradient direction is normalized and the projection is performed onto the $\ell_2$ ball. The repeated update makes PGD a strong first-order baseline for both evaluation and adversarial training.
+For an $\ell_2$ variant, the update uses a normalized gradient direction and projection onto the $\ell_2$ ball. The algorithmic intuition is simple: repeated local ascent gives the attack more opportunities to find a high-loss point than a single FGSM step.
 
-The report uses PGD-$\ell_\infty$ and PGD-$\ell_2$ as attacks. PGD-AT, by contrast, is a training method that uses PGD-generated adversarial examples inside the adversarial-training objective. This separation between attack algorithm and training method is important because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share the same source attacks in Chapter~\ref{chap:methodology}.
+PGD is strong, broadly used, and closely tied to adversarial training, but it still depends on the chosen norm, loss, step size, and iteration budget. PGD-AT is the training method that uses PGD-generated examples; PGD-$\ell_\infty$ and PGD-$\ell_2$ are the attacks themselves. This distinction is central to the thesis because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share PGD-$\ell_\infty$ as a source attack while differing in how generated examples are grouped and weighted.
 
-\subsection{Carlini-Wagner Attack (CW)}
+\subsection{Carlini\textendash Wagner Attack (CW)}
 
-The Carlini-Wagner attack is an optimization-based attack designed to search for small perturbations that satisfy a margin-style misclassification objective \cite{carlini2017towards}. Instead of following only a fixed number of projected gradient steps on cross-entropy, CW directly optimizes a surrogate objective that trades perturbation size against attack success.
+The Carlini\textendash Wagner attack is motivated by the need to test robustness under an optimization objective that differs from standard cross-entropy gradient ascent \cite{carlini2017towards}. It is usually formulated as a whitebox attack and is especially associated with the $\ell_2$ threat model. The adversary searches for a small perturbation that changes the classification decision while controlling perturbation size.
 
-In this report, CW-$\ell_2$ is used as a held-out evaluation attack. Its role is to complement step-based gradient attacks by testing the model under a different loss formulation and norm geometry. It is not used as a source training attack.
+A common CW-style objective combines an $\ell_2$ penalty with a margin-based attack loss:
+\[
+\min_{\delta}
+\|\delta\|_2^2
++ c\,g(x+\delta),
+\quad
+x+\delta\in[0,1]^d,
+\]
+where $g(\cdot)$ is chosen so that successful adversarial examples have low objective value. This form makes the attack different from direct cross-entropy maximization: the perturbation norm and the classification margin are optimized together.
+
+CW-$\ell_2$ is a useful held-out evaluation attack because it probes a different loss geometry from PGD and FGSM-style attacks. Its limitation is computational cost, and its strength depends on optimization settings. In this thesis it is used as an evaluation attack only, not as a source attack for training.
 
 \subsection{DeepFool}
 
-DeepFool estimates the direction to a nearby decision boundary by locally linearizing the classifier and iteratively moving the input toward that boundary \cite{moosavi2016deepfool}. For nonlinear networks, the method repeats this local approximation until the predicted class changes or the iteration budget is reached.
+DeepFool is motivated by a geometric view of adversarial examples: if the classifier's decision boundary is nearby, a small movement toward that boundary can change the predicted class \cite{moosavi2016deepfool}. It is a whitebox boundary-oriented attack because it uses local gradient information to approximate the classifier near the current point. The report uses DeepFool-$\ell_2$ as a held-out $\ell_2$ evaluation attack.
 
-DeepFool-$\ell_2$ is useful as an evaluation attack because it emphasizes boundary proximity rather than cross-entropy maximization alone. It should not be interpreted as a robustness certificate: it is an attack procedure that approximates a nearby boundary crossing, not a proof that no smaller perturbation exists.
+For a locally linearized binary classifier, the smallest boundary-crossing perturbation has the form
+\[
+r_t=
+-\frac{f(x_t)}{\|\nabla_x f(x_t)\|_2^2}\nabla_x f(x_t).
+\]
+In multiclass neural networks, DeepFool generalizes this idea by estimating the closest class boundary under a local linear approximation and iteratively updating the input until the predicted class changes or the iteration budget is reached.
+
+DeepFool is valuable because it emphasizes boundary proximity rather than directly maximizing cross-entropy. Its limitation is that local linearization is only an approximation for nonlinear networks, so it is still an attack heuristic rather than a certificate. In this thesis it complements PGD-$\ell_2$, DDN-$\ell_2$, and CW-$\ell_2$ in the evaluation suite.
 
 \subsection{Decoupled Direction and Norm (DDN)}
 
-The Decoupled Direction and Norm (DDN) attack searches for adversarial examples under an $\ell_2$ geometry by separating the update direction from the perturbation norm \cite{rony2019decoupling}. The direction is updated using gradient information, while the norm is increased or decreased depending on whether the current perturbation succeeds.
+Decoupled Direction and Norm (DDN) is motivated by the observation that the direction of an adversarial perturbation and the size of that perturbation can be adapted separately \cite{rony2019decoupling}. It is a whitebox $\ell_2$ attack: the adversary uses gradients to update direction while controlling the perturbation norm. DDN-$\ell_2$ is one of the two source attacks used for training in this thesis and is also included in evaluation.
 
-DDN-$\ell_2$ is both a source attack and an evaluation attack in this report. DDN-AT refers to a training baseline that adversarially trains using DDN-generated examples. The attack and the training method are therefore related, but not interchangeable: the former generates inputs, while the latter defines how those inputs are used during model optimization.
+At a high level, DDN updates a normalized direction using the loss gradient and then adjusts the current radius depending on attack success:
+\[
+\delta_{t+1}
+=
+\rho_{t+1}\,
+\frac{\delta_t+\alpha\,\mathrm{Normalize}
+\left(\nabla_x \ell(f_\theta(x+\delta_t),y)\right)}
+{\left\|\delta_t+\alpha\,\mathrm{Normalize}
+\left(\nabla_x \ell(f_\theta(x+\delta_t),y)\right)\right\|_2}.
+\]
+If the current perturbation is already adversarial, the radius can be reduced; otherwise, it can be increased. This decoupling lets the attack search for small successful $\ell_2$ perturbations without fixing the radius throughout the trajectory.
+
+DDN is efficient and well suited to $\ell_2$ adversarial training, but its behavior still depends on update and radius-adjustment choices. DDN-AT is the training method that uses DDN-generated adversarial examples, whereas DDN-$\ell_2$ is the attack. In the main comparisons, it provides the $\ell_2$ source counterpart to PGD-$\ell_\infty$.
 
 \subsection{Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}
 
-MI-FGSM adds momentum to iterative sign-gradient attacks \cite{dong2018boosting}. Instead of using only the current gradient, it maintains an accumulated direction that stabilizes the update across iterations. This can improve transferability and reduce oscillation in the perturbation trajectory.
+Momentum Iterative Fast Gradient Sign Method (MI-FGSM) is motivated by the instability that can occur when iterative sign-gradient attacks change direction sharply across steps. It is a whitebox $\ell_\infty$ attack that augments iterative FGSM with a momentum term \cite{dong2018boosting}. The objective remains untargeted loss maximization under an $\ell_\infty$ constraint.
 
-In the evaluation suite, MI-FGSM provides another $\ell_\infty$ first-order stress condition. It is close enough to PGD to test iterative gradient robustness, but different enough to reveal whether robustness depends on a particular update rule. It is not one of the source training attacks used by the main methods.
+The central update accumulates a normalized gradient direction before applying a sign step:
+\[
+g_{t+1}
+=
+\mu g_t+
+\frac{\nabla_x \ell(f_\theta(x_t^{\mathrm{adv}}),y)}
+{\left\|\nabla_x \ell(f_\theta(x_t^{\mathrm{adv}}),y)\right\|_1},
+\quad
+x_{t+1}^{\mathrm{adv}}
+=
+\Pi_{\mathcal{S}_\infty(\varepsilon)}
+\left(x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}(g_{t+1})\right).
+\]
+The momentum term smooths the update direction and can improve transferability across models.
+
+MI-FGSM is useful because it is close to PGD while still changing the attack dynamics. It can reveal whether robustness depends too narrowly on a particular first-order update rule. In this thesis it is a held-out $\ell_\infty$ evaluation attack and is not used for source adversarial training.
 
 \subsection{TRADES-Style Projected Gradient Descent (TPGD)}
 
-The name TPGD is overloaded across libraries and papers. In the code and protocol used for this report, TPGD refers to a TRADES-style PGD attack based on a KL-divergence objective between clean and perturbed predictions, rather than to a target-label PGD attack. This interpretation is aligned with the TRADES objective, which separates natural classification loss from a robustness regularization term \cite{zhang2019trades}.
+The TPGD name is overloaded across software libraries and papers, so its meaning must be fixed for this report. Here, TPGD refers to the TRADES-style PGD attack used by the implemented evaluation code, not to target-label PGD. It is a whitebox $\ell_\infty$ evaluation attack whose objective is based on the divergence between clean and perturbed predictions \cite{zhang2019trades}.
 
-TPGD is included in the main evaluation suite to test a loss objective that differs from ordinary cross-entropy PGD. This helps the evaluation avoid depending only on attacks that optimize the same loss used by common adversarial-training baselines.
+The attack maximizes a KL-divergence objective rather than ordinary cross-entropy:
+\[
+\max_{\delta\in\mathcal{S}_\infty(\varepsilon)}
+\operatorname{KL}
+\left(
+p_\theta(\cdot\mid x)
+\;\|\;
+p_\theta(\cdot\mid x+\delta)
+\right).
+\]
+Projected gradient ascent then proceeds as in PGD, but with the KL objective replacing the classification loss. The intuition is to find perturbations that make the predictive distribution move away from the clean prediction, even when the ground-truth label is not directly used in the inner objective.
+
+TPGD is useful because it tests a loss objective that differs from cross-entropy PGD. Its limitation is that it is still an $\ell_\infty$ first-order attack and therefore does not replace broader evaluation across norms and attack families. In this thesis it is a held-out evaluation attack included in Mean(8), not a training source attack.
 
 \subsection{AutoAttack}
 
-AutoAttack is a standardized ensemble evaluation that combines complementary attacks and reduces the need for manual attack tuning \cite{croce2020reliable}. Its purpose is to provide a stronger robustness check than any single configured attack can usually provide on its own.
+AutoAttack is motivated by the need for a standardized robustness evaluation that reduces manual attack tuning and combines complementary failure modes \cite{croce2020reliable}. It is used here as a whitebox $\ell_\infty$ stress evaluation. Unlike the individual attacks above, AutoAttack is an evaluation suite rather than a single update rule.
 
-This report evaluates AutoAttack-$\ell_\infty$ separately from the main eight-attack mean. The Mean(8) metric covers FGSM-RS, PGD-$\ell_\infty$, TPGD, MI-FGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$. AutoAttack-$\ell_\infty$ is therefore a separate stress metric rather than part of the primary Mean(8) ranking, and AutoAttack-512 is treated as a sanity or stress check rather than as the main comparison criterion.
+At the wrapper level, AutoAttack evaluates a model using a fixed collection of attacks and reports robustness under the strongest successful component:
+\[
+\mathrm{Acc}_{\mathrm{AA}}(f_\theta)
+=
+\frac{1}{n}\sum_{i=1}^{n}
+\mathbf{1}
+\left[
+\forall A\in\mathcal{A}_{\mathrm{AA}},
+\; f_\theta(A(x_i,y_i,f_\theta))=y_i
+\right].
+\]
+This expression captures the ensemble logic without deriving the internals of APGD, FAB, or Square Attack.
+
+AutoAttack is stronger and more standardized than a single configured attack, but it is computationally more expensive. This report therefore evaluates AutoAttack-$\ell_\infty$ separately from Mean(8). AutoAttack-512 is used only as a sanity or stress check, while the primary ranking metric remains the eight-attack evaluation suite defined in Chapter~\ref{chap:experimental_setup}.
 
 \section{Adversarial Training as Min-Max Optimization}
 
