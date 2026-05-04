@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 18:04
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 18:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1787,7 +1787,7 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
- [10] (main.lot [11
+ [10] [11] (main.lot [12
 
 ]
 Underfull \hbox (badness 2460) in paragraph at lines 24--24
@@ -1795,20 +1795,20 @@ Underfull \hbox (badness 2460) in paragraph at lines 24--24
 gnificance tests for Attack- 
  []
 
-[12]
+[13]
 Underfull \hbox (badness 1077) in paragraph at lines 33--33
  [][] [][][]\TU/TimesNewRoman(0)/m/n/13 Cross-method graybox accuracy by attack
  family. Values are off- 
  []
 
-[13])
+[14])
 \tf@lot=\write7
 \openout7 = `main.lot'.
 
- [14])
+ [15])
 \openout2 = `outsider/list-of-abbreviations.aux'.
 
- (outsider/list-of-abbreviations.tex) [15
+ (outsider/list-of-abbreviations.tex) [16
 
 
 
@@ -1819,33 +1819,33 @@ Underfull \hbox (badness 1077) in paragraph at lines 33--33
 
  (chapters/chapter1.tex
 Chapter 1.
-[16
+[17
 
 
 
 
-] [17] [18] [19] [20]) [21]
+] [18] [19] [20] [21]) [22]
 \openout2 = `chapters/chapter2.aux'.
 
  (chapters/chapter2.tex
 Chapter 2.
-(chapters/chapter2/1-preliminaries.tex [22
+(chapters/chapter2/1-preliminaries.tex [23
 
 
 
 
-] [23] [24] [25] [26] [27])
-(chapters/chapter2/2-at-deep-dive.tex [28]) (chapters/chapter2/3-dro.tex)
-(chapters/chapter2/4-dg-via-clustering.tex [29])
+] [24] [25] [26] [27] [28])
+(chapters/chapter2/2-at-deep-dive.tex [29]) (chapters/chapter2/3-dro.tex)
+(chapters/chapter2/4-dg-via-clustering.tex [30])
 (chapters/chapter2/5-foundations.tex) (chapters/chapter2/6-summary.tex))
-[30]
+[31]
 \openout2 = `chapters/chapter3.aux'.
 
  (chapters/chapter3.tex
 Chapter 3.
 (chapters/chapter3/1_multi_at.tex) (chapters/chapter3/2_group_dro.tex)
 (chapters/chapter3/3_dg_ar.tex) (chapters/chapter3/4_cluster.tex)
-(chapters/chapter3/5_gap.tex)) [31
+(chapters/chapter3/5_gap.tex)) [32
 
 
 
@@ -1855,88 +1855,88 @@ Chapter 3.
 
  (chapters/chapter4.tex
 Chapter 4.
-(chapters/chapter4/1-problem_formulation.tex [32
+(chapters/chapter4/1-problem_formulation.tex [33
 
 
 
 
-] [33])
-(chapters/chapter4/2-multi_attack.tex [34]) (chapters/chapter4/3-attackDRO.tex
-[35]) (chapters/chapter4/4-attackDRO++.tex [36] [37])
-(chapters/chapter4/5-clustering_feature.tex [38] [39])
+] [34])
+(chapters/chapter4/2-multi_attack.tex [35]) (chapters/chapter4/3-attackDRO.tex
+[36]) (chapters/chapter4/4-attackDRO++.tex [37] [38])
+(chapters/chapter4/5-clustering_feature.tex [39] [40])
 (chapters/chapter4/6-anchor_objective.tex
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [40])
+ [41])
 (chapters/chapter4/7-complete_pipeline.tex
 Underfull \hbox (badness 10000) in paragraph at lines 34--34
 []|\TU/TimesNewRoman(0)/m/n/11.86258 Interpolates between uniform ERM and
  []
 
-[41] [42] [43]) (chapters/chapter4/summary.tex [44])) [45]
+[42] [43] [44]) (chapters/chapter4/summary.tex [45])) [46]
 \openout2 = `chapters/chapter5.aux'.
 
 
 (chapters/chapter5.tex
 Chapter 5.
 (chapters/chapter5/1-dataset_preprocessing.tex)
-(chapters/chapter5/2-architectures.tex [46
+(chapters/chapter5/2-architectures.tex [47
 
 
 
 
 ])
-(chapters/chapter5/3-attack_suite.tex [47] [48])
-(chapters/chapter5/4-configuration.tex [49] [50])
-(chapters/chapter5/5-choices.tex [51] [52]) (chapters/chapter5/6-protocol.tex
-[53] [54]) (chapters/chapter5/7-eval_metrics.tex [55] [56]
+(chapters/chapter5/3-attack_suite.tex [48] [49])
+(chapters/chapter5/4-configuration.tex [50] [51])
+(chapters/chapter5/5-choices.tex [52] [53]) (chapters/chapter5/6-protocol.tex
+[54] [55]) (chapters/chapter5/7-eval_metrics.tex [56] [57]
 Underfull \hbox (badness 2368) in paragraph at lines 112--116
 []\TU/TimesNewRoman(0)/m/n/13 AutoAttack-$[][]$ is reported separately from Mea
 n(8). Early ablations may use
  []
 
-) (chapters/chapter5/8-graybox_transfer.tex [57] [58])
-(chapters/chapter5/9-tools_tracking.tex [59] [60] [61])) [62] [63]
+) (chapters/chapter5/8-graybox_transfer.tex [58] [59])
+(chapters/chapter5/9-tools_tracking.tex [60] [61] [62])) [63] [64]
 \openout2 = `chapters/chapter6.aux'.
 
 
 (chapters/chapter6.tex
 Chapter 6.
-(chapters/chapter6/1_main_results.tex [64
+(chapters/chapter6/1_main_results.tex [65
 
 
 
 
-] [65]
-LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 299
+] [66]
+LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 295
 .
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.66765pt on input line 299.
+(Font)              scaled to size 8.66765pt on input line 295.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.06732pt on input line 299.
+(Font)              scaled to size 6.06732pt on input line 295.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 4.33382pt on input line 299.
+(Font)              scaled to size 4.33382pt on input line 295.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.6658pt on input line 299.
+(Font)              scaled to size 8.6658pt on input line 295.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.06602pt on input line 299.
+(Font)              scaled to size 6.06602pt on input line 295.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.33289pt on input line 299.
- [66] [67]
-Underfull \hbox (badness 1314) in paragraph at lines 330--341
+(Font)              scaled to size 4.33289pt on input line 295.
+ [67] [68]
+Underfull \hbox (badness 1314) in paragraph at lines 326--337
 \TU/TimesNewRoman(0)/m/n/13 versus-balanced interpretation. Compared with PGD-A
 T, AttackDRO++ achieves
  []
 
-[68] [69]
-Underfull \hbox (badness 1082) in paragraph at lines 479--479
+[69] [70]
+Underfull \hbox (badness 1082) in paragraph at lines 477--477
 []\TU/TimesNewRoman(0)/m/n/13 Table 6.6: |Worst(8) and AutoAttack-512 sanity re
 sults across 20 paired random-
  []
 
-[70] [71]) (chapters/chapter6/4_whitebox.tex [72]
+[71] [72]) (chapters/chapter6/4_whitebox.tex [73]
 Underfull \hbox (badness 1558) in paragraph at lines 5--6
 \TU/TimesNewRoman(0)/m/n/13 The aggregate results in Section [][]6.1[][] show t
 hat AttackDRO++ improves average
@@ -1945,7 +1945,7 @@ hat AttackDRO++ improves average
 File: figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png Graphic file (
 type bmp)
 <figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png>
-[73]
+[74]
 File: figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png>
@@ -1955,36 +1955,36 @@ e bmp)
 File: figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png Graphic file (t
 ype bmp)
 <figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png>
- [74]
+ [75]
 File: figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png Graphic fil
 e (type bmp)
 <figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png>
- [75]
+ [76]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n
 5.png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png
 >
- [76]
+ [77]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png>
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png>
- [77] [78]
+ [78] [79]
 File: figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png Gra
 phic file (type bmp)
 <figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png>
- [79]
+ [80]
 File: figures/whitebox/whitebox_bottomk_lift_bar_n5.png Graphic file (type bmp)
 
 <figures/whitebox/whitebox_bottomk_lift_bar_n5.png>
-) [80]
-(chapters/chapter6/2_graybox_results.tex [81] [82]
+) [81]
+(chapters/chapter6/2_graybox_results.tex [82] [83]
 File: figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png>
- [83]
+ [84]
 File: figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png Graphi
 c file (type bmp)
 <figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png>
@@ -2009,56 +2009,56 @@ phic file (type bmp)
 File: figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png Graphic f
 ile (type bmp)
 <figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png>
- [84] [85] [86] [87]
-[88]
+ [85] [86] [87] [88]
+[89]
 File: figures/graybox/whitebox_graybox_gap_DDNAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_DDNAT.png>
 File: figures/graybox/whitebox_graybox_gap_PGDAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_PGDAT.png>
- [89]
+ [90]
 File: figures/graybox/whitebox_graybox_gap_MultiAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_MultiAT.png>
 File: figures/graybox/whitebox_graybox_gap_AttackDROpp.png Graphic file (type b
 mp)
 <figures/graybox/whitebox_graybox_gap_AttackDROpp.png>
- [90] [91]
+ [91] [92]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png
  Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png>
- [92]
+ [93]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.png>
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.png>
- [93] [94] [95]
+ [94] [95] [96]
 File: figures/graybox/method_decomposition_three_panel_science.png Graphic file
  (type bmp)
 <figures/graybox/method_decomposition_three_panel_science.png>
 ) (chapters/chapter6/3_ablation.tex
-[96]
+[97]
 File: figures/ablations/ablation_num_clusters.png Graphic file (type bmp)
 <figures/ablations/ablation_num_clusters.png>
- [97] [98]
+ [98] [99]
 File: figures/ablations/ablation_anchor_strength.png Graphic file (type bmp)
 <figures/ablations/ablation_anchor_strength.png>
- [99]
+ [100]
 File: figures/ablations/ablation_recluster_frequency.png Graphic file (type bmp
 )
 <figures/ablations/ablation_recluster_frequency.png>
- [100]) (chapters/chapter6/6_summary.tex)) [101]
+ [101]) (chapters/chapter6/6_summary.tex)) [102]
 \openout2 = `chapters/chapter7.aux'.
 
 
 (chapters/chapter7.tex
 Chapter 7.
-[102
+[103
 
 
 
 
-] [103] [104] [105] [106]) [107] (main.bbl) [108
+] [104] [105] [106] [107]) [108] (main.bbl) [109
 
 
 
@@ -2067,7 +2067,7 @@ Chapter 7.
 
  (appendices.tex
 Appendix A.
-[109
+[110
 
 
 ]
@@ -2085,17 +2085,17 @@ File: figures/wandb/wb_ddn_l2_acc.png Graphic file (type bmp)
 File: figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.
 png Graphic file (type bmp)
 <figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png>
-[110
+[111
 
-] [111]
+] [112]
 Appendix C.
 File: figures/ablations/wrn2810_architecture_check.png Graphic file (type bmp)
 <figures/ablations/wrn2810_architecture_check.png>
-[112
+[113
 
-] [113]
+] [114]
 Appendix D.
-) [114
+) [115
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2115,10 +2115,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  38090 strings out of 402987
  756739 string characters out of 5448525
- 1413804 words of memory out of 5000000
+ 1412825 words of memory out of 5000000
  65976 multiletter control sequences out of 15000+600000
  636988 words of font info for 158 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 108i,18n,107p,1067b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,18n,107p,1036b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (115 pages).
+Output written on main.pdf (116 pages).

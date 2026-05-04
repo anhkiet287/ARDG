@@ -29,8 +29,8 @@ Across the available runs, all settings remain close in Mean(8), with difference
 well below one percentage point. The default $K=4$ setting gives the highest
 Worst(8) among the tested settings and remains competitive in Mean(8), while
 $K=2$ is slightly more coarse and $K=6$ or $K=10$ do not provide a clear gain.
-The very fine $K=10$ setting should be interpreted cautiously because only two
-valid $K=10$ runs are available in the current log.
+The $K=10$ setting uses only two valid runs and should be interpreted
+as weaker evidence than the other cluster-count settings.
 
 \begin{table}[H]
 \centering
@@ -77,7 +77,7 @@ Very fine grouping
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_num_clusters.png}
-    \caption{Sensitivity of AttackDRO++ to the number of clusters. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks.}
+    \caption{Sensitivity of AttackDRO++ to the number of clusters. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks.}
     \label{fig:ch6_ablation_num_clusters}
 \end{figure}
 
@@ -147,7 +147,7 @@ $0.50$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_anchor_strength.png}
-    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
+    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
     \label{fig:ch6_ablation_anchor_strength}
 \end{figure}
 
@@ -221,7 +221,7 @@ Refresh interval
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_recluster_frequency.png}
-    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. The figure reports Mean(8) robust accuracy with the min--max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
+    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
     \label{fig:ch6_ablation_recluster_frequency}
 \end{figure}
 

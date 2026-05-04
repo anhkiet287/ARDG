@@ -70,24 +70,20 @@ Worst(8)
 \end{table}
 We compare four methods on 20 paired random-seed runs: PGD-AT,
 DDN-AT, Multi-AT, and AttackDRO++ (Ours).
-AttackDRO++ improves Mean(8) over Multi-AT by $+0.279$~pp ($p = 0.0076$,
-14/20 wins), with the strongest channel on the held-out $\ell_2$ mean ($+0.405$~pp,
-$p = 0.0079$, 16/20). It improves Mean(8) over PGD-AT by $+1.826$~pp and
-over DDN-AT by $+6.098$~pp, both at $p < 10^{-10}$ on all 20 seeds, and
-achieves $2.5$--$3.3{\times}$ tighter seed-to-seed standard deviation than Multi-AT on every average-case metric. Worst(8) and AutoAttack-512 are
-statistically indistinguishable from Multi-AT ($|\Delta| < 0.005$~pp,
-$p > 0.97$): AttackDRO++ improves average and held-out robustness while
-leaving the standardized hardest-case checks broadly unchanged. The single-attack baselines
-remain stronger than AttackDRO++ on the family they train against
-(PGD-AT on the held-out $\ell_\infty$ mean, DDN-AT on the held-out $\ell_2$ mean) but lose
-substantially on the other, confirming the specialist-versus-balanced
-interpretation that motivates multi-attack training.
+Relative to Multi-AT, AttackDRO++ improves Mean(8) by $+0.279$~pp
+($p = 0.0076$, 14/20 seed-level wins), with the largest channel on the
+held-out $\ell_2$ mean ($+0.405$~pp, $p = 0.0079$). Worst(8) and
+AutoAttack-512 are statistically indistinguishable from Multi-AT
+($|\Delta| < 0.005$~pp, $p > 0.97$), so AttackDRO++ improves average and
+held-out robustness while leaving the standardized hardest-case checks
+broadly unchanged.
 
-AttackDRO++ achieves the highest Mean(8), held-out attack mean, and
-seen-source mean. PGD-AT wins the held-out $\ell_\infty$ mean and Worst(8);
-DDN-AT wins the held-out $\ell_2$ mean. The bold pattern visualizes the specialist-versus-balanced
-interpretation: each single-AT method dominates one column, while
-AttackDRO++ is best on every column-aggregating metric.
+The single-attack baselines confirm the expected specialist pattern.
+PGD-AT wins the held-out $\ell_\infty$ mean and Worst(8); DDN-AT wins the
+held-out $\ell_2$ mean. Each therefore dominates one threat family but
+loses substantially on the other, while AttackDRO++ achieves the highest
+Mean(8), held-out attack mean, and seen-source mean --- the metrics that
+average across both families.
 
 \paragraph{Effect-size summary.}
 Table~\ref{tab:ch6_effect_size_summary} reports paired effect magnitudes
@@ -448,8 +444,10 @@ interpretation of single-attack training: each single-AT method dominates a
 narrow attack family at the cost of substantial regression on the other.
 AttackDRO++'s improvement over Multi-AT is largest on held-out
 $\ell_2$ attacks ($+0.374$ to $+0.504$~pp, all $p<0.05$) and smallest on the
-seen $\ell_\infty$ attack ($-0.003$~pp), which explains why Worst(8)
-remains broadly unchanged rather than improved.
+seen $\ell_\infty$ attack ($-0.003$~pp). The per-attack pattern explains
+why the Mean(8) gain does not translate into a stronger Worst(8): the
+improvement is concentrated on held-out attacks, while the weakest
+evaluation direction remains broadly unchanged.
 
 
 \subsection{Robustness Under the Hardest Evaluation Cases}
@@ -517,21 +515,19 @@ AttackDRO++ (Ours) & $42.46$ & $0.20$ \\
 
 \paragraph{AttackDRO++ vs.\ Multi-AT.}
 AttackDRO++ is statistically indistinguishable from Multi-AT on both
-hardest-case metrics. On the $n=20$ sanity panel, the paired differences are
-$-0.003$~pp for Worst(8) ($p=0.971$) and $-0.001$~pp for AutoAttack-512
-($p=0.998$). This full-test panel indicates that AttackDRO++ is statistically
-indistinguishable from Multi-AT under full-test AutoAttack-$\ell_\infty$
-in the selected five-seed panel ($-0.006$~pp, $p=0.9584$). The hardest-case
-checks are therefore broadly comparable rather than improved: AttackDRO++
-improves average and held-out robustness while leaving the standardized
-hardest-case checks broadly unchanged.
+hardest-case metrics: the paired Worst(8) difference is $-0.003$~pp
+($p=0.971$) on the $n=20$ panel, the AutoAttack-512 sanity check is
+$-0.001$~pp ($p=0.998$), and the full-test AutoAttack-$\ell_\infty$
+evaluation on the selected five-seed panel is $-0.006$~pp ($p=0.9584$).
+These checks should therefore be read as broadly comparable rather than
+improved.
 
 \paragraph{PGD-AT specialization.}
 PGD-AT obtains the highest Worst(8) and AutoAttack because both metrics are
 dominated by $\ell_\infty$ robustness, the threat family it trains against.
 This advantage is therefore structural rather than evidence of broader
 robustness. As Table~\ref{tab:ch6_per_attack_all_baselines} shows, PGD-AT loses
-$5$--$6$~pp to AttackDRO++ on held-out $\ell_2$ attacks, while DDN-AT shows the
+$5$ to $6$~pp to AttackDRO++ on held-out $\ell_2$ attacks, while DDN-AT shows the
 opposite failure mode by collapsing under $\ell_\infty$ stress. Single-attack
 training therefore produces specialists; AttackDRO++ does not match PGD-AT's
 $\ell_\infty$ depth, but provides the best average cross-attack balance.
@@ -599,7 +595,7 @@ Multi-AT, while the main benefit of AttackDRO++ is on average and held-out robus
 The whitebox results give the main aggregate evidence: AttackDRO++ improves
 average and held-out robustness relative to Multi-AT while leaving the hardest
 standardized checks broadly unchanged. However, aggregate and per-attack metrics can still hide
-which CIFAR-10 classes and attack--class cells drive the remaining failures. The
+which CIFAR-10 classes and attack-by-class cells drive the remaining failures. The
 next section therefore drills down into class-wise whitebox robustness to test
 whether the observed gains are broad or concentrated in a small part of the
 evaluation grid.
