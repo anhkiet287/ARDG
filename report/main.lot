@@ -5,12 +5,12 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Default hyperparameters for AttackDRO++ in the main experiments.}}{43}{table.caption.17}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for Multi-AT, AttackDRO, AttackDRO++, and AttackDRO++ (Ours).}}{49}{table.caption.18}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++.}}{49}{table.caption.18}%
 \contentsline {table}{\numberline {5.2}{\ignorespaces Validation and test attacks used to compute Mean(8), the average robust accuracy over the eight non-AutoAttack evaluation attacks. Source attacks are also used during training; held-out attacks are used only for validation and test evaluation.}}{50}{table.caption.19}%
 \contentsline {table}{\numberline {5.3}{\ignorespaces AutoAttack-$\ell _\infty $ configuration used as a separate stress test. AutoAttack is reported separately from Mean(8).}}{51}{table.caption.21}%
 \contentsline {table}{\numberline {5.4}{\ignorespaces General training configuration used for the main experiments.}}{51}{table.caption.22}%
 \contentsline {table}{\numberline {5.5}{\ignorespaces Training methods compared in the CIFAR-10 and ResNet-18 experiments.}}{52}{table.caption.23}%
-\contentsline {table}{\numberline {5.6}{\ignorespaces Default hyperparameters for AttackDRO++ (Ours).}}{53}{table.caption.24}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Default hyperparameters for AttackDRO++.}}{53}{table.caption.24}%
 \contentsline {table}{\numberline {5.7}{\ignorespaces Hyperparameters varied in ablation studies.}}{54}{table.caption.25}%
 \contentsline {table}{\numberline {5.8}{\ignorespaces Reporting format for the statistical significance protocol used in Chapter~\ref {chap:results_analysis}.}}{56}{table.caption.26}%
 \contentsline {table}{\numberline {5.9}{\ignorespaces Evaluation metrics used for whitebox, graybox, aggregate, and per-class analysis.}}{59}{table.caption.27}%

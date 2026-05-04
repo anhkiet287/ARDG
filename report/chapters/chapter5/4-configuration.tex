@@ -1,4 +1,4 @@
-﻿\section{Training Configuration}
+\section{Training Configuration}
 
 All methods are trained under a controlled adversarial training pipeline. Unless
 otherwise stated, the optimizer, model architecture, dataset split, preprocessing
@@ -85,13 +85,13 @@ AttackDRO
 & Group DRO over attack identity
 & Coarse attack-level DRO baseline. \\
 
-AttackDRO++
+Cluster-DRO
 & Group DRO over discovered clusters
-& Cluster-based group discovery baseline. \\
+& Intermediate cluster-level grouping baseline. \\
 
-AttackDRO++ (Ours)
+AttackDRO++
 & Uniform-anchored Cluster-DRO with gradient fingerprints
-& Proposed method. \\
+& Proposed final method. \\
 \bottomrule
 \end{tabularx}
 \end{table}
