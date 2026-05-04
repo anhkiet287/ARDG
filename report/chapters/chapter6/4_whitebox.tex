@@ -1,6 +1,6 @@
-﻿\newpage
+\newpage
 \section{Class-wise Whitebox Robustness Across Attacks}
-\label{sec:whitebox_class_attack}
+\label{sec:ch6_whitebox_class_attack}
 
 % TODO[Kiệt]:
 % Goal:
@@ -15,7 +15,7 @@
 % - Repeating every heatmap cell in prose.
 % Target length: 5-7 pages including figures.
 
-The aggregate results in Section~\ref{sec:main_results} show that AttackDRO++ improves average cross-attack robustness while preserving a similar worst-case profile to the uniform multi-attack baseline. However, aggregate accuracy can hide localized failure modes: a method may improve the mean by increasing already-easy cells, while leaving hard class--attack combinations unchanged. To examine whether the improvement is distributed across the evaluation grid, we perform a whitebox per-(attack $\times$ class) drilldown on the eight non-AutoAttack attacks and the ten CIFAR-10 classes. Each cell therefore corresponds to the robust accuracy of one method on one attack and one class, averaged over five seeds.
+The aggregate results in Section~\ref{sec:ch6_whitebox} show that AttackDRO++ improves average cross-attack robustness while preserving a similar worst-case profile to the uniform multi-attack baseline. However, aggregate accuracy can hide localized failure modes: a method may improve the mean by increasing already-easy cells, while leaving hard class--attack combinations unchanged. To examine whether the improvement is distributed across the evaluation grid, we perform a whitebox per-(attack $\times$ class) drilldown on the eight non-AutoAttack attacks and the ten CIFAR-10 classes. Each cell therefore corresponds to the robust accuracy of one method on one attack and one class, averaged over five seeds.
 
 This analysis has two purposes. First, it identifies whether AttackDRO++ behaves as a balanced multi-attack method or merely shifts robustness from one threat family to another. Second, it exposes the tail cells that dominate practical failure behavior, especially under hard attacks such as PGD-$\ell_\infty$ and MI-FGSM on visually ambiguous classes. We compare AttackDRO++ against three baselines: the uniform multi-attack model (Multi-AT), the PGD-$\ell_\infty$ specialist (PGD-AT), and the DDN-$\ell_2$ specialist (DDN-AT).
 
@@ -24,7 +24,7 @@ This analysis has two purposes. First, it identifies whether AttackDRO++ behaves
 \centering
 \includegraphics[width=0.78\linewidth]{figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png}
 \caption{Whitebox per-attack robustness profile averaged over five seeds. The radar plot compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ (Ours) across the eight non-AutoAttack evaluation attacks. The shape of each curve highlights the specialization of the single-attack baselines and the more balanced profile of the multi-attack methods.}
-\label{fig:whitebox_radar_per_attack_accuracy}
+\label{fig:ch6_whitebox_radar_per_attack_accuracy}
 \end{figure}
 
 \paragraph{Absolute per-class heatmaps with a shared scale.}
@@ -35,7 +35,7 @@ Before analyzing deltas, we first report the raw per-(class $\times$ attack) rob
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
 for PGD-AT. Cells report robust accuracy (\%).}
-\label{fig:whitebox_abs_pgdat}
+\label{fig:ch6_whitebox_abs_pgdat}
 \end{figure}
 
 \begin{figure}[H]
@@ -43,7 +43,7 @@ for PGD-AT. Cells report robust accuracy (\%).}
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_DDNAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
 for DDN-AT. Cells report robust accuracy (\%).}
-\label{fig:whitebox_abs_ddnat}
+\label{fig:ch6_whitebox_abs_ddnat}
 \end{figure}
 
 \begin{figure}[H]
@@ -51,7 +51,7 @@ for DDN-AT. Cells report robust accuracy (\%).}
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
 for Multi-AT. Cells report robust accuracy (\%).}
-\label{fig:whitebox_abs_multiat}
+\label{fig:ch6_whitebox_abs_multiat}
 \end{figure}
 
 \begin{figure}[H]
@@ -59,12 +59,12 @@ for Multi-AT. Cells report robust accuracy (\%).}
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png}
 \caption{Absolute whitebox per-(class \(\times\) attack) robust accuracy
 for AttackDRO++ (Ours). Cells report robust accuracy (\%).}
-\label{fig:whitebox_abs_attackdropp}
+\label{fig:ch6_whitebox_abs_attackdropp}
 \end{figure}
 PGD-AT is stronger on several $\ell_\infty$ cells, while DDN-AT is more biased toward bounded $\ell_2$ attacks and visibly weaker on PGD-$\ell_\infty$ and MI-FGSM. Compared with the specialists, Multi-AT and AttackDRO++ show a more balanced cross-attack profile. AttackDRO++ largely preserves the Multi-AT structure while slightly lifting many cells, especially outside the hardest $\ell_\infty$ animal-class tail.
 
 \subsection{Per-Class Whitebox Robustness Pattern}
-\label{sec:whitebox_per_class}
+\label{subsec:ch6_whitebox_per_class}
 
 % TODO[Kiệt]:
 % Goal:
@@ -72,7 +72,7 @@ PGD-AT is stronger on several $\ell_\infty$ cells, while DDN-AT is more biased t
 % Flow:
 % - Identify broad high/low cells, then compare AttackDRO++ against Multi-AT and single-attack specialists.
 % Include:
-% - Reference `tab:whitebox_per_cell_summary` and the delta heatmaps.
+% - Reference `tab:ch6_whitebox_per_cell_summary` and the delta heatmaps.
 % Avoid:
 % - Unsupported causal claims about why individual CIFAR-10 classes are hard.
 % Target length: 3-5 paragraphs.
@@ -89,18 +89,17 @@ Compared with Multi-AT, AttackDRO++ produces a broad but modest shift rather tha
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png}
 \caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ relative to Multi-AT. Each cell reports AttackDRO++ minus Multi-AT in percentage points, averaged over five seeds.}
-\label{fig:whitebox_delta_vs_multiat}
+\label{fig:ch6_whitebox_delta_vs_multiat}
 \end{figure}
 
 \paragraph{Attack-Class Delta Against Single-AT Baselines}
-\label{sec:whitebox_attack_class_delta}
 
-Table~\ref{tab:whitebox_per_cell_summary} summarizes the per-cell delta between AttackDRO++ and each baseline. The comparison against Multi-AT is the most important one because both methods train on the same source attacks and differ mainly in the group structure used for optimization. AttackDRO++ improves 67/80 cells over Multi-AT, with a mean gain of $+0.281$ percentage points and a bottom-10 lift of $+0.282$ percentage points. The gains are small, but they are widespread, which supports the interpretation that cluster-based DRO acts as a stabilizing refinement over uniform multi-attack training.
+Table~\ref{tab:ch6_whitebox_per_cell_summary} summarizes the per-cell delta between AttackDRO++ and each baseline. The comparison against Multi-AT is the most important one because both methods train on the same source attacks and differ mainly in the group structure used for optimization. AttackDRO++ improves 67/80 cells over Multi-AT, with a mean gain of $+0.281$ percentage points and a bottom-10 lift of $+0.282$ percentage points. The gains are small, but they are widespread, which supports the interpretation that cluster-based DRO acts as a stabilizing refinement over uniform multi-attack training.
 
 \begin{table}[H]
 \centering
 \caption{Per-(class $\times$ attack) whitebox comparison of AttackDRO++ against each baseline. $\Delta$ is computed as AttackDRO++ minus the baseline. Positive cells count the number of attack--class cells where $\Delta>0$ out of 80 total cells.}
-\label{tab:whitebox_per_cell_summary}
+\label{tab:ch6_whitebox_per_cell_summary}
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
 \renewcommand{\arraystretch}{1.18}
@@ -145,14 +144,14 @@ DDN-AT
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png}
 \caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to PGD-AT. Positive cells indicate where AttackDRO++ (Ours) improves over the PGD-$\ell_\infty$ specialist. The figure shows that AttackDRO++ (Ours) gains mainly on bounded $\ell_2$ attacks while PGD-AT remains stronger on several $\ell_\infty$ iterative cells.}
-\label{fig:whitebox_delta_vs_pgdat}
+\label{fig:ch6_whitebox_delta_vs_pgdat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png}
 \caption{Whitebox per-(class $\times$ attack) delta of AttackDRO++ (Ours) relative to DDN-AT. The large positive cells under PGD-$\ell_\infty$ and MI-FGSM show that AttackDRO++ (Ours) substantially corrects the $\ell_\infty$ weakness of the DDN-$\ell_2$ specialist, while several negative cells remain on DDN-AT's preferred $\ell_2$ family.}
-\label{fig:whitebox_delta_vs_ddnat}
+\label{fig:ch6_whitebox_delta_vs_ddnat}
 \end{figure}
 
 The comparison against PGD-AT shows the expected specialist trade-off. AttackDRO++ is positive in 47/80 cells and has a mean gain of $+1.782$ percentage points, but the gains and losses are not uniformly distributed. The largest improvements occur on bounded $\ell_2$ attacks, especially DeepFool-$\ell_2$, CW-$\ell_2$, DDN-$\ell_2$, and PGD-$\ell_2$ on hard animal classes such as \textit{deer}, \textit{cat}, and \textit{bird}. For example, the largest gains over PGD-AT appear on DeepFool-$\ell_2$ for \textit{deer} ($+13.06$ pp), CW-$\ell_2$ for \textit{deer} ($+11.26$ pp), and DDN-$\ell_2$ for \textit{deer} ($+11.04$ pp). Conversely, PGD-AT remains stronger on several $\ell_\infty$ cells, particularly PGD20-CE and MI-FGSM for \textit{frog}, \textit{automobile}, \textit{horse}, and \textit{cat}. This confirms that PGD-AT is not weak in absolute terms; rather, it is specialized toward the $\ell_\infty$ geometry used during training.
@@ -160,7 +159,7 @@ The comparison against PGD-AT shows the expected specialist trade-off. AttackDRO
 The comparison against DDN-AT is even more asymmetric. AttackDRO++ improves 62/80 cells and gains $+5.781$ percentage points on average, with a large $+15.710$ percentage-point improvement on the bottom-10 cells. The largest improvements occur under $\ell_\infty$ attacks: PGD20-CE on \textit{ship} ($+27.20$ pp), PGD20-CE on \textit{frog} ($+26.04$ pp), MI-FGSM on \textit{frog} ($+23.68$ pp), and MI-FGSM on \textit{ship} ($+23.62$ pp). These large deltas show that DDN-AT develops a strong $\ell_2$ bias and leaves many $\ell_\infty$ attack--class cells under-protected. At the same time, DDN-AT remains stronger on some $\ell_2$ boundary/optimization cells, especially CW-$\ell_2$ and DeepFool-$\ell_2$ for \textit{deer}, \textit{cat}, and \textit{bird}. Thus, AttackDRO++ improves cross-attack balance but does not completely dominate the strongest single-norm specialist on its preferred family.
 
 \subsection{Attack-Family Interpretation}
-\label{sec:whitebox_attack_family_interpretation}
+\label{subsec:ch6_whitebox_attack_family}
 
 % TODO[Kiệt]:
 % Goal:
@@ -180,13 +179,13 @@ The Multi-AT comparison is more balanced: most attack averages are positive, but
 \centering
 \includegraphics[width=\linewidth]{figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png}
 \caption{Attack-wise whitebox delta of AttackDRO++ relative to the three baselines.}
-\label{fig:whitebox_radar_delta_vs_baselines}
+\label{fig:ch6_whitebox_radar_delta_vs_baselines}
 \end{figure}
 \vspace{-0.5cm}
 This result supports the main claim of the chapter. AttackDRO++ should not be interpreted as a replacement for a single specialist when the deployment threat model is known exactly. Instead, it is a cross-attack robustness method: it sacrifices some of the peak strength of a specialist in exchange for a more even robustness profile across attacks and classes. 
 
 \subsection{Bottom-\(K\) Whitebox Tail Robustness}
-\label{sec:whitebox_bottomk}
+\label{subsec:ch6_whitebox_tail_robustness}
 
 % TODO[Kiệt]:
 % Goal:
@@ -194,7 +193,7 @@ This result supports the main claim of the chapter. AttackDRO++ should not be in
 % Flow:
 % - Define Bottom-K locally or point to an earlier definition, then interpret the lift figure.
 % Include:
-% - Reference `fig:whitebox_bottomk_lift` if it remains in the main flow.
+% - Reference `fig:ch6_whitebox_bottomk_lift` if it remains in the main flow.
 % Avoid:
 % - Leaving `Bottom-K` as undefined shorthand.
 % Target length: 2-3 paragraphs.
@@ -215,7 +214,7 @@ sacrificing its weakest cells.
 baseline. For each baseline, the bottom-\(K\) cells are the weakest
 class--attack cells of that baseline; bars report AttackDRO++ minus the
 baseline on those same cells.}
-\label{fig:whitebox_bottomk_lift}
+\label{fig:ch6_whitebox_bottomk_lift}
 \end{figure}
 
 The tail comparison is most pronounced against DDN-AT. Its weakest cells collapse
@@ -231,6 +230,6 @@ reduces many of these failures, indicating that multi-attack training and the
 Cluster-DRO component help mitigate the cross-norm weakness of PGD-only training.
 
 Overall, the bottom-\(K\) analysis supports the aggregate conclusion from
-Section~\ref{sec:main_results}: AttackDRO++ gives a broad but modest refinement
+Section~\ref{sec:ch6_whitebox}: AttackDRO++ gives a broad but modest refinement
 over Multi-AT, substantially corrects the \(\ell_\infty\) tail weakness of
 DDN-AT, and reduces the \(\ell_2\) tail weakness of PGD-AT.

@@ -1,6 +1,6 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Hyperparameter Choices and Ablation Factors}
-\label{sec:hyperparameters}
+\label{sec:ch5_hyperparameters}
 
 % TODO[Kiệt]:
 % Goal:
@@ -8,7 +8,7 @@
 % Flow:
 % - Default configuration first, then ablation dimensions and what each tests.
 % Include:
-% - Keep values synchronized with Chapter 4 `tab:hparams` and Chapter 6 ablation tables.
+% - Keep values synchronized with Chapter 4 `tab:ch4_hparams` and Chapter 6 ablation tables.
 % Avoid:
 % - Reporting ablation outcomes in this setup chapter.
 % Target length: 4-6 paragraphs plus existing tables.
@@ -17,7 +17,7 @@
 \begin{table}[H]
 \centering
 \caption{Default hyperparameters for AttackDRO++ (Ours).}
-\label{tab:main_hyperparams}
+\label{tab:ch5_main_hyperparams}
 \footnotesize
 \setlength{\tabcolsep}{3.5pt}
 \renewcommand{\arraystretch}{1.05}
@@ -119,7 +119,7 @@ has raw dimension $C d_h = 10 \times 512 = 5120$. The fixed random projection re
 this dimension while retaining useful information about the optimization direction
 induced by each adversarial example.
 
-Table~\ref{tab:ablation_hyperparams} lists the main hyperparameters varied in ablation
+Table~\ref{tab:ch5_ablation_hyperparams} lists the main hyperparameters varied in ablation
 experiments. These ablations are used in Chapter~6 to justify the default configuration
 and to separate the effect of the proposed components from the strong uniform
 multi-attack baseline.
@@ -127,7 +127,7 @@ multi-attack baseline.
 \begin{table}[H]
 \centering
 \caption{Hyperparameters varied in ablation studies.}
-\label{tab:ablation_hyperparams}
+\label{tab:ch5_ablation_hyperparams}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.08}

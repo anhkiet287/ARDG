@@ -30,14 +30,14 @@ on whether the current example is already adversarial.
 
 
 
-Table~\ref{tab:training_attacks} summarizes the source attacks used during training.
+Table~\ref{tab:ch5_training_attacks} summarizes the source attacks used during training.
 Both attacks are used to generate mixed adversarial minibatches for Multi-ATtack
 ERM, AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method.
 
 \begin{table}[H]
 \centering
 \caption{Training attack configuration.}
-\label{tab:training_attacks}
+\label{tab:ch5_training_attacks}
 \begin{tabular}{llllll}
 \toprule
 Attack & Norm & Budget & Steps & Loss / objective & Role \\
@@ -51,7 +51,7 @@ DDN-$\ell_2$ & $\ell_2$ & $0.5$ & 20 & DDN objective & Source attack \\
 ForMulti-ATtack training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction is also used by AttackDRO, AttackDRO++, and the proposed AttackDRO++ Anchor35 GradFP method. Thus, the compared methods share the same adversarial data generation process and differ mainly in how they weight or group the generated examples.
 
 \subsection{Evaluation Attacks}
-\label{sec:evaluation_attacks}
+\label{subsec:ch5_evaluation_attacks}
 
 The evaluation suite includes both source attacks and held-out attacks. The two source
 attacks used during training are also included in validation and test evaluation, while
@@ -62,13 +62,13 @@ geometries and optimization dynamics.
 
 
 For validation and final testing, we evaluate each checkpoint using the attack suite in
-Table~\ref{tab:evaluation_attacks}. The main aggregate metric, denoted Mean(8), is
+Table~\ref{tab:ch5_evaluation_attacks}. The main aggregate metric, denoted Mean(8), is
 computed over the eight attacks in the table. AutoAttack is reported separately and is
 therefore not included in Mean(8).
 \begin{table}[H]
 \centering
 \caption{Validation and test attacks used for Mean(8).}
-\label{tab:evaluation_attacks}
+\label{tab:ch5_evaluation_attacks}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{7pt}
 \begin{tabular}{lcccc}
@@ -89,7 +89,7 @@ CW-$\ell_2$          & $\ell_2$      & $0.5$   & 200 & Held-out $\ell_2$ \\
 
 For aggregate analysis, we report four summary metrics derived from the same eight
 attacks: Seen, Held-out \(\ell_\infty\), Held-out \(\ell_2\), and Mean(8). Their exact
-definitions are given in Section~\ref{sec:evaluation_metrics}.
+definitions are given in Section~\ref{sec:ch5_evaluation_metrics}.
 
 \paragraph{AutoAttack configuration}
 
@@ -102,13 +102,13 @@ budget \(\varepsilon_\infty = 8/255\). In early experiments and ablations, AutoA
 sometimes evaluated on a subset of 512 test samples as a sanity check. These 512-sample
 results are useful for detecting severe robustness collapse, but they are not used as the
 primary ranking criterion because the sample size is smaller and the variance is higher.
-For the final stress test, AutoAttack is evaluated on the full test set for selected
-representative seeds.
+For the final stress test, AutoAttack is evaluated on the full test set for a fixed
+random-seed panel.
 
 \begin{table}[H]
 \centering
 \caption{AutoAttack configuration.}
-\label{tab:autoattack_config}
+\label{tab:ch5_autoattack_config}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{10pt}
 \begin{tabular}{lccc}

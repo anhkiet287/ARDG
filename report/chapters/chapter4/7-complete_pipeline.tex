@@ -1,6 +1,6 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Complete Training Framework}
-\label{sec:pipeline}
+\label{sec:ch4_complete_pipeline}
 
 % TODO[Kiệt]:
 % Goal:
@@ -15,17 +15,17 @@
 % Target length: 4-6 paragraphs plus existing table/algorithm.
 % ─────────────────────────────────────────────────────────────────────────────
 
-Algorithm~\ref{alg:attackdropp} summarizes the complete AttackDRO++ training
+Algorithm~\ref{alg:ch4_attackdropp} summarizes the complete AttackDRO++ training
 pipeline. The method combines mixed adversarial batch generation, augmented
 feature construction, cluster-level reweighting, \(q\)-updates, and a
-uniform-anchored loss. Table~\ref{tab:hparams} lists the default hyperparameters
+uniform-anchored loss. Table~\ref{tab:ch4_hparams} lists the default hyperparameters
 used in the main experiments.
 
 
 \begin{table}[H]
 \centering
 \caption{Default hyperparameters for AttackDRO++ in the main experiments.}
-\label{tab:hparams}
+\label{tab:ch4_hparams}
 \small
 \begin{tabularx}{\textwidth}{@{}l l l X@{}}
 \toprule
@@ -49,7 +49,7 @@ Bootstrap assignment     & --                          & random & Used before th
 
 \begin{algorithm}[H]
 \caption{AttackDRO++ with Gradient Fingerprints and Uniform Anchor}
-\label{alg:attackdropp}
+\label{alg:ch4_attackdropp}
 \DontPrintSemicolon
 \SetAlgoLined
 

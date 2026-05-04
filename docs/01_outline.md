@@ -625,7 +625,7 @@ Required tables and figures:
 
 Notes:
 
-- Use "five randomly selected seeds" without overexplaining.
+- Use "five random seeds" without overexplaining.
 - Select only 3–4 representative transfer matrices for the main text.
 - Remaining matrices go to Appendix C if kept.
 
@@ -729,7 +729,7 @@ Appendix C — Additional Tables and Visualizations
 | Appendix | Content | Status |
 |---|---|---|
 | A | Additional algorithms, if not included in Chapter 4 | optional |
-| B | Full configs, seed lists, compute environment, tool versions | include |
+| B | Full configs, seed protocol, compute environment, tool versions | include |
 | C | Extra transfer matrices and full per-class tables | optional/include if useful |
 
 Diagnostics decision:

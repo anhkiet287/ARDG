@@ -129,7 +129,7 @@ Tasks:
 - Make research questions answerable by current Chapter 6 evidence.
 - Keep contributions tied to implemented method/evaluation pieces.
 - Keep scope conservative: CIFAR-10, ResNet-18 main setting, defined attack suite, repeated-seed protocol.
-- Mention AutoAttack status correctly: it is separate from Mean(8) and should not be described as part of the 20-seed paired aggregate panel; use the current Chapter 5/6 evidence when stating whether it is a 512-sample sanity check, selected-seed full-test check, or five-seed result.
+- Mention AutoAttack status correctly: it is separate from Mean(8) and should not be described as part of the 20-seed paired aggregate panel; use the current Chapter 5/6 evidence when stating whether it is a 512-sample sanity check, fixed random-seed full-test check, or five-seed result.
 - Mention WRN-28-10 only as supplementary evidence if it is actually used and supported in the report.
 
 Expected output:

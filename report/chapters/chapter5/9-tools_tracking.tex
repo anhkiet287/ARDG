@@ -1,0 +1,173 @@
+% ─────────────────────────────────────────────────────────────────────────────
+\section{Tools, Platforms, and Experiment Tracking}
+\label{sec:ch5_tools_platforms}
+% ─────────────────────────────────────────────────────────────────────────────
+
+The experiments in this report were implemented in Python using a PyTorch-based
+training pipeline. The codebase is organized around a configurable experiment
+script that defines dataset construction, model initialization, adversarial attack
+generation, training objectives, checkpoint selection, and fixed
+evaluation scripts in one place. This organization is important because the compared methods differ
+mainly in their grouping and weighting strategies, while the dataset split,
+architecture, source attacks, evaluation attacks, optimizer, and checkpointing
+rules are kept fixed.
+
+Table~\ref{tab:ch5_tools_platforms} summarizes the main tools and platforms used
+in the experimental workflow. Google Colab and Google Drive are used for
+interactive execution and persistent storage of checkpoints, cached adversarial
+examples, figures, and result files. PyTorch and torchvision provide the core
+deep-learning infrastructure, including model definitions, data loading, and
+optimization. The attack implementations are built primarily with TorchAttacks,
+with AutoAttack-$\ell_\infty$ and DDN-$\ell_2$ handled through their dedicated
+packages when required. scikit-learn is used for K-means clustering in
+AttackDRO++, while NumPy and pandas are used to aggregate seed-level and
+attack-level results.
+
+\begin{table}[H]
+\centering
+\caption{Tools and platforms used in the experimental workflow. The table lists only tools that are part of the implemented training, evaluation, logging, or reporting pipeline.}
+\label{tab:ch5_tools_platforms}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.24\textwidth}
+>{\raggedright\arraybackslash}p{0.28\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
+\toprule
+Tool / platform & Role & Use in this report \\
+\midrule
+
+Google Colab
+& Interactive execution environment
+& Used to run training and evaluation notebooks with GPU support. \\
+
+Google Drive
+& Persistent experiment storage
+& Stores checkpoints, cached adversarial examples, result tables, figures, and intermediate analysis files. \\
+
+Python
+& Main implementation language
+& Used for the full training, evaluation, analysis, and plotting pipeline. \\
+
+PyTorch
+& Deep-learning framework
+& Implements model training, automatic differentiation, mixed-precision execution, and checkpoint loading. \\
+
+torchvision
+& Dataset and model utilities
+& Provides CIFAR-10 loading, image transforms, and ResNet backbones adapted for small images. \\
+
+TorchAttacks
+& Adversarial attack library
+& Provides most gradient-based and optimization-based attacks used in training and evaluation. \\
+
+AutoAttack package
+& Standardized robustness stress test
+& Used for AutoAttack-$\ell_\infty$ evaluation with perturbation budget $8/255$. \\
+
+adv-lib
+& DDN attack implementation
+& Used for DDN-$\ell_2$ adversarial example generation. \\
+
+scikit-learn
+& Clustering utilities
+& Provides MiniBatch K-means for cluster discovery in AttackDRO++. \\
+
+NumPy and pandas
+& Result processing
+& Used to aggregate per-seed, per-attack, per-class, and graybox transfer results. \\
+
+matplotlib and SciencePlots
+& Visualization
+& Used to generate plots and publication-style figures for analysis. \\
+
+Weights \& Biases
+& Experiment tracking
+& Logs configurations, training curves, validation metrics, group weights, and diagnostic figures when enabled. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Experiment tracking is treated as part of the reproducibility protocol rather than
+as a separate result source. Each run records the method name, seed, dataset,
+backbone, source attacks, evaluation attacks, and key hyperparameters. During
+training, the pipeline logs loss, adversarial accuracy, validation robustness,
+learning rate, checkpoint state, and group-weight diagnostics when applicable.
+For AttackDRO and AttackDRO++, the logged group weights and cluster diagnostics
+are particularly useful for checking whether adaptive reweighting behaves as
+expected, but these diagnostics are not used to select test results directly.
+
+All test-set claims in Chapter~6 are based on saved checkpoints that are loaded
+after training and evaluated using fixed evaluation scripts. The main result
+tables are produced from structured result files rather than from manually copied
+console logs. This separation reduces the risk of mixing validation, test, whitebox, graybox, and diagnostic metrics. It
+also makes it possible to reuse the same result files for aggregate metrics,
+per-attack analysis, per-class analysis, and paired statistical comparisons.
+
+\paragraph{Summary.}
+Table~\ref{tab:ch5_setup_summary} summarizes the full experimental setup used as
+the basis for the result claims in Chapter~6.
+
+\begin{table}[H]
+\centering
+\caption{Summary of the experimental setup used in this report. Unless otherwise stated, the main whitebox results use CIFAR-10, ResNet-18, five random seeds, and the eight non-AutoAttack evaluation attacks.}
+\label{tab:ch5_setup_summary}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.28\textwidth}
+>{\raggedright\arraybackslash}X
+@{}}
+\toprule
+Component & Configuration \\
+\midrule
+
+Dataset
+& CIFAR-10 with 40{,}000 training images, 10{,}000 validation images, and 10{,}000 test images. \\
+
+Backbone
+& ResNet-18 adapted for CIFAR-10 resolution. \\
+
+Main compared methods
+& PGD-AT, DDN-AT, Multi-AT, AttackDRO, AttackDRO++, and AttackDRO++ (Ours). \\
+
+Source attacks
+& PGD-$\ell_\infty$ and DDN-$\ell_2$. \\
+
+Evaluation attacks for Mean(8)
+& FGSM-RS, PGD-$\ell_\infty$, TPGD, MI-FGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, and CW-$\ell_2$. \\
+
+Separate stress test
+& AutoAttack-$\ell_\infty$, reported separately from Mean(8). \\
+
+Primary aggregate metric
+& Mean robust accuracy over the eight non-AutoAttack evaluation attacks. \\
+
+Secondary metrics
+& Worst robust accuracy over the same eight attacks, seen-source robustness, held-out $\ell_\infty$ robustness, held-out $\ell_2$ robustness, per-attack accuracy, per-class accuracy, and graybox transfer accuracy. \\
+
+Repeated-seed protocol
+& Five random seeds are used for the main repeated-seed comparisons. \\
+
+Graybox protocol
+& Four method families are evaluated across five random seeds each, giving 20 random-seed checkpoints and 400 surrogate--target pairs. \\
+
+Statistical analysis
+& Paired random-seed comparisons with Wilcoxon signed-rank tests, paired $t$-tests, bootstrap confidence intervals, effect sizes, and Holm--Bonferroni correction. \\
+
+Implementation stack
+& PyTorch, torchvision, TorchAttacks, AutoAttack package, adv-lib, scikit-learn, NumPy, pandas, matplotlib, SciencePlots, W\&B, Google Colab, and Google Drive. \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+This chapter has defined the experimental setting used throughout the remainder of
+the report: the dataset, model, attacks, training configurations, hyperparameters,
+statistical protocol, evaluation metrics, graybox transfer design, and
+implementation tools. These definitions provide the reproducibility contract for
+the empirical claims that follow. Chapter~\ref{chap:results_analysis} now presents the results obtained under this protocol and analyzes how the proposed method behaves under whitebox, graybox, per-class, and ablation settings.

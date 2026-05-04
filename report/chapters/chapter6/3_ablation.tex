@@ -7,14 +7,14 @@
 % - Anchor strength, q-frozen behavior, cluster count, refresh schedule, feature mode, and regularizer.
 % - For each: result -> interpretation -> limitation.
 % Include:
-% - Cite `fig:ablation_dashboard`, `tab:ablation_num_clusters`, and `tab:cluster_refresh_schedule_ablation` where relevant.
+% - Cite `fig:ch6_ablation_dashboard`, `tab:ch6_ablation_num_clusters`, and `tab:ch6_cluster_refresh_schedule_ablation` where relevant.
 % - Normalize `M(8)` to `Mean(8)` in a later naming cleanup.
 % Avoid:
 % - Adding extra ablation files back into the main flow without user confirmation.
 % Target length: 4-6 pages depending on final ablation scope.
 
 \subsection{Anchor Strength}
-\label{subsec:ablation_anchor_strength}
+\label{subsec:ch6_ablation_anchor_strength}
 
 % TODO[Kiệt]:
 % Goal:
@@ -22,7 +22,7 @@
 % Flow:
 % - Interpret the dashboard, then connect the chosen setting to Chapter 4's anchor objective.
 % Include:
-% - Reference `fig:ablation_dashboard`.
+% - Reference `fig:ch6_ablation_dashboard`.
 % Avoid:
 % - Claiming exact optimum unless the ablation supports it.
 % Target length: 2-3 paragraphs.
@@ -30,9 +30,9 @@
 The anchor-strength ablation examines the interpolation between the uniform
 multi-attack ERM loss and the adaptive Cluster-DRO loss. A smaller anchor gives
 more weight to the uniform baseline, while a larger anchor increases the influence of
-cluster-level reweighting. Figure~\ref{fig:ablation_dashboard} provides the dashboard
+cluster-level reweighting. Figure~\ref{fig:ch6_ablation_dashboard} provides the dashboard
 view of the ablation results, with the anchor-strength comparison shown as the first
-sensitivity check. Figure~\ref{fig:ablation_dashboard} reports the corresponding
+sensitivity check. Figure~\ref{fig:ch6_ablation_dashboard} reports the corresponding
 numeric summary.
 
 \begin{figure}[H]
@@ -42,7 +42,7 @@ numeric summary.
     sensitivity of M(8) robust accuracy to anchor strength, number of clusters, and
     cluster-refresh schedule. M(8) denotes the mean robust accuracy over the eight
     bounded evaluation attacks and excludes AutoAttack.}
-    \label{fig:ablation_dashboard}
+    \label{fig:ch6_ablation_dashboard}
 \end{figure}
 
 
@@ -60,7 +60,7 @@ ranking.
 \fi
 
 \subsection{Number of Clusters}
-\label{subsec:ablation_num_clusters}
+\label{subsec:ch6_ablation_num_clusters}
 
 % TODO[Kiệt]:
 % Goal:
@@ -68,7 +68,7 @@ ranking.
 % Flow:
 % - Discuss too few, default, and too many clusters as a grouping-resolution trade-off.
 % Include:
-% - Reference `tab:ablation_num_clusters`.
+% - Reference `tab:ch6_ablation_num_clusters`.
 % Avoid:
 % - Leaving placeholder-looking cells unexplained if the table is not final.
 % Target length: 2-3 paragraphs.
@@ -76,7 +76,7 @@ ranking.
 The number of clusters controls the granularity of the latent groups used by
 AttackDRO++. Too few clusters may merge distinct failure modes, while too many
 clusters may fragment the minibatch and make group-loss estimates noisy.
-Table~\ref{tab:ablation_num_clusters} summarizes the sensitivity to this design choice.
+Table~\ref{tab:ch6_ablation_num_clusters} summarizes the sensitivity to this design choice.
 
 \begin{table}[H]
     \centering
@@ -85,7 +85,7 @@ Table~\ref{tab:ablation_num_clusters} summarizes the sensitivity to this design 
     $K$ determines the granularity of the latent adversarial groups used by Cluster-DRO.
     M(8) is the mean robust accuracy over the eight bounded evaluation attacks and
     excludes AutoAttack.}
-    \label{tab:ablation_num_clusters}
+    \label{tab:ch6_ablation_num_clusters}
     \begin{tabular}{lccc}
         \toprule
         Setting & $K$ & M(8) & Notes \\
@@ -105,7 +105,7 @@ the method is reasonably robust around the default cluster granularity, not as p
 $K=4$ is universally optimal.
 
 \subsection{Cluster-Refresh Schedule}
-\label{subsec:ablation_cluster_refresh}
+\label{subsec:ch6_ablation_cluster_refresh}
 
 % TODO[Kiệt]:
 % Goal:
@@ -113,7 +113,7 @@ $K=4$ is universally optimal.
 % Flow:
 % - Compare refresh policies, then connect to feature-bank freshness and q reset.
 % Include:
-% - Reference `tab:cluster_refresh_schedule_ablation`.
+% - Reference `tab:ch6_cluster_refresh_schedule_ablation`.
 % Avoid:
 % - Overclaiming from small-seed ablation results.
 % Target length: 2-3 paragraphs.
@@ -124,7 +124,7 @@ often the K-means clusterer is refitted from the feature bank. A shorter interva
 adapt more quickly to representation changes, while a longer interval may provide a
 more stable clustering signal.
 
-Table~\ref{tab:cluster_refresh_schedule_ablation} compares refreshing the clusterer
+Table~\ref{tab:ch6_cluster_refresh_schedule_ablation} compares refreshing the clusterer
 every one epoch and every two epochs. The two settings produce very similar results.
 The default two-epoch schedule gives a slightly higher Mean(8), with
 $62.44 \pm 0.22$, compared with $62.38 \pm 0.14$ for the one-epoch schedule. It also
@@ -144,7 +144,7 @@ overly frequent cluster refitting.
     over three seeds. Mean(8) averages over the eight bounded evaluation attacks and
     excludes AutoAttack. Worst(8) is the minimum robust accuracy over the same eight
     bounded attacks and also excludes AutoAttack. AutoAttack is reported separately.}
-    \label{tab:cluster_refresh_schedule_ablation}
+    \label{tab:ch6_cluster_refresh_schedule_ablation}
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{ccccccc}
         \toprule

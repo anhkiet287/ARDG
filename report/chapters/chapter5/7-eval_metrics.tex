@@ -1,6 +1,6 @@
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Evaluation Metrics and Robustness Definitions}
-\label{sec:evaluation_metrics}
+\label{sec:ch5_evaluation_metrics}
 
 % TODO[Kiệt]:
 % Goal:
@@ -121,7 +121,7 @@ averages:
 
 AutoAttack is reported separately from Mean(8). Early ablations may use AutoAttack on
 512 test samples as a sanity check, while final AutoAttack comparisons are reported on
-the full test set for selected representative seeds.
+the full test set for a fixed random-seed panel.
 
 For graybox evaluation, adversarial examples are generated using a surrogate model
 \(f_{\theta_s}\) and evaluated on a target model \(f_{\theta_t}\):
@@ -162,7 +162,7 @@ where \(\mathcal{D}_{c}\) is the subset of test examples whose label is \(c\).
 \begin{table}[H]
 \centering
 \caption{Summary of evaluation metrics.}
-\label{tab:evaluation_metrics_summary}
+\label{tab:ch5_evaluation_metrics_summary}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.08}

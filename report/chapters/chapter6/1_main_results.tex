@@ -1,6 +1,6 @@
-﻿% ─────────────────────────────────────────────────────────────────────────────
+% ─────────────────────────────────────────────────────────────────────────────
 \section{Whitebox Robustness Under Direct Attacks}
-\label{sec:main_results}
+\label{sec:ch6_whitebox}
 
 % TODO[Kiệt]:
 % Goal:
@@ -17,15 +17,15 @@
 % ─────────────────────────────────────────────────────────────────────────────
 
 \subsection{Aggregate Robustness}
-\label{sec:aggregate_robustness}
+\label{subsec:ch6_aggregate_robustness}
 
 % TODO[Kiệt]:
 % Goal:
 % - Make the aggregate result easy to read before detailed statistics.
 % Flow:
-% - State the main pattern in `tab:agg-results`, then qualify it with effect size and corrected tests.
+% - State the main pattern in `tab:ch6_aggregate_results`, then qualify it with effect size and corrected tests.
 % Include:
-% - References to `tab:effect_size_summary`, `tab:paired_aggregate_all_baselines`, and `tab:corrected_paired_tests` where claims depend on them.
+% - References to `tab:ch6_effect_size_summary`, `tab:ch6_paired_aggregate_all_baselines`, and `tab:ch6_corrected_paired_tests` where claims depend on them.
 % Avoid:
 % - Treating small non-significant differences as conclusions.
 % Target length: 4-6 paragraphs plus existing tables.
@@ -36,7 +36,7 @@
 reported as mean $\pm$ standard deviation across $n=20$ seeds. AutoAttack
 is reported separately and is not included in Mean(8). Bold values indicate
 the best method for each metric.}
-\label{tab:agg-results}
+\label{tab:ch6_aggregate_results}
 \small
 \setlength{\tabcolsep}{3.5pt}
 \renewcommand{\arraystretch}{1.08}
@@ -108,18 +108,18 @@ interpretation: each single-AT method dominates one column, while
 AttackDRO++ is best on every column-aggregating metric.
 
 \paragraph{Effect-size summary.}
-Table~\ref{tab:effect_size_summary} reports paired effect magnitudes
+Table~\ref{tab:ch6_effect_size_summary} reports paired effect magnitudes
 between AttackDRO++ and each baseline. Cohen's $d_z = \Delta / \sigma_\Delta$
 is the standardized paired effect size; conventional thresholds are
 $0.2$ (small), $0.5$ (medium), $0.8$ (large). Statistical significance
-is reported in Table~\ref{tab:paired_aggregate_all_baselines}.
+is reported in Table~\ref{tab:ch6_paired_aggregate_all_baselines}.
 
 \begin{table}[H]
 \centering
 \caption{Effect-size summary: AttackDRO++ (Ours) vs.\ each baseline ($n=20$).
 $\Delta$ in percentage points; negative values mean the baseline is
 stronger.}
-\label{tab:effect_size_summary}
+\label{tab:ch6_effect_size_summary}
 \small
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.10}
@@ -152,16 +152,16 @@ asymmetric single-AT comparisons quantify the specialist tradeoff that
 motivates the Multi-ATtack setting in the first place.
 
 \paragraph{Paired aggregate robustness comparisons.}
-Table~\ref{tab:paired_aggregate_all_baselines} reports paired aggregate results separate the main Multi-ATtack comparison from the
+Table~\ref{tab:ch6_paired_aggregate_all_baselines} reports paired aggregate results separate the main Multi-ATtack comparison from the
 single-attack specialist comparisons. AutoAttack is excluded from this table and reported
-separately in Section~\ref{sec:worst_case_behavior}.
+separately in Section~\ref{subsec:ch6_worst_case_behavior}.
 
 \begin{table}[H]
 \centering
 \caption{Paired aggregate robustness comparison between AttackDRO++ (Ours) and each baseline.
 \(\Delta\) is computed as AttackDRO++ minus the corresponding baseline in percentage
 points. The \(p\)-value is from a two-sided paired \(t\)-test.}
-\label{tab:paired_aggregate_all_baselines}
+\label{tab:ch6_paired_aggregate_all_baselines}
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.08}
@@ -214,10 +214,10 @@ DDN-AT on held-out $\ell_2$. This again supports the main interpretation that
 single-attack baselines are specialists, while AttackDRO++ provides better average
 cross-attack balance.
 % ─────────────────────────────────────────────────────────────────────────────
-% TODO(Kiet's partner): Fill Table~\ref{tab:corrected_paired_tests}.
+% TODO(Kiet's partner): Fill Table~\ref{tab:ch6_corrected_paired_tests}.
 %
 % This table is the multiple-comparison-corrected companion to
-% Table~\ref{tab:paired_aggregate_all_baselines}.
+% Table~\ref{tab:ch6_paired_aggregate_all_baselines}.
 %
 % Use the final 20-seed CSV and the canonical Chapter 6 metrics:
 %   - Clean: standard clean test accuracy.
@@ -229,7 +229,7 @@ cross-attack balance.
 %   - Worst(8): minimum over the eight non-AutoAttack attacks.
 %
 % Do not include AutoAttack in this table. AutoAttack is reported separately
-% in Section~\ref{sec:worst_case_behavior}.
+% in Section~\ref{subsec:ch6_worst_case_behavior}.
 %
 % Method names:
 %   PGD-AT, DDN-AT, Multi-AT, AttackDRO++.
@@ -259,8 +259,8 @@ reports bootstrap 95\% confidence intervals, seed-level win counts, Cohen's pair
 effect size $d_z$, paired $t$-test $p$-values, Wilcoxon signed-rank $p$-values,
 and Holm-corrected Wilcoxon $p$-values. Holm correction is applied within each
 baseline comparison across the seven reported metrics. AutoAttack is excluded
-from this table and reported separately in Section~\ref{sec:worst_case_behavior}.}
-\label{tab:corrected_paired_tests}
+from this table and reported separately in Section~\ref{subsec:ch6_worst_case_behavior}.}
+\label{tab:ch6_corrected_paired_tests}
 \scriptsize
 \setlength{\tabcolsep}{2.5pt}
 \renewcommand{\arraystretch}{1.08}
@@ -353,15 +353,15 @@ DDN-AT & Worst(8)
 }
 \end{table}
 
-% TODO(Kiet's partner): After filling Table~\ref{tab:corrected_paired_tests},
+% TODO(Kiet's partner): After filling Table~\ref{tab:ch6_corrected_paired_tests},
 % update this paragraph according to the Holm-corrected Wilcoxon results.
 % If the Multi-AT comparison remains significant after Holm correction,
 % describe it as correction-robust. If not, describe it as a small positive
 % trend supported by paired t-tests and effect sizes, but not uniformly
 % correction-robust.
-Table~\ref{tab:paired_aggregate_all_baselines} reports the paired $t$-test
+Table~\ref{tab:ch6_paired_aggregate_all_baselines} reports the paired $t$-test
 comparison. To align with the statistical protocol described in Chapter~5,
-Table~\ref{tab:corrected_paired_tests} additionally reports Wilcoxon signed-rank
+Table~\ref{tab:ch6_corrected_paired_tests} additionally reports Wilcoxon signed-rank
 tests with Holm correction, bootstrap confidence intervals, paired effect sizes,
 and seed-level win counts.
 The multiple-comparison-corrected tests provide a conservative check on the
@@ -392,14 +392,14 @@ Seen mean, but remains weaker on Heldout $\ell_\infty$ and Worst(8), consistent
 with PGD-AT's specialization toward $\ell_\infty$ robustness. Compared with
 DDN-AT, AttackDRO++ obtains correction-robust gains on Mean(8), Heldout(6),
 Heldout $\ell_\infty$, Seen mean, and Worst(8), while Heldout $\ell_2$ is
-statistically indistinguishable. Overall, Table~\ref{tab:corrected_paired_tests}
+statistically indistinguishable. Overall, Table~\ref{tab:ch6_corrected_paired_tests}
 suggests that AttackDRO++ mainly improves average cross-attack balance and
 heldout robustness, while its worst-case behavior depends on the baseline being
 compared.
 
 
 \subsection{Per-Attack Robustness Breakdown}
-\label{sec:per_attack_breakdown}
+\label{subsec:ch6_per_attack_breakdown}
 
 % TODO[Kiệt]:
 % Goal:
@@ -407,14 +407,14 @@ compared.
 % Flow:
 % - Discuss per-attack table, then connect source vs held-out attacks to the research questions.
 % Include:
-% - Refer to `tab:per_attack_all_baselines`.
+% - Refer to `tab:ch6_per_attack_all_baselines`.
 % - Use report-facing attack names, not code-style attack names.
 % Avoid:
 % - Repeating all table numbers in prose.
 % Target length: 3-5 paragraphs.
 
 The aggregate metrics show the overall trend, but they do not reveal which attacks
-drive the improvement. Table~\ref{tab:per_attack_all_baselines} reports per-attack
+drive the improvement. Table~\ref{tab:ch6_per_attack_all_baselines} reports per-attack
 paired comparisons between AttackDRO++ and each baseline. The table is divided into
 three panels: the main comparison against Multi-AT, followed by the two
 single-attack specialist comparisons.
@@ -429,7 +429,7 @@ score on 4 of 8 attacks; the two single-attack baselines together account
 for the remaining 4, each winning on the family they were trained against.
 $\Delta$ values use the bold-marker convention $^*$ for $p<0.05$ and
 $^{**}$ for $p<0.01$.}
-\label{tab:per_attack_all_baselines}
+\label{tab:ch6_per_attack_all_baselines}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.10}
@@ -504,7 +504,7 @@ CW-$\ell_2$     & heldout $\ell_2$
 \bottomrule
 \end{tabular}
 \end{table}
-Table~\ref{tab:per_attack_all_baselines} disaggregates the Mean(8) result
+Table~\ref{tab:ch6_per_attack_all_baselines} disaggregates the Mean(8) result
 into the eight evaluation attacks. AttackDRO++ achieves the highest
 per-attack accuracy on four of eight attacks, including all three heldout
 $\ell_2$ attacks where it beats Multi-AT at $p<0.05$. PGD-AT wins on
@@ -521,7 +521,7 @@ preserved rather than improved.
 
 
 \subsection{Worst-Case Behavior: Worst(8) and AutoAttack}
-\label{sec:worst_case_behavior}
+\label{subsec:ch6_worst_case_behavior}
 
 % TODO[Kiệt]:
 % Goal:
@@ -529,7 +529,7 @@ preserved rather than improved.
 % Flow:
 % - Interpret `Worst(8)` first, then explain why AutoAttack is reported separately.
 % Include:
-% - References to `tab:worst_autoattack_sanity` and `tab:autoattack_fulltest`.
+% - References to `tab:ch6_worst_autoattack_sanity` and `tab:ch6_autoattack_fulltest`.
 % Avoid:
 % - Claiming AutoAttack is part of Mean(8).
 % Target length: 3-4 paragraphs.
@@ -537,8 +537,8 @@ preserved rather than improved.
 Two metrics test standardized worst-case behavior. Worst(8) is the minimum
 robust accuracy across the eight evaluation attacks per checkpoint;
 AutoAttack-$\ell_\infty$ is an ensemble $\ell_\infty$ stress test following
-Croce and Hein \cite{croce2020reliable}. Tables~\ref{tab:worst_autoattack_sanity} and
-\ref{tab:autoattack_fulltest} report each metric separately because they have
+Croce and Hein \cite{croce2020reliable}. Tables~\ref{tab:ch6_worst_autoattack_sanity} and
+\ref{tab:ch6_autoattack_fulltest} report each metric separately because they have
 different evaluation panels: Worst(8) is computed across the full $n=20$
 seed panel, while AutoAttack is reported in two layers --- a 512-sample
 sanity evaluation across all $n=20$ seeds and a full-test evaluation on
@@ -552,7 +552,7 @@ non-AutoAttack evaluation attacks. For AttackDRO++ $-$ Multi-AT,
 the paired differences are $-0.003$~pp on Worst(8) ($p=0.971$) and
 $-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the highest
 method.}
-\label{tab:worst_autoattack_sanity}
+\label{tab:ch6_worst_autoattack_sanity}
 \small
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.08}
@@ -576,7 +576,7 @@ AttackDRO++ (Ours)          & $45.079$ & $0.237$ & $41.317$ & $1.050$ \\
 \caption{Full-test AutoAttack-$\ell_\infty$ results on the selected
 $n=5$ paired seed panel. The paired difference is
 AttackDRO++ $-$ Multi-AT: $-0.006$~pp, with $p=0.9584$.}
-\label{tab:autoattack_fulltest}
+\label{tab:ch6_autoattack_fulltest}
 \small
 \setlength{\tabcolsep}{10pt}
 \renewcommand{\arraystretch}{1.08}
@@ -603,20 +603,20 @@ degrading standardized worst-case behavior.
 PGD-AT obtains the highest Worst(8) and AutoAttack because both metrics are
 dominated by $\ell_\infty$ robustness, the threat family it trains against.
 This advantage is therefore structural rather than evidence of broader
-robustness. As Table~\ref{tab:per_attack_all_baselines} shows, PGD-AT loses
+robustness. As Table~\ref{tab:ch6_per_attack_all_baselines} shows, PGD-AT loses
 $5$--$6$~pp to AttackDRO++ on heldout $\ell_2$ attacks, while DDN-AT shows the
 opposite failure mode by collapsing under $\ell_\infty$ stress. Single-attack
 training therefore produces specialists; AttackDRO++ does not match PGD-AT's
 $\ell_\infty$ depth, but provides the best average cross-attack balance.
 
 \subsection{Variance Reduction and Training Stability}
-\label{sec:variance_reduction}
+\label{subsec:ch6_variance_reduction}
 
 % TODO[Kiệt]:
 % Goal:
 % - Explain whether AttackDRO++ changes seed-to-seed stability.
 % Flow:
-% - Interpret `tab:variance-reduction`, then state whether the result supports or only suggests improved stability.
+% - Interpret `tab:ch6_variance_reduction`, then state whether the result supports or only suggests improved stability.
 % Include:
 % - Keep standard deviation and ratio definitions clear.
 % Avoid:
@@ -624,7 +624,7 @@ $\ell_\infty$ depth, but provides the best average cross-attack balance.
 % Target length: 2-3 paragraphs.
 
 In addition to improving the mean of average-case robustness metrics, AttackDRO++ also
-reduces seed-to-seed variation relative to Multi-AT. Table~\ref{tab:variance-reduction}
+reduces seed-to-seed variation relative to Multi-AT. Table~\ref{tab:ch6_variance_reduction}
 compares the standard deviation of each seed-level metric between the two methods.
 
 \begin{table}[H]
@@ -634,7 +634,7 @@ standard deviation of the per-seed metric. AttackDRO++ substantially reduces
 seed-to-seed variation on Mean(8), held-out averages, and held-out norm-specific
 metrics, while Worst(8) and AutoAttack standard deviations remain similar across
 methods.}
-\label{tab:variance-reduction}
+\label{tab:ch6_variance_reduction}
 \small
 \setlength{\tabcolsep}{5pt}
 \renewcommand{\arraystretch}{1.08}

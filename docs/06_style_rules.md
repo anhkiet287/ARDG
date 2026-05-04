@@ -242,7 +242,7 @@ Backbone & ResNet-18 \\
 Training attacks & PGD-$\ell_\infty$, DDN-$\ell_2$ \\
 Evaluation attacks & FGSM-RS, PGD-$\ell_\infty$, TPGD, MIFGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, CW-$\ell_2$, AutoAttack-$\ell_\infty$ \\
 Main metric & Mean robust accuracy over eight attacks, excluding AutoAttack-$\ell_\infty$ \\
-Seeds & 42, 123, 456, 789, 1024 \\
+Seeds & Five random seeds \\
 \bottomrule
 \end{tabular}
 \end{table}

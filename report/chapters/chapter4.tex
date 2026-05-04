@@ -1,6 +1,6 @@
 
 \chapter{Proposed Methodology}
-\label{chap:proposed_methodology}
+\label{chap:methodology}
 \section{Methodology Overview}
 
 % TODO[Kiệt]:
@@ -25,14 +25,14 @@ coming from multiple adversarial domains and design training objectives that can
 emphasize weak domains or latent hard groups while preserving the stability of the
 uniform multi-attack baseline.
 
-This chapter develops the proposed framework in five steps. First, Section~\ref{sec:formulation}
+This chapter develops the proposed framework in five steps. First, Section~\ref{sec:ch4_problem_formulation}
 formulates multi-attack adversarial training under the attacks-as-domains perspective.
-Second, Section~\ref{sec:erm} defines Uniform Multi-Attack ERM, which serves as one of the
-main baseline beside single attack adversarial training like PGD or DDN. Third, Section~\ref{sec:attackdro} introduces AttackDRO, a GroupDRO
-formulation over attack identities. Fourth, Section~\ref{sec:attackdropp} extends this
+Second, Section~\ref{sec:ch4_multi_attack_erm} defines Uniform Multi-Attack ERM, which serves as one of the
+main baseline beside single attack adversarial training like PGD or DDN. Third, Section~\ref{sec:ch4_attackdro} introduces AttackDRO, a GroupDRO
+formulation over attack identities. Fourth, Section~\ref{sec:ch4_attackdropp} extends this
 to AttackDRO++, which discovers latent adversarial groups through clustering.
-Section~\ref{sec:gradfp} introduces gradient fingerprints to enrich group discovery
-with optimization-level information, and Section~\ref{sec:anchor} introduces the
+Section~\ref{sec:ch4_gradfp} introduces gradient fingerprints to enrich group discovery
+with optimization-level information, and Section~\ref{sec:ch4_anchor_objective} introduces the
 uniform-anchored Cluster-DRO objective to stabilize training.
 
 The final method evaluated in the main experiments is \textbf{AttackDRO++ with
