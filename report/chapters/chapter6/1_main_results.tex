@@ -1,4 +1,4 @@
-% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% --------------------------------------------------------------------------
 \section{Whitebox Robustness Under Direct Attacks}
 \label{sec:ch6_whitebox}
 
@@ -74,10 +74,10 @@ AttackDRO++ improves Mean(8) over Multi-AT by $+0.279$~pp ($p = 0.0076$,
 14/20 wins), with the strongest channel on the held-out $\ell_2$ mean ($+0.405$~pp,
 $p = 0.0079$, 16/20). It improves Mean(8) over PGD-AT by $+1.826$~pp and
 over DDN-AT by $+6.098$~pp, both at $p < 10^{-10}$ on all 20 seeds, and
-achieves $2.5$--$3.3{\times}$ tighter seed-to-seed standard deviation than Multi-AT on every average-case metric. Worst(8) and AutoAttack are
+achieves $2.5$--$3.3{\times}$ tighter seed-to-seed standard deviation than Multi-AT on every average-case metric. Worst(8) and AutoAttack-512 are
 statistically indistinguishable from Multi-AT ($|\Delta| < 0.005$~pp,
-$p > 0.97$): AttackDRO++ improves average and held-out robustness without
-disturbing standardized worst-case behavior. The single-attack baselines
+$p > 0.97$): AttackDRO++ improves average and held-out robustness while
+leaving the standardized hardest-case checks broadly unchanged. The single-attack baselines
 remain stronger than AttackDRO++ on the family they train against
 (PGD-AT on the held-out $\ell_\infty$ mean, DDN-AT on the held-out $\ell_2$ mean) but lose
 substantially on the other, confirming the specialist-versus-balanced
@@ -125,8 +125,8 @@ Worst(8)          & $-0.003$ & $-0.01$  & $-4.576$ & $-15.36$  & $+19.122$ & $36
 Two regimes are visible. Against Multi-AT, every average-case metric is a
 medium-effect gain ($d_z \in [0.55, 0.67]$, $\Delta \in [+0.16, +0.41]$~pp)
 with Worst(8) at zero effect: AttackDRO++ shifts the average-case
-distribution by a small but consistent amount without disturbing
-worst-case behavior. Against the single-AT baselines, $d_z$ exceeds $4$
+distribution by a small but consistent amount while leaving
+hardest-case behavior broadly unchanged. Against the single-AT baselines, $d_z$ exceeds $4$
 on most metrics but flips negative on the family each specialist trains
 against. The medium-effect Multi-AT comparison validates the cluster-DRO
 objective as a refinement of Multi-AT; the large-but-
@@ -195,7 +195,7 @@ Against DDN-AT, AttackDRO++ improves all $\ell_\infty$-related aggregates while 
 DDN-AT on held-out $\ell_2$. This again supports the main interpretation that
 single-attack baselines are specialists, while AttackDRO++ provides better average
 cross-attack balance.
-% â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+% --------------------------------------------------------------------------
 \begin{table}[H]
 \centering
 \caption{Multiple-comparison-corrected paired significance tests for AttackDRO++ (Ours)
@@ -323,8 +323,9 @@ intervals, and moderate paired effect sizes. However, the Holm-corrected
 Wilcoxon $p$-values for these metrics do not remain below the $0.05$ threshold.
 Therefore, relative to Multi-AT, the evidence is best described as a small
 positive trend rather than a uniformly correction-robust improvement. Worst(8)
-is essentially unchanged, indicating that AttackDRO++ preserves the worst-case
-attack performance of Multi-AT rather than improving it.
+is essentially unchanged, indicating that AttackDRO++ does not improve
+the worst-case attack performance over Multi-AT, but also does not meaningfully
+degrade it in this panel.
 
 For the single-attack baselines, the corrected tests support the expected
 specialist-versus-balanced interpretation. Compared with PGD-AT, AttackDRO++
@@ -468,11 +469,13 @@ the selected $n=5$ seed panel.
 
 \begin{table}[H]
 \centering
-\caption{Worst(8) and 512-sample AutoAttack sanity results across
-20 paired random-seed runs. Worst(8) is the minimum robust accuracy over the eight
-non-AutoAttack evaluation attacks. For AttackDRO++ $-$ Multi-AT,
+\caption{Worst(8) and AutoAttack-512 sanity results across
+20 paired random-seed runs. Worst(8) is computed over the eight
+non-AutoAttack evaluation attacks. AutoAttack-512 denotes
+AutoAttack-$\ell_\infty$ evaluated on 512 test samples as a sanity check
+and is reported separately from Mean(8). For AttackDRO++ $-$ Multi-AT,
 the paired differences are $-0.003$~pp on Worst(8) ($p=0.971$) and
-$-0.001$~pp on AutoAttack ($p=0.998$). Bold values indicate the best method
+$-0.001$~pp on AutoAttack-512 ($p=0.998$). Bold values indicate the best method
 for each metric.}
 \label{tab:ch6_worst_autoattack_sanity}
 \small
@@ -480,7 +483,7 @@ for each metric.}
 \renewcommand{\arraystretch}{1.08}
 \begin{tabular}{lrrrr}
 \toprule
-& \multicolumn{2}{c}{Worst(8)} & \multicolumn{2}{c}{AutoAttack-$\ell_\infty$} \\
+& \multicolumn{2}{c}{Worst(8)} & \multicolumn{2}{c}{AutoAttack-512} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Method & Mean (\%) & $\sigma$ (pp) & Mean (\%) & $\sigma$ (pp) \\
 \midrule
@@ -514,12 +517,14 @@ AttackDRO++ (Ours) & $42.46$ & $0.20$ \\
 
 \paragraph{AttackDRO++ vs.\ Multi-AT.}
 AttackDRO++ is statistically indistinguishable from Multi-AT on both
-worst-case metrics. On the $n=20$ sanity panel, the paired differences are
-$-0.003$~pp for Worst(8) ($p=0.971$) and $-0.001$~pp for AutoAttack
-($p=0.998$). The full-test AutoAttack panel gives the same conclusion
-($-0.006$~pp, $p=0.9584$). Thus, the claim is preservation rather than
-improvement: AttackDRO++ improves average and held-out robustness without
-degrading standardized worst-case behavior.
+hardest-case metrics. On the $n=20$ sanity panel, the paired differences are
+$-0.003$~pp for Worst(8) ($p=0.971$) and $-0.001$~pp for AutoAttack-512
+($p=0.998$). This full-test panel indicates that AttackDRO++ is statistically
+indistinguishable from Multi-AT under full-test AutoAttack-$\ell_\infty$
+in the selected five-seed panel ($-0.006$~pp, $p=0.9584$). The hardest-case
+checks are therefore broadly comparable rather than improved: AttackDRO++
+improves average and held-out robustness while leaving the standardized
+hardest-case checks broadly unchanged.
 
 \paragraph{PGD-AT specialization.}
 PGD-AT obtains the highest Worst(8) and AutoAttack because both metrics are
@@ -588,12 +593,12 @@ This suggests that the anchored Cluster-DRO objective not only improves the mean
 average-case robustness metrics, but also makes the Multi-AT training outcome less
 sensitive to random seed. The effect is weaker for Worst(8) and AutoAttack, whose
 standard deviations remain similar across methods. This is consistent with the previous
-sections: AttackDRO++ preserves the hardest \(\ell_\infty\) stress metrics relative to
- Multi-AT, while its main benefit is on average and held-out robustness.
+sections: the hardest \(\ell_\infty\) stress metrics are broadly unchanged relative to
+Multi-AT, while the main benefit of AttackDRO++ is on average and held-out robustness.
 
 The whitebox results give the main aggregate evidence: AttackDRO++ improves
-average and held-out robustness relative to Multi-AT while preserving the hardest
-standardized checks. However, aggregate and per-attack metrics can still hide
+average and held-out robustness relative to Multi-AT while leaving the hardest
+standardized checks broadly unchanged. However, aggregate and per-attack metrics can still hide
 which CIFAR-10 classes and attack--class cells drive the remaining failures. The
 next section therefore drills down into class-wise whitebox robustness to test
 whether the observed gains are broad or concentrated in a small part of the

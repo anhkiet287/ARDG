@@ -86,33 +86,33 @@
 \contentsline {paragraph}{AttackDRO++ vs.\ Multi-AT.}{70}{paragraph*.41}%
 \contentsline {paragraph}{PGD-AT specialization.}{70}{paragraph*.42}%
 \contentsline {subsection}{\numberline {6.1.4}Training Stability: How Predictable Is the Outcome?}{71}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Class-wise Whitebox Robustness Across Attacks}{72}{section.6.2}%
-\contentsline {paragraph}{Absolute per-class heatmaps with a shared scale.}{73}{paragraph*.45}%
-\contentsline {subsection}{\numberline {6.2.1}Class-Level Gains and Persistent Difficulties}{75}{subsection.6.2.1}%
-\contentsline {paragraph}{Attack-Class Delta Against Multi-AT Baseline}{75}{paragraph*.50}%
-\contentsline {paragraph}{Attack-Class Delta Against Single-AT Baselines}{76}{paragraph*.52}%
-\contentsline {paragraph}{Attack-family interpretation.}{78}{paragraph*.56}%
-\contentsline {subsection}{\numberline {6.2.2}Tail-Class Robustness: Do the Weakest Cells Improve?}{79}{subsection.6.2.2}%
-\contentsline {section}{\numberline {6.3}Graybox Robustness Across Surrogate Models}{81}{section.6.3}%
-\contentsline {paragraph}{Random-seed checkpoint panel and whitebox sanity check.}{81}{paragraph*.59}%
-\contentsline {subsection}{\numberline {6.3.1}Cross-Method Transfer Structure}{82}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over?}{84}{subsection.6.3.2}%
-\contentsline {paragraph}{Per-attack transfer behavior.}{86}{paragraph*.65}%
-\contentsline {paragraph}{Whitebox--graybox gap and specialist inflation.}{87}{paragraph*.68}%
-\contentsline {subsection}{\numberline {6.3.3}Class-Level Transfer Patterns}{90}{subsection.6.3.3}%
-\contentsline {paragraph}{Method contribution decomposition.}{94}{paragraph*.78}%
-\contentsline {section}{\numberline {6.4}Sensitivity to Key Hyperparameters}{95}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Number of Clusters: How Many Groups Are Needed?}{96}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Anchor Strength: Finding a Stable Trade-off}{97}{subsection.6.4.2}%
-\contentsline {subsection}{\numberline {6.4.3}Recluster Frequency: How Often Should Groups Update?}{98}{subsection.6.4.3}%
-\contentsline {paragraph}{Supplementary architecture check.}{100}{paragraph*.87}%
-\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{101}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Summary of Contributions}{101}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Answers to Research Questions}{102}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Limitations of the Current Study}{103}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Directions for Future Work}{104}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Closing Remarks}{105}{section.7.5}%
-\contentsline {chapter}{\numberline {A}Illustrative Pseudo-code and Flowcharts}{107}{appendix.A}%
-\contentsline {chapter}{\numberline {B}Experimental Logs and Configurations}{108}{appendix.B}%
-\contentsline {chapter}{\numberline {C}Additional Tables and Visualizations}{110}{appendix.C}%
-\contentsline {chapter}{\numberline {D}Compute Resources and Environment Notes}{112}{appendix.D}%
+\contentsline {section}{\numberline {6.2}Class-wise Whitebox Robustness Across Attacks}{73}{section.6.2}%
+\contentsline {paragraph}{Absolute per-class heatmaps with a shared scale.}{74}{paragraph*.45}%
+\contentsline {subsection}{\numberline {6.2.1}Class-Level Gains and Persistent Difficulties}{76}{subsection.6.2.1}%
+\contentsline {paragraph}{Attack-Class Delta Against Multi-AT Baseline}{76}{paragraph*.50}%
+\contentsline {paragraph}{Attack-Class Delta Against Single-AT Baselines}{77}{paragraph*.52}%
+\contentsline {paragraph}{Attack-family interpretation.}{79}{paragraph*.56}%
+\contentsline {subsection}{\numberline {6.2.2}Tail-Class Robustness: Do the Weakest Cells Improve?}{80}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Graybox Robustness Across Surrogate Models}{82}{section.6.3}%
+\contentsline {paragraph}{Random-seed checkpoint panel and whitebox sanity check.}{82}{paragraph*.59}%
+\contentsline {subsection}{\numberline {6.3.1}Cross-Method Transfer Structure}{83}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Paired Graybox Comparisons: Does the Whitebox Advantage Carry Over?}{85}{subsection.6.3.2}%
+\contentsline {paragraph}{Per-attack transfer behavior.}{87}{paragraph*.65}%
+\contentsline {paragraph}{Whitebox--graybox gap and specialist inflation.}{88}{paragraph*.68}%
+\contentsline {subsection}{\numberline {6.3.3}Class-Level Transfer Patterns}{91}{subsection.6.3.3}%
+\contentsline {paragraph}{Method contribution decomposition.}{95}{paragraph*.78}%
+\contentsline {section}{\numberline {6.4}Sensitivity to Key Hyperparameters}{96}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Number of Clusters: How Many Groups Are Needed?}{97}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Anchor Strength: Finding a Stable Trade-off}{98}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Recluster Frequency: How Often Should Groups Update?}{99}{subsection.6.4.3}%
+\contentsline {paragraph}{Supplementary architecture check.}{101}{paragraph*.87}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{102}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Summary of Contributions}{102}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Answers to Research Questions}{103}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Limitations of the Current Study}{104}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Directions for Future Work}{105}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Closing Remarks}{106}{section.7.5}%
+\contentsline {chapter}{\numberline {A}Illustrative Pseudo-code and Flowcharts}{108}{appendix.A}%
+\contentsline {chapter}{\numberline {B}Experimental Logs and Configurations}{109}{appendix.B}%
+\contentsline {chapter}{\numberline {C}Additional Tables and Visualizations}{111}{appendix.C}%
+\contentsline {chapter}{\numberline {D}Compute Resources and Environment Notes}{113}{appendix.D}%

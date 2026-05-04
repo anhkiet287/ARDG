@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 16:58
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  4 MAY 2026 17:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1891,8 +1891,13 @@ Chapter 5.
 (chapters/chapter5/3-attack_suite.tex [47] [48])
 (chapters/chapter5/4-configuration.tex [49] [50])
 (chapters/chapter5/5-choices.tex [51] [52]) (chapters/chapter5/6-protocol.tex
-[53] [54]) (chapters/chapter5/7-eval_metrics.tex [55] [56])
-(chapters/chapter5/8-graybox_transfer.tex [57] [58])
+[53] [54]) (chapters/chapter5/7-eval_metrics.tex [55] [56]
+Underfull \hbox (badness 2368) in paragraph at lines 112--116
+[]\TU/TimesNewRoman(0)/m/n/13 AutoAttack-$[][]$ is reported separately from Mea
+n(8). Early ablations may use
+ []
+
+) (chapters/chapter5/8-graybox_transfer.tex [57] [58])
 (chapters/chapter5/9-tools_tracking.tex [59] [60] [61])) [62] [63]
 \openout2 = `chapters/chapter6.aux'.
 
@@ -1920,12 +1925,18 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 4.33289pt on input line 299.
  [66] [67]
-Underfull \hbox (badness 1314) in paragraph at lines 329--340
+Underfull \hbox (badness 1314) in paragraph at lines 330--341
 \TU/TimesNewRoman(0)/m/n/13 versus-balanced interpretation. Compared with PGD-A
 T, AttackDRO++ achieves
  []
 
-[68] [69] [70]) (chapters/chapter6/4_whitebox.tex [71]
+[68] [69]
+Underfull \hbox (badness 1082) in paragraph at lines 479--479
+[]\TU/TimesNewRoman(0)/m/n/13 Table 6.6: |Worst(8) and AutoAttack-512 sanity re
+sults across 20 paired random-
+ []
+
+[70] [71]) (chapters/chapter6/4_whitebox.tex [72]
 Underfull \hbox (badness 1558) in paragraph at lines 5--6
 \TU/TimesNewRoman(0)/m/n/13 The aggregate results in Section [][]6.1[][] show t
 hat AttackDRO++ improves average
@@ -1934,7 +1945,7 @@ hat AttackDRO++ improves average
 File: figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png Graphic file (
 type bmp)
 <figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png>
-[72]
+[73]
 File: figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png>
@@ -1944,36 +1955,36 @@ e bmp)
 File: figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png Graphic file (t
 ype bmp)
 <figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png>
- [73]
+ [74]
 File: figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png Graphic fil
 e (type bmp)
 <figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png>
- [74]
+ [75]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n
 5.png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png
 >
- [75]
+ [76]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png>
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png>
- [76] [77]
+ [77] [78]
 File: figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png Gra
 phic file (type bmp)
 <figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png>
- [78]
+ [79]
 File: figures/whitebox/whitebox_bottomk_lift_bar_n5.png Graphic file (type bmp)
 
 <figures/whitebox/whitebox_bottomk_lift_bar_n5.png>
-) [79]
-(chapters/chapter6/2_graybox_results.tex [80] [81]
+) [80]
+(chapters/chapter6/2_graybox_results.tex [81] [82]
 File: figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png>
- [82]
+ [83]
 File: figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png Graphi
 c file (type bmp)
 <figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png>
@@ -1998,56 +2009,56 @@ phic file (type bmp)
 File: figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png Graphic f
 ile (type bmp)
 <figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png>
- [83] [84] [85] [86]
-[87]
+ [84] [85] [86] [87]
+[88]
 File: figures/graybox/whitebox_graybox_gap_DDNAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_DDNAT.png>
 File: figures/graybox/whitebox_graybox_gap_PGDAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_PGDAT.png>
- [88]
+ [89]
 File: figures/graybox/whitebox_graybox_gap_MultiAT.png Graphic file (type bmp)
 <figures/graybox/whitebox_graybox_gap_MultiAT.png>
 File: figures/graybox/whitebox_graybox_gap_AttackDROpp.png Graphic file (type b
 mp)
 <figures/graybox/whitebox_graybox_gap_AttackDROpp.png>
- [89] [90]
+ [90] [91]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png
  Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png>
- [91]
+ [92]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.png>
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.png>
- [92] [93] [94]
+ [93] [94] [95]
 File: figures/graybox/method_decomposition_three_panel_science.png Graphic file
  (type bmp)
 <figures/graybox/method_decomposition_three_panel_science.png>
 ) (chapters/chapter6/3_ablation.tex
-[95]
+[96]
 File: figures/ablations/ablation_num_clusters.png Graphic file (type bmp)
 <figures/ablations/ablation_num_clusters.png>
- [96] [97]
+ [97] [98]
 File: figures/ablations/ablation_anchor_strength.png Graphic file (type bmp)
 <figures/ablations/ablation_anchor_strength.png>
- [98]
+ [99]
 File: figures/ablations/ablation_recluster_frequency.png Graphic file (type bmp
 )
 <figures/ablations/ablation_recluster_frequency.png>
- [99]) (chapters/chapter6/6_summary.tex)) [100]
+ [100]) (chapters/chapter6/6_summary.tex)) [101]
 \openout2 = `chapters/chapter7.aux'.
 
 
 (chapters/chapter7.tex
 Chapter 7.
-[101
+[102
 
 
 
 
-] [102] [103]) [104] [105] (main.bbl) [106
+] [103] [104]) [105] [106] (main.bbl) [107
 
 
 
@@ -2056,7 +2067,7 @@ Chapter 7.
 
  (appendices.tex
 Appendix A.
-[107
+[108
 
 
 ]
@@ -2074,17 +2085,17 @@ File: figures/wandb/wb_ddn_l2_acc.png Graphic file (type bmp)
 File: figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.
 png Graphic file (type bmp)
 <figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png>
-[108
+[109
 
-] [109]
+] [110]
 Appendix C.
 File: figures/ablations/wrn2810_architecture_check.png Graphic file (type bmp)
 <figures/ablations/wrn2810_architecture_check.png>
-[110
+[111
 
-] [111]
+] [112]
 Appendix D.
-) [112
+) [113
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2104,10 +2115,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  38090 strings out of 402987
  756739 string characters out of 5448525
- 1413629 words of memory out of 5000000
+ 1413738 words of memory out of 5000000
  65976 multiletter control sequences out of 15000+600000
  636988 words of font info for 158 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,18n,107p,1067b,702s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (113 pages).
+Output written on main.pdf (114 pages).
