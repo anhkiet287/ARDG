@@ -1,4 +1,4 @@
-﻿# 00_llm_handoff.md
+# 00_llm_handoff.md
 
 ## Current repo state
 
@@ -203,7 +203,7 @@ Still not aligned:
 Known handoff issues fixed:
 - `sec:gradfp`: added to `report/chapters/chapter4/5-clustering_feature.tex`.
 - `tab:worst8`: references now point to existing table labels.
-- `tab:autoattack`: no exact active `\ref{tab:autoattack}` remains; existing labels are `tab:autoattack_config` and `tab:autoattack_fulltest`.
+- `tab:autoattack`: no exact active `\ref{tab:autoattack}` remains; existing labels are `tab:autoattack_config` and `tab:ch6_autoattack_fulltest`.
 - `fig:graybox_delta_heatmaps`: replaced with the actual graybox delta figure refs.
 - `tab:ablation_anchor_strength`: replaced with `fig:ablation_dashboard` where that target was the obvious intended object.
 - Duplicate `eq:floor`: less central label in `report/chapters/chapter4/3-attackDRO.tex` renamed to `eq:attackdro_floor`; `eq:floor` remains on the uniform-anchor objective.

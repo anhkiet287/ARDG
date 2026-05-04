@@ -23,18 +23,21 @@ Scope: built from the current 7-chapter flow in `report/main.tex`, the included 
 | `DDN-AT` | `DDN-AT`; figure filenames sometimes imply `singleDDN` | Single-attack adversarial training using DDN-$\ell_2$. | `report/chapters/chapter5/4-configuration.tex`, `tab:ch5_method_training_summary`. | Use `DDN-AT`. | User explicitly requested this name instead of `Single-AT DDN-$\ell_2$`. |
 | `Multi-AT` | `Multi-AT`; old prose `Multi-ATtack`; sometimes `Uniform Multi-AT`; methodology name `Uniform Multi-Attack ERM`. | Uniform multi-attack adversarial training baseline over PGD-$\ell_\infty$ and DDN-$\ell_2$ source attacks. | `report/chapters/chapter4/2-multi_attack.tex`; `report/chapters/chapter5/4-configuration.tex`, `tab:ch5_method_training_summary`. | Use `Multi-AT`. | `Uniform Multi-Attack ERM` is useful in Chapter 4 when defining the objective; formal results should use `Multi-AT`. |
 | `AttackDRO` | `AttackDRO`; `Group DRO over attack identity`. | Group DRO over source attack identities. | `report/chapters/chapter4/3-attackDRO.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `AttackDRO`. | Use `Group DRO` with a space in prose. |
-| `AttackDRO++` | `AttackDRO++`; `Cluster-DRO`; cluster-based variant. | Group DRO over discovered latent clusters. | `report/chapters/chapter4/4-attackDRO++.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `AttackDRO++` when referring to the method family or cluster-DRO baseline. | May be alternated with "the proposed method" after first definition when context is clear. |
-| `AttackDRO++ (Ours)` | `attackdro_pp_anchor035_gradfp_online_k4`; `anchor035`; `Anchor35 GradFP`. | Final proposed configuration: AttackDRO++ with uniform anchor, gradient fingerprints, online K-means refresh, and `K=4`. | `report/chapters/chapter4/7-complete_pipeline.tex` implementation note; `report/chapters/chapter5/4-configuration.tex`, `tab:ch5_method_training_summary`. | Use `AttackDRO++ (Ours)`. | Formal tables/captions should not use `AttackDRO++ Anchor35 GradFP` unless mapping to a config identifier. |
+| `Cluster-DRO` | `Cluster-DRO`; `cluster-level DRO`. | intermediate cluster-level grouping baseline; Group DRO over discovered latent clusters. | `report/chapters/chapter4/4-attackDRO++.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `Cluster-DRO` or `cluster-level DRO` for the intermediate baseline. | Do not use AttackDRO++ to refer to the cluster-only component. |
+| `AttackDRO++` | `attackdro_pp_anchor035_gradfp_online_k4`; `anchor035`; `Anchor35 GradFP`. | final proposed method; uniform-anchored Cluster-DRO with gradient fingerprints. | `report/chapters/chapter4/7-complete_pipeline.tex`; `report/chapters/chapter5/4-configuration.tex`. | Use `AttackDRO++`. | `(Ours)` is optional only in crowded Chapter 6 result tables if needed, not the preferred Chapter 5 method name. |
 | `q`-frozen variant | `q-Frozen`, `Q-frozen`, `uniform q`, `update q vs. uniform q`. | Ablation where adaptive `q` reweighting is disabled or kept uniform. | `report/chapters/chapter5/5-choices.tex`, `tab:ch5_ablation_hyperparams`; inactive source heading in `report/chapters/chapter6/3_ablation.tex`. | Do not use in active main-flow tables unless the ablation is restored. | Current Chapter 6 `q-Frozen Ablation` heading is inside `\iffalse`; treat as inactive source. |
-| `Anchor35` / anchor variants | `Anchor35`; `anchor035`; `\lambda_{\mathrm{DRO}}=0.35`; anchor strengths `{0.20, 0.35, 0.50}`. | Uniform-anchor setting controlling the strength of the Cluster-DRO correction. | `report/chapters/chapter4/6-anchor_objective.tex`; `report/chapters/chapter5/5-choices.tex`. | In formal results use `AttackDRO++ (Ours)`; in ablation tables use `\lambda_{\mathrm{DRO}}`. | `Anchor35` is acceptable as a config shorthand only after it is mapped to `\lambda_{\mathrm{DRO}}=0.35`. |
+| `Anchor35` / anchor variants | `Anchor35`; `anchor035`; `\lambda_{\mathrm{DRO}}=0.35`; anchor strengths `{0.20, 0.35, 0.50}`. | Uniform-anchor setting controlling the strength of the Cluster-DRO correction. | `report/chapters/chapter4/6-anchor_objective.tex`; `report/chapters/chapter5/5-choices.tex`. | In formal results use `AttackDRO++`; in ablation tables use `\lambda_{\mathrm{DRO}}`. | `Anchor35` is acceptable as a config shorthand only after it is mapped to `\lambda_{\mathrm{DRO}}=0.35`. |
 
 Important method naming rules:
 
 - `PGD-AT` = single-attack adversarial training using PGD-$\ell_\infty$.
 - `DDN-AT` = single-attack adversarial training using DDN-$\ell_2$.
 - `Multi-AT` = uniform multi-attack adversarial training baseline.
-- `AttackDRO++ (Ours)` = proposed method in formal tables/captions.
-- `AttackDRO++` or "the proposed method" may be used in running prose after first definition.
+- `AttackDRO` = Group DRO over fixed source attack identities.
+- `Cluster-DRO` = intermediate cluster-level grouping baseline; Group DRO over discovered latent clusters.
+- `AttackDRO++` = final proposed method; uniform-anchored Cluster-DRO with gradient fingerprints.
+- Do not use `AttackDRO++` to refer to the cluster-only component.
+- Do not make the `(Ours)` suffix part of the preferred formal method name. The suffix may be used only if a crowded result table requires disambiguation; Chapter 3 and Chapter 5 should prefer `AttackDRO++`.
 
 ## 3. Attack name registry
 
@@ -207,7 +210,7 @@ Metric title rule:
 | Short metric shorthand. | `M(8)` | `Mean(8)` or define `M(8)` explicitly in the same caption/table. | Previously in `report/chapters/chapter6/3_ablation.tex`. | Cleaned in active Chapter 6 ablation captions and tables. |
 | Metric shorthand in heading. | `Worst-Case Behavior: Worst(8) and AutoAttack` | Readable title such as `Robustness Under the Hardest Evaluation Cases`. | Previously in `report/chapters/chapter6/1_main_results.tex`. | Cleaned in active Chapter 6 headings. |
 | Math/internal shorthand in heading. | `Bottom-\(K\) Whitebox Tail Robustness` | `Tail-Class Robustness: Do the Weakest Cells Improve?` | Previously in `report/chapters/chapter6/4_whitebox.tex`. | Cleaned in active Chapter 6 headings. |
-| Variant name used as formal method name. | `AttackDRO++ Anchor35 GradFP`; `AttackDRO++ (Anchor35 GradFP)` | `AttackDRO++ (Ours)` in formal tables/captions; map config separately. | Previously in Chapter 5 and Chapter 6 active prose. | Cleaned in report-facing prose; the code identifier remains only in the Chapter 4 implementation note. |
+| Variant name used as formal method name. | `AttackDRO++ Anchor35 GradFP`; method name with an `(Ours)` suffix | `AttackDRO++` in formal tables/captions; map config separately. | Previously in Chapter 5 and Chapter 6 active prose. | Cleaned in report-facing prose; `(Ours)` is optional and mostly discouraged in Chapter 5. |
 | DRO acronym styling. | `GroupDRO` | `Group DRO` | Previously in `report/chapters/chapter4/3-attackDRO.tex`. | Cleaned in active Chapter 4 prose. |
 | Acronym list synchronized. | Front matter previously omitted recurring acronyms and retained unused `AA`, `IRM`, and `REx`. | Active abbreviation list now includes recurring report acronyms and excludes unused shorthand. | `report/outsider/list-of-abbreviations.tex`; mirrored in `report/outsider/frontmatter.tex`. | Recheck if Chapter 3 or Appendix D is expanded later. |
 | Notation formatting drift. | `(x)`, `(C=10)`, `(d\_h = 512)` | `\(x\)`, `\(C=10\)`, `\(d_h=512\)`. | `report/chapters/chapter5/2-architectures.tex`. | Safe LaTeX formatting cleanup later. |
@@ -230,7 +233,7 @@ Metric title rule:
 ### Needs user confirmation
 
 - Preserve `Multi-AT` as the formal method name; use "uniform multi-attack baseline" only as explanatory prose.
-- Preserve `AttackDRO++ (Ours)` outside configuration/implementation notes.
+- Prefer `AttackDRO++` over adding an `(Ours)` suffix unless disambiguating in crowded tables.
 - Decide whether Chapter 2 should change class-count notation from `K` to `C` to avoid conflict with the Chapter 4 cluster count `K`.
 - Confirm actual tools/platforms before adding Chapter 5.9: Colab, Drive, W&B, PyTorch, torchvision, TorchAttacks, AutoAttack package, adv-lib, scikit-learn, pandas, NumPy, matplotlib, hardware, and environment.
 - If Chapter 2 later defines a different meaning for `TPGD`, update the front matter and this registry; current approved outline maps it to Targeted Projected Gradient Descent.
