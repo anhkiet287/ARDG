@@ -9,6 +9,38 @@ Distributionally robust optimization (DRO) replaces average-case optimization wi
 \]
 The ambiguity set can be defined in many ways, but the shared principle is that the model should not be optimized only for the empirical average when plausible shifts may expose higher-risk subpopulations \cite{hashimoto2018fairness,duchi2021learning}.
 
+This progression from average-risk minimization to group-aware robust optimization provides the conceptual path from PGD-AT and DDN-AT to AttackDRO and Cluster-DRO; Table~\ref{tab:ch2_objective_families} summarizes the roles of these objective families in the report.
+
+\begin{table}[H]
+\centering
+\caption{Comparison of objective families used to motivate the training methods in this report.}
+\label{tab:ch2_objective_families}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Framework & Objective idea & Group assumption & Role in this report \\
+\midrule
+ERM &
+Minimize average loss on clean training examples. &
+No explicit adversarial groups. &
+Reference learning objective and the clean-data baseline concept. \\
+Adversarial training &
+Minimize loss on adversarial examples generated under a threat model. &
+Usually tied to one source attack unless extended. &
+Foundation for PGD-AT, DDN-AT, and Multi-AT. \\
+DRO &
+Optimize for performance under a family of possible distributions. &
+Groups may be implicit through an uncertainty set. &
+Conceptual bridge from average-risk training to robustness under distribution shift. \\
+Group DRO &
+Emphasize groups with higher loss through group-specific risks and weights. &
+Groups are predefined or discovered. &
+Foundation for AttackDRO over attack identities and Cluster-DRO over latent groups. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \subsection{From ERM to Worst-Group Risk}
 
 Group DRO specializes the robust objective to a finite collection of groups. Suppose each example belongs to a group $g\in\mathcal{G}$, and let $R_g(\theta)$ denote the expected loss on group $g$. The worst-group objective is

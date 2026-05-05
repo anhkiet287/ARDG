@@ -18,9 +18,9 @@ on whether the current example is already adversarial.
 
 
 
-Table~\ref{tab:ch5_training_attacks} summarizes the source attacks used during training.
-Both attacks are used to generate mixed adversarial minibatches for Multi-AT,
-AttackDRO, Cluster-DRO, and AttackDRO++.
+Because all multi-attack methods share the same adversarial data generation process,
+Table~\ref{tab:ch5_training_attacks} fixes the source attacks before the report
+compares weighting and grouping strategies.
 
 \begin{table}[H]
 \centering
@@ -49,10 +49,11 @@ used for optimization, but should also generalize to attacks with different pert
 geometries and optimization dynamics.
 
 
-For validation and final testing, we evaluate each checkpoint using the attack suite in
-Table~\ref{tab:ch5_evaluation_attacks}. The main aggregate metric, denoted Mean(8), is
-computed over the eight attacks in the table. AutoAttack is reported separately and is
-therefore not included in Mean(8).
+For validation and final testing, the attack suite in
+Table~\ref{tab:ch5_evaluation_attacks} defines the shared evaluation surface used to
+measure both seen-source robustness and held-out generalization. The main aggregate
+metric, denoted Mean(8), is computed over the eight attacks in the table. AutoAttack is
+reported separately and is therefore not included in Mean(8).
 \begin{table}[H]
 \centering
 \caption{Validation and test attacks used to compute Mean(8), the average robust accuracy over the eight non-AutoAttack evaluation attacks. Source attacks are also used during training; held-out attacks are used only for validation and test evaluation.}

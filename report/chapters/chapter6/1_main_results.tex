@@ -86,11 +86,12 @@ Mean(8), held-out attack mean, and seen-source mean (the metrics that
 average across both families).
 
 \paragraph{Effect-size summary.}
-Table~\ref{tab:ch6_effect_size_summary} reports paired effect magnitudes
-between AttackDRO++ and each baseline. Cohen's $d_z = \Delta / \sigma_\Delta$
-is the standardized paired effect size; conventional thresholds are
-$0.2$ (small), $0.5$ (medium), $0.8$ (large). Statistical significance
-is reported in Table~\ref{tab:ch6_paired_aggregate_all_baselines}.
+Effect sizes complement the paired $p$-values by scaling each AttackDRO++--baseline
+difference by its seed-level variability; Table~\ref{tab:ch6_effect_size_summary}
+provides this magnitude view, while Table~\ref{tab:ch6_paired_aggregate_all_baselines}
+handles the corresponding aggregate significance tests. Cohen's
+$d_z = \Delta / \sigma_\Delta$ is the standardized paired effect size; conventional
+thresholds are $0.2$ (small), $0.5$ (medium), $0.8$ (large).
 
 \begin{table}[H]
 \centering
@@ -130,9 +131,11 @@ asymmetric single-AT comparisons quantify the specialist tradeoff that
 motivates the multi-attack setting in the first place.
 
 \paragraph{Paired aggregate robustness comparisons.}
-Table~\ref{tab:ch6_paired_aggregate_all_baselines} separates the main Multi-AT comparison from the
-single-attack specialist comparisons. AutoAttack is excluded from this table and reported
-separately in Section~\ref{subsec:ch6_hardest_evaluation_cases}.
+The paired aggregate comparison in Table~\ref{tab:ch6_paired_aggregate_all_baselines}
+separates the main Multi-AT baseline from the two single-attack specialists, which makes
+the uniform-baseline refinement and the specialist trade-off readable as different
+questions. AutoAttack is excluded from this table and reported separately in
+Section~\ref{subsec:ch6_hardest_evaluation_cases}.
 
 \begin{table}[H]
 \centering
@@ -295,11 +298,10 @@ DDN-AT & Worst(8)
 }
 \end{table}
 
-Table~\ref{tab:ch6_paired_aggregate_all_baselines} reports the paired $t$-test
-comparison. To align with the statistical protocol described in Chapter~5,
-Table~\ref{tab:ch6_corrected_paired_tests} additionally reports Wilcoxon signed-rank
-tests with Holm correction, bootstrap confidence intervals, paired effect sizes,
-and seed-level win counts.
+The paired $t$-test table establishes the main aggregate deltas, and
+Table~\ref{tab:ch6_corrected_paired_tests} adds the more conservative protocol from
+Chapter~5: Wilcoxon signed-rank tests with Holm correction, bootstrap confidence
+intervals, paired effect sizes, and seed-level win counts.
 The multiple-comparison-corrected tests provide a conservative check on the
 paired $t$-test results. Against Multi-AT, the key question is whether the
 small positive gains on average-case metrics remain supported after Wilcoxon
@@ -339,11 +341,10 @@ compared.
 \subsection{Per-Attack Accuracy: Where Do Methods Diverge?}
 \label{subsec:ch6_per_attack_accuracy}
 
-The aggregate metrics show the overall trend, but they do not reveal which attacks
-drive the improvement. Table~\ref{tab:ch6_per_attack_all_baselines} reports per-attack
-paired comparisons between AttackDRO++ and each baseline. The table is divided into
-three panels: the main comparison against Multi-AT, followed by the two
-single-attack specialist comparisons.
+The aggregate metrics show the overall trend, but they do not reveal whether the gain is
+broad or concentrated in one threat family. Table~\ref{tab:ch6_per_attack_all_baselines}
+breaks the paired comparison down by attack, with the main Multi-AT comparison followed
+by the two single-attack specialist comparisons.
 
 \begin{table}[H]
 \centering
@@ -432,8 +433,8 @@ CW-$\ell_2$     & held-out $\ell_2$
 \end{tabular}%
 }
 \end{table}
-Table~\ref{tab:ch6_per_attack_all_baselines} disaggregates the Mean(8) result
-into the eight evaluation attacks. AttackDRO++ achieves the highest
+The attack-level breakdown in Table~\ref{tab:ch6_per_attack_all_baselines} clarifies
+why the Mean(8) gain does not automatically imply a stronger Worst(8). AttackDRO++ achieves the highest
 per-attack accuracy on four of eight attacks, including all three held-out
 $\ell_2$ attacks where it beats Multi-AT at $p<0.05$. PGD-AT wins on
 the three held-out $\ell_\infty$ attacks and on the seen-source attack
@@ -536,8 +537,9 @@ $\ell_\infty$ depth, but provides the best average cross-attack balance.
 \label{subsec:ch6_training_stability}
 
 In addition to improving the mean of average-case robustness metrics, AttackDRO++ also
-reduces seed-to-seed variation relative to Multi-AT. Table~\ref{tab:ch6_variance_reduction}
-compares the standard deviation of each seed-level metric between the two methods.
+reduces seed-to-seed variation relative to Multi-AT. To check whether the gain is more
+predictable across repeated runs, Table~\ref{tab:ch6_variance_reduction} compares the
+standard deviation of each seed-level metric between the two methods.
 
 \begin{table}[H]
 \centering
@@ -599,4 +601,3 @@ which CIFAR-10 classes and attack-by-class cells drive the remaining failures. T
 next section therefore drills down into class-wise whitebox robustness to test
 whether the observed gains are broad or concentrated in a small part of the
 evaluation grid.
-

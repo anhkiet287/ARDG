@@ -6,8 +6,8 @@ pipeline, and evaluation protocol are kept fixed across methods. This ensures th
 performance differences mainly come from the training objective rather than from
 implementation or evaluation differences.
 
-The primary training configuration is summarized in Table~\ref{tab:ch5_training_config}.
-All main experiments use ResNet-18 on CIFAR-10 with stochastic gradient descent (SGD),
+To make method differences attributable to the training objective, Table~\ref{tab:ch5_training_config}
+fixes the shared training configuration for the main experiments. All main experiments use ResNet-18 on CIFAR-10 with stochastic gradient descent (SGD),
 momentum, weight decay, mixed-precision training, and a multi-step learning-rate
 schedule. The main methods are trained for 50 epochs. During training, each minibatch
 contains a balanced mixture of source attacks. In the two-source setting, approximately
@@ -49,10 +49,10 @@ Checkpoint selection is based on validation robustness rather than test performa
 After training, the selected checkpoint is evaluated once on the test set. This protocol
 is applied consistently to the uniform baseline and all AttackDRO variants.
 
-Table~\ref{tab:ch5_method_training_summary} summarizes the main training methods. All
-multi-attack methods use the same source attacks and mixed-batch adversarial example
-generation; they differ only in how adversarial examples are weighted or grouped during
-optimization.
+The method overview in Table~\ref{tab:ch5_method_training_summary} separates each
+training objective by its grouping or weighting strategy. All multi-attack methods use
+the same source attacks and mixed-batch adversarial example generation; they differ only
+in how adversarial examples are weighted or grouped during optimization.
 
 \begin{table}[H]
 \centering

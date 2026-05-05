@@ -24,8 +24,9 @@ same group, making the Cluster-DRO correction too coarse. If $K$ is too large,
 the minibatch may be split into many small groups, making group-loss estimates
 noisier and the cluster weights less stable.
 
-Table~\ref{tab:ch6_ablation_num_clusters} summarizes the cluster-count ablation.
-Across the available runs, all settings remain close in Mean(8), with differences
+Because $K$ controls the trade-off between coarse grouping and noisy small groups,
+Table~\ref{tab:ch6_ablation_num_clusters} tests whether AttackDRO++ is sensitive to
+cluster granularity. Across the available runs, all settings remain close in Mean(8), with differences
 well below one percentage point. The default $K=4$ setting gives the highest
 Worst(8) among the tested settings and remains competitive in Mean(8), while
 $K=2$ is slightly more coarse and $K=6$ or $K=10$ do not provide a clear gain.
@@ -77,7 +78,7 @@ Very fine grouping
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_num_clusters.png}
-    \caption{Sensitivity of AttackDRO++ to the number of clusters. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks.}
+    \caption{Sensitivity of AttackDRO++ to the number of clusters. Points show Mean(8) robust accuracy with the min-to-max range across available runs; Mean(8) is computed over the eight non-AutoAttack evaluation attacks.}
     \label{fig:ch6_ablation_num_clusters}
 \end{figure}
 
@@ -99,7 +100,8 @@ previous $\lambda_{\mathrm{DRO}}=1.0$ setting is removed because it corresponds
 to an overly aggressive Cluster-DRO setting and is not part of the final
 candidate set.
 
-Table~\ref{tab:ch6_ablation_anchor_strength} compares three anchor strengths.
+Because the anchor controls how far the objective can move away from uniform Multi-AT,
+Table~\ref{tab:ch6_ablation_anchor_strength} tests three practical anchor strengths.
 The differences are again small, but the moderate setting
 $\lambda_{\mathrm{DRO}}=0.35$ gives the strongest Mean(8), Worst(8), and
 AutoAttack values among the tested settings. The lower value
@@ -147,7 +149,7 @@ $0.50$
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_anchor_strength.png}
-    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
+    \caption{Sensitivity of AttackDRO++ to the anchor strength $\lambda_{\mathrm{DRO}}$. Points show Mean(8) robust accuracy with the min-to-max range across available runs; Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The previous $\lambda_{\mathrm{DRO}}=1.0$ setting is excluded from the final ablation panel.}
     \label{fig:ch6_ablation_anchor_strength}
 \end{figure}
 
@@ -168,6 +170,7 @@ changes in the representation, but it also changes the group structure more
 frequently. Refreshing less often may give a more stable grouping signal, but it
 may lag behind the evolving model.
 
+Since the refresh interval trades adaptation speed against group stability,
 Table~\ref{tab:ch6_cluster_refresh_schedule_ablation} compares refreshing every
 one epoch with refreshing every two epochs. The two schedules produce nearly
 identical Mean(8), Worst(8), and family-level behavior. The default two-epoch
@@ -221,7 +224,7 @@ Refresh interval
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.82\linewidth]{figures/ablations/ablation_recluster_frequency.png}
-    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. The figure reports Mean(8) robust accuracy with the min-to-max range across available runs. Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
+    \caption{Sensitivity of AttackDRO++ to the cluster-refresh interval. Points show Mean(8) robust accuracy with the min-to-max range across available runs; Mean(8) is computed over the eight non-AutoAttack evaluation attacks. The two refresh schedules produce similar results, so the default two-epoch schedule is retained as a practical stability choice.}
     \label{fig:ch6_ablation_recluster_frequency}
 \end{figure}
 

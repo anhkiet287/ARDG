@@ -97,4 +97,26 @@ In the graybox setting, the adversary has partial information. A common case is 
 
 In the blackbox setting, the adversary does not access model parameters or gradients and instead relies on queries. Score-based attacks use probabilities or logits, while decision-based attacks use only predicted labels. Blackbox attacks are useful for detecting gradient masking, where a defense appears strong because gradients are uninformative rather than because the classifier has learned genuinely robust decision boundaries \cite{athalye2018obfuscated,andriushchenko2019square}. The main experiments in this report focus on the specified whitebox evaluation suite and separate stress checks, while the blackbox setting remains part of the broader threat-model vocabulary.
 
+Because the later protocols combine direct whitebox attacks, surrogate transfer, and standardized stress checks, Table~\ref{tab:ch2_threat_models} fixes the access assumptions before the individual attack algorithms are introduced.
+
+\begin{table}[H]
+\centering
+\caption{Threat-model access assumptions used in this report.}
+\label{tab:ch2_threat_models}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.82in}>{\centering\arraybackslash}p{0.78in}>{\centering\arraybackslash}p{0.78in}>{\centering\arraybackslash}p{1.02in}>{\centering\arraybackslash}p{0.55in}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Threat model & Parameters & Gradients & Scores/logits & Used? & Role in this report \\
+\midrule
+Whitebox & Yes & Yes & Yes & Yes &
+Main setting for training attacks and direct robustness evaluation. \\
+Graybox & Surrogate only & Surrogate only & Protocol-dependent & Yes &
+Transfer setting where adversarial examples are generated on a surrogate and tested on a target model. \\
+Blackbox & No & No & Query only & Limited &
+Appears through score-based components of standardized evaluation, especially AutoAttack. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 These definitions prepare the move from individual attacks to training objectives. Once attacks are viewed as generators of distinct adversarial risks, multi-attack and group-aware training can be framed as choices about which risks are optimized, how they are weighted, and how hidden failure modes are discovered.

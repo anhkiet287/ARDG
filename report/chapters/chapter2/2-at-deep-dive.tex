@@ -141,6 +141,40 @@ This expression captures the ensemble logic without deriving the internals of AP
 
 AutoAttack is stronger and more standardized than a single configured attack, but it is computationally more expensive. This report therefore evaluates AutoAttack-$\ell_\infty$ separately from Mean(8). AutoAttack-512 is used only as a sanity or stress check, while the primary ranking metric remains the eight-attack evaluation suite defined in Chapter~\ref{chap:experimental_setup}.
 
+The attack suite separates source attacks, held-out evaluation attacks, and the separate AutoAttack stress test; Table~\ref{tab:ch2_attack_summary} records those roles without repeating the exact budgets and step counts deferred to Chapter~\ref{chap:experimental_setup}.
+
+\begin{table}[H]
+\centering
+\caption{Attack algorithms used in the report. Exact budgets and step counts are specified in Chapter~\ref{chap:experimental_setup}.}
+\label{tab:ch2_attack_summary}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}lcccl>{\raggedright\arraybackslash}X@{}}
+\toprule
+Attack & Norm & Iterative & Training source & Evaluation & Role \\
+\midrule
+FGSM-RS & $\ell_\infty$ & No & No & Yes &
+Fast random-start one-step check for local gradient sensitivity. \\
+PGD-$\ell_\infty$ & $\ell_\infty$ & Yes & Yes & Yes &
+Main $\ell_\infty$ source attack and standard whitebox evaluation attack. \\
+TPGD & $\ell_\infty$ & Yes & No & Yes &
+TRADES-style/KL-PGD held-out attack with a different loss geometry. \\
+MI-FGSM & $\ell_\infty$ & Yes & No & Yes &
+Momentum-based held-out attack, also useful for transfer behavior. \\
+PGD-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Held-out projected-gradient attack under the $\ell_2$ threat model. \\
+DDN-$\ell_2$ & $\ell_2$ & Yes & Yes & Yes &
+Main $\ell_2$ source attack and evaluation attack. \\
+DeepFool-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Boundary-oriented held-out $\ell_2$ attack. \\
+CW-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Margin-based optimization attack for held-out $\ell_2$ evaluation. \\
+AutoAttack-$\ell_\infty$ & $\ell_\infty$ & Yes & No & Separate &
+Standardized stress test reported outside Mean(8). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \section{Adversarial Training as Min-Max Optimization}
 
 Adversarial training replaces ERM with a min-max objective in which an inner adversary generates difficult perturbed examples and an outer optimizer updates the model to classify them correctly \cite{madry2019towards}. A standard formulation is
