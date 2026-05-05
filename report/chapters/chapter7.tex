@@ -31,18 +31,18 @@ additional emphasis.  The resulting AttackDRO++ configuration is therefore best
 understood as a refinement of Multi-AT rather than as a separate replacement for
 multi-attack training.
 
-The contribution of this work should be read at two connected levels:
-methodologically, AttackDRO++ introduces a group-aware multi-attack training
+The report makes both a methodological and empirical contribution.
+Methodologically, AttackDRO++ introduces a group-aware multi-attack training
 mechanism built from latent cluster discovery, gradient fingerprints, and a
-uniform anchor; empirically, the report tests whether that mechanism improves
-robustness balance under the fixed CIFAR-10 and ResNet-18 protocol.  The
+uniform anchor.  Empirically, the report tests whether that mechanism improves
+robustness balance under a fixed CIFAR-10 and ResNet-18 protocol.  The
 empirical claim is therefore narrower than the method itself: the evidence
 supports an improvement in robustness balance in the evaluated CIFAR-10 and
 ResNet-18 setting, not a general claim of robustness across datasets,
 architectures, or attack configurations.  The report evaluates this claim
 through aggregate whitebox robustness, per-attack breakdowns, per-class and
 attack-by-class drilldowns, graybox transfer, statistical comparisons, and
-hyperparameter sensitivity studies.  It does not aim to establish universal
+hyperparameter sensitivity studies.  It does not aim to establish unrestricted
 robustness or broad architecture generalization; instead, it tests whether
 group-aware multi-attack training can improve robustness balance under a fixed
 and reproducible experimental protocol.
@@ -210,6 +210,6 @@ conditional: broader datasets, stronger adaptive attacks, additional
 architectures, and larger transfer settings are all needed before making
 general claims.
 
-The main conclusion is therefore not that AttackDRO++ establishes universal
+The main conclusion is therefore not that AttackDRO++ establishes unrestricted
 robustness, but that adversarial robustness is better evaluated and optimized
 as a multi-domain problem than as a single-attack score.
