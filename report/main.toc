@@ -37,7 +37,6 @@
 \contentsline {subsection}{\numberline {2.7.1}Paired Tests and Bootstrap Confidence Intervals}{37}{subsection.2.7.1}%
 \contentsline {subsection}{\numberline {2.7.2}Effect Size and Multiple-Comparison Correction}{37}{subsection.2.7.2}%
 \contentsline {paragraph}{Repeated random-seed evaluation.}{38}{paragraph*.15}%
-\contentsline {section}{\numberline {2.8}Chapter Summary}{38}{section.2.8}%
 \contentsline {chapter}{\numberline {3}Related Work}{39}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Multi-Attack Adversarial Training}{39}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Group DRO Applied to Robustness}{41}{section.3.2}%

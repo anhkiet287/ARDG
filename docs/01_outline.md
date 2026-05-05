@@ -137,7 +137,7 @@ If only one subsection is needed, fold it into the parent section.
 
 | Chapter / Part | Owner | Notes |
 |---|---|---|
-| Chapter 1 — Introduction | Leader (Kiệt) | Compact motivation and Stage 1 bridge. |
+| Chapter 1 — Introduction | Leader (Kiệt) | Compact final-report motivation and method bridge. |
 | Chapter 2 — Background | ĐA | Use standardized attack template. |
 | Chapter 3 — Related Work | Thành | Focus on positioning and gap. |
 | Chapter 4 — Proposed Methodology | Leader (Kiệt) | Main method chapter. |
@@ -161,32 +161,30 @@ If only one subsection is needed, fold it into the parent section.
 ## Sections
 
 ```text
-1.1 Adversarial Robustness and the Cross-Attack Gap
-1.2 Stage 1 Findings and Their Limitations
-1.3 Problem Statement
-1.4 Research Questions and Hypotheses
-1.5 Contributions of This Work
-1.6 Scope and Limitations
-1.7 Report Organization
+1.1 Motivation
+1.2 Problem Statement
+1.3 Research Questions and Objectives
+1.4 Contributions
+1.5 Report Organization
 ```
 
 | # | Title | Purpose | Target |
 |---|---|---|---:|
-| 1.1 | Adversarial Robustness and the Cross-Attack Gap | Motivate adversarial robustness and explain why robustness against one attack is not enough. | 500–700 w |
-| 1.2 | Stage 1 Findings and Their Limitations | Explain what Stage 1 diagnosed and why Stage 2 needs an intervention, not only evaluation. | 400–550 w |
-| 1.3 | Problem Statement | Formalize cross-attack robustness under multi-attack adversarial training. | 250–350 w |
-| 1.4 | Research Questions and Hypotheses | State RQs and hypotheses tied to Chapters 5–6. | 300–450 w |
-| 1.5 | Contributions of This Work | List method, protocol, and empirical contributions. | 250–350 w |
-| 1.6 | Scope and Limitations | Bound dataset, architecture, attacks, and claims. | 200–300 w |
-| 1.7 | Report Organization | Explain Chapters 2–7 and why the structure follows the story. | 250–350 w |
+| 1.1 | Motivation | Motivate adversarial robustness, the cross-attack gap, attacks-as-domains, latent groups, gradient fingerprints, and anchoring. | 700–900 w |
+| 1.2 | Problem Statement | Formalize multi-attack robust training under shared source attacks and threat-model-aware evaluation. | 400–550 w |
+| 1.3 | Research Questions and Objectives | Explicitly pose RQ1-RQ4 for Chapter 7 to answer, then state the completed training, comparison, evaluation, and conservative interpretation objectives. | 350–500 w |
+| 1.4 | Contributions | List method, protocol, empirical, ablation, and diagnostic contributions. | 350–500 w |
+| 1.5 | Report Organization | Explain Chapters 2–7 and the appendix. | 250–350 w |
 
-### 1.1 Adversarial Robustness and the Cross-Attack Gap
+### 1.1 Motivation
 
 Include:
 
 - Why adversarial robustness matters.
-- Models can be robust to one attack but weak against another.
-- Cross-attack robustness as the central motivation.
+- Standard adversarial training can specialize to the chosen source attack.
+- Multi-AT is a stronger baseline, but fixed attack identities can be coarse.
+- Group DRO motivates adaptive emphasis, while cluster discovery and gradient fingerprints provide richer group definitions.
+- AttackDRO++ is the final method: uniform-anchored Cluster-DRO with gradient fingerprints.
 - Keep practical examples brief and avoid overclaiming from CIFAR-10 experiments.
 
 Assets:
@@ -195,73 +193,49 @@ Assets:
 |---|---|---|
 | Motivating attack illustration | optional | Use only if available and clean. |
 
-### 1.2 Stage 1 Findings and Their Limitations
-
-Include:
-
-- Stage 1 showed attack-dependent robustness.
-- Stage 1 mainly diagnosed the problem.
-- Stage 2 proposes a method to reduce the gap.
-
-Assets:
-
-| Asset | Status | Notes |
-|---|---|---|
-| Stage 1 recap table | needs check | Include only if concise. |
-
-### 1.3 Problem Statement
+### 1.2 Problem Statement
 
 Include:
 
 - Classification setting.
-- Attack-induced domains.
-- Domain-specific risk.
-- Cross-attack robustness gap.
-- Goal under computational constraints.
+- Shared source attacks for Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++.
+- Seen and held-out attack evaluation.
+- Fixed attack identities as potentially coarse groups.
+- Need for latent group discovery, optimization-aware grouping, and stable weighting.
 
 Equation labels:
 
 - Label only if referenced later.
 - Candidate labels should be registered in `03_label_registry.md`.
 
-### 1.4 Research Questions and Hypotheses
+### 1.3 Research Questions and Objectives
 
-Suggested RQs:
+Must include:
 
-| RQ | Question | Evaluated in |
-|---|---|---|
-| RQ1 | How large is the cross-attack robustness gap under single-attack training? | Ch. 6.1 |
-| RQ2 | Does multi-attack training improve robustness across seen and held-out attacks? | Ch. 6.1 |
-| RQ3 | Can group-aware training improve robustness and stability beyond uniform multi-attack training? | Ch. 6.1–6.3 |
-| RQ4 | Which design choices are responsible for the final behavior? | Ch. 6.4 |
-
-### 1.5 Contributions of This Work
+- RQ1-RQ4 explicitly, because Chapter 7 contains an answers-to-research-questions section that refers back to Chapter 1.
 
 Include:
 
-- Attack-as-domains framing for Stage 2.
-- Multi-AT baseline.
-- AttackDRO and AttackDRO++.
-- Gradient fingerprint clustering.
-- Anchor stabilization.
-- Multi-seed evaluation and graybox analysis.
+- Controlled multi-attack training and evaluation pipeline.
+- Comparison of single-source baselines, Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++.
+- Per-attack accuracy, Mean(8), Worst(8), held-out summaries, AutoAttack, graybox transfer, ablations, and supplementary architecture checks.
+- Conservative multi-seed interpretation through paired comparisons.
 
-### 1.6 Scope and Limitations
+### 1.4 Contributions
 
 Include:
 
-- CIFAR-10.
-- ResNet-18.
-- PGD-$\ell_\infty$ and DDN-$\ell_2$ as seen attacks.
-- AutoAttack-$\ell_\infty$ evaluated across 5 seeds; it is not part of the 20-seed paired aggregate panel.
-- No certified robustness.
-- No broad architecture/dataset claim. WRN-28-10 experiments exist for Multi-AT and AttackDRO++, but they are treated as supplementary architecture evidence because AttackDRO++ does not outperform Multi-AT in that single observed WRN seed, even though both methods improve over the ResNet-18 setting.
+- Cross-attack robustness framing and metric protocol.
+- Controlled shared-source comparison.
+- AttackDRO++ method components: latent clusters, augmented features, gradient fingerprints, and uniform anchor.
+- Multi-seed CIFAR-10 / ResNet-18 evaluation.
+- Ablation, diagnostic, AutoAttack, graybox, and supplementary WRN checks.
 
-### 1.7 Report Organization
+### 1.5 Report Organization
 
 Transition out:
 
-- Report organization itself bridges to Chapter 2.
+- Chapter 2 background, Chapter 3 related work and gap, Chapter 4 method, Chapter 5 protocol, Chapter 6 results, Chapter 7 conclusion and limitations, appendix algorithms and supplementary material.
 - Do not add a separate summary.
 
 ---

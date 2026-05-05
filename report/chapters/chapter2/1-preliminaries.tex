@@ -4,41 +4,41 @@ This chapter fixes the technical vocabulary used by the later methodology and ev
 
 We consider supervised classification with input space $\mathcal{X}\subseteq\mathbb{R}^{d}$ and label space $\mathcal{Y}=\{1,\ldots,C\}$. A training set is denoted by
 \[
-\mathcal{D}=\{(x_i,y_i)\}_{i=1}^{n},
+\mathcal{D}=\{(\mathbf{x}_i,y_i)\}_{i=1}^{n},
 \]
 where each pair is sampled from an underlying data distribution $P_{XY}$. A classifier with parameters $\theta$ maps an input to logits
 \[
 f_\theta:\mathcal{X}\rightarrow\mathbb{R}^{C},
 \]
-and predicts $\hat{y}=\arg\max_{c} f_\theta(x)_c$. The softmax transformation converts logits into class probabilities,
+and predicts $\hat{y}=\arg\max_{c} f_\theta(\mathbf{x})_c$. The softmax transformation converts logits into class probabilities,
 \[
-p_\theta(y=c\mid x)=
-\frac{\exp(f_\theta(x)_c)}
-{\sum_{j=1}^{C}\exp(f_\theta(x)_j)}.
+p_\theta(y=c\mid \mathbf{x})=
+\frac{\exp(f_\theta(\mathbf{x})_c)}
+{\sum_{j=1}^{C}\exp(f_\theta(\mathbf{x})_j)}.
 \]
 
 \subsection{Deep Neural Networks and Supervised Classification}
 
 Deep neural networks are used here as parameterized classifiers rather than as objects of architectural study. Their relevance to this report is that the same differentiable structure used for gradient-based learning also exposes gradients with respect to the input. These input gradients are the basic computational object behind many first-order adversarial attacks, including FGSM and PGD \cite{goodfellow2015explaining,madry2019towards}.
 
-For a labeled example $(x,y)$, the standard classification loss is cross-entropy,
+For a labeled example $(\mathbf{x},y)$, the standard classification loss is cross-entropy,
 \[
-\ell(f_\theta(x),y)=-\log p_\theta(y\mid x).
+\ell(f_\theta(\mathbf{x}),y)=-\log p_\theta(y\mid \mathbf{x}).
 \]
 Empirical risk minimization (ERM) fits the model by minimizing average training loss:
 \[
 \min_{\theta}
-\frac{1}{n}\sum_{i=1}^{n}\ell(f_\theta(x_i),y_i).
+\frac{1}{n}\sum_{i=1}^{n}\ell(f_\theta(\mathbf{x}_i),y_i).
 \]
 ERM is the clean-data reference point for the rest of the report. It optimizes performance on sampled training examples, but it does not require the prediction to remain stable inside a local neighborhood of each input. Adversarial robustness adds precisely this local stability requirement.
 
 \subsection{Loss Functions and Gradient-Based Optimization}
 
-In gradient-based training, the model parameters are updated using derivatives of the loss with respect to $\theta$. In gradient-based attacks, the adversary instead uses derivatives with respect to $x$. A small perturbation $\delta$ can therefore be selected to increase the loss while remaining visually or semantically close to the original input:
+In gradient-based training, the model parameters are updated using derivatives of the loss with respect to $\theta$. In gradient-based attacks, the adversary instead uses derivatives with respect to $\mathbf{x}$. A small perturbation $\delta$ can therefore be selected to increase the loss while remaining visually or semantically close to the original input:
 \[
-\arg\max_c f_\theta(x)_c
+\arg\max_c f_\theta(\mathbf{x})_c
 \neq
-\arg\max_c f_\theta(x+\delta)_c,
+\arg\max_c f_\theta(\mathbf{x}+\delta)_c,
 \quad
 \|\delta\|_p\leq \varepsilon .
 \]

@@ -185,7 +185,7 @@ Status values:
 
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
-| `app:pseudocode` | `report/appendices.tex` | Appendix A: Illustrative Pseudo-code and Flowcharts | active, unused | Prefix ok. |
+| `app:algorithms` | `report/appendices/algorithms.tex` | Appendix A: Algorithms and Pseudocode | active, referenced | Referenced from Chapter 2 attack algorithms section. |
 | `app:logs` | `report/appendices.tex` | Appendix B: Experimental Logs and Configurations | active, referenced | Referenced from Chapter 5.9 after moving the W&B tracking figure. |
 | `app:extras` | `report/appendices.tex` | Appendix C: Additional Tables and Visualizations | active, referenced | Referenced from Chapter 6.4 supplementary architecture note. |
 | `app:compute` | `report/appendices.tex` | Appendix D: Compute Resources and Environment Notes | active, unused | Prefix ok. |
@@ -223,6 +223,7 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | `chap:experimental_setup` | `\ref` | `report/chapters/chapter4/summary.tex`; `report/chapters/chapter6/3_ablation.tex`; `report/chapters/chapter7.tex` | yes | Setup chapter references. |
 | `chap:methodology` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Method chapter reference. |
 | `app:logs` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex` | yes | Appendix B tracking export reference. |
+| `app:algorithms` | `\ref` | `report/chapters/chapter2/2-at-deep-dive.tex` | yes | Appendix A attack and training pseudocode reference. |
 | `app:extras` | `\ref` | `report/chapters/chapter6/3_ablation.tex`; `report/chapters/chapter7.tex` | yes | Appendix C supplementary architecture reference. |
 | `subsec:ch6_aggregate_comparison` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer table. |
 | `subsec:ch6_per_attack_accuracy` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex`; `report/chapters/chapter7.tex` | yes | Per-attack whitebox subsection reference. |
