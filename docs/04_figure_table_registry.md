@@ -97,7 +97,7 @@ figures and are not included in the active figure inventory.
 | `tab:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | active, final, referenced | Number-of-clusters ablation. |
 | `tab:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | active, final, referenced | Anchor-strength ablation. |
 | `tab:ch6_cluster_refresh_schedule_ablation` | `report/chapters/chapter6/3_ablation.tex` | active, final, referenced | Cluster-refresh schedule ablation. |
-| `tab:ch7_rq_answers` | `report/chapters/chapter7.tex` | active | Summary answers to research questions. |
+| `tab:ch7_rq_answers` | `report/chapters/chapter7.tex` | removed, deprecated | Removed from active Chapter 7 tables; Section 7.2 now uses prose research-question answers. |
 | `tab:app_wrn2810_architecture_check` | `report/appendices.tex` | active, appendix, supplementary | Appendix C WRN-28-10 single-run architecture check. |
 
 ## 4. Stale label cleanup status

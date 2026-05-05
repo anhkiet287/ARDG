@@ -32,7 +32,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces Representative W\&B dashboard exports for experiment tracking. Panels (a)\textendash (e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell _\infty $ and DDN-$\ell _2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}}{132}{figure.caption.89}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Representative W\&B dashboard exports for experiment tracking. Panels (a)\textendash (e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell _\infty $ and DDN-$\ell _2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}}{132}{figure.caption.92}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {C.1}{\ignorespaces Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell _\infty $ is reported separately.}}{134}{figure.caption.91}%
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell _\infty $ is reported separately.}}{134}{figure.caption.94}%
 \addvspace {10\p@ }

@@ -691,7 +691,7 @@ Required assets:
 
 | Asset | Status | Notes |
 |---|---|---|
-| RQ answer table (`tab:ch7_rq_answers`) | active | Maps RQ, answer, evidence. |
+| RQ answer table (`tab:ch7_rq_answers`) | removed, deprecated | Section 7.2 now answers the research questions in prose paragraphs. |
 
 ---
 
