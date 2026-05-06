@@ -3,7 +3,18 @@
 %=========================
 \chapter{Background}
 \label{chap:background}
-
+This chapter introduces the background needed to understand the proposed cross-attack
+adversarial training framework. It first reviews the supervised classification setting,
+adversarial examples, threat models, and adversarial training. These concepts establish
+why robustness is usually defined relative to a specific perturbation set and attack
+algorithm. The chapter then explains why robustness obtained from a single attack may
+not transfer uniformly to other attacks, motivating the multi-attack setting used in this
+report. This transition is important because the proposed method does not treat attacks
+only as evaluation tools, but also as sources of training-domain variation that can expose
+different weaknesses of the model. Finally, it introduces distributionally robust
+optimization, Group DRO, attacks-as-domains, latent group discovery, and the statistical
+tools used to evaluate multi-seed robustness results. Together, these foundations prepare
+the reader for the AttackDRO++ methodology developed in Chapter~\ref{chap:methodology}.
 \input{chapters/chapter2/1-preliminaries}
 \input{chapters/chapter2/2-at-deep-dive}
 \input{chapters/chapter2/3-dro}

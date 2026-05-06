@@ -20,13 +20,7 @@ Table~\ref{tab:ch6_graybox_whitebox_sanity} compares this
 random-seed checkpoint panel against the full whitebox panel to verify that the
 main method ordering is preserved.
 
-The diagonal entries of the graybox table correspond to the case where
-the surrogate and target are the same checkpoint. We use these entries as
-a whitebox sanity check. They need not match the main whitebox evaluation
-exactly, because the graybox cache uses a balanced
-125-image-per-class-per-attack split instead of the full test set for
-each attack. However, they should preserve the same method ordering and
-remain close in absolute value.
+
 
 \begin{table}[H]
 \centering
@@ -57,6 +51,13 @@ AttackDRO++
 \bottomrule
 \end{tabular}
 \end{table}
+The diagonal entries of the graybox table correspond to the case where
+the surrogate and target are the same checkpoint. We use these entries as
+a whitebox sanity check. They need not match the main whitebox evaluation
+exactly, because the graybox cache uses a balanced
+125-image-per-class-per-attack split instead of the full test set for
+each attack. However, they should preserve the same method ordering and
+remain close in absolute value.
 
 The Mean(8) ordering is identical on both panels (AttackDRO++ $>$
 Multi-AT $>$ PGD-AT $>$ DDN-AT), and absolute values agree to within
@@ -104,11 +105,7 @@ over Multi-AT therefore appears in the same direction when adversarial examples
 are crafted on separately trained surrogates, but the transfer setting still
 needs the paired-dependence caution below.
 
-The aggregate transfer matrix hides important attack-family structure.
-Figures~\ref{fig:ch6_graybox_transfer_linf} and~\ref{fig:ch6_graybox_transfer_l2}
-therefore disaggregate the transfer behavior into the four
-\(\ell_\infty\)-oriented attacks and the four \(\ell_2\)-oriented attacks.
-This grouping makes the specialist behavior more explicit. 
+
 
 \begin{figure}[H]
 \centering
@@ -208,10 +205,10 @@ the configuration ``AttackDRO++ as target, Multi-AT as surrogate'' against
 its mirror ``Multi-AT as target, AttackDRO++ as surrogate'' and compute
 the per-triple difference. This yields \(n = 5 \times 5 \times 8 = 200\)
 paired observations and makes the comparison invariant to which method is chosen
-as the surrogate. Because these paired observations share target checkpoints,
-surrogate checkpoints, random seeds, and attack families, the per-cell tests
-should be interpreted as evidence of a consistent transfer trend rather than as
-standalone evidence from mutually independent training-run panels.
+as the surrogate. Because the paired observations reuse target checkpoints, surrogate checkpoints,
+random seeds, and attack families, the resulting tests should be read as evidence
+of a consistent transfer pattern rather than as comparisons over fully independent
+training.
 \begin{table}[H]
 \centering
 \caption[Paired graybox comparisons]{Paired graybox comparisons. Each row uses $n=200$ paired
@@ -346,7 +343,7 @@ attacks (PGD-$\ell_\infty$ and DDN-$\ell_2$) contribute small,
 non-significant gains, consistent with the fact that both methods
 already train against these attacks. The graybox Mean(8) gain is
 therefore distributed across attack families rather than concentrated on
-one family. Because the per-attack observations reuse the same target and
+one family. Due to the same target and
 surrogate checkpoints across attack families, these \(p\)-values should be read
 as consistency checks over the graybox panel rather than as standalone
 training-run proof.
@@ -436,12 +433,6 @@ $+0.37$~pp larger than that of Multi-AT, which is consistent with a
 balanced cross-attack defense rather than a transfer-favored
 specialist.
 
-The per-(class \(\times\) attack) graybox-minus-whitebox gap heatmaps in
-Figures~\ref{fig:ch6_graybox_gap_ddnat} through~\ref{fig:ch6_graybox_gap_attackdropp}
-make the specialist-inflation effect concrete. Cell values are computed
-as graybox accuracy minus whitebox accuracy in percentage points, so positive values indicate
-that transferred attacks are weaker than direct whitebox attacks on the
-same target.
 
 \begin{figure}[H]
 \centering
@@ -471,7 +462,10 @@ same target.
 \label{fig:ch6_graybox_gap_attackdropp}
 \end{figure}
 
-DDN-AT exhibits broad positive gaps on the \(\ell_\infty\)-oriented
+
+The per-(class \(\times\) attack) graybox-minus-whitebox gap heatmaps in
+Figures~\ref{fig:ch6_graybox_gap_ddnat} through~\ref{fig:ch6_graybox_gap_attackdropp}
+make the specialist-inflation effect concrete. DDN-AT exhibits broad positive gaps on the \(\ell_\infty\)-oriented
 attack columns, indicating that its high graybox score is partly driven
 by weak transfer from \(\ell_\infty\) surrogates rather than uniformly
 strong robustness. PGD-AT, Multi-AT, and AttackDRO++ show smaller and
@@ -664,8 +658,7 @@ roughly four times larger on the bottom-10 cells ($+0.799$~pp) than on
 whitebox Mean(8), consistent with the design intent that AttackDRO++ should
 help difficult cells rather than only raising the average. This decomposition
 does not identify which internal component drives the pattern; it only separates
-the observed Multi-AT and AttackDRO++ increments. The multi-attack column tells
-a complementary specialist story. 
+the observed Multi-AT and AttackDRO++ increments.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/method_decomposition_three_panel_science.png}

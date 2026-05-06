@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  6 MAY 2026 18:22
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  6 MAY 2026 19:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1853,39 +1853,42 @@ Chapter 2.
 
 
 
-] [19] [20] [21])
-(chapters/chapter2/2-at-deep-dive.tex [22]
+] [19] [20] [21]
+File: figures/w-b-g-box.png Graphic file (type bmp)
+<figures/w-b-g-box.png>
+)
+(chapters/chapter2/2-at-deep-dive.tex [22] [23]
 File: figures/adv_viz/adv_fgsm-rs_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_fgsm-rs_3eps.pdf>
- [23]
+ [24]
 File: figures/adv_viz/adv_pgd-ce_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_pgd-ce_3eps.pdf>
- [24]
+ [25]
 File: figures/adv_viz/adv_pgd-l2_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_pgd-l2_3eps.pdf>
- [25]
+ [26]
 File: figures/adv_viz/adv_cw-l2_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_cw-l2_3eps.pdf>
- [26]
+ [27]
 File: figures/adv_viz/adv_deepfool-l2_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_deepfool-l2_3eps.pdf>
- [27]
+ [28]
 File: figures/adv_viz/adv_ddn-l2_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_ddn-l2_3eps.pdf>
- [28]
-File: figures/adv_viz/adv_mifgsm_3eps.pdf Graphic file (type pdf)
-<use figures/adv_viz/adv_mifgsm_3eps.pdf>
 
 [29]
+File: figures/adv_viz/adv_mifgsm_3eps.pdf Graphic file (type pdf)
+<use figures/adv_viz/adv_mifgsm_3eps.pdf>
+ [30]
 File: figures/adv_viz/adv_tpgd_3eps.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_tpgd_3eps.pdf>
- [30] [31] [32]) (chapters/chapter2/3-dro.tex [33] [34]
+ [31] [32]) (chapters/chapter2/3-dro.tex [33] [34]
 Underfull \hbox (badness 1466) in paragraph at lines 76--77
 [] []\TU/TimesNewRoman(0)/b/n/13 Regularization in overparameterized models.[] 
 \TU/TimesNewRoman(0)/m/n/13 In overparameterized neural net-
  []
 
-) (chapters/chapter2/4-dg-via-clustering.tex [35] [36])
+[35]) (chapters/chapter2/4-dg-via-clustering.tex [36])
 (chapters/chapter2/5-foundations.tex [37] [38])
 (chapters/chapter2/6-summary.tex)) [39]
 \openout2 = `chapters/chapter3.aux'.
@@ -1912,40 +1915,33 @@ Chapter 4.
 ] [47])
 (chapters/chapter4/2-multi_attack.tex [48]) (chapters/chapter4/3-attackDRO.tex
 [49]) (chapters/chapter4/4-attackDRO++.tex [50] [51])
-(chapters/chapter4/5-clustering_feature.tex [52] [53] [54]
-Overfull \vbox (53.5589pt too high) has occurred while \output is active []
-
-
-[55]) (chapters/chapter4/6-anchor_objective.tex [56])
-(chapters/chapter4/7-complete_pipeline.tex [57]
-LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 213
+(chapters/chapter4/5-clustering_feature.tex [52] [53])
+(chapters/chapter4/6-anchor_objective.tex [54] [55] [56])
+(chapters/chapter4/7-complete_pipeline.tex
+LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 200
 .
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.66765pt on input line 213.
+(Font)              scaled to size 8.66765pt on input line 200.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.06732pt on input line 213.
+(Font)              scaled to size 6.06732pt on input line 200.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 4.33382pt on input line 213.
+(Font)              scaled to size 4.33382pt on input line 200.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.6658pt on input line 213.
+(Font)              scaled to size 8.6658pt on input line 200.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.06602pt on input line 213.
+(Font)              scaled to size 6.06602pt on input line 200.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.33289pt on input line 213.
-
-
-LaTeX Warning: Float too large for page by 15.58505pt on input line 238.
-
+(Font)              scaled to size 4.33289pt on input line 200.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `lmtt' (encoding: TU).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-[58] [59] [60] [61]
-Underfull \hbox (badness 10000) in paragraph at lines 363--363
+ [57] [58] [59]
+Underfull \hbox (badness 10000) in paragraph at lines 329--329
 []|\TU/TimesNewRoman(0)/m/n/11.86258 Interpolates between uniform ERM and
  []
 
-) (chapters/chapter4/summary.tex)) [62]
+) (chapters/chapter4/summary.tex [60])) [61]
 \openout2 = `chapters/chapter5.aux'.
 
  (chapters/chapter5.tex
@@ -1953,85 +1949,97 @@ Chapter 5.
 (chapters/chapter5/1-dataset_preprocessing.tex
 File: figures/cifar10.png Graphic file (type bmp)
 <figures/cifar10.png>
- [63
+ [62
 
 
 
 
 ])
-(chapters/chapter5/2-architectures.tex [64])
-(chapters/chapter5/3-attack_suite.tex [65] [66] [67])
-(chapters/chapter5/4-configuration.tex [68]) (chapters/chapter5/5-choices.tex
-[69]) (chapters/chapter5/6-protocol.tex [70] [71] [72])
-(chapters/chapter5/7-eval_metrics.tex [73])
-(chapters/chapter5/8-graybox_transfer.tex [74] [75])
-(chapters/chapter5/9-tools_tracking.tex [76] [77] [78])) [79]
+(chapters/chapter5/2-architectures.tex [63])
+(chapters/chapter5/3-attack_suite.tex [64] [65] [66])
+(chapters/chapter5/4-configuration.tex [67]) (chapters/chapter5/5-choices.tex
+[68]) (chapters/chapter5/6-protocol.tex [69] [70] [71])
+(chapters/chapter5/7-eval_metrics.tex [72])
+(chapters/chapter5/8-graybox_transfer.tex [73] [74])
+(chapters/chapter5/9-tools_tracking.tex [75] [76] [77])) [78]
 \openout2 = `chapters/chapter6.aux'.
 
 
 (chapters/chapter6.tex
 Chapter 6.
-(chapters/chapter6/1_main_results.tex [80
+
+Underfull \hbox (badness 2096) in paragraph at lines 11--19
+[]\TU/TimesNewRoman(0)/m/n/13 The main aggregate metric, Mean(8), averages robu
+st accuracy over eight non-
+ []
+
+
+Underfull \hbox (badness 1888) in paragraph at lines 11--19
+\TU/TimesNewRoman(0)/m/n/13 AutoAttack attacks: FGSM-RS, PGD-$[][]$, TPGD, MI-F
+GSM, PGD-$[][]$, DDN-$[][]$,
+ []
+
+(chapters/chapter6/1_main_results.tex [79
 
 
 
 
-] [81] [82] [83] [84]
-Underfull \hbox (badness 1314) in paragraph at lines 337--348
+] [80] [81] [82] [83]
+Underfull \hbox (badness 1314) in paragraph at lines 332--343
 \TU/TimesNewRoman(0)/m/n/13 versus-balanced interpretation. Compared with PGD-A
 T, AttackDRO++ achieves
  []
 
-[85]
-Underfull \hbox (badness 1082) in paragraph at lines 479--479
+[84]
+Underfull \hbox (badness 1082) in paragraph at lines 473--473
 []\TU/TimesNewRoman(0)/m/n/13 Table 6.6: |Worst(8) and AutoAttack-512 sanity re
 sults across 20 paired random-
  []
 
-[86] [87]) (chapters/chapter6/4_whitebox.tex [88]
+[85] [86]) (chapters/chapter6/4_whitebox.tex [87]
 File: figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png Graphic file (
 type bmp)
 <figures/whitebox/whitebox_radar_per_attack_accuracy_n5.png>
- [89]
+ [88]
 File: figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png>
 File: figures/whitebox/whitebox_per_class_attack_DDNAT_n5.png Graphic file (typ
 e bmp)
 <figures/whitebox/whitebox_per_class_attack_DDNAT_n5.png>
- [90]
 File: figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png Graphic file (t
 ype bmp)
 <figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png>
+ [89]
 File: figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png Graphic fil
 e (type bmp)
 <figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png>
- [91] [92]
+ [90]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n
 5.png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png
 >
- [93]
+ [91]
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png>
 File: figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.
 png Graphic file (type bmp)
 <figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png>
-
-[94] [95]
+ [92]
+[93]
 File: figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png Gra
 phic file (type bmp)
 <figures/whitebox/whitebox_radar_attackdropp_delta_vs_baselines_n5.png>
- [96]
+ [94]
 File: figures/whitebox/whitebox_bottomk_lift_bar_n5.png Graphic file (type bmp)
 
 <figures/whitebox/whitebox_bottomk_lift_bar_n5.png>
- [97]) (chapters/chapter6/2_graybox_results.tex [98]
+ [95]) (chapters/chapter6/2_graybox_results.tex [96]
 File: figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.p
 ng Graphic file (type bmp)
 <figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png>
- [99]
+ [97]
 File: figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png Graphi
 c file (type bmp)
 <figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png>
@@ -2044,8 +2052,7 @@ le (type bmp)
 File: figures/graybox/transfer_matrix_4method_mifgsm_science_clean.png Graphic 
 file (type bmp)
 <figures/graybox/transfer_matrix_4method_mifgsm_science_clean.png>
-
-[100] [101]
+ [98]
 File: figures/graybox/transfer_matrix_4method_pgd_l2_science_clean.png Graphic 
 file (type bmp)
 <figures/graybox/transfer_matrix_4method_pgd_l2_science_clean.png>
@@ -2058,77 +2065,78 @@ phic file (type bmp)
 File: figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png Graphic f
 ile (type bmp)
 <figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png>
- [102] [103] [104] [105]
-Underfull \hbox (badness 1939) in paragraph at lines 439--445
+
+[99] [100] [101] [102]
+File: figures/graybox/whitebox_graybox_gap_DDNAT.pdf Graphic file (type pdf)
+<use figures/graybox/whitebox_graybox_gap_DDNAT.pdf>
+File: figures/graybox/whitebox_graybox_gap_PGDAT.pdf Graphic file (type pdf)
+<use figures/graybox/whitebox_graybox_gap_PGDAT.pdf>
+ [103]
+File: figures/graybox/whitebox_graybox_gap_MultiAT.pdf Graphic file (type pdf)
+<use figures/graybox/whitebox_graybox_gap_MultiAT.pdf>
+File: figures/graybox/whitebox_graybox_gap_AttackDROpp.pdf Graphic file (type p
+df)
+<use figures/graybox/whitebox_graybox_gap_AttackDROpp.pdf>
+ [104]
+Underfull \hbox (badness 1939) in paragraph at lines 466--474
 []\TU/TimesNewRoman(0)/m/n/13 The per-(class $[]$ attack) graybox-minus-whitebo
 x gap heatmaps in Figures [][]6.14[][]
  []
 
-File: figures/graybox/whitebox_graybox_gap_DDNAT.pdf Graphic file (type pdf)
-<use figures/graybox/whitebox_graybox_gap_DDNAT.pdf>
-[106]
-File: figures/graybox/whitebox_graybox_gap_PGDAT.pdf Graphic file (type pdf)
-<use figures/graybox/whitebox_graybox_gap_PGDAT.pdf>
-File: figures/graybox/whitebox_graybox_gap_MultiAT.pdf Graphic file (type pdf)
-<use figures/graybox/whitebox_graybox_gap_MultiAT.pdf>
- [107]
-File: figures/graybox/whitebox_graybox_gap_AttackDROpp.pdf Graphic file (type p
-df)
-<use figures/graybox/whitebox_graybox_gap_AttackDROpp.pdf>
- [108] [109]
+[105]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.pdf
  Graphic file (type pdf)
 <use figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.pdf>
 
+ [106]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.p
 df Graphic file (type pdf)
 <use figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.pd
 f>
- [110]
 File: figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.p
 df Graphic file (type pdf)
 <use figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.pd
 f>
- [111]
+ [107] [108]
 File: figures/graybox/method_decomposition_three_panel_science.png Graphic file
  (type bmp)
 <figures/graybox/method_decomposition_three_panel_science.png>
- [112]) (chapters/chapter6/3_ablation.tex
-[113]
+ [109]) (chapters/chapter6/3_ablation.tex [110]
 File: figures/ablations/ablation_num_clusters.png Graphic file (type bmp)
 <figures/ablations/ablation_num_clusters.png>
- [114] [115]
+ [111]
 File: figures/ablations/ablation_anchor_strength.png Graphic file (type bmp)
 <figures/ablations/ablation_anchor_strength.png>
- [116]
+
+[112]
 File: figures/ablations/ablation_recluster_frequency.png Graphic file (type bmp
 )
 <figures/ablations/ablation_recluster_frequency.png>
- [117]) (chapters/chapter6/6_summary.tex [118]))
-[119]
+ [113]) (chapters/chapter6/6_summary.tex [114])) [115]
 \openout2 = `chapters/chapter7.aux'.
 
- (chapters/chapter7.tex
+
+(chapters/chapter7.tex
 Chapter 7.
-[120
+[116
 
 
 
 
-] [121] [122] [123]) [124] (main.bbl [125
+] [117] [118] [119]) [120] (main.bbl [121
 
 
 
-] [126] [127] [128]) [129]
+] [122] [123] [124]) [125]
 \openout2 = `appendices.aux'.
 
 
 (appendices.tex (appendices/algorithms.tex
 Appendix A.
-[130
+[126
 
 
-] [131] [132]) [133] [134]
+] [127] [128]) [129] [130]
 Appendix B.
 File: figures/wandb/wb_train_loss.png Graphic file (type bmp)
 <figures/wandb/wb_train_loss.png>
@@ -2143,21 +2151,19 @@ File: figures/wandb/wb_ddn_l2_acc.png Graphic file (type bmp)
 File: figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.
 png Graphic file (type bmp)
 <figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png>
-[135
+[131
 
-] [136]
+] [132]
 Appendix C.
 File: figures/adv_viz/adv_grouped_linf.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_grouped_linf.pdf>
 File: figures/adv_viz/adv_grouped_l2.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_grouped_l2.pdf>
-File: figures/ablations/wrn2810_architecture_check.pdf Graphic file (type pdf)
-<use figures/ablations/wrn2810_architecture_check.pdf>
-[137
+[133
 
-] [138] [139]
+] [134]
 Appendix D.
-) [140
+) [135
 
 ] 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
@@ -2172,15 +2178,15 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7294A5C7B43C606A771877477B64BA21;21644.
+(rerunfilecheck)             Checksum: 784842954841FAE98C281C43DA20E082;21543.
  ) 
 Here is how much of TeX's memory you used:
- 39039 strings out of 402987
- 778928 string characters out of 5448525
- 1412953 words of memory out of 5000000
- 66887 multiletter control sequences out of 15000+600000
+ 39055 strings out of 402987
+ 779080 string characters out of 5448525
+ 1412766 words of memory out of 5000000
+ 66903 multiletter control sequences out of 15000+600000
  637004 words of font info for 160 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,18n,107p,1014b,1078s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (141 pages).
+Output written on main.pdf (136 pages).

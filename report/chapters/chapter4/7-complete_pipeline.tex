@@ -22,29 +22,16 @@ to multiple source attacks, but it treats all generated examples equally.
 AttackDRO then adds attack-level reweighting, but this still assumes that each
 attack family is internally homogeneous.
 
-AttackDRO++ removes this assumption. Instead of using attack identity as the only
-group label, it discovers latent groups from the adversarial examples themselves.
-Gradient fingerprints add optimization-level information to the clustering
-features, helping the grouping capture not only representation similarity but also
-training difficulty. Finally, the uniform anchor keeps the objective close to the
-strong multi-attack baseline while still allowing Cluster-DRO to emphasize harder
-groups. The result is a method that moves from observing the cross-attack gap to
-actively training against the latent structure behind it.
-
-The same evaluation discipline is preserved throughout the framework. Source
-attacks are fixed during training, held-out attacks are never used for
-optimization, and robustness is reported both per attack and through aggregate
-metrics.
-
-The dominant cost remains adversarial example generation, which is shared by all
-multi-attack methods in the comparison. Therefore, AttackDRO++ mainly changes the
-training objective and grouping mechanism, while keeping the source attacks,
-threat models, and evaluation protocol fixed. The cluster refresh schedule is an implementation choice rather than a fixed part
-of the mathematical objective. In the main experiments, clusters are refreshed
-every \(R=2\) epochs, and \(\mathbf{q}\) is reset to the uniform distribution
-after each refresh to avoid carrying weights across changed cluster identities.
-
-
+AttackDRO++ removes this assumption by replacing fixed attack groups with latent
+groups discovered from adversarial examples. Gradient fingerprints add
+optimization-level information to the clustering features, while the uniform
+anchor keeps the objective close to the strong multi-attack baseline. The
+training protocol keeps source attacks fixed, excludes held-out attacks from
+optimization, and reports robustness per attack and through aggregate metrics.
+Cluster refresh and cluster-score updates are configurable implementation choices:
+in the main experiments, clusters are refreshed every \(R=2\) epochs, \(\mathbf{q}\)
+is reset after refresh, and \(s_k\) may come from cluster loss, difficulty score,
+or a hybrid of the two.
 \begin{figure}[htbp]
 \centering
 \resizebox{0.95\textwidth}{!}{%
@@ -211,28 +198,13 @@ after each refresh to avoid carrying weights across changed cluster identities.
 
 \end{tikzpicture}%
 }
-\caption[Core AttackDRO++ training loop]{%
-  \textbf{Core training loop of AttackDRO++.}
-  At each iteration, the minibatch is split across two source attacks
-  ($\mathrm{PGD}\text{-}\ell_\infty$ and $\mathrm{DDN}\text{-}\ell_2$),
-  producing a mixed adversarial batch.
-  The batch is passed through \(f_\theta\) to obtain logits \(z_i\),
-  penultimate representations \(h_i\), and gradient fingerprints \(g_i\).
-  Logits are used to construct prediction and gradient-fingerprint terms, while
-  the canonical augmented clustering feature is
-  \(\psi_i=[\operatorname{norm}(h_i);
-  \lambda_{\mathrm{lbl}}\tilde{y}_i;
-  \lambda_{\mathrm{grad}}\operatorname{norm}(g_i)]\). These features are assigned
-  to one of \(K\) latent clusters by the current \(k\)-means clusterer.
-  The objective interpolates a uniform multi-attack ERM term
-  \(\mathcal{L}_{\mathrm{ERM}}\) with a cluster-DRO term
-  \(\mathcal{L}_{\mathrm{ClusterDRO}} = \sum_k q_k\mathcal{L}_k\) using
-  anchor coefficient \(\lambda_{\mathrm{DRO}}\).
-  Model parameters \(\theta\) are updated every step, while cluster weights
-  \(\mathbf{q}\) are updated after the warmup period using exponentiated-gradient
-  updates with the configured cluster score \(s_k\) and floor projection; the
-  detached feature bank periodically refreshes the \(k\)-means centroids every
-  \(R\) epochs.%
+  \caption[Core AttackDRO++ training loop]{%
+Core training loop of AttackDRO++. A minibatch is converted into a mixed
+PGD-\(\ell_\infty\)/DDN-\(\ell_2\) adversarial batch, passed through the model
+to construct augmented clustering features \(\psi_i\), assigned to latent
+clusters, and optimized with a uniform-anchored combination of ERM and
+Cluster-DRO losses. Cluster weights \(\mathbf{q}\) and K-means centroids are
+updated periodically according to the configured refresh and reweighting policy.%
 }
 \label{fig:attackdropp_core_training}
 \end{figure}
@@ -289,13 +261,7 @@ Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}
 \Return{\(f_\theta^\ast\)}
 \end{algorithm}
 
-The cluster refresh schedule is treated as a configurable training choice rather than a fixed mathematical requirement. It can be
-instantiated using either epoch-based or step-based schedules. Unless otherwise
-specified, the main experiments use an epoch-based schedule with \(R=2\) epochs and
-reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
-The cluster reweighting score \(s_k\) is also configurable: the implementation can
-update \(\mathbf{q}\) from cluster loss, from the configured difficulty score, or
-from a hybrid of the two.
+
 
 \subsection{Progression from Stage 1 to the Final Method}
 

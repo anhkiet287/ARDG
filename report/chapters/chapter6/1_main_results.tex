@@ -7,17 +7,12 @@
 
 \begin{table}[H]
 \centering
-\caption[Aggregate robust accuracy on the CIFAR-10 evaluation suite]{Aggregate robust accuracy (\%) on the CIFAR-10 evaluation suite,
-reported as mean $\pm$ standard deviation across 20 random-seed runs.
-Mean(8) is the average robust accuracy over the
-eight non-AutoAttack evaluation attacks. Worst(8) is the lowest robust accuracy
-among those same eight attacks. The
-held-out attack mean averages FGSM-RS, TPGD, MI-FGSM, PGD-$\ell_2$,
-DeepFool-$\ell_2$, and CW-$\ell_2$. The held-out $\ell_\infty$ mean averages
-FGSM-RS, TPGD, and MI-FGSM; the held-out $\ell_2$ mean averages PGD-$\ell_2$,
-DeepFool-$\ell_2$, and CW-$\ell_2$. The seen-source mean averages
-PGD-$\ell_\infty$ and DDN-$\ell_2$. AutoAttack is reported separately and is
-not included in Mean(8). Bold values indicate the best method for each metric.}
+\caption[Aggregate robust accuracy on the CIFAR-10 evaluation suite]{Aggregate
+robust accuracy (\%) on the CIFAR-10 evaluation suite, reported as
+mean $\pm$ standard deviation across 20 random-seed runs. Aggregate metrics are
+defined in the Chapter~\ref{chap:results_analysis} overview. AutoAttack is
+reported separately from Mean(8). Bold values indicate the best method for each
+metric.}
 \label{tab:ch6_aggregate_results}
 \footnotesize
 \setlength{\tabcolsep}{1.25pt}
@@ -467,8 +462,7 @@ Croce and Hein \cite{croce2020reliable}. Tables~\ref{tab:ch6_worst_autoattack_sa
 different evaluation panels: Worst(8) is computed across the full $n=20$
 seed panel, while AutoAttack is reported in two layers: a 512-sample
 sanity evaluation across all $n=20$ seeds and a full-test evaluation on
-the selected $n=5$ seed panel. AutoAttack is therefore a separate stress check,
-not part of Mean(8) or the main aggregate ranking.
+the selected $n=5$ seed panel. AutoAttack is a separate stress check due to its expensive cost.
 
 \begin{table}[H]
 \centering
@@ -588,8 +582,8 @@ AutoAttack-$\ell_\infty$
 The difference is strongest for held-out robustness. The standard deviation decreases by
 \(3.26\times\) for the held-out attack mean, \(2.70\times\) for the held-out \(\ell_2\) mean, and
 \(2.51\times\) for the held-out \(\ell_\infty\) mean. Mean(8) also shows
-observed lower seed-to-seed standard deviation, decreasing from \(0.447\)~pp
-under Multi-AT to \(0.148\)~pp under AttackDRO++, a \(3.03\times\) ratio.
+observed lower seed-to-seed standard deviation, decreasing \(3.03\times\) from \(0.447\)~pp
+under Multi-AT to \(0.148\)~pp under AttackDRO++.
 
 This suggests a more predictable observed outcome on average-case metrics, but
 the comparison does not isolate which component drives the lower variation. The

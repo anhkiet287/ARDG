@@ -119,10 +119,11 @@ than as evidence of universal hyperparameter optimality.
 The main limitation is scope.  CIFAR-10 is the only main dataset, and ResNet-18
 is the only main architecture.  These choices make the study controlled and
 reproducible, but they also bound the conclusion.  Appendix~\ref{app:extras}
-includes a WRN-28-10 check, but that result is supplementary and does not
-support a broad architecture-general claim.  Larger datasets, higher-capacity
-models, and different data domains may change both the attack difficulty profile
-and the usefulness of latent cluster discovery.
+includes an exploratory WRN-28-10 AttackDRO++ check, which suggests that the
+method can still work with a higher-capacity model, but that result is
+supplementary and does not support a broad architecture-general claim.  Larger
+datasets, higher-capacity models, and different data domains may change both the
+attack difficulty profile and the usefulness of latent cluster discovery.
 
 The attack suite is also fixed.  The report evaluates a defined set of
 whitebox and graybox attacks, with AutoAttack-$\ell_\infty$ reported separately

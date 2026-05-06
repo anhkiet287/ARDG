@@ -13,6 +13,12 @@ cut across attack boundaries. The complete AttackDRO++ method is defined after t
 augmented clustering features and uniform anchor are introduced in Sections~\ref{sec:ch4_gradfp}
 and~\ref{sec:ch4_anchor_objective}.
 
+The key design choice is to move the grouping unit from known attack labels to
+data-dependent latent groups. Attack labels identify the source procedure that generated
+an adversarial example, but they do not necessarily describe the type of failure that the
+model experiences: a PGD-generated example and a DDN-generated example may lie near
+the same fragile decision region, while two PGD-generated examples may affect different
+classes, margins, or local boundaries.
 For each adversarial example \(\mathbf{x}_i^{\mathrm{adv}}\), the model extracts a
 representation vector
 \begin{equation}
@@ -105,8 +111,7 @@ assuming that raw cluster loss is always the only update signal.
 This allows the cluster-DRO component to emphasize hard latent groups even when they
 do not align exactly with the original attack identities.
 
-Since model representations evolve during training, cluster assignments must also be
-updated. The clustering procedure therefore maintains a feature bank \(\mathcal{F}\), which stores
+The clustering procedure maintains a feature bank \(\mathcal{F}\), which stores
 detached augmented feature vectors \(\psi_i\) from recent minibatches. When the refresh condition
 is met, K-means is refitted on \(\mathcal{F}\), and subsequent minibatches are assigned
 using the updated clusterer. Before the first K-means refresh, cluster assignments are

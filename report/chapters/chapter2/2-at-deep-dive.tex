@@ -9,13 +9,37 @@ boundary-oriented adversarial examples. These differences matter because a model
 that is robust to one attack procedure may still fail under another, which is the
 core motivation for the attacks-as-domains.
 
-Chapter~\ref{chap:experimental_setup} gives the concrete configuration values,
-including perturbation budgets, step counts, and which attacks are used for
-training or evaluation. This section instead defines the attacks conceptually so
-that later comparisons can refer to them without reintroducing their mechanics.
-Appendix~\ref{app:algorithms} provides compact pseudocode for the attack and
-training procedures used throughout the report.
-
+\begin{table}[H]
+\centering
+\caption[Attack algorithm overview]{Attack algorithms used in the report. Exact budgets and step counts are specified in Chapter~\ref{chap:experimental_setup}.}
+\label{tab:ch2_attack_summary}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}lcccl>{\raggedright\arraybackslash}X@{}}
+\toprule
+Attack & Norm & Iterative & Training source & Evaluation & Role \\
+\midrule
+FGSM-RS & $\ell_\infty$ & No & No & Yes &
+Fast random-start one-step check for local gradient sensitivity. \\
+PGD-$\ell_\infty$ & $\ell_\infty$ & Yes & Yes & Yes &
+Main $\ell_\infty$ source attack and standard whitebox evaluation attack. \\
+TPGD & $\ell_\infty$ & Yes & No & Yes &
+TRADES-style/KL-PGD held-out attack with a different loss geometry. \\
+MI-FGSM & $\ell_\infty$ & Yes & No & Yes &
+Momentum-based held-out attack, also useful for transfer behavior. \\
+PGD-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Held-out projected-gradient attack under the $\ell_2$ threat model. \\
+DDN-$\ell_2$ & $\ell_2$ & Yes & Yes & Yes &
+Main $\ell_2$ source attack and evaluation attack. \\
+DeepFool-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Boundary-oriented held-out $\ell_2$ attack. \\
+CW-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
+Margin-based optimization attack for held-out $\ell_2$ evaluation. \\
+AutoAttack-$\ell_\infty$ & $\ell_\infty$ & Yes & No & Separate &
+Standardized stress test reported outside Mean(8). \\
+\bottomrule
+\end{tabularx}
+\end{table}
 \subsection{Fast Gradient Sign Method with Random Start (FGSM-RS)}
 
 Fast Gradient Sign Method with Random Start (FGSM-RS) is motivated by the need for a cheap first-order evaluation attack. It operates in the whitebox $\ell_\infty$ threat model: the adversary can access the model gradient and must keep the perturbation inside an $\ell_\infty$ ball around the clean input. The base FGSM attack uses a single gradient-sign step to increase the cross-entropy loss \cite{goodfellow2015explaining}.
@@ -30,7 +54,6 @@ x+\delta_0+\alpha\,\mathrm{sign}
 \right).
 \]
 The random start reduces dependence on the clean point's immediate gradient direction and makes the one-step attack less brittle than deterministic FGSM \cite{wong2020fast}.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/adv_viz/adv_fgsm-rs_3eps.pdf}
@@ -38,7 +61,6 @@ The random start reduces dependence on the clean point's immediate gradient dire
 \label{fig:ch2_fgsm_rs_3eps}
 \end{figure}
 
-FGSM-RS is fast and useful for exposing obvious failures, but it is weaker than multi-step attacks and should not be treated as a complete robustness evaluation. In this thesis it is used only as a held-out $\ell_\infty$ evaluation attack. It is not a source training attack and does not define a training method.
 
 \subsection{Projected Gradient Descent (PGD)}
 
@@ -63,6 +85,8 @@ x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}
 
 For an $\ell_2$ variant, the update uses a normalized gradient direction and projection onto the $\ell_2$ ball. The algorithmic intuition is simple: repeated local ascent gives the attack more opportunities to find a high-loss point than a single FGSM step.
 
+PGD is strong, broadly used, and closely tied to adversarial training, but it still depends on the chosen norm, loss, step size, and iteration budget. PGD-AT is the training method that uses PGD-generated examples; PGD-$\ell_\infty$ and PGD-$\ell_2$ are the attacks themselves. This distinction is central to the thesis because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share PGD-$\ell_\infty$ as a source attack while differing in how generated examples are grouped and weighted.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{figures/adv_viz/adv_pgd-l2_3eps.pdf}
@@ -70,7 +94,6 @@ For an $\ell_2$ variant, the update uses a normalized gradient direction and pro
 \label{fig:ch2_pgd_l2_3eps}
 \end{figure}
 
-PGD is strong, broadly used, and closely tied to adversarial training, but it still depends on the chosen norm, loss, step size, and iteration budget. PGD-AT is the training method that uses PGD-generated examples; PGD-$\ell_\infty$ and PGD-$\ell_2$ are the attacks themselves. This distinction is central to the thesis because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share PGD-$\ell_\infty$ as a source attack while differing in how generated examples are grouped and weighted.
 
 \subsection{Carlini\textendash Wagner Attack (CW)}
 
@@ -159,7 +182,7 @@ x_{t+1}^{\mathrm{adv}}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/adv_viz/adv_mifgsm_3eps.pdf}
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_mifgsm_3eps.pdf}
 \caption[MI-FGSM perturbation visualization]{MI-FGSM-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
 \label{fig:ch2_mifgsm_3eps}
 \end{figure}
@@ -175,7 +198,7 @@ The TPGD name is overloaded across software libraries and papers, so its meaning
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/adv_viz/adv_tpgd_3eps.pdf}
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_tpgd_3eps.pdf}
 \caption[TPGD perturbation visualization]{TPGD-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
 \label{fig:ch2_tpgd_3eps}
 \end{figure}
@@ -218,37 +241,7 @@ To keep the attack descriptions focused on the optimization objectives, the grou
 
 The attack suite separates source attacks, held-out evaluation attacks, and the separate AutoAttack stress test; Table~\ref{tab:ch2_attack_summary} records those roles without repeating the exact budgets and step counts deferred to Chapter~\ref{chap:experimental_setup}.
 
-\begin{table}[H]
-\centering
-\caption[Attack algorithm overview]{Attack algorithms used in the report. Exact budgets and step counts are specified in Chapter~\ref{chap:experimental_setup}.}
-\label{tab:ch2_attack_summary}
-\small
-\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\linewidth}{@{}lcccl>{\raggedright\arraybackslash}X@{}}
-\toprule
-Attack & Norm & Iterative & Training source & Evaluation & Role \\
-\midrule
-FGSM-RS & $\ell_\infty$ & No & No & Yes &
-Fast random-start one-step check for local gradient sensitivity. \\
-PGD-$\ell_\infty$ & $\ell_\infty$ & Yes & Yes & Yes &
-Main $\ell_\infty$ source attack and standard whitebox evaluation attack. \\
-TPGD & $\ell_\infty$ & Yes & No & Yes &
-TRADES-style/KL-PGD held-out attack with a different loss geometry. \\
-MI-FGSM & $\ell_\infty$ & Yes & No & Yes &
-Momentum-based held-out attack, also useful for transfer behavior. \\
-PGD-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
-Held-out projected-gradient attack under the $\ell_2$ threat model. \\
-DDN-$\ell_2$ & $\ell_2$ & Yes & Yes & Yes &
-Main $\ell_2$ source attack and evaluation attack. \\
-DeepFool-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
-Boundary-oriented held-out $\ell_2$ attack. \\
-CW-$\ell_2$ & $\ell_2$ & Yes & No & Yes &
-Margin-based optimization attack for held-out $\ell_2$ evaluation. \\
-AutoAttack-$\ell_\infty$ & $\ell_\infty$ & Yes & No & Separate &
-Standardized stress test reported outside Mean(8). \\
-\bottomrule
-\end{tabularx}
-\end{table}
+
 
 \section{Adversarial Training as Min-Max Optimization}
 

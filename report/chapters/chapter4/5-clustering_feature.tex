@@ -80,6 +80,28 @@ g_i = \mathrm{vec}(G_i)P
 In our default setting, \(d_{\mathrm{proj}}=128\). The projection is fixed throughout
 training and introduces no additional learnable parameters.
 
+The final augmented clustering feature is
+\[
+\psi_i =
+\left[
+\operatorname{norm}(h_i)
+\;\Vert\;
+\lambda_{\mathrm{lbl}}\tilde{y}_i
+\;\Vert\;
+\lambda_{\mathrm{grad}}\operatorname{norm}(g_i)
+\right].
+\]
+
+This construction keeps the clustering feature compact while still encoding information
+that is not visible from the representation alone. The representation term captures where
+the adversarial example lies in the learned feature space, but two nearby points may still
+produce different loss gradients if the classifier is uncertain in different directions. The
+projected gradient fingerprint provides a lightweight summary of this optimization
+behavior, while the scalar label feature preserves coarse class structure during clustering.
+The weights \(\lambda_{\mathrm{lbl}}\) and \(\lambda_{\mathrm{grad}}\) control how much label
+and gradient information influence the final grouping relative to the normalized
+representation feature.
+
 \begin{figure}[H]
 \centering
 \resizebox{0.55\textwidth}{!}{%
@@ -196,11 +218,15 @@ $c_i \in \{1,\dots,K\}$};
 \draw[line] (aug) -- (cluster);
 \draw[line] (cluster) -- (assign);
 
-\node[groupbox, fit=(rep)(logits)(grad)(splitRep)(mergeGrad),
-      label={[sideboxlabel]right:Signals from the same training model}] {};
+% Add invisible right anchors so the dashed group boxes extend further right.
+\coordinate (signalsRightPad) at ($(mergeGrad)+(0.75,0)$);
+\coordinate (latentRightPad) at ($(aug.east)+(0.75,0)$);
 
-\node[groupbox, fit=(aug)(cluster)(assign),
-      label={[sideboxlabel]right:Latent group discovery}] {};
+\node[groupbox, fit=(rep)(logits)(grad)(splitRep)(signalsRightPad),
+      label={[sideboxlabel, xshift=0.25cm]right:Signals from the same training model}] {};
+
+\node[groupbox, fit=(aug)(cluster)(assign)(latentRightPad),
+      label={[sideboxlabel, xshift=0.25cm]right:Latent group discovery}] {};
 
 \end{tikzpicture}%
 }
@@ -219,23 +245,3 @@ probabilities and gradient fingerprints, but they are not concatenated directly
 into \(\psi_i\).}
 \label{fig:gradfp_augmented_feature}
 \end{figure}
-
-The final augmented clustering feature is
-\[
-\psi_i =
-\left[
-\operatorname{norm}(h_i)
-\;\Vert\;
-\lambda_{\mathrm{lbl}}\tilde{y}_i
-\;\Vert\;
-\lambda_{\mathrm{grad}}\operatorname{norm}(g_i)
-\right].
-\]
-
-The three components play complementary roles. Representation features describe where
-an example lies in feature space, whereas gradient fingerprints describe how the
-classifier head would need to change to classify that example correctly. Combining
-representation, scalar label, and gradient information makes the clustering signal
-both representation-aware and optimization-aware. This allows AttackDRO++ to discover
-latent adversarial groups that reflect both structural similarity and optimization
-difficulty.

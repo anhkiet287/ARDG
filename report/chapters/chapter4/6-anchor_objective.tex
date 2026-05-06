@@ -47,9 +47,7 @@ correction becomes larger, but its influence remains controlled by
 
 In the main experiments, we set \(\lambda_{\mathrm{DRO}}=0.35\) as the default anchor strength. This value keeps the uniform multi-attack objective as
 the dominant stabilizing term while still allowing the model to adapt toward harder
-clusters. Intuitively, this suggests an inverted-U behavior: a small amount of
-Cluster-DRO pressure can improve robustness by emphasizing hard groups, whereas
-excessive pressure may overfit unstable clusters and harm the balance across attacks.
+clusters.
 
 A second stabilization mechanism is the floor projection applied to the cluster
 weights. After each exponentiated-gradient update, \(\mathbf{q}\) is normalized and

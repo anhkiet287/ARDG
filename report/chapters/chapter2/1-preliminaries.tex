@@ -97,6 +97,12 @@ In the graybox setting, the adversary has partial information. A common case is 
 
 In the blackbox setting, the adversary does not access model parameters or gradients and instead relies on queries. Score-based attacks use probabilities or logits, while decision-based attacks use only predicted labels. Blackbox attacks are useful for detecting gradient masking, where a defense appears strong because gradients are uninformative rather than because the classifier has learned genuinely robust decision boundaries \cite{athalye2018obfuscated,andriushchenko2019square}. The main experiments in this report focus on the specified whitebox evaluation suite and separate stress checks, while the blackbox setting remains part of the broader threat-model vocabulary.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\linewidth]{figures/w-b-g-box.png}
+\caption{Whitebox, graybox, and blackbox adversary categories by accessible information, reproduced from Mei et al.~\cite{mei2024comprehensive}.}
+\end{figure}
+
 Because the later protocols combine direct whitebox attacks, surrogate transfer, and standardized stress checks, Table~\ref{tab:ch2_threat_models} fixes the access assumptions before the individual attack algorithms are introduced.
 
 \begin{table}[H]

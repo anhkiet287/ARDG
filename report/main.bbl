@@ -21,6 +21,15 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{mei2024comprehensive}
+\BIBentryALTinterwordspacing
+S.~Mei, J.~Lian, X.~Wang, Y.~Su, M.~Ma, and L.-P. Chau, ``A comprehensive study
+  on the robustness of deep learning-based image classification and object
+  detection in remote sensing: Surveying and benchmarking,'' \emph{Journal of
+  Remote Sensing}, vol.~4, p. 0219, 2024. [Online]. Available:
+  \url{https://doi.org/10.34133/remotesensing.0219}
+\BIBentrySTDinterwordspacing
+
 \bibitem{szegedy2014intriguing}
 \BIBentryALTinterwordspacing
 C.~Szegedy, W.~Zaremba, I.~Sutskever, J.~Bruna, D.~Erhan, I.~Goodfellow, and

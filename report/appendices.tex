@@ -6,7 +6,7 @@
 % APPENDIX B: EXPERIMENTAL LOGS AND CONFIGURATIONS
 %===========================================================
 
-\chapter{Experimental Logs and Configurations}
+\chapter{Experimental Logs}
 \label{app:logs}
 
 \begin{figure}[p]
@@ -87,12 +87,19 @@ Figure~\ref{fig:app_grouped_linf_adv_viz} and Figure~\ref{fig:app_grouped_l2_adv
 \label{fig:app_grouped_l2_adv_viz}
 \end{figure}
 
+Table~\ref{tab:app_wrn2810_architecture_check} reports an exploratory
+higher-capacity WRN-28-10 check for AttackDRO++ only. The purpose is to verify
+that the method remains usable with a larger backbone and to record the absolute
+robustness obtained in that setting; because this is a single run, it is not
+used as a paired architecture comparison.
+
 \begin{table}[H]
 \centering
-\caption[Supplementary WRN-28-10 architecture check]{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are
-robust accuracy (\%) from a single run and are therefore not included in the
-main paired claims. Mean(8) and Worst(8) are computed over the eight
-non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately. Bold values indicate the best method for each metric.}
+\caption[Exploratory WRN-28-10 AttackDRO++ check]{Exploratory WRN-28-10
+AttackDRO++ check on CIFAR-10. Values are robust accuracy (\%) from a single
+run and are therefore not included in the main paired claims. Mean(8) and
+Worst(8) are computed over the eight non-AutoAttack attacks;
+AutoAttack-$\ell_\infty$ is reported separately.}
 \label{tab:app_wrn2810_architecture_check}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -101,11 +108,6 @@ non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately. Bold va
 \toprule
 Method & Mean(8) $\uparrow$ & Worst(8) $\uparrow$ & AutoAttack $\uparrow$ \\
 \midrule
-Multi-AT
-& \bestval{64.87}
-& \bestval{47.99}
-& \bestval{44.92} \\
-
 AttackDRO++
 & $64.68$
 & $47.72$
@@ -113,13 +115,6 @@ AttackDRO++
 \bottomrule
 \end{tabular}
 \end{table}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.75\linewidth]{figures/ablations/wrn2810_architecture_check.pdf}
-    \caption[Supplementary WRN-28-10 architecture check]{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately.}
-    \label{fig:app_wrn2810_architecture_check}
-\end{figure}
 
 %===========================================================
 % APPENDIX D: COMPUTE RESOURCES AND ENVIRONMENT

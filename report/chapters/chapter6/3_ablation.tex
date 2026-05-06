@@ -240,18 +240,24 @@ the ablation suggests that the method is not highly sensitive to the exact
 refresh interval, so the less frequent schedule is preferred for simplicity.
 
 \paragraph{Supplementary architecture check.}
-A single-run WRN-28-10 check is reported in Appendix~\ref{app:extras} as
-supplementary evidence. This check is not included in the main paired claims
-because it does not use the repeated-random-seed protocol of the main ResNet-18
-experiments. In that setting, Multi-AT slightly outperforms AttackDRO++ on both
-Mean(8) and AutoAttack-$\ell_\infty$, suggesting that the relative benefit of
-the proposed grouping strategy may depend on model capacity and should be
-evaluated more systematically in future work.
+A single-run WRN-28-10 AttackDRO++ check is reported in
+Appendix~\ref{app:extras} as exploratory supplementary evidence. This check is
+not included in the main paired claims because it does not use the
+repeated-random-seed protocol of the main ResNet-18 experiments. Its
+AttackDRO++ results, Mean(8) $64.68\%$, Worst(8) $47.72\%$, and
+AutoAttack-$\ell_\infty$ $43.16\%$, indicate that the method can still produce
+strong robustness when the model capacity is increased. The Mean(8) and
+Worst(8) values are above the corresponding ResNet-18 AttackDRO++ aggregate
+levels in Table~\ref{tab:ch6_aggregate_results}, which is consistent with the
+expected benefit of a larger backbone. The result should still be read as an
+exploratory capacity check rather than as an architecture-level generalization
+claim.
 
 Together, these ablations suggest that the final AttackDRO++ configuration is
 not the result of a fragile hyperparameter choice. Moderate clustering
 granularity, moderate anchor strength, and a two-epoch refresh schedule provide a
 practical configuration for the evaluated setting. The ablations also define the
 limits of the current evidence: they use fewer runs than the main comparison and
-support the selected ResNet-18 configuration, but broader architecture-level
-conclusions require additional repeated-seed experiments.
+support the selected ResNet-18 configuration, while the WRN-28-10 result remains
+exploratory until broader architecture-level conclusions are tested with
+additional repeated-seed experiments.

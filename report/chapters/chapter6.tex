@@ -1,7 +1,31 @@
 ﻿
 \chapter{Results and Analysis}
 \label{chap:results_analysis}
+This chapter evaluates AttackDRO++ under the experimental protocol defined in
+Chapter~\ref{chap:experimental_setup}. The main comparison includes four
+methods: PGD-AT, DDN-AT, Multi-AT, and AttackDRO++. Multi-AT serves as the
+primary strong baseline because it trains on both source attacks, whereas PGD-AT
+and DDN-AT serve as single-attack specialists that reveal how robustness can
+concentrate around one perturbation family.
 
+The main aggregate metric, Mean(8), averages robust accuracy over eight
+non-AutoAttack attacks: FGSM-RS, PGD-\(\ell_\infty\), TPGD, MI-FGSM,
+PGD-\(\ell_2\), DDN-\(\ell_2\), DeepFool-\(\ell_2\), and CW-\(\ell_2\).
+Among these attacks, PGD-\(\ell_\infty\) and DDN-\(\ell_2\) are the seen source
+attacks used during training, while the remaining six attacks are held out from
+optimization. Worst(8) reports the lowest robust accuracy among the same eight
+attacks, and AutoAttack-\(\ell_\infty\) is reported separately as a standardized
+stress check rather than as part of Mean(8).
+
+The analysis proceeds from aggregate whitebox robustness to more targeted
+diagnostics, including per-attack behavior, hardest-case checks, seed-to-seed
+variation, class-wise patterns, graybox transfer, ablations, and supplementary
+checks. The interpretation remains bounded: the goal is not to show universal
+robustness or dominance under every attack, but to test whether latent cluster
+reweighting, gradient fingerprints, and the uniform anchor provide a modest
+refinement of uniform multi-attack training under the CIFAR-10 and ResNet-18
+setting. Graybox significance tests are interpreted as transfer-trend evidence
+rather than fully independent training-run proof.
 \input{chapters/chapter6/1_main_results}
 \input{chapters/chapter6/4_whitebox}
 
