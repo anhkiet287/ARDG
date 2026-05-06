@@ -114,5 +114,5 @@
 \contentsline {chapter}{\numberline {B}Experimental Logs}{131}{appendix.B}%
 \contentsline {chapter}{\numberline {C}Additional Tables and Visualizations}{133}{appendix.C}%
 \contentsline {section}{\numberline {C.1}Adversarial Perturbation Visualizations}{133}{section.C.1}%
-\contentsline {subsection}{\numberline {C.1.1}Grouped Adversarial Perturbation Visualization}{133}{subsection.C.1.1}%
+\contentsline {subsection}{\numberline {C.1.1}Grouped Adversarial Perturbation Visualizations}{133}{subsection.C.1.1}%
 \contentsline {chapter}{\numberline {D}Compute Resources and Environment Notes}{135}{appendix.D}%

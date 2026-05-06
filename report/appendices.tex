@@ -90,12 +90,21 @@ to generate the tables.
 \section{Adversarial Perturbation Visualizations}
 \label{app:adv_visualizations}
 
-\subsection{Grouped Adversarial Perturbation Visualization}
+\subsection{Grouped Adversarial Perturbation Visualizations}
 
-Figure~\ref{fig:app_grouped_l2_adv_viz} summarizes adversarial examples and
-normalized perturbation heatmaps across the main \(\ell_2\) evaluation attacks.
-This figure is intended as qualitative support for the attack descriptions in
-Chapter~2; all heatmaps are normalized for visibility.
+Figures~\ref{fig:app_grouped_linf_adv_viz}
+and~\ref{fig:app_grouped_l2_adv_viz} summarize adversarial examples and
+normalized perturbation heatmaps across the main \(\ell_\infty\) and \(\ell_2\)
+evaluation attacks. These figures are intended as qualitative support for the
+attack descriptions in Chapter~2; all heatmaps are normalized for visibility,
+with darker regions indicating lower perturbation intensity.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{figures/adv_viz/adv_grouped_linf.pdf}
+\caption[Grouped \(\ell_\infty\) perturbation visualization]{Grouped \(\ell_\infty\) adversarial examples on CIFAR-10, with adversarial images and normalized perturbation heatmaps.}
+\label{fig:app_grouped_linf_adv_viz}
+\end{figure}
 
 \begin{figure}[htbp]
 \centering
