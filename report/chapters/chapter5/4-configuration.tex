@@ -47,16 +47,19 @@ Checkpoint selection & Validation robust average & Test set is used only after s
 
 Checkpoint selection is based on validation robustness rather than test performance.
 After training, the selected checkpoint is evaluated once on the test set. This protocol
-is applied consistently to the uniform baseline and all AttackDRO variants.
+is applied consistently to the reported method checkpoints.
 
-The method overview in Table~\ref{tab:ch5_method_training_summary} separates each
-training objective by its grouping or weighting strategy. All multi-attack methods use
-the same source attacks and mixed-batch adversarial example generation; they differ only
-in how adversarial examples are weighted or grouped during optimization.
+The method overview in Table~\ref{tab:ch5_method_training_summary} separates the
+main methods and intermediate design objectives by their grouping or weighting
+strategy. All multi-attack objectives use the same source attacks and mixed-batch
+adversarial example generation; they differ only in how adversarial examples are
+weighted or grouped during optimization. The main empirical comparison in
+Chapter~\ref{chap:results_analysis} focuses on PGD-AT, DDN-AT, Multi-AT, and
+AttackDRO++ under the fixed protocol.
 
 \begin{table}[H]
 \centering
-\caption{Training methods compared in the CIFAR-10 and ResNet-18 experiments.}
+\caption{Training methods and intermediate objectives defined for the CIFAR-10 and ResNet-18 experiments.}
 \label{tab:ch5_method_training_summary}
 \footnotesize
 \setlength{\tabcolsep}{4pt}

@@ -80,14 +80,15 @@ to allocate training emphasis so that robustness is balanced across this
 evaluation suite without optimizing directly for held-out attacks.
 
 Uniform multi-attack training is the starting point because it controls for
-the source adversarial data generation process.  Multi-AT, AttackDRO,
-Cluster-DRO, and AttackDRO++ all use the same source attacks, so their
-comparison focuses on grouping and weighting rather than on a change in which
-adversarial examples are generated.  Under this setup, fixed attack identities
-are a plausible first grouping, but they can miss examples that are hard for
-reasons not captured by the source attack label.  A high-loss subset may be
-defined by class structure, representation geometry, local margin, optimization
-trajectory, or an interaction among these factors.
+the source adversarial data generation process.  This report introduces
+AttackDRO and Cluster-DRO as intermediate design steps that motivate the final
+method.  The main empirical comparison in Chapter~\ref{chap:results_analysis}
+focuses on PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ under the fixed
+experimental protocol.  Under this setup, fixed attack identities are a
+plausible first grouping, but they can miss examples that are hard for reasons
+not captured by the source attack label.  A high-loss subset may be defined by
+class structure, representation geometry, local margin, optimization trajectory,
+or an interaction among these factors.
 
 The problem is therefore not only to train on multiple attacks, but to identify
 which parts of the induced training distribution deserve additional emphasis.
@@ -132,9 +133,10 @@ strength, and cluster refresh schedule, are most important for stable
 AttackDRO++ performance?
 
 These questions lead to four concrete objectives.  The report builds a
-controlled multi-attack adversarial training and evaluation pipeline; compares
-PGD-AT, DDN-AT, Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ under shared
-source attacks; evaluates per-attack accuracy, Mean(8), Worst(8), held-out
+controlled multi-attack adversarial training and evaluation pipeline; introduces
+AttackDRO and Cluster-DRO as methodology steps that lead to AttackDRO++;
+compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ in the main Chapter~6
+empirical panel; evaluates per-attack accuracy, Mean(8), Worst(8), held-out
 attack summaries, AutoAttack-$\ell_\infty$, graybox transfer, ablations, and
 supplementary architecture checks; and interprets empirical claims
 conservatively through paired multi-seed comparisons.
@@ -150,10 +152,10 @@ problem and defines a metric protocol that separates per-attack accuracy,
 Mean(8), Worst(8), held-out attacks, and AutoAttack-$\ell_\infty$ stress
 evaluation.
 
-\item It provides a controlled comparison of single-source adversarial
-training, Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ under shared
-source attacks, keeping the distinction between adversarial data generation and
-group-weighting design explicit.
+\item It provides a controlled main comparison of single-source adversarial
+training, Multi-AT, and AttackDRO++ under shared source attacks, while using
+AttackDRO and Cluster-DRO as intermediate design steps to keep the distinction
+between adversarial data generation and group-weighting design explicit.
 
 \item It defines AttackDRO++ as the final proposed method: uniform-anchored
 Cluster-DRO with gradient fingerprints.  The method combines latent cluster

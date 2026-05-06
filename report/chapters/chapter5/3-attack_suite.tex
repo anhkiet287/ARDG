@@ -24,7 +24,7 @@ compares weighting and grouping strategies.
 
 \begin{table}[H]
 \centering
-\caption{Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++.}
+\caption{Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for the multi-attack design path from Multi-AT through AttackDRO++.}
 \label{tab:ch5_training_attacks}
 \begin{tabular}{llllll}
 \toprule
@@ -36,7 +36,7 @@ DDN-$\ell_2$ & $\ell_2$ & $0.5$ & 20 & DDN objective & Source attack \\
 \end{tabular}
 \end{table}
 
-For Multi-AT training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction is also used by AttackDRO, Cluster-DRO, and AttackDRO++. Thus, the compared methods share the same adversarial data generation process and differ mainly in how they weight or group the generated examples.
+For Multi-AT training, each minibatch is split across the source attacks and adversarial examples are generated using the assigned attack. The same mixed-batch source attack construction underlies the AttackDRO and Cluster-DRO design steps and the final AttackDRO++ method. Thus, the main Chapter~\ref{chap:results_analysis} comparison keeps adversarial data generation fixed and focuses on PGD-AT, DDN-AT, Multi-AT, and AttackDRO++.
 
 \subsection{Evaluation Attacks}
 \label{subsec:ch5_evaluation_attacks}

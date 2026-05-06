@@ -204,9 +204,12 @@ Section~\ref{sec:ch5_graybox_protocol}: for every triple
 $(\text{target seed},\ \text{surrogate seed},\ \text{attack})$, we pair
 the configuration ``AttackDRO++ as target, Multi-AT as surrogate'' against
 its mirror ``Multi-AT as target, AttackDRO++ as surrogate'' and compute
-the per-triple difference. As the results, $n = 5 \times 5 \times 8 = 200$
-paired pairs make the comparison invariant to which method is chosen as
-the surrogate.
+the per-triple difference. This yields \(n = 5 \times 5 \times 8 = 200\)
+paired observations and makes the comparison invariant to which method is chosen
+as the surrogate. Because these paired observations share target checkpoints,
+surrogate checkpoints, random seeds, and attack families, the per-cell tests
+should be interpreted as evidence of a consistent transfer trend rather than as
+tests over fully independent training runs.
 \begin{table}[H]
 \centering
 \caption{Paired graybox comparisons. Each row uses $n=200$ paired
@@ -284,11 +287,10 @@ this section: under symmetric cross-method graybox transfer,
 AttackDRO++ improves on Multi-AT by $+0.549$~pp at
 $p \approx 1.1 \times 10^{-8}$, with a small-to-medium paired effect size
 of $d_z \approx 0.42$. This effect is roughly twice the corresponding
-whitebox delta of $+0.279$~pp on the same seed panel and is significant
-at far stricter levels. The Cluster-DRO improvement is maintained and is
-numerically larger under graybox transfer than in the whitebox aggregate
-comparison, suggesting that the gain is not narrowly tied to
-AttackDRO++'s own gradients.
+whitebox delta of $+0.279$~pp on the same seed panel and has a very small
+\(p\)-value under the shared-checkpoint paired test. Read with the dependence
+caution above, this supports a consistent transfer trend rather than a claim
+over fully independent training runs.
 
 The single-attack contrasts confirm the expected specialist-versus-balanced
 pattern. AttackDRO++ improves on PGD-AT by $+4.44$~pp at
@@ -334,7 +336,7 @@ CW-$\ell_2$     & held-out $\ell_2$      & $79.26$ & $78.83$ & $+0.429$ & $0.249
 \end{table}
 
 AttackDRO++ produces a positive paired delta on all eight attacks. Five
-of these deltas are individually significant at $p < 0.05$, and the gain
+of these deltas have \(p < 0.05\) under the per-attack paired test, and the gain
 is largest on DeepFool-$\ell_2$ ($+1.47$~pp, $p = 1.6\times 10^{-4}$),
 the most local-gradient $\ell_2$ attack and the held-out attack on which
 the whitebox gain over Multi-AT was also largest. The two seen
@@ -342,7 +344,10 @@ attacks (PGD-$\ell_\infty$ and DDN-$\ell_2$) contribute small,
 non-significant gains, consistent with the fact that both methods
 already train against these attacks. The graybox Mean(8) gain is
 therefore distributed across attack families rather than concentrated on
-one family.
+one family. Because the per-attack observations reuse the same target and
+surrogate checkpoints across attack families, these \(p\)-values should be read
+as consistency checks over the graybox panel rather than as tests over fully
+independent training runs.
 
 We aggregate the per-attack deltas into the four attack groups defined
 in Section~\ref{sec:ch5_evaluation_metrics} to compare the cross-method graybox
@@ -527,8 +532,8 @@ DDN-AT
 Three observations follow. First, AttackDRO++ exceeds Multi-AT on
 $59$ of $80$ cells with a mean per-cell delta of $+0.557$~pp, in close
 agreement with the $+0.549$~pp aggregate from
-Table~\ref{tab:ch6_paired_graybox_two_panel}. Cell-level significance is sparse
-($2$ vs.\ $3$ cells reach $p < 0.05$ in either direction), as expected
+Table~\ref{tab:ch6_paired_graybox_two_panel}. Cell-level \(p<0.05\) counts are sparse
+($2$ vs.\ $3$ cells reach that threshold in either direction), as expected
 under the $n = 5$ per-cell sample size and the small absolute deltas;
 the bulk of the evidence for AttackDRO++ is therefore the
 \emph{distributional} shift across many cells rather than a few cell-level
@@ -542,7 +547,7 @@ $+0.779$~pp on Multi-AT's worst $10$ cells, and improves on
 PGD-AT by $+1.329$~pp on PGD-AT's worst $10$ cells.
 
 Third, the AttackDRO++ vs.\ DDN-AT cell-level comparison ($-2.21$~pp on
-average, $32$ cells favoring DDN-AT at $p<0.05$) is the per-cell
+average, with $32$ cells favoring DDN-AT at \(p<0.05\)) is the per-cell
 counterpart of the DDN-AT graybox inflation: most of DDN-AT's wins are
 on $\ell_2$ cells, while AttackDRO++ retains the wins it needs on the
 $\ell_\infty$ cells that DDN-AT collapses on under whitebox attack

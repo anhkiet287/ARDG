@@ -21,12 +21,12 @@ Hyperparameter & Symbol & Value & Role \\
 \midrule
 DRO anchor strength      & \(\lambda_{\mathrm{DRO}}\)  & 0.35  & Interpolates between uniform ERM and Cluster-DRO \\
 Number of clusters       & \(K\)                       & 4     & Controls latent group granularity \\
-\(q\) learning rate      & \(\eta_q\)                  & \(3\times10^{-4}\) & Step size for exponentiated-gradient update \\
+\(q\) learning rate      & \(\eta_q\)                  & \(3\times10^{-4}\) & Step size for exponentiated-gradient update using \(s_k\) \\
 \(q\)-floor              & \(q_{\min}\)                & 0.03  & Minimum mass retained by each cluster \\
 \(q\)-warmup             & \(T_w\)                     & 3 epochs & Delays adaptive reweighting until clusters are more reliable \\
 Gradient projection dim. & \(d_{\mathrm{proj}}\)       & 128   & Dimension of projected gradient fingerprint \\
-Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradFP component in \(\psi\) \\
-Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of label component in \(\psi\) \\
+Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradFP component in \(\psi_i\) \\
+Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of scalar label component in \(\psi_i\) \\
 Feature bank size        & \(|\mathcal{F}|\)           & 4{,}096 & Buffer used to refit K-means \\
 Cluster refresh interval & \(R\)                       & 2 epochs & Default K-means refit frequency \\
 \(q\)-refresh policy     & N/A                         & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
@@ -41,7 +41,7 @@ Bootstrap assignment     & N/A                         & random & Used before th
 \DontPrintSemicolon
 \SetAlgoLined
 
-\KwIn{Training set \(\mathcal{D}_{\mathrm{train}}\), model \(f_\theta\), source attacks \(\mathcal{A}_{\mathrm{src}}=\{A_1,\ldots,A_M\}\), Cluster count \(K\), anchor weight \(\lambda_{\mathrm{DRO}}\), learning rates \(\eta_\theta,\eta_q\), \(q\)-floor \(q_{\min}\), Label weight \(\lambda_{\mathrm{lbl}}\), gradient weight \(\lambda_{\mathrm{grad}}\), projection dimension \(d_{\mathrm{proj}}\), Refresh interval \(R\), warmup epochs \(T_w\)}
+\KwIn{Training set \(\mathcal{D}_{\mathrm{train}}\), model \(f_\theta\), source attacks \(\mathcal{A}_{\mathrm{src}}=\{A_1,\ldots,A_M\}\), Cluster count \(K\), anchor weight \(\lambda_{\mathrm{DRO}}\), learning rates \(\eta_\theta,\eta_q\), \(q\)-floor \(q_{\min}\), Label weight \(\lambda_{\mathrm{lbl}}\), gradient weight \(\lambda_{\mathrm{grad}}\), projection dimension \(d_{\mathrm{proj}}\), Refresh interval \(R\), warmup epochs \(T_w\), \(q\)-update metric}
 \KwOut{Trained model \(f_\theta^\ast\)}
 
 Initialize \(\mathbf{q} \leftarrow (1/K,\ldots,1/K)\)\;
@@ -52,9 +52,9 @@ Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}
 \For{epoch \(e = 1,\ldots,E\)}{
     \For{each minibatch \((x,y)\) of size \(N\)}{
         Generate mixed adversarial batch \(x^{\mathrm{adv}}\) using \(\mathcal{A}_{\mathrm{src}}\)\;
-        Compute logits and features \((z,h) \leftarrow f_\theta(x^{\mathrm{adv}})\)\;
-        Build augmented features \(\psi \leftarrow \mathrm{BuildFeature}(z,h,y,P)\)\;
-        Assign cluster ids \(c \leftarrow \mathrm{AssignCluster}(\psi,\mathrm{Clusterer},K)\)\;
+        Compute logits \(z \leftarrow f_\theta(x^{\mathrm{adv}})\) and features \(h \leftarrow \phi_\theta(x^{\mathrm{adv}})\)\;
+        Build augmented clustering features \(\{\psi_i\}_{i=1}^N \leftarrow \mathrm{BuildFeature}(z_i,h_i,y_i,P)\)\;
+        Assign cluster ids \(c_i \leftarrow \mathrm{AssignCluster}(\psi_i,\mathrm{Clusterer},K)\) for all samples\;
 
         Compute uniform loss \(\mathcal{L}_{\mathrm{ERM}}\)\;
         Compute cluster-DRO loss \(\mathcal{L}_{\mathrm{ClusterDRO}}\)\;
@@ -70,14 +70,15 @@ Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}
         Update model parameters \(\theta\) using SGD\;
 
         \If{\(e > T_w\)}{
-            Update \(\mathbf{q}\) using exponentiated gradient and floor projection\;
+            Compute cluster scores \(s_k\) from the configured \(q\)-update metric\;
+            Update \(\mathbf{q}\) using exponentiated gradient with \(s_k\) and floor projection\;
         }
 
-        Add detached features \(\psi\) to feature bank \(\mathcal{F}\)\;
+        Add detached features \(\{\psi_i\}_{i=1}^N\) to feature bank \(\mathcal{F}\)\;
     }
 
     \If{refresh condition is met}{
-        Refresh K-means clusterer using \(\mathrm{KMeans}(\mathcal{F},K)\)\;
+        Refresh K-means clusterer using detached \(\psi_i\) in \(\mathcal{F}\)\;
         Apply \(q\)-refresh policy to \(\mathbf{q}\) \tcp*{default: reset to uniform}
         Reset or update feature bank \(\mathcal{F}\) according to the memory policy\;
     }
@@ -91,6 +92,9 @@ The cluster refresh schedule is treated as a configurable training choice rather
 instantiated using either epoch-based or step-based schedules. Unless otherwise
 specified, the main experiments use an epoch-based schedule with \(R=2\) epochs and
 reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
+The cluster reweighting score \(s_k\) is also configurable: the implementation can
+update \(\mathbf{q}\) from cluster loss, from the configured difficulty score, or
+from a hybrid of the two.
 
 \subsection{Progression from Stage 1 to the Final Method}
 
@@ -119,11 +123,12 @@ uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). Chapter~\ref{chap:exper
 documents the full training configuration, software stack, and evaluation protocol.
 
 The main additional state introduced by AttackDRO++ is the feature bank used for
-cluster refresh. The bank stores detached augmented features, so clustering does
-not backpropagate through past minibatches. K-means is refitted only at the
-configured refresh interval, and the cluster weights are reset or refreshed after
-the cluster identities change. This keeps the adaptive grouping mechanism tied to
-recent model representations while avoiding a per-step clustering cost.
+cluster refresh. The bank stores detached augmented clustering features \(\psi_i\),
+so clustering does not backpropagate through past minibatches. K-means is refitted
+only at the configured refresh interval, and the cluster weights are updated using
+the configured cluster score \(s_k\) before being reset or refreshed when cluster
+identities change. This keeps the adaptive grouping mechanism tied to recent model
+representations while avoiding a per-step clustering cost.
 
 The dominant computational cost remains adversarial example generation, because
 all compared multi-attack methods use the same mixed source attacks. The

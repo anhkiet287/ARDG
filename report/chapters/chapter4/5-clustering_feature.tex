@@ -8,11 +8,16 @@ optimization behavior. To capture this additional signal, AttackDRO++ constructs
 an augmented clustering feature that combines representation similarity, class
 information, and gradient-level training dynamics.
 
-For an adversarial example \(x_i^{\mathrm{adv}}\), let
+For an adversarial example \(\tilde{\mathbf{x}}_i=\mathbf{x}_i^{\mathrm{adv}}\), let
 \[
-(z_i,h_i) = f_\theta(x_i^{\mathrm{adv}})
+z_i = f_\theta(\tilde{\mathbf{x}}_i),
+\qquad
+h_i = \phi_\theta(\tilde{\mathbf{x}}_i).
 \]
-denote the logits and penultimate-layer feature, and let
+The logits \(z_i=f_\theta(\tilde{\mathbf{x}}_i)\) are used to compute prediction
+probabilities and gradient-fingerprint terms, while
+\(h_i=\phi_\theta(\tilde{\mathbf{x}}_i)\) provides the representation component of
+the clustering feature. Let
 \[
 p_i = \mathrm{softmax}(z_i)
 \]
@@ -20,15 +25,18 @@ be the predicted class distribution.
 
 The first component is the normalized representation feature,
 \[
-\bar{h}_i = \mathrm{norm}(h_i),
+\bar{h}_i = \operatorname{norm}(h_i),
 \]
 which captures semantic similarity in the model feature space.
 
-The second component is a class-aware label feature,
+The second component is a class-aware scalar label feature. When label information
+is enabled, the implementation appends the normalized scalar class-index feature
+\(\tilde{y}_i \in [0,1]\) with weight \(\lambda_{\mathrm{lbl}}\):
 \[
-\lambda_{\mathrm{lbl}}\mathrm{onehot}(y_i),
+\lambda_{\mathrm{lbl}}\tilde{y}_i,
 \]
-which provides weak label structure during clustering.
+which provides weak label structure during clustering without using a one-hot label
+vector in the clustering feature.
 
 The third component is the gradient fingerprint. For a linear classifier head
 \[
@@ -39,7 +47,7 @@ W \in \mathbb{R}^{C \times d_h},
 the per-example gradient of the cross-entropy loss with respect to the classifier
 weight matrix is
 \[
-\nabla_W \ell(f_\theta(x_i^{\mathrm{adv}}),y_i)
+\nabla_W \ell(f_\theta(\tilde{\mathbf{x}}_i),y_i)
 =
 \bigl(p_i-\mathrm{onehot}(y_i)\bigr)\otimes h_i
 \in \mathbb{R}^{C\times d_h}.
@@ -49,6 +57,8 @@ We use this quantity as a gradient proxy and denote it by
 G_i =
 \bigl(p_i-\mathrm{onehot}(y_i)\bigr)\otimes h_i.
 \]
+The one-hot vector appears here only in the cross-entropy gradient proxy; it is
+not appended as the label component of \(\psi_i\).
 
 Intuitively, \(G_i\) describes the training direction induced by sample \(i\).
 Thus, two adversarial examples may be grouped together not only because they are
@@ -74,18 +84,18 @@ The final augmented clustering feature is
 \[
 \psi_i =
 \left[
-\mathrm{norm}(h_i)
+\operatorname{norm}(h_i)
 \;\Vert\;
-\lambda_{\mathrm{lbl}}\mathrm{onehot}(y_i)
+\lambda_{\mathrm{lbl}}\tilde{y}_i
 \;\Vert\;
-\lambda_{\mathrm{grad}}\mathrm{norm}(g_i)
+\lambda_{\mathrm{grad}}\operatorname{norm}(g_i)
 \right].
 \]
 
 The three components play complementary roles. Representation features describe where
 an example lies in feature space, whereas gradient fingerprints describe how the
 classifier head would need to change to classify that example correctly. Combining
-representation, label, and gradient information makes the clustering signal both
-representation-aware and optimization-aware. This allows AttackDRO++ to discover
+representation, scalar label, and gradient information makes the clustering signal
+both representation-aware and optimization-aware. This allows AttackDRO++ to discover
 latent adversarial groups that reflect both structural similarity and optimization
 difficulty.

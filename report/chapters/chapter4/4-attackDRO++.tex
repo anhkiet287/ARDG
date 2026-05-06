@@ -18,7 +18,9 @@ representation vector
 \begin{equation}
     \mathbf{h}_i = \phi_\theta(\mathbf{x}_i^{\mathrm{adv}}),
 \end{equation}
-and a clustering model assigns the example to a latent group
+which is augmented with the scalar label feature and gradient fingerprint to form
+the clustering feature \(\psi_i\) defined in Section~\ref{sec:ch4_gradfp}. A
+clustering model then assigns the example to a latent group
 \begin{equation}
     c_i \in \{1,\ldots,K\}.
 \end{equation}
@@ -77,22 +79,35 @@ more training emphasis. The renormalization over present clusters keeps the mini
 objective well-defined even when some latent groups are absent from a particular batch.
 
 The cluster weights are updated using the same exponentiated-gradient principle as in
-AttackDRO, but now at the cluster level rather than the attack level. Given a
-cluster-level difficulty score
+AttackDRO, but now at the cluster level rather than the attack level. Let \(s_k\)
+denote the configured cluster reweighting score for cluster \(k\). In the
+implementation, \(s_k\) can be based on the cluster loss \(\mathcal{L}_k\), the
+configured difficulty score averaged over the cluster,
 \begin{equation}
-    s_k
-    =
     \frac{1}{|\mathcal{B}_k|}
     \sum_{i\in\mathcal{B}_k} s_i,
-    \qquad k \in \mathcal{C}_{\mathcal{B}},
 \end{equation}
-the update increases the weight of clusters with higher average difficulty. This allows
-the cluster-DRO component to emphasize hard latent groups even when they do not align exactly with
-the original attack identities.
+or a hybrid of loss and difficulty score, depending on the configured \(q\)-update
+metric. The cluster update is
+\begin{equation}
+    q_k
+    \leftarrow
+    \Pi_{q_{\min}}
+    \left(
+    q_k \exp(\eta_q s_k)
+    \right),
+    \qquad k=1,\ldots,K.
+\end{equation}
+Here \(\Pi_{q_{\min}}\) denotes the normalization and floor projection applied to
+the full cluster-weight vector after the exponentiated-gradient step. Thus, the
+update emphasizes clusters with higher configured reweighting scores rather than
+assuming that raw cluster loss is always the only update signal.
+This allows the cluster-DRO component to emphasize hard latent groups even when they
+do not align exactly with the original attack identities.
 
 Since model representations evolve during training, cluster assignments must also be
 updated. The clustering procedure therefore maintains a feature bank \(\mathcal{F}\), which stores
-detached augmented feature vectors from recent minibatches. When the refresh condition
+detached augmented feature vectors \(\psi_i\) from recent minibatches. When the refresh condition
 is met, K-means is refitted on \(\mathcal{F}\), and subsequent minibatches are assigned
 using the updated clusterer. Before the first K-means refresh, cluster assignments are
 bootstrapped randomly.

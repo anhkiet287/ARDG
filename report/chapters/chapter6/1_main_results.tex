@@ -351,9 +351,8 @@ by the two single-attack specialist comparisons.
 \caption{Per-attack robust accuracy (\%) for all four methods across 20 paired random-seed runs.
 Bold values indicate the best method for each attack. The right-hand
 $\Delta$ and $p$ columns report the paired comparison of AttackDRO++ (Ours) against
-Multi-AT. AttackDRO++ (Ours) wins the highest
-score on 4 of 8 attacks; the two single-attack baselines together account
-for the remaining 4, each winning on the family they were trained against.
+Multi-AT. AttackDRO++ (Ours) is highest on 3 of 8 attacks; the strongest
+method varies by attack family.
 $\Delta$ values use the bold-marker convention $^*$ for $p<0.05$ and
 $^{**}$ for $p<0.01$.}
 \label{tab:ch6_per_attack_all_baselines}
@@ -434,21 +433,16 @@ CW-$\ell_2$     & held-out $\ell_2$
 }
 \end{table}
 The attack-level breakdown in Table~\ref{tab:ch6_per_attack_all_baselines} clarifies
-why the Mean(8) gain does not automatically imply a stronger Worst(8). AttackDRO++ achieves the highest
-per-attack accuracy on four of eight attacks, including all three held-out
-$\ell_2$ attacks where it beats Multi-AT at $p<0.05$. PGD-AT wins on
-the three held-out $\ell_\infty$ attacks and on the seen-source attack
-PGD-$\ell_\infty$ that it trains directly against; DDN-AT wins on
-PGD-$\ell_2$ and DeepFool-$\ell_2$, the held-out $\ell_2$ attacks closest to
-its training distribution. The pattern is consistent with a specialist
-interpretation of single-attack training: each single-AT method dominates a
-narrow attack family at the cost of substantial regression on the other.
-AttackDRO++'s improvement over Multi-AT is largest on held-out
-$\ell_2$ attacks ($+0.374$ to $+0.504$~pp, all $p<0.05$) and smallest on the
-seen $\ell_\infty$ attack ($-0.003$~pp). The per-attack pattern explains
-why the Mean(8) gain does not translate into a stronger Worst(8): the
-improvement is concentrated on held-out attacks, while the weakest
-evaluation direction remains broadly unchanged.
+why the Mean(8) gain does not automatically imply a stronger Worst(8). Against
+Multi-AT, AttackDRO++ improves most per-attack metrics, especially on held-out
+\(\ell_2\) attacks. Across all compared methods, however, the best method still
+depends on the attack family: PGD-AT remains strongest on several
+\(\ell_\infty\)-oriented attacks, while DDN-AT remains strongest on some
+\(\ell_2\)-oriented attacks. AttackDRO++ is therefore best understood as
+improving average robustness balance rather than dominating every individual
+attack. The per-attack pattern explains why the Mean(8) gain does not translate
+into a stronger Worst(8): the improvement is concentrated on held-out attacks,
+while the weakest evaluation direction remains broadly unchanged.
 
 
 \subsection{Robustness Under the Hardest Evaluation Cases}
@@ -536,18 +530,19 @@ $\ell_\infty$ depth, but provides the best average cross-attack balance.
 \subsection{Training Stability: How Predictable Is the Outcome?}
 \label{subsec:ch6_training_stability}
 
-In addition to improving the mean of average-case robustness metrics, AttackDRO++ also
-reduces seed-to-seed variation relative to Multi-AT. To check whether the gain is more
-predictable across repeated runs, Table~\ref{tab:ch6_variance_reduction} compares the
-standard deviation of each seed-level metric between the two methods.
+AttackDRO++ runs in this panel exhibit lower seed-to-seed standard deviation
+than Multi-AT on average-case metrics. To describe whether the observed outcomes
+are more predictable across repeated runs, Table~\ref{tab:ch6_variance_reduction}
+compares the standard deviation of each seed-level metric between the two
+methods.
 
 \begin{table}[H]
 \centering
-\caption{Variance reduction across 20 paired random-seed runs. \(\sigma\) is the
-standard deviation of the per-seed metric. AttackDRO++ substantially reduces
-seed-to-seed variation on Mean(8), held-out averages, and held-out norm-specific
-metrics, while Worst(8) and AutoAttack standard deviations remain similar across
-methods.}
+\caption{Observed seed-to-seed standard deviation across 20 paired random-seed
+runs. \(\sigma\) is the standard deviation of the per-seed metric. AttackDRO++
+has lower standard deviation than Multi-AT on Mean(8), held-out averages, and
+held-out norm-specific metrics, while Worst(8) and AutoAttack standard
+deviations remain similar across methods.}
 \label{tab:ch6_variance_reduction}
 \small
 \setlength{\tabcolsep}{5pt}
@@ -587,12 +582,14 @@ The reduction is strongest for held-out robustness. The standard deviation decre
 stable, decreasing from \(0.447\)~pp under Multi-AT to \(0.148\)~pp under
 AttackDRO++, a \(3.03\times\) reduction.
 
-This suggests that the anchored Cluster-DRO objective not only improves the mean of
-average-case robustness metrics, but also makes the Multi-AT training outcome less
-sensitive to random seed. The effect is weaker for Worst(8) and AutoAttack, whose
-standard deviations remain similar across methods. This is consistent with the previous
-sections: the hardest \(\ell_\infty\) stress metrics are broadly unchanged relative to
-Multi-AT, while the main benefit of AttackDRO++ is on average and held-out robustness.
+AttackDRO++ runs in this panel exhibit lower seed-to-seed standard deviation than
+Multi-AT on average-case metrics. This suggests a more stable observed outcome,
+although the present comparison does not isolate which component causes the
+reduction. The effect is weaker for Worst(8) and AutoAttack, whose standard
+deviations remain similar across methods. This is consistent with the previous
+sections: the hardest \(\ell_\infty\) stress metrics are broadly unchanged
+relative to Multi-AT, while the main benefit of AttackDRO++ is on average and
+held-out robustness.
 
 The whitebox results give the main aggregate evidence: AttackDRO++ improves
 average and held-out robustness relative to Multi-AT while leaving the hardest
