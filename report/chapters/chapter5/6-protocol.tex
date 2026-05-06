@@ -30,7 +30,7 @@ where $\bar{d}$ is the mean paired difference and $s_d$ is the sample standard d
 
 To estimate uncertainty, 95\% bootstrap confidence intervals are computed from seed-level results. For each method and metric, the seed-level values are resampled with replacement 10{,}000 times, and the mean is recomputed for each resample. The 2.5th and 97.5th percentiles of the bootstrap distribution are used as the confidence interval. Bootstrap confidence intervals are also computed for the paired difference $x_i - y_i$, as this directly estimates the uncertainty of the improvement over each baseline. In result tables, CI denotes confidence interval, and paired differences are reported in percentage points (pp).
 
-Because multiple attacks, metrics, and baseline comparisons are evaluated, Holm--Bonferroni correction is applied within each metric family. Both raw and corrected $p$-values are reported, but corrected $p$-values are used for final significance interpretation. This correction reduces the risk of false positive findings while remaining less conservative than the standard Bonferroni correction.
+Because multiple attacks, metrics, and baseline comparisons are evaluated, Holm--Bonferroni correction is applied within each metric family \cite{holm1979simple}. Both raw and corrected $p$-values are reported, but corrected $p$-values are used for final significance interpretation. This correction reduces the risk of false positive findings while remaining less conservative than the standard Bonferroni correction.
 
 The reporting format in Table~\ref{tab:ch5_statistical_reporting_format} keeps the
 results chapter tied to the paired-seed protocol by defining the quantities reported

@@ -47,8 +47,9 @@ I.~J. Goodfellow, J.~Shlens, and C.~Szegedy, ``Explaining and harnessing
 \bibitem{madry2019towards}
 \BIBentryALTinterwordspacing
 A.~Madry, A.~Makelov, L.~Schmidt, D.~Tsipras, and A.~Vladu, ``Towards deep
-  learning models resistant to adversarial attacks,'' 2019. [Online].
-  Available: \url{https://arxiv.org/abs/1706.06083}
+  learning models resistant to adversarial attacks,'' in \emph{International
+  Conference on Learning Representations}, 2018. [Online]. Available:
+  \url{https://openreview.net/forum?id=rJzIBfZAb}
 \BIBentrySTDinterwordspacing
 
 \bibitem{sagawa2019groupdro}
@@ -93,16 +94,18 @@ A.~Athalye, N.~Carlini, and D.~A. Wagner, ``Obfuscated gradients give a false
 \bibitem{andriushchenko2019square}
 \BIBentryALTinterwordspacing
 M.~Andriushchenko, F.~Croce, N.~Flammarion, and M.~Hein, ``Square attack: a
-  query-efficient black-box adversarial attack via random search,''
-  \emph{CoRR}, 2019. [Online]. Available:
-  \url{https://arxiv.org/abs/1912.00049}
+  query-efficient black-box adversarial attack via random search,'' in
+  \emph{Computer Vision -- ECCV 2020}, ser. Lecture Notes in Computer Science,
+  vol. 12368.\hskip 1em plus 0.5em minus 0.4em\relax Springer, 2020, pp.
+  484--501. [Online]. Available: \url{https://arxiv.org/abs/1912.00049}
 \BIBentrySTDinterwordspacing
 
 \bibitem{wong2020fast}
 \BIBentryALTinterwordspacing
 E.~Wong, L.~Rice, and J.~Z. Kolter, ``Fast is better than free: Revisiting
-  adversarial training,'' \emph{CoRR}, vol. abs/2001.03994, 2020. [Online].
-  Available: \url{https://arxiv.org/abs/2001.03994}
+  adversarial training,'' in \emph{International Conference on Learning
+  Representations}, 2020. [Online]. Available:
+  \url{https://openreview.net/forum?id=BJx040EFvH}
 \BIBentrySTDinterwordspacing
 
 \bibitem{carlini2017towards}
@@ -136,9 +139,11 @@ Y.~Dong, F.~Liao, T.~Pang, H.~Su, J.~Zhu, X.~Hu, and J.~Li, ``Boosting
 \bibitem{zhang2019trades}
 \BIBentryALTinterwordspacing
 H.~Zhang, Y.~Yu, J.~Jiao, E.~P. Xing, L.~E. Ghaoui, and M.~I. Jordan,
-  ``Theoretically principled trade-off between robustness and accuracy,''
-  \emph{CoRR}, vol. abs/1901.08573, 2019. [Online]. Available:
-  \url{http://arxiv.org/abs/1901.08573}
+  ``Theoretically principled trade-off between robustness and accuracy,'' in
+  \emph{Proceedings of the 36th International Conference on Machine Learning},
+  ser. Proceedings of Machine Learning Research, vol.~97.\hskip 1em plus 0.5em
+  minus 0.4em\relax PMLR, 2019, pp. 7472--7482. [Online]. Available:
+  \url{https://proceedings.mlr.press/v97/zhang19p.html}
 \BIBentrySTDinterwordspacing
 
 \bibitem{rice2020overfitting}
@@ -330,5 +335,12 @@ A.~Krizhevsky, ``Learning multiple layers of features from tiny images,''
 K.~He, X.~Zhang, S.~Ren, and J.~Sun, ``Deep residual learning for image
   recognition,'' in \emph{Proceedings of the IEEE Conference on Computer Vision
   and Pattern Recognition}, 2016, pp. 770--778.
+
+\bibitem{holm1979simple}
+\BIBentryALTinterwordspacing
+S.~Holm, ``A simple sequentially rejective multiple test procedure,''
+  \emph{Scandinavian Journal of Statistics}, vol.~6, no.~2, pp. 65--70, 1979.
+  [Online]. Available: \url{https://www.jstor.org/stable/4615733}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

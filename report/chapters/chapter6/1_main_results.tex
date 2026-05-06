@@ -67,10 +67,13 @@ We compare four methods on 20 paired random-seed runs: PGD-AT,
 DDN-AT, Multi-AT, and AttackDRO++.
 Multi-AT is the main strong baseline because it uses both source attacks.
 Relative to this baseline, AttackDRO++ improves Mean(8) by $+0.279$~pp
-($p = 0.0076$, 14/20 seed-level wins), with the largest channel on the
-held-out $\ell_2$ mean ($+0.405$~pp, $p = 0.0079$). These differences are
-small in absolute size, so the result is best read as a modest average
-improvement rather than a broad shift in all robustness metrics.
+($p = 0.0076$ from the uncorrected paired $t$-test, 14/20 seed-level wins),
+with the largest channel on the held-out $\ell_2$ mean ($+0.405$~pp,
+$p = 0.0079$ from the uncorrected paired $t$-test). The Holm-corrected
+Wilcoxon evidence in Table~\ref{tab:ch6_corrected_paired_tests} is more
+conservative for this comparison, so the AttackDRO++--Multi-AT result is best
+read as a small positive trend rather than a uniformly correction-robust
+improvement.
 
 Worst(8) and
 AutoAttack-512 are statistically indistinguishable from Multi-AT

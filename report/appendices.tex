@@ -9,6 +9,22 @@
 \chapter{Experimental Logs}
 \label{app:logs}
 
+This appendix records representative experiment-tracking exports used to monitor
+training behavior. The panels are included to document the telemetry available
+during development, not as additional quantitative evidence beyond the tables in
+Chapter~\ref{chap:results_analysis}. The reported claims continue to rely on the
+saved checkpoints, fixed evaluation scripts, and paired seed summaries described
+in Chapter~\ref{chap:experimental_setup}.
+
+Figure~\ref{fig:app_wandb_core_metrics} shows the main training signals tracked
+for an AttackDRO++ run. The loss and accuracy panels check that optimization is
+progressing normally, while the clean, PGD-$\ell_\infty$, and DDN-$\ell_2$
+validation panels monitor whether robustness under the two source attacks
+changes smoothly during training. The group-weight trajectory provides a
+diagnostic for the adaptive Cluster-DRO component: it shows whether the learned
+group weights remain active rather than collapsing to a single group throughout
+training.
+
 \begin{figure}[p]
 \centering
 \captionsetup{font=footnotesize}
@@ -53,8 +69,13 @@
 \label{fig:app_wandb_core_metrics}
 \end{figure}
 
-% Goal: store run configuration, seed policy, split policy, attack configuration,
-% training schedule, JSON logs, command lines if available, and compact config tables.
+The exports are intentionally summarized at the dashboard level. Raw run
+identifiers, checkpoint names, and command-line logs are not treated as visible
+result artifacts because they are implementation metadata. The reproducibility
+contract for the report is instead the protocol specification in
+Chapter~\ref{chap:experimental_setup}, the metric definitions in
+Section~\ref{sec:ch5_evaluation_metrics}, and the aggregate CSV summaries used
+to generate the tables.
 
 %===========================================================
 % APPENDIX C: ADDITIONAL TABLES AND VISUALIZATIONS
@@ -69,16 +90,12 @@
 \section{Adversarial Perturbation Visualizations}
 \label{app:adv_visualizations}
 
-\subsection{Grouped Adversarial Perturbation Visualizations}
+\subsection{Grouped Adversarial Perturbation Visualization}
 
-Figure~\ref{fig:app_grouped_linf_adv_viz} and Figure~\ref{fig:app_grouped_l2_adv_viz} summarize adversarial examples and normalized perturbation heatmaps across the main \(\ell_\infty\) and \(\ell_2\) evaluation attacks. These figures are intended as qualitative support for the attack descriptions in Chapter~2; all heatmaps are normalized for visibility.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.90\textwidth]{figures/adv_viz/adv_grouped_linf.pdf}
-\caption[Grouped \(\ell_\infty\) perturbation visualization]{Grouped \(\ell_\infty\) adversarial examples on CIFAR-10, with adversarial images and normalized perturbation heatmaps.}
-\label{fig:app_grouped_linf_adv_viz}
-\end{figure}
+Figure~\ref{fig:app_grouped_l2_adv_viz} summarizes adversarial examples and
+normalized perturbation heatmaps across the main \(\ell_2\) evaluation attacks.
+This figure is intended as qualitative support for the attack descriptions in
+Chapter~2; all heatmaps are normalized for visibility.
 
 \begin{figure}[htbp]
 \centering

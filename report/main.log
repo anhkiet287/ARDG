@@ -1,7 +1,6 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  6 MAY 2026 19:58
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.12) (preloaded format=xelatex 2026.5.3)  6 MAY 2026 21:46
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **./main.tex
 (main.tex
@@ -1985,13 +1984,13 @@ GSM, PGD-$[][]$, DDN-$[][]$,
 
 
 ] [80] [81] [82] [83]
-Underfull \hbox (badness 1314) in paragraph at lines 332--343
+Underfull \hbox (badness 1314) in paragraph at lines 335--346
 \TU/TimesNewRoman(0)/m/n/13 versus-balanced interpretation. Compared with PGD-A
 T, AttackDRO++ achieves
  []
 
 [84]
-Underfull \hbox (badness 1082) in paragraph at lines 473--473
+Underfull \hbox (badness 1082) in paragraph at lines 476--476
 []\TU/TimesNewRoman(0)/m/n/13 Table 6.6: |Worst(8) and AutoAttack-512 sanity re
 sults across 20 paired random-
  []
@@ -2155,8 +2154,6 @@ png Graphic file (type bmp)
 
 ] [132]
 Appendix C.
-File: figures/adv_viz/adv_grouped_linf.pdf Graphic file (type pdf)
-<use figures/adv_viz/adv_grouped_linf.pdf>
 File: figures/adv_viz/adv_grouped_l2.pdf Graphic file (type pdf)
 <use figures/adv_viz/adv_grouped_l2.pdf>
 [133
@@ -2178,13 +2175,13 @@ LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 784842954841FAE98C281C43DA20E082;21543.
+(rerunfilecheck)             Checksum: 0EA15530566659ABCDCFFC010142FB6D;21538.
  ) 
 Here is how much of TeX's memory you used:
- 39055 strings out of 402987
- 779080 string characters out of 5448525
- 1412766 words of memory out of 5000000
- 66903 multiletter control sequences out of 15000+600000
+ 39048 strings out of 402987
+ 778744 string characters out of 5448525
+ 1412701 words of memory out of 5000000
+ 66897 multiletter control sequences out of 15000+600000
  637004 words of font info for 160 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,18n,107p,1014b,1078s stack positions out of 10000i,1000n,20000p,200000b,200000s

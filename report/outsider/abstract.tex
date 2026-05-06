@@ -1,7 +1,24 @@
 \chapter*{Abstract}
 
-This thesis addresses the critical vulnerability of deep learning models to adversarial perturbations, particularly the limitation where standard defense mechanisms fail to generalize across different threat models. Our research proposes a novel perspective that treats distinct families of adversarial attacks as separate "domains," aiming to identify and quantify the "cross-attack robustness gap" inherent in current training paradigms.
+This thesis studies cross-attack adversarial robustness in a bounded
+CIFAR-10/ResNet-18 setting. The main comparison evaluates four methods under a
+shared training and evaluation protocol: PGD-AT, DDN-AT, Multi-AT, and
+AttackDRO++. Multi-AT trains uniformly on PGD-$\ell_\infty$ and DDN-$\ell_2$
+source attacks, while PGD-AT and DDN-AT serve as single-source specialists.
 
-\noindent We establish a comprehensive experimental framework to evaluate the transferability of robustness across diverse adversarial environments. By subjecting models trained on specific perturbation norms to a wide spectrum of unseen attack algorithms, the study systematically measures the performance degradation that occurs when shifting between these domains.
+\noindent AttackDRO++ is proposed as a latent-group refinement of Multi-AT. It
+clusters adversarial examples, augments the grouping signal with gradient
+fingerprints, and uses a uniform anchor so that the adaptive group-weighted
+objective remains tied to the underlying multi-attack training signal. The goal
+is not to replace the multi-attack baseline, but to test whether finer latent
+groups can improve cross-attack balance under the fixed protocol.
 
-\noindent Ultimately, this quantitative analysis motivates the proposed method evaluated in this report. By characterizing the domain shifts between attack families, the report integrates Domain Generalization principles into adversarial training and tests whether group-aware multi-attack training can reduce the observed robustness gaps under the stated experimental protocol.
+\noindent Across the paired-seed experiments, AttackDRO++ shows a small positive
+Mean(8) trend over Multi-AT and lower observed seed-to-seed variation on the
+average-case metrics. The hardest-case metric, Worst(8), and the separate
+AutoAttack-$\ell_\infty$ checks remain broadly comparable to Multi-AT.
+AutoAttack is reported separately from Mean(8), so it is treated as a stress
+test rather than part of the main aggregate ranking. These results support a
+conservative conclusion: in the evaluated CIFAR-10/ResNet-18 setting,
+AttackDRO++ provides a modest average-case refinement of Multi-AT without
+establishing broader robustness claims.
