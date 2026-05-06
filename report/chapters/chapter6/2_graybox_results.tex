@@ -7,7 +7,7 @@ AttackDRO++ improves average and held-out robustness over Multi-AT on
 \(n=20\) paired seeds. We next test whether this gain also holds under
 cross-model transfer, using the graybox protocol of
 Section~\ref{sec:ch5_graybox_protocol}. In this setting, adversarial examples
-are generated on one checkpoint and evaluated on an independently trained
+are generated on one checkpoint and evaluated on a separately trained
 target checkpoint.
 
 \paragraph{Random-seed checkpoint panel and whitebox sanity check.}
@@ -64,8 +64,9 @@ $1.0$~pp. More importantly, the paired Mean(8) delta of AttackDRO++ minus
 Multi-AT is $+0.184$~pp on the $n=5$ graybox panel and
 $+0.279$~pp on the full $n=20$ panel: both are positive and of the same
 order of magnitude. The graybox cache is therefore consistent with the
-main evaluation protocol and supports the cross-method analyses in the following
-subsections.
+main evaluation protocol. Because this is a smaller five-seed panel, the next
+subsections use it to test whether the whitebox trend has a corresponding
+transfer pattern rather than to replace the main aggregate evidence.
 
 \subsection{Cross-Method Transfer Structure}
 \label{subsec:ch6_graybox_transfer_structure}
@@ -99,8 +100,9 @@ The gap analysis below quantifies this structural inflation directly. Second, th
 row is consistently above the Multi-AT row for every surrogate,
 with cross-method gaps ranging from $+0.17$~pp (DDN-AT surrogate) to
 $+0.61$~pp (PGD-AT surrogate). The whitebox advantage of AttackDRO++
-over Multi-AT therefore persists when adversarial examples are
-crafted on independently trained surrogates.
+over Multi-AT therefore appears in the same direction when adversarial examples
+are crafted on separately trained surrogates, but the transfer setting still
+needs the paired-dependence caution below.
 
 The aggregate transfer matrix hides important attack-family structure.
 Figures~\ref{fig:ch6_graybox_transfer_linf} and~\ref{fig:ch6_graybox_transfer_l2}
@@ -209,7 +211,7 @@ paired observations and makes the comparison invariant to which method is chosen
 as the surrogate. Because these paired observations share target checkpoints,
 surrogate checkpoints, random seeds, and attack families, the per-cell tests
 should be interpreted as evidence of a consistent transfer trend rather than as
-tests over fully independent training runs.
+standalone evidence from mutually independent training-run panels.
 \begin{table}[H]
 \centering
 \caption[Paired graybox comparisons]{Paired graybox comparisons. Each row uses $n=200$ paired
@@ -290,7 +292,7 @@ of $d_z \approx 0.42$. This effect is roughly twice the corresponding
 whitebox delta of $+0.279$~pp on the same seed panel and has a very small
 \(p\)-value under the shared-checkpoint paired test. Read with the dependence
 caution above, this supports a consistent transfer trend rather than a claim
-over fully independent training runs.
+from a mutually independent training-run panel.
 
 The single-attack contrasts confirm the expected specialist-versus-balanced
 pattern. AttackDRO++ improves on PGD-AT by $+4.44$~pp at
@@ -346,8 +348,8 @@ already train against these attacks. The graybox Mean(8) gain is
 therefore distributed across attack families rather than concentrated on
 one family. Because the per-attack observations reuse the same target and
 surrogate checkpoints across attack families, these \(p\)-values should be read
-as consistency checks over the graybox panel rather than as tests over fully
-independent training runs.
+as consistency checks over the graybox panel rather than as standalone
+training-run proof.
 
 We aggregate the per-attack deltas into the four attack groups defined
 in Section~\ref{sec:ch5_evaluation_metrics} to compare the cross-method graybox
@@ -377,14 +379,16 @@ AttackDRO++ & $59.96$          & $77.78$          & \bestval{69.18} & $79.35$ & 
 The family decomposition makes three points concrete. The held-out
 $\ell_\infty$ column has AttackDRO++ at the top ($69.18\%$) by a small
 but consistent margin over the other three methods. The held-out
-$\ell_2$ column is dominated by DDN-AT ($84.85\%$), with AttackDRO++
+$\ell_2$ column is led by DDN-AT ($84.85\%$), with AttackDRO++
 ($79.35\%$) ranked second and improving on Multi-AT by
 $+0.73$~pp. The seen $\ell_2$ column shows the same pattern. The seen
 $\ell_\infty$ column favors PGD-AT, again by structure: surrogates
 generate strong PGD-$\ell_\infty$ adversarial examples, and only PGD-AT
 is robust to them. In this focused five-seed panel, AttackDRO++ is the
 only method that is at or above Multi-AT on every attack family, while
-DDN-AT and PGD-AT each remain narrow specialists under transfer.
+DDN-AT and PGD-AT each remain narrow specialists under transfer. This supports
+the balanced-profile interpretation, but it remains a focused five-seed
+graybox panel rather than a replacement for the larger whitebox comparison.
 
 \paragraph{Graybox-minus-whitebox gap and specialist inflation.}
 
@@ -562,7 +566,6 @@ on $\ell_2$ cells, while AttackDRO++ retains the wins it needs on the
 $\ell_\infty$ cells that DDN-AT collapses on under whitebox attack
 (Section~\ref{subsec:ch6_per_attack_accuracy}).
 
-The heatmaps in
 The per-cell deltas in Figures~\ref{fig:ch6_graybox_delta_multiat}
 through~\ref{fig:ch6_graybox_delta_ddnat} make these patterns explicit:
 green cells favor AttackDRO++, red cells favor the baseline.
@@ -622,7 +625,7 @@ and report this decomposition for whitebox Mean(8), cross-method graybox
 Mean(8), and the bottom-10-cell cross-method graybox average (the average
 graybox accuracy on the ten attack-by-class cells in which the target is
 weakest). The bottom-10 metric is included because it isolates worst-cell
-behavior, which is most sensitive to the AttackDRO++ objective.
+behavior in this panel, where the design intent of AttackDRO++ is most visible.
 
 \begin{table}[H]
 \centering
@@ -646,20 +649,23 @@ Bottom-10 graybox       & DDN-AT & $-0.090$ & $+0.799$ & $+0.709$ \\
 \bottomrule
 \end{tabular}
 \end{table}
-The AttackDRO++ effect (column 4) is positive on every metric and
+The AttackDRO++ component (column 4) is positive on every metric and
 decomposition path, ranging from $+0.184$~pp on whitebox Mean(8) to
 $+0.799$~pp on the bottom-10 cross-graybox metric. Two implications
 follow. 
 
-First, the AttackDRO++ effect is larger under graybox transfer
-than under direct whitebox attack, consistent with the
+First, the AttackDRO++ component is larger under graybox transfer
+than under direct whitebox attack in this decomposition, consistent with the
 $+0.279$~pp $\rightarrow$ $+0.549$~pp scaling observed in
 Section~\ref{subsec:ch6_paired_graybox_comparisons}. 
 
-Second, the AttackDRO++ effect is
+Second, the AttackDRO++ component is
 roughly four times larger on the bottom-10 cells ($+0.799$~pp) than on
-whitebox Mean(8), supporting the design intent that the AttackDRO++ primarily reshapes worst-cell behavior rather than the
-average. The multi-attack column tells a complementary specialist story. 
+whitebox Mean(8), consistent with the design intent that AttackDRO++ should
+help difficult cells rather than only raising the average. This decomposition
+does not identify which internal component drives the pattern; it only separates
+the observed Multi-AT and AttackDRO++ increments. The multi-attack column tells
+a complementary specialist story. 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/graybox/method_decomposition_three_panel_science.png}
@@ -677,12 +683,12 @@ when the baseline is DDN-AT, but removes $-2.76$~pp of cross-graybox
 Mean(8) for the same baseline, because DDN-AT's graybox accuracy is
 inflated by the very $\ell_\infty$ transfer mismatch that
 Multi-AT corrects. The AttackDRO++ component remains positive in both
-cases, indicating that it adds robustness that is not absorbed by either
-multi-attack training alone or DDN-AT's structural graybox advantage.
+cases, suggesting an additional positive component beyond either multi-attack
+training alone or DDN-AT's structural graybox advantage in this decomposition.
 
 The graybox analysis tests whether the whitebox pattern survives transfer from
-independently trained surrogate checkpoints. It supports the same broad
+separately trained surrogate checkpoints. It supports the same broad
 interpretation as the direct whitebox evaluation, but transfer matrices and
-paired comparisons do not identify which design choices make AttackDRO++ stable.
+paired comparisons do not identify which design choices drive the pattern.
 The next section therefore turns to hyperparameter sensitivity, focusing on
 cluster granularity, anchor strength, and refresh frequency.

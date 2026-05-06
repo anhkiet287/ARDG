@@ -9,8 +9,9 @@ hyperparameters: the number of discovered clusters, the strength of the uniform
 anchor, and the frequency with which clusters are refreshed.
 
 These ablations are intended as configuration guidance rather than as a second
-main comparison. Unless otherwise stated, they use the same CIFAR-10, ResNet-18,
-source-attack, and evaluation-attack protocol defined in Chapter~\ref{chap:experimental_setup}.
+main comparison or theoretical proof. Unless otherwise stated, each setting uses
+three available runs under the same CIFAR-10, ResNet-18, source-attack, and
+evaluation-attack protocol defined in Chapter~\ref{chap:experimental_setup}.
 Mean(8) and Worst(8) follow the definitions in Section~\ref{sec:ch5_evaluation_metrics}:
 both are computed over the eight non-AutoAttack evaluation attacks, while
 AutoAttack-$\ell_\infty$ is reported separately.
@@ -85,8 +86,9 @@ The ablation supports using a moderate number of clusters rather than treating
 the cluster count as a highly tuned parameter. The default $K=4$ is expressive
 enough to go beyond the two source attack identities, but it does not fragment
 the training batch as aggressively as larger values. Therefore, the evidence
-supports $K=4$ as a stable practical choice, not as a universally optimal cluster
-count.
+supports $K=4$ as a practical default in this protocol, not as a universally
+optimal cluster count. The next ablation checks whether the anchor strength is
+similarly tolerant to moderate changes.
 
 \subsection{Anchor Strength: Finding a Stable Trade-off}
 \label{subsec:ch6_ablation_anchor_strength}
@@ -152,8 +154,8 @@ The lower value
 $\lambda_{\mathrm{DRO}}=0.20$ remains close, suggesting that the method does not
 require a sharply tuned anchor. The higher value $\lambda_{\mathrm{DRO}}=0.50$
 slightly reduces Mean(8) and AutoAttack, which is consistent with the idea that
-too much emphasis on adaptive cluster weighting can reduce the stabilizing effect
-of the uniform multi-attack baseline.
+too much emphasis on adaptive cluster weighting can weaken the contribution of
+the uniform multi-attack baseline.
 
 Overall, the anchor-strength ablation supports the design motivation from
 Chapter~\ref{chap:methodology}. AttackDRO++ benefits from a nonzero
@@ -161,7 +163,9 @@ cluster-level correction, but the correction should remain anchored to the
 uniform multi-attack objective. The default value
 $\lambda_{\mathrm{DRO}}=0.35$ is retained because it gives the best balance
 among the tested settings without relying entirely on either uniform ERM or
-aggressive Cluster-DRO weighting.
+aggressive Cluster-DRO weighting. Because this panel uses three runs per
+setting, the conclusion is configuration guidance rather than proof that this
+anchor is optimal in other protocols.
 
 \subsection{Recluster Frequency: How Often Should Groups Update?}
 \label{subsec:ch6_ablation_recluster_frequency}
@@ -233,8 +237,7 @@ Refresh interval
 We retain $R=2$ epochs as the default because it gives comparable robustness
 while reducing the frequency of cluster refitting. This is a practical choice:
 the ablation suggests that the method is not highly sensitive to the exact
-refresh interval, so the less frequent schedule is preferred for stability and
-simplicity.
+refresh interval, so the less frequent schedule is preferred for simplicity.
 
 \paragraph{Supplementary architecture check.}
 A single-run WRN-28-10 check is reported in Appendix~\ref{app:extras} as
@@ -248,6 +251,7 @@ evaluated more systematically in future work.
 Together, these ablations suggest that the final AttackDRO++ configuration is
 not the result of a fragile hyperparameter choice. Moderate clustering
 granularity, moderate anchor strength, and a two-epoch refresh schedule provide a
-stable practical configuration. The ablations also define the limits of the
-current evidence: they support the selected ResNet-18 configuration, but broader
-architecture-level conclusions require additional repeated-seed experiments.
+practical configuration for the evaluated setting. The ablations also define the
+limits of the current evidence: they use fewer runs than the main comparison and
+support the selected ResNet-18 configuration, but broader architecture-level
+conclusions require additional repeated-seed experiments.

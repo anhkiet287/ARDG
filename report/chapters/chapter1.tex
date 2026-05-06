@@ -4,201 +4,176 @@
 \section{Motivation}
 
 Deep neural networks can achieve high standard accuracy while remaining
-sensitive to deliberately constructed perturbations of their inputs.  The
-perturbations studied in adversarial robustness are usually constrained to be
-small under a chosen norm, yet they can change the prediction of a trained
-classifier with high reliability \cite{szegedy2014intriguing,goodfellow2015explaining}.
-Adversarial training responds to this failure mode by including adversarial
-examples during optimization, and it has become one of the most widely used
-empirical defenses under specified threat models \cite{madry2019towards}.
+vulnerable to small, deliberately constructed input perturbations.  These
+adversarial examples are usually constrained by a norm budget, but they can
+still change the prediction of a trained classifier with high reliability
+\cite{szegedy2014intriguing,goodfellow2015explaining}.  Adversarial training
+addresses this failure mode by including adversarially perturbed examples during
+optimization and is one of the most widely used empirical defenses under
+specified threat models \cite{madry2019towards}.
 
-The strength of adversarial training is also the source of a practical
-limitation: robustness is shaped by the attack used to generate the training
-examples.  A model trained primarily against a projected-gradient
-$\ell_\infty$ attack may learn invariances that are useful for that geometry
-without transferring equally well to $\ell_2$ attacks, decision-boundary
-attacks, or attacks with different optimization behavior.  Conversely, a model
-trained against an $\ell_2$ source attack may show a different pattern of
-robustness and weakness.  This report studies that mismatch as a
-cross-attack robustness problem, where the relevant question is not whether a
-model survives one attack, but how its robust accuracy is distributed across a
-suite of seen and held-out attacks.
+The practical limitation is that adversarial training is shaped by the attack
+used to generate the training examples.  A model trained mainly against a
+projected-gradient \(\ell_\infty\) attack can become strong for that geometry
+while remaining less reliable under \(\ell_2\) attacks, boundary-oriented
+attacks, or attacks with different optimization dynamics.  Likewise, a model
+trained against an \(\ell_2\) source attack can develop a different pattern of
+strengths and weaknesses.  This report studies that behavior as a
+cross-attack robustness problem: the question is not whether a model survives
+one attack, but how its robustness is distributed across seen and held-out
+attacks.
 
-Multi-attack adversarial training is a natural stronger baseline because it
-exposes the model to more than one source attack during training.  In this
-report, Multi-AT denotes uniform multi-attack adversarial training over shared
-source attacks.  This design broadens the training signal, but it still treats
-all source examples through a fixed averaging rule.  If the hardest examples
-cut across attack families, classes, and optimization trajectories, then fixed
-attack identities can be too coarse to describe where training is failing.
+Multi-attack adversarial training is the main strong baseline for this setting.
+In this report, Multi-AT means uniform multi-attack adversarial training on two
+source attacks, PGD-\(\ell_\infty\) and DDN-\(\ell_2\).  This is a stronger
+practical baseline than training on a single source attack because the model is
+exposed to both an \(\ell_\infty\) and an \(\ell_2\) training signal.  However,
+Multi-AT still averages over the generated examples with a fixed rule.  If hard
+examples are defined by class, representation geometry, margin, or optimization
+trajectory rather than only by attack identity, then fixed source-attack labels
+are too coarse to describe where training is failing.
 
-Group distributionally robust optimization (Group DRO) offers a complementary
-view: rather than optimizing only the average loss, training can adaptively
-emphasize groups with higher loss \cite{sagawa2019groupdro}.  Its usefulness
-depends on whether the groups correspond to meaningful weaknesses.  AttackDRO
-uses fixed source attack identities as groups, but those identities do not
-necessarily capture latent hard subsets within an attack family or shared
-failure modes across families.  This motivates a move from known attack labels
-to discovered latent groups.
+This motivates an attacks-as-domains view.  Each attack generator induces a
+domain-like distribution of adversarial examples through its perturbation set,
+loss objective, and optimization procedure.  Group distributionally robust
+optimization (Group DRO) suggests that training can emphasize groups with higher
+loss rather than optimizing only an average loss \cite{sagawa2019groupdro}.  The
+key question is how those groups should be defined.  Attack identity is one
+possible grouping, but examples within the same attack can have different
+difficulty, and examples from different attacks can share similar failure modes.
 
-Domain generalization provides a useful lens for this move.  Attacks can be
-viewed as algorithm-induced domains because each attack changes the input
-distribution according to a particular perturbation set, loss objective, and
-optimization procedure.  At the same time, adversarial robustness is not the
-same problem as ordinary domain generalization: evaluation is threat-model
-aware, attacks are constructed against the model, and robustness claims must be
-conditioned on the attacks that were actually tested.  For that reason, this
-report uses the attacks-as-domains perspective as a design tool, not as a claim
-that the final method solves general domain generalization.
+AttackDRO++ addresses this group-definition problem with latent clusters,
+gradient fingerprints, and a uniform anchor.  Latent clusters replace fixed
+attack identities with groups discovered from adversarial examples.  Gradient
+fingerprints add optimization-aware information, so grouping is not based only
+on representation similarity.  The uniform anchor keeps the adaptive
+cluster-level objective tied to the Multi-AT loss, making AttackDRO++ a
+refinement of Multi-AT rather than a replacement for multi-attack training.
 
-The final method in this report, AttackDRO++, combines latent cluster discovery
-with optimization-aware information.  Cluster-DRO first replaces fixed attack
-identities with discovered latent clusters.  AttackDRO++ then augments this
-cluster-level grouping with gradient fingerprints and a uniform anchor.  The
-gradient fingerprints help clustering reflect optimization-level difficulty,
-while the anchor keeps adaptive reweighting tied to the stable Multi-AT
-training signal.  The resulting method is a uniform-anchored Cluster-DRO
-procedure with gradient fingerprints.
-
-The empirical claim is deliberately bounded.  In the main CIFAR-10 and
-ResNet-18 setting, AttackDRO++ increases average robustness balance relative
-to the uniform multi-attack baseline, while hardest-case robustness, full-test
-AutoAttack, graybox transfer, ablation behavior, and supplementary WRN-28-10
-checks are interpreted cautiously.  The report therefore focuses on a practical
-multi-attack adversarial training setting rather than unrestricted robustness
-against arbitrary attacks.
+The intended claim is deliberately bounded.  The goal is not to establish
+unrestricted robustness or a new universal defense.  Instead, the report asks
+whether AttackDRO++ can provide a modest but consistent average improvement and
+lower observed seed-to-seed variation over Multi-AT under the evaluated
+CIFAR-10/ResNet-18 setting, while keeping hardest-case and AutoAttack behavior
+separate from the main aggregate ranking.
 
 \section{Problem Statement}
 
 This report studies robust image classification under a controlled multi-attack
 training protocol.  A classifier is trained using adversarial examples from a
-fixed source attack set, with PGD-$\ell_\infty$ and DDN-$\ell_2$ serving as
-the shared sources for the multi-attack methods.  The trained classifier is
-then evaluated across seen and held-out attacks that differ in perturbation
-norm, optimization objective, and attack dynamics.  The central problem is how
-to allocate training emphasis so that robustness is balanced across this
-evaluation suite without optimizing directly for held-out attacks.
+fixed source attack set.  For the multi-attack methods, the shared source
+attacks are PGD-\(\ell_\infty\) and DDN-\(\ell_2\).  The trained classifier is
+then evaluated on both seen-source attacks and held-out attacks that differ in
+norm, objective, and attack dynamics.
 
-Uniform multi-attack training is the starting point because it controls for
-the source adversarial data generation process.  This report introduces
-AttackDRO and Cluster-DRO as intermediate design steps that motivate the final
-method.  The main empirical comparison in Chapter~\ref{chap:results_analysis}
-focuses on PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ under the fixed
-experimental protocol.  Under this setup, fixed attack identities are a
-plausible first grouping, but they can miss examples that are hard for reasons
-not captured by the source attack label.  A high-loss subset may be defined by
-class structure, representation geometry, local margin, optimization trajectory,
-or an interaction among these factors.
+The central problem is how to use the source attacks without overfitting the
+training objective to coarse attack identities.  Single-source adversarial
+training can specialize to one perturbation family.  Multi-AT reduces this
+specialization by training on both source families, and therefore serves as the
+main practical baseline.  Yet fixed attack identities may still hide important
+variation inside each attack family.  Some examples can be difficult because of
+their class, feature representation, local margin, or induced gradient signal,
+not simply because they were generated by PGD or DDN.
 
-The problem is therefore not only to train on multiple attacks, but to identify
-which parts of the induced training distribution deserve additional emphasis.
-Latent cluster discovery addresses the group-definition problem by replacing
-manual attack labels with groups inferred from training examples.  Gradient
-fingerprints add information about how examples interact with the classifier
-head during optimization, so that clustering is not limited to representation
-similarity alone.  A uniform anchor then stabilizes the adaptive objective by
-retaining a direct connection to the Multi-AT loss.
+AttackDRO++ is motivated by this latent difficulty structure.  It discovers
+cluster groups from adversarial examples, enriches those groups with gradient
+fingerprints, and uses an anchored Cluster-DRO objective to emphasize harder
+groups without discarding the uniform multi-attack signal.  The main empirical
+comparison focuses on PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ under the same
+CIFAR-10/ResNet-18 training and evaluation protocol.  AttackDRO and Cluster-DRO
+are used as design steps in the methodology, not as the primary
+Chapter~\ref{chap:results_analysis} comparison set.
 
-Evaluation must also reflect the structure of the problem.  Mean(8) summarizes
-average robust accuracy across the eight non-AutoAttack attacks, Worst(8)
-reports the hardest attack in that suite, and held-out summaries separate
-attacks that were not used as training sources.  AutoAttack-$\ell_\infty$ is
-reported separately as a hard evaluation rather than folded into Mean(8)
-\cite{croce2020reliable}.  The goal is to assess robust average performance
-and hardest-case behavior under a predefined protocol, with claims interpreted
-through paired multi-seed comparisons.
+Evaluation follows the same distinction between source and held-out attacks.
+Mean(8) averages robust accuracy over the eight non-AutoAttack evaluation
+attacks.  Worst(8) reports the weakest attack in that same suite, and held-out
+summaries separate attacks that were not used as training sources.
+AutoAttack-\(\ell_\infty\) is reported separately as a standardized stress test and is not
+part of Mean(8) or the main aggregate ranking \cite{croce2020reliable}.  All
+claims are therefore tied to the defined attack suite, paired seed protocol, and
+model family used in the experiments.
 
 \section{Research Questions and Objectives}
 
-The report is organized around four research questions that connect the
-motivation in this chapter to the empirical answers in
-Chapter~\ref{chap:conclusion}.  The questions move from the behavior of
-single-source adversarial training, through the role of uniform multi-attack
-training, to the additional value and configuration sensitivity of AttackDRO++.
+The report is organized around four research questions that can be answered by
+the evidence in Chapter~\ref{chap:results_analysis} and summarized in
+Chapter~\ref{chap:conclusion}.
 
 \textbf{RQ1:} To what extent does single-source adversarial training produce
 attack-dependent robustness across attacks with different norms, objectives, or
 optimization behavior?
 
-\textbf{RQ2:} Does uniform multi-attack adversarial training improve robustness
-balance across seen and held-out attacks compared with single-source
-adversarial training baselines?
+\textbf{RQ2:} Does Multi-AT improve robustness balance across seen and held-out
+attacks compared with single-source adversarial training baselines?
 
-\textbf{RQ3:} Does AttackDRO++ improve average robustness balance over the
-uniform multi-attack baseline while preserving hardest-case and AutoAttack
-behavior under the evaluated protocol?
+\textbf{RQ3:} Does AttackDRO++ provide a modest but consistent average
+improvement over Multi-AT, while leaving hardest-case and AutoAttack behavior
+broadly unchanged under the evaluated protocol?
 
-\textbf{RQ4:} Which configuration choices, including cluster count, anchor
-strength, and cluster refresh schedule, are most important for stable
-AttackDRO++ performance?
+\textbf{RQ4:} How sensitive is AttackDRO++ to practical configuration choices
+such as cluster count, anchor strength, and cluster refresh schedule?
 
-These questions lead to four concrete objectives.  The report builds a
-controlled multi-attack adversarial training and evaluation pipeline; introduces
-AttackDRO and Cluster-DRO as methodology steps that lead to AttackDRO++;
-compares PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ in the main Chapter~6
-empirical panel; evaluates per-attack accuracy, Mean(8), Worst(8), held-out
-attack summaries, AutoAttack-$\ell_\infty$, graybox transfer, ablations, and
-supplementary architecture checks; and interprets empirical claims
-conservatively through paired multi-seed comparisons.
+These questions lead to four objectives.  First, the report defines a controlled
+multi-attack training and evaluation pipeline with fixed source attacks,
+held-out attacks, paired seed comparisons, and separate AutoAttack reporting.
+Second, it develops AttackDRO++ as a latent-group refinement of Multi-AT using
+clusters, gradient fingerprints, and a uniform anchor.  Third, it compares
+PGD-AT, DDN-AT, Multi-AT, and AttackDRO++ using aggregate, per-attack,
+class-wise, graybox, and hardest-case diagnostics.  Fourth, it interprets
+ablations and supplementary architecture checks as configuration and robustness
+evidence, not as broad claims beyond the evaluated setting.
 
 \section{Contributions}
 
-This report makes five contributions within the bounded setting of CIFAR-10
-robust training and the protocol defined in Chapter~\ref{chap:experimental_setup}.
+This report makes four contributions within the bounded CIFAR-10/ResNet-18
+setting defined in Chapter~\ref{chap:experimental_setup}.
 
 \begin{enumerate}
-\item It frames cross-attack robustness as a practical multi-attack training
-problem and defines a metric protocol that separates per-attack accuracy,
-Mean(8), Worst(8), held-out attacks, and AutoAttack-$\ell_\infty$ stress
-evaluation.
-
-\item It provides a controlled main comparison of single-source adversarial
-training, Multi-AT, and AttackDRO++ under shared source attacks, while using
-AttackDRO and Cluster-DRO as intermediate design steps to keep the distinction
-between adversarial data generation and group-weighting design explicit.
+\item It frames the task as cross-attack adversarial robustness and uses an
+attacks-as-domains view to separate source attacks from held-out attacks.  The
+evaluation protocol reports per-attack accuracy, Mean(8), Worst(8), held-out
+summaries, and a separate AutoAttack-\(\ell_\infty\) stress test.
 
 \item It defines AttackDRO++ as the final proposed method: uniform-anchored
 Cluster-DRO with gradient fingerprints.  The method combines latent cluster
-discovery, augmented clustering features, optimization-aware gradient
-fingerprints, and a uniform anchor in one training pipeline.
+groups, optimization-aware gradient fingerprints, and a uniform anchor that keeps
+the adaptive objective connected to the Multi-AT baseline.
 
-\item It evaluates the method over a multi-seed CIFAR-10 and ResNet-18 panel,
-including whitebox attack summaries, seen and held-out attack breakdowns,
-paired statistical comparisons, class-wise diagnostics, and graybox transfer
-analysis.
+\item It provides a controlled empirical comparison in which the main methods are
+PGD-AT, DDN-AT, Multi-AT, and AttackDRO++.  Under the evaluated CIFAR-10/ResNet-18
+setting, the evidence supports a modest but consistent average improvement and
+lower observed seed-to-seed variation versus Multi-AT, while hardest-case and
+AutoAttack results remain broadly similar.
 
-\item It analyzes design choices through ablations and supplementary checks,
-including cluster count, anchor strength, refresh schedule, AutoAttack
-evaluation, and a WRN-28-10 architecture check, while keeping the resulting
-claims tied to the evidence available for each setting.
+\item It adds diagnostic evaluation beyond the main aggregate score, including
+bounded multi-attack whitebox evaluation, graybox transfer, class-wise analysis,
+configuration ablations, and a supplementary WRN-28-10 check.  These analyses are
+used to calibrate the claims rather than to argue for broad architecture or
+attack-suite generalization.
 \end{enumerate}
 
 \section{Report Organization}
 
-Chapter~\ref{chap:background} introduces the technical background for the
-report, including adversarial examples, attack algorithms, adversarial
-training, distributionally robust optimization, domain generalization,
-clustering, and the statistical tools used for paired multi-seed evaluation.
-Appendix~\ref{app:algorithms} contains compact pseudocode for the attack and
-training procedures so that Chapter~\ref{chap:background} can remain
-conceptual rather than algorithm-heavy.
+Chapter~\ref{chap:background} introduces the background needed for the report:
+adversarial examples, attack algorithms, adversarial training, distributionally
+robust optimization, domain generalization, clustering, and statistical tools
+for paired multi-seed evaluation.  Appendix~\ref{app:algorithms} provides compact
+pseudocode for the attack and training procedures.
 
-Chapter~\ref{chap:related_work} reviews related work on multi-attack
-adversarial training, Group DRO, domain generalization, and cluster discovery.
-It uses those strands to identify the remaining gap that motivates a method
-combining multi-attack training, adaptive group emphasis, latent group
-discovery, optimization-aware clustering, and uniform anchoring.
+Chapter~\ref{chap:related_work} reviews multi-attack adversarial training,
+Group DRO, domain generalization, and cluster discovery.  It uses these areas to
+identify the gap addressed by latent group discovery with an anchored
+multi-attack objective.
 
-Chapter~\ref{chap:methodology} defines AttackDRO++ and the training progression
-leading to it: Multi-AT, AttackDRO, Cluster-DRO, and the final uniform-anchored
-Cluster-DRO method with gradient fingerprints.  Chapter~\ref{chap:experimental_setup}
-then specifies the experimental setup, including dataset, architecture, source
-attacks, evaluation suite, metrics, hyperparameters, statistical protocol, and
-graybox transfer design.
+Chapter~\ref{chap:methodology} defines the method progression from Multi-AT to
+AttackDRO, Cluster-DRO, and the final AttackDRO++ training framework.
+Chapter~\ref{chap:experimental_setup} specifies the dataset, architecture,
+source attacks, evaluation suite, metrics, hyperparameters, statistical protocol,
+and graybox transfer design.
 
-Chapter~\ref{chap:results_analysis} presents the empirical analysis: main
-whitebox results, class-wise whitebox diagnostics, graybox transfer, sensitivity
-studies, and supplementary checks.  Chapter~\ref{chap:conclusion} closes the
-report by answering the research questions, stating the limitations of the
-evidence, and outlining extensions that would be needed to test the method
-under broader datasets, architectures, and attack settings.
+Chapter~\ref{chap:results_analysis} presents the empirical analysis: aggregate
+whitebox robustness, per-attack and class-wise diagnostics, graybox transfer,
+ablation studies, and supplementary checks.  Chapter~\ref{chap:conclusion}
+answers the research questions, states the limitations of the evidence, and
+outlines future work needed for broader datasets, architectures, and attack
+settings.
