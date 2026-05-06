@@ -155,12 +155,14 @@ $z_i=f_\theta(x_i^{\mathrm{adv}})$};
 
 \node[smallblock, below=0.55cm of logits] (grad)
 {Gradient fingerprint\\[2pt]
-$g_i=P^\top \nabla_W \ell_i$\\[-1pt]
+$g_i=\mathrm{vec}(G_i)P$\\[-1pt]
 };
 
 \node[merge, below=1.0cm of grad] (aug)
-{Augmented feature\\[2pt]
-$u_i=[h_i;z_i;y_i;g_i]$};
+{Canonical augmented\\clustering feature\\[2pt]
+$\psi_i=[\operatorname{norm}(h_i);$\\[-1pt]
+$\lambda_{\mathrm{lbl}}\tilde{y}_i;$\\[-1pt]
+$\lambda_{\mathrm{grad}}\operatorname{norm}(g_i)]$};
 
 \node[outblock, below=0.65cm of aug] (cluster)
 {K-means\\clustering};
@@ -207,9 +209,14 @@ adversarial sample \(x_i^{\mathrm{adv}}\) is passed through the same training
 model \(f_\theta\), producing both the backbone feature \(h_i\) and classifier
 output \(z_i\). A gradient fingerprint \(g_i\) is computed from the
 classifier-head loss gradient and projected to a low-dimensional vector. The
-feature, prediction signal, label information, and gradient fingerprint are
-combined as \(u_i=[h_i;z_i;y_i;g_i]\), which is then used for K-means clustering
-and latent group assignment.}
+representation feature, scalar normalized label feature, and gradient fingerprint
+are combined as the canonical augmented clustering feature
+\(\psi_i=[\operatorname{norm}(h_i);
+\lambda_{\mathrm{lbl}}\tilde{y}_i;
+\lambda_{\mathrm{grad}}\operatorname{norm}(g_i)]\), which is then used for
+K-means clustering and latent group assignment. Logits are used to compute
+probabilities and gradient fingerprints, but they are not concatenated directly
+into \(\psi_i\).}
 \label{fig:gradfp_augmented_feature}
 \end{figure}
 
