@@ -70,6 +70,139 @@ g_i = \mathrm{vec}(G_i)P
 In our default setting, \(d_{\mathrm{proj}}=128\). The projection is fixed throughout
 training and introduces no additional learnable parameters.
 
+\begin{figure}[H]
+\centering
+\resizebox{0.55\textwidth}{!}{%
+\begin{tikzpicture}[
+    node distance = 0.65cm,
+    >=Latex,
+    font=\small,
+    every node/.append style={align=center},
+    block/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=5.0cm,
+        minimum height=1.15cm,
+        text width=5.2cm,
+        fill=blue!8,
+        inner sep=4pt
+    },
+    smallblock/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=5.0cm,
+        minimum height=1.1cm,
+        text width=5.2cm,
+        fill=green!8,
+        inner sep=4pt
+    },
+    merge/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=5.0cm,
+        minimum height=1.2cm,
+        text width=5.2cm,
+        fill=orange!12,
+        inner sep=4pt
+    },
+    outblock/.style={
+        draw,
+        rounded corners,
+        thick,
+        align=center,
+        minimum width=5.0cm,
+        minimum height=1.1cm,
+        text width=5.2cm,
+        fill=purple!8,
+        inner sep=4pt
+    },
+    line/.style={-Latex, thick},
+    groupbox/.style={draw, dashed, rounded corners, inner sep=10pt},
+    sideboxlabel/.style={font=\footnotesize, rotate=90, anchor=south}
+]
+
+\node[block] (input)
+{Adversarial sample\\[2pt] $x_i^{\mathrm{adv}}$};
+
+\node[block, below=0.7cm of input] (model)
+{Training model\\[2pt]
+$f_\theta = g_\theta \circ \phi_\theta$\\[-1pt]
+};
+
+\node[smallblock, below=1.0cm of model] (rep)
+{Backbone feature\\[2pt]
+$h_i=\phi_\theta(x_i^{\mathrm{adv}})$};
+
+\node[smallblock, below=0.55cm of rep] (logits)
+{Classifier output\\[2pt]
+$z_i=f_\theta(x_i^{\mathrm{adv}})$};
+
+\node[smallblock, below=0.55cm of logits] (grad)
+{Gradient fingerprint\\[2pt]
+$g_i=P^\top \nabla_W \ell_i$\\[-1pt]
+};
+
+\node[merge, below=1.0cm of grad] (aug)
+{Augmented feature\\[2pt]
+$u_i=[h_i;z_i;y_i;g_i]$};
+
+\node[outblock, below=0.65cm of aug] (cluster)
+{K-means\\clustering};
+
+\node[outblock, below=0.65cm of cluster] (assign)
+{Latent group\\assignment\\[2pt]
+$c_i \in \{1,\dots,K\}$};
+
+\draw[line] (input) -- (model);
+
+\coordinate (signalStem) at ($(model.south)+(0,-0.45)$);
+\coordinate (splitRep) at ($(rep.west)+(-0.65,0)$);
+\coordinate (splitLogits) at ($(logits.west)+(-0.65,0)$);
+\coordinate (splitGrad) at ($(grad.west)+(-0.65,0)$);
+\draw[thick] (model.south) -- (signalStem);
+\draw[thick] (signalStem) -| (splitRep);
+\draw[thick] (splitRep) -- (splitGrad);
+\draw[line] (splitRep) -- (rep.west);
+\draw[line] (splitLogits) -- (logits.west);
+\draw[line] (splitGrad) -- (grad.west);
+
+\coordinate (mergeRep) at ($(rep.east)+(0.65,0)$);
+\coordinate (mergeLogits) at ($(logits.east)+(0.65,0)$);
+\coordinate (mergeGrad) at ($(grad.east)+(0.65,0)$);
+\draw[thick] (rep.east) -- (mergeRep);
+\draw[thick] (logits.east) -- (mergeLogits);
+\draw[thick] (grad.east) -- (mergeGrad);
+\draw[thick] (mergeRep) -- (mergeGrad);
+\draw[line] (mergeLogits) |- (aug.north);
+
+\draw[line] (aug) -- (cluster);
+\draw[line] (cluster) -- (assign);
+
+\node[groupbox, fit=(rep)(logits)(grad)(splitRep)(mergeGrad),
+      label={[sideboxlabel]right:Signals from the same training model}] {};
+
+\node[groupbox, fit=(aug)(cluster)(assign),
+      label={[sideboxlabel]right:Latent group discovery}] {};
+
+\end{tikzpicture}%
+}
+\caption[Gradient fingerprint clustering feature]{Augmented clustering feature construction in AttackDRO++. Each
+adversarial sample \(x_i^{\mathrm{adv}}\) is passed through the same training
+model \(f_\theta\), producing both the backbone feature \(h_i\) and classifier
+output \(z_i\). A gradient fingerprint \(g_i\) is computed from the
+classifier-head loss gradient and projected to a low-dimensional vector. The
+feature, prediction signal, label information, and gradient fingerprint are
+combined as \(u_i=[h_i;z_i;y_i;g_i]\), which is then used for K-means clustering
+and latent group assignment.}
+\label{fig:gradfp_augmented_feature}
+\end{figure}
+
 The final augmented clustering feature is
 \[
 \psi_i =

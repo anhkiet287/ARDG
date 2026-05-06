@@ -1,6 +1,20 @@
 \section{Adversarial Attack Algorithms}
 
-The attacks used in this report are best understood as different approximations to the same inner maximization problem. They vary in perturbation norm, attacker access, optimization objective, update rule, and role in training or evaluation. Chapter~\ref{chap:experimental_setup} gives the concrete configuration values; this section defines the algorithms conceptually so that later comparisons can refer to them without reintroducing their mechanics. Appendix~\ref{app:algorithms} provides compact pseudocode for the attack and training procedures used throughout the report.
+The attacks used in this report are best understood as different approximations
+to the same inner maximization problem. They vary in perturbation norm, attacker
+access, optimization objective, update rule, and role in training or evaluation.
+Some attacks, such as PGD-based methods, directly maximize a loss within a fixed
+norm ball, while others, such as DeepFool, DDN, and CW, search for low-norm or
+boundary-oriented adversarial examples. These differences matter because a model
+that is robust to one attack procedure may still fail under another, which is the
+core motivation for the attacks-as-domains.
+
+Chapter~\ref{chap:experimental_setup} gives the concrete configuration values,
+including perturbation budgets, step counts, and which attacks are used for
+training or evaluation. This section instead defines the attacks conceptually so
+that later comparisons can refer to them without reintroducing their mechanics.
+Appendix~\ref{app:algorithms} provides compact pseudocode for the attack and
+training procedures used throughout the report.
 
 \subsection{Fast Gradient Sign Method with Random Start (FGSM-RS)}
 
@@ -17,6 +31,13 @@ x+\delta_0+\alpha\,\mathrm{sign}
 \]
 The random start reduces dependence on the clean point's immediate gradient direction and makes the one-step attack less brittle than deterministic FGSM \cite{wong2020fast}.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_fgsm-rs_3eps.pdf}
+\caption[FGSM-RS perturbation visualization]{FGSM-RS-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets. Each row shows the clean image, adversarial image, and normalized perturbation heatmap.}
+\label{fig:ch2_fgsm_rs_3eps}
+\end{figure}
+
 FGSM-RS is fast and useful for exposing obvious failures, but it is weaker than multi-step attacks and should not be treated as a complete robustness evaluation. In this thesis it is used only as a held-out $\ell_\infty$ evaluation attack. It is not a source training attack and does not define a training method.
 
 \subsection{Projected Gradient Descent (PGD)}
@@ -32,7 +53,22 @@ x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}
 \left(\nabla_x \ell(f_\theta(x_t^{\mathrm{adv}}),y)\right)
 \right).
 \]
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_pgd-ce_3eps.pdf}
+\caption[PGD-\(\ell_\infty\) perturbation visualization]{PGD-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_pgd_linf_3eps}
+\end{figure}
+
 For an $\ell_2$ variant, the update uses a normalized gradient direction and projection onto the $\ell_2$ ball. The algorithmic intuition is simple: repeated local ascent gives the attack more opportunities to find a high-loss point than a single FGSM step.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_pgd-l2_3eps.pdf}
+\caption[PGD-\(\ell_2\) perturbation visualization]{PGD-\(\ell_2\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_pgd_l2_3eps}
+\end{figure}
 
 PGD is strong, broadly used, and closely tied to adversarial training, but it still depends on the chosen norm, loss, step size, and iteration budget. PGD-AT is the training method that uses PGD-generated examples; PGD-$\ell_\infty$ and PGD-$\ell_2$ are the attacks themselves. This distinction is central to the thesis because Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++ share PGD-$\ell_\infty$ as a source attack while differing in how generated examples are grouped and weighted.
 
@@ -52,6 +88,13 @@ where $g(\cdot)$ is chosen so that successful adversarial examples have low obje
 
 CW-$\ell_2$ is a useful held-out evaluation attack because it probes a different loss geometry from PGD and FGSM-style attacks. Its limitation is computational cost, and its strength depends on optimization settings. In this thesis it is used as an evaluation attack only, not as a source attack for training.
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_cw-l2_3eps.pdf}
+\caption[CW perturbation visualization]{CW-\(\ell_2\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_cw_l2_3eps}
+\end{figure}
+
 \subsection{DeepFool}
 
 DeepFool is motivated by a geometric view of adversarial examples: if the classifier's decision boundary is nearby, a small movement toward that boundary can change the predicted class \cite{moosavi2016deepfool}. It is a whitebox boundary-oriented attack because it uses local gradient information to approximate the classifier near the current point. The report uses DeepFool-$\ell_2$ as a held-out $\ell_2$ evaluation attack.
@@ -63,12 +106,18 @@ r_t=
 \]
 In multiclass neural networks, DeepFool generalizes this idea by estimating the closest class boundary under a local linear approximation and iteratively updating the input until the predicted class changes or the iteration budget is reached.
 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_deepfool-l2_3eps.pdf}
+\caption[DeepFool perturbation visualization]{DeepFool-\(\ell_2\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized boundary-oriented perturbation heatmaps.}
+\label{fig:ch2_deepfool_l2_3eps}
+\end{figure}
 DeepFool is valuable because it emphasizes boundary proximity rather than directly maximizing cross-entropy. Its limitation is that local linearization is only an approximation for nonlinear networks, so it is still an attack heuristic rather than a certificate. In this thesis it complements PGD-$\ell_2$, DDN-$\ell_2$, and CW-$\ell_2$ in the evaluation suite.
 
 \subsection{Decoupled Direction and Norm (DDN)}
 
-Decoupled Direction and Norm (DDN) is motivated by the observation that the direction of an adversarial perturbation and the size of that perturbation can be adapted separately \cite{rony2019decoupling}. It is a whitebox $\ell_2$ attack: the adversary uses gradients to update direction while controlling the perturbation norm. DDN-$\ell_2$ is one of the two source attacks used for training in this thesis and is also included in evaluation.
-
+Decoupled Direction and Norm (DDN) is motivated by the observation that the direction of an adversarial perturbation and the size of that perturbation can be adapted separately \cite{rony2019decoupling}. It is a whitebox $\ell_2$ attack: the adversary uses gradients to update direction while controlling the perturbation norm. 
 At a high level, DDN updates a normalized direction using the loss gradient and then adjusts the current radius depending on attack success:
 \[
 \delta_{t+1}
@@ -79,9 +128,15 @@ At a high level, DDN updates a normalized direction using the loss gradient and 
 {\left\|\delta_t+\alpha\,\mathrm{Normalize}
 \left(\nabla_x \ell(f_\theta(x+\delta_t),y)\right)\right\|_2}.
 \]
-If the current perturbation is already adversarial, the radius can be reduced; otherwise, it can be increased. This decoupling lets the attack search for small successful $\ell_2$ perturbations without fixing the radius throughout the trajectory.
 
-DDN is efficient and well suited to $\ell_2$ adversarial training, but its behavior still depends on update and radius-adjustment choices. DDN-AT is the training method that uses DDN-generated adversarial examples, whereas DDN-$\ell_2$ is the attack. In the main comparisons, it provides the $\ell_2$ source counterpart to PGD-$\ell_\infty$.
+ 
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figures/adv_viz/adv_ddn-l2_3eps.pdf}
+\caption[DDN perturbation visualization]{DDN-\(\ell_2\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_ddn_l2_3eps}
+\end{figure}
+If the current perturbation is already adversarial, the radius can be reduced; otherwise, it can be increased. This decoupling lets the attack search for small successful $\ell_2$ perturbations without fixing the radius throughout the trajectory. DDN is efficient and well suited to $\ell_2$ adversarial training, but its behavior still depends on update and radius-adjustment choices. 
 
 \subsection{Momentum Iterative Fast Gradient Sign Method (MI-FGSM)}
 
@@ -100,6 +155,15 @@ x_{t+1}^{\mathrm{adv}}
 \Pi_{\mathcal{S}_\infty(\varepsilon)}
 \left(x_t^{\mathrm{adv}}+\alpha\,\mathrm{sign}(g_{t+1})\right).
 \]
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/adv_viz/adv_mifgsm_3eps.pdf}
+\caption[MI-FGSM perturbation visualization]{MI-FGSM-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_mifgsm_3eps}
+\end{figure}
+
 The momentum term smooths the update direction and can improve transferability across models.
 
 MI-FGSM is useful because it is close to PGD while still changing the attack dynamics. It can reveal whether robustness depends too narrowly on a particular first-order update rule. In this thesis it is a held-out $\ell_\infty$ evaluation attack and is not used for source adversarial training.
@@ -107,6 +171,14 @@ MI-FGSM is useful because it is close to PGD while still changing the attack dyn
 \subsection{TRADES-Style Projected Gradient Descent (TPGD)}
 
 The TPGD name is overloaded across software libraries and papers, so its meaning must be fixed for this report. Here, TPGD refers to the TRADES-style PGD attack used by the implemented evaluation code, not to target-label PGD. It is a whitebox $\ell_\infty$ evaluation attack whose objective is based on the divergence between clean and perturbed predictions \cite{zhang2019trades}.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/adv_viz/adv_tpgd_3eps.pdf}
+\caption[TPGD perturbation visualization]{TPGD-\(\ell_\infty\) adversarial examples on CIFAR-10 under three perturbation budgets, with normalized perturbation heatmaps.}
+\label{fig:ch2_tpgd_3eps}
+\end{figure}
 
 The attack maximizes a KL-divergence objective rather than ordinary cross-entropy:
 \[
@@ -118,6 +190,7 @@ p_\theta(\cdot\mid x)
 p_\theta(\cdot\mid x+\delta)
 \right).
 \]
+
 Projected gradient ascent then proceeds as in PGD, but with the KL objective replacing the classification loss. The intuition is to find perturbations that make the predictive distribution move away from the clean prediction, even when the ground-truth label is not directly used in the inner objective.
 
 TPGD is useful because it tests a loss objective that differs from cross-entropy PGD. Its limitation is that it is still an $\ell_\infty$ first-order attack and therefore does not replace broader evaluation across norms and attack families. In this thesis it is a held-out evaluation attack included in Mean(8), not a training source attack.
@@ -141,11 +214,13 @@ This expression captures the ensemble logic without deriving the internals of AP
 
 AutoAttack is stronger and more standardized than a single configured attack, but it is computationally more expensive. This report therefore evaluates AutoAttack-$\ell_\infty$ separately from Mean(8). AutoAttack-512 is used only as a sanity or stress check, while the primary ranking metric remains the eight-attack evaluation suite defined in Chapter~\ref{chap:experimental_setup}.
 
+To keep the attack descriptions focused on the optimization objectives, the grouped qualitative comparison of the full attack suite is provided in Appendix~\ref{app:adv_visualizations}. The individual attack sections include representative three-budget visualizations, while the appendix places the \(\ell_\infty\) and \(\ell_2\) attacks side by side.
+
 The attack suite separates source attacks, held-out evaluation attacks, and the separate AutoAttack stress test; Table~\ref{tab:ch2_attack_summary} records those roles without repeating the exact budgets and step counts deferred to Chapter~\ref{chap:experimental_setup}.
 
 \begin{table}[H]
 \centering
-\caption{Attack algorithms used in the report. Exact budgets and step counts are specified in Chapter~\ref{chap:experimental_setup}.}
+\caption[Attack algorithm overview]{Attack algorithms used in the report. Exact budgets and step counts are specified in Chapter~\ref{chap:experimental_setup}.}
 \label{tab:ch2_attack_summary}
 \small
 \setlength{\tabcolsep}{3pt}

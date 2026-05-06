@@ -2,38 +2,234 @@
 \section{Complete Training Framework}
 \label{sec:ch4_complete_pipeline}
 
-In this report, AttackDRO++ denotes the complete method: latent cluster discovery,
-augmented clustering features, gradient fingerprints, and a uniform-anchored
-Cluster-DRO objective. Algorithm~\ref{alg:ch4_attackdropp} summarizes this pipeline.
-The default hyperparameters in Table~\ref{tab:ch4_hparams} make that combined
-pipeline concrete by specifying the cluster granularity, reweighting controls,
-feature settings, and refresh policy used in the main experiments.
+AttackDRO++ is the final method studied in this report. It combines latent
+cluster discovery, augmented clustering features, gradient fingerprints, and a
+uniform-anchored Cluster-DRO objective into one training pipeline. The goal is to
+move beyond fixed attack identities and let the model identify harder adversarial
+subgroups during training. At the same time, the uniform anchor prevents the
+adaptive objective from drifting too far from the strong multi-attack baseline.
+Algorithm~\ref{alg:ch4_attackdropp} gives the complete procedure, while
+Table~\ref{tab:ch4_hparams} lists the default hyperparameters used in the main
+experiments.
+
+\paragraph{From Diagnostic Motivation to the Final Method}
+
+The method follows directly from the attacks-as-domains diagnosis introduced
+earlier. Single-attack adversarial training reveals the cross-attack robustness
+gap: a model trained against one source attack can remain weak against other
+threat models. Uniform multi-attack training addresses this by exposing the model
+to multiple source attacks, but it treats all generated examples equally.
+AttackDRO then adds attack-level reweighting, but this still assumes that each
+attack family is internally homogeneous.
+
+AttackDRO++ removes this assumption. Instead of using attack identity as the only
+group label, it discovers latent groups from the adversarial examples themselves.
+Gradient fingerprints add optimization-level information to the clustering
+features, helping the grouping capture not only representation similarity but also
+training difficulty. Finally, the uniform anchor keeps the objective close to the
+strong multi-attack baseline while still allowing Cluster-DRO to emphasize harder
+groups. The result is a method that moves from observing the cross-attack gap to
+actively training against the latent structure behind it.
+
+The same evaluation discipline is preserved throughout the framework. Source
+attacks are fixed during training, held-out attacks are never used for
+optimization, and robustness is reported both per attack and through aggregate
+metrics.
+
+The dominant cost remains adversarial example generation, which is shared by all
+multi-attack methods in the comparison. Therefore, AttackDRO++ mainly changes the
+training objective and grouping mechanism, while keeping the source attacks,
+threat models, and evaluation protocol fixed. The cluster refresh schedule is an implementation choice rather than a fixed part
+of the mathematical objective. In the main experiments, clusters are refreshed
+every \(R=2\) epochs, and \(\mathbf{q}\) is reset to the uniform distribution
+after each refresh to avoid carrying weights across changed cluster identities.
 
 
-\begin{table}[H]
+\begin{figure}[htbp]
 \centering
-\caption{Default hyperparameters for AttackDRO++ in the main experiments.}
-\label{tab:ch4_hparams}
-\small
-\begin{tabularx}{\textwidth}{@{}l l l X@{}}
-\toprule
-Hyperparameter & Symbol & Value & Role \\
-\midrule
-DRO anchor strength      & \(\lambda_{\mathrm{DRO}}\)  & 0.35  & Interpolates between uniform ERM and Cluster-DRO \\
-Number of clusters       & \(K\)                       & 4     & Controls latent group granularity \\
-\(q\) learning rate      & \(\eta_q\)                  & \(3\times10^{-4}\) & Step size for exponentiated-gradient update \\
-\(q\)-floor              & \(q_{\min}\)                & 0.03  & Minimum mass retained by each cluster \\
-\(q\)-warmup             & \(T_w\)                     & 3 epochs & Delays adaptive reweighting until clusters are more reliable \\
-Gradient projection dim. & \(d_{\mathrm{proj}}\)       & 128   & Dimension of projected gradient fingerprint \\
-Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradFP component in \(\psi\) \\
-Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of label component in \(\psi\) \\
-Feature bank size        & \(|\mathcal{F}|\)           & 4{,}096 & Buffer used to refit K-means \\
-Cluster refresh interval & \(R\)                       & 2 epochs & Default K-means refit frequency \\
-\(q\)-refresh policy     & N/A                         & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
-Bootstrap assignment     & N/A                         & random & Used before the first K-means refit \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\resizebox{0.95\textwidth}{!}{%
+\begin{tikzpicture}[
+  node distance = 0.68cm,
+  every node/.append style = {align=center},
+  inputblk/.style  = {draw=black!40,        fill=gray!11,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  attackblk/.style = {draw=red!50!black,    fill=red!9,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  fwdblk/.style    = {draw=blue!55!black,   fill=blue!8,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  featblk/.style   = {draw=violet!65!black, fill=violet!8,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  clustblk/.style  = {draw=orange!75!black, fill=orange!10,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  lossblk/.style   = {draw=green!60!black,  fill=green!9,
+                      rounded corners=5pt,  minimum width=3.5cm,
+                      minimum height=1.60cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  combblk/.style   = {draw=teal!65!black,   fill=teal!9,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  updblk/.style    = {draw=teal!80!black,   fill=teal!13,
+                      rounded corners=5pt,  minimum width=7.6cm,
+                      minimum height=1.08cm, font=\small,
+                      inner sep=8pt,        line width=0.85pt},
+  sideblk/.style   = {draw=gray!55,         fill=gray!8,
+                      rounded corners=5pt,  minimum width=3.1cm,
+                      minimum height=1.05cm, font=\small,
+                      inner sep=7pt,        line width=0.72pt,
+                      densely dashed},
+  arr/.style       = {-{Stealth[length=7pt, width=5.5pt]},
+                      line width=0.95pt, color=black!55},
+  darr/.style      = {-{Stealth[length=6pt, width=4.5pt]},
+                      line width=0.72pt, color=gray!60, densely dashed},
+  looparr/.style   = {-{Stealth[length=7pt, width=5.5pt]},
+                      line width=0.80pt, color=black!28, rounded corners=4pt},
+]
+
+\node[inputblk] (batch)
+  {\textbf{Minibatch}\qquad
+   $\mathcal{B} = \{(x_i,\,y_i)\}_{i=1}^{N}$};
+
+\node[attackblk, below=of batch] (attacks)
+  {\textbf{Mixed Source-Attack Batch}\\[3pt]
+   split minibatch across
+   $\mathrm{PGD}\text{-}\ell_\infty$ and $\mathrm{DDN}\text{-}\ell_2$
+   \quad$\longrightarrow$\quad
+   $\{x_i^{\mathrm{adv}}\}_{i=1}^{N}$};
+
+\node[fwdblk, below=of attacks] (forward)
+  {\textbf{Model Signals from } $f_\theta(x_i^{\mathrm{adv}})$\\[3pt]
+   forward: logits $z_i$, representation $h_i$
+   \quad$|$\quad
+   gradient: fingerprint $g_i$};
+
+\node[featblk, below=of forward] (augfeat)
+  {\textbf{Augmented Clustering Feature}\\[3pt]
+   $\psi_i = \bigl[\,h_i \;;\; z_i \;;\; y_i \;;\; g_i\,\bigr]$};
+
+\node[clustblk, below=of augfeat] (cluster)
+  {\textbf{Cluster Assignment}\enspace (current $k$-means)\\[3pt]
+   $c_i \;\in\; \{1,\dots,K\}$};
+
+\node[lossblk] (lerm) at ($(cluster.south)+(-2.8,-1.95)$)
+  {$\mathcal{L}_{\mathrm{ERM}}$\\[6pt]
+   {\footnotesize uniform multi-attack}};
+
+\node[lossblk] (ldro) at ($(cluster.south)+(+2.8,-1.95)$)
+  {$\mathcal{L}_{\mathrm{ClusterDRO}}$\\[6pt]
+   $\displaystyle\sum_{k=1}^{K} q_k\,\mathcal{L}_k$};
+
+\coordinate (lossmid) at ($(lerm.south)!0.5!(ldro.south)$);
+
+\node[combblk] (combine) at ($(lossmid)+(0,-1.35)$)
+  {$\mathcal{L}_{\mathrm{total}}
+    \;=\;
+    (1-\lambda_{\mathrm{DRO}})\,\mathcal{L}_{\mathrm{ERM}}
+    \;+\;
+    \lambda_{\mathrm{DRO}}\,\mathcal{L}_{\mathrm{ClusterDRO}}$};
+
+\node[updblk, below=0.65cm of combine] (updatetheta)
+  {\textbf{Update Model Parameters}\\[3pt]
+   $\theta \;\leftarrow\; \theta
+      - \eta_\theta\,\nabla_\theta\,\mathcal{L}_{\mathrm{total}}$};
+
+\node[updblk, below=0.65cm of updatetheta] (updateq)
+  {\textbf{Update Cluster Weights}\enspace
+   (EG update $+$ normalisation $+$ $q$\text{-floor})\\[3pt]
+   $q_k \;\leftarrow\;
+     \mathrm{Proj}_{q_{\min}}\!\!\left(
+       q_k \cdot \exp\!\bigl(\eta_q\,\mathcal{L}_k\bigr)\right)$};
+
+\node[sideblk] (bank) at ($(augfeat.east)+(3.75,0)$)
+  {\textbf{Feature Bank}\\[3pt]
+   $\{\psi_i\}$ \;(detached)};
+
+\node[sideblk, below=1.50cm of bank] (kmeans)
+  {\textbf{$k$-Means Clusterer}\\[3pt]
+   $K$ centroids};
+
+\draw[arr] (batch)     -- (attacks);
+\draw[arr] (attacks)   -- (forward);
+\draw[arr] (forward)   -- (augfeat);
+\draw[arr] (augfeat)   -- (cluster);
+
+\coordinate (splitpt) at ($(cluster.south)+(0,-0.44)$);
+\draw[arr] (cluster.south) -- (splitpt);
+\draw[arr] (splitpt) -| (lerm.north);
+\draw[arr] (splitpt) -| (ldro.north);
+
+% Merge the two loss branches before entering the total-loss box.
+\coordinate (lossJoinR) at ($(ldro.south)+(0,-0.32)$);
+\coordinate (lossJoinL) at (lerm.south |- lossJoinR);
+\coordinate (lossJoinM) at ($(lossJoinL)!0.5!(lossJoinR)$);
+\draw[line width=0.95pt, color=black!55] (lerm.south) -- (lossJoinL);
+\draw[line width=0.95pt, color=black!55] (ldro.south) -- (lossJoinR);
+\draw[line width=0.95pt, color=black!55] (lossJoinL) -- (lossJoinR);
+\draw[arr] (lossJoinM) -- (combine.north);
+
+\draw[arr] (combine)     -- (updatetheta);
+\draw[arr] (updatetheta) -- (updateq);
+
+\draw[darr] (augfeat.east)
+    to node[above, font=\scriptsize\itshape, color=gray!65]
+       {store (detach)}
+    (bank.west);
+
+\draw[darr] (bank.south)
+    to node[right, font=\scriptsize\itshape, color=gray!65,
+            xshift=2pt, align=left]
+       {periodic\\[-2pt]refresh\\[-2pt]($R$ epochs)}
+    (kmeans.north);
+
+\draw[darr] (kmeans.west) -- ++(-0.65,0)
+    |- node[left, font=\scriptsize\itshape, color=gray!65,
+            xshift=-2pt, near start] {assign}
+    (cluster.east);
+
+\coordinate (loopbot)  at ($(updateq.south)+(0,-0.58)$);
+\coordinate (loopleft) at ($(loopbot)+(-6.80,0)$);
+\draw[looparr]
+    (updateq.south) -- (loopbot) -- (loopleft) |- (batch.west);
+
+\node[font=\scriptsize\itshape, color=black!32,
+      anchor=north, inner sep=2pt]
+    at ($(loopbot)!0.5!(loopleft)$)
+    {next iteration};
+
+\end{tikzpicture}%
+}
+\caption[Core AttackDRO++ training loop]{%
+  \textbf{Core training loop of AttackDRO++.}
+  At each iteration, the minibatch is split across two source attacks
+  ($\mathrm{PGD}\text{-}\ell_\infty$ and $\mathrm{DDN}\text{-}\ell_2$),
+  producing a mixed adversarial batch.
+  The batch is passed through \(f_\theta\) to obtain logits \(z_i\),
+  penultimate representations \(h_i\), and gradient fingerprints \(g_i\).
+  These signals are concatenated into augmented features
+  \(\psi_i=[h_i;z_i;y_i;g_i]\) and assigned to one of \(K\) latent clusters by
+  the current \(k\)-means clusterer.
+  The objective interpolates a uniform multi-attack ERM term
+  \(\mathcal{L}_{\mathrm{ERM}}\) with a cluster-DRO term
+  \(\mathcal{L}_{\mathrm{ClusterDRO}} = \sum_k q_k\mathcal{L}_k\) using
+  anchor coefficient \(\lambda_{\mathrm{DRO}}\).
+  Model parameters \(\theta\) are updated every step, while cluster weights
+  \(\mathbf{q}\) are updated after the warmup period using exponentiated-gradient
+  updates with floor projection; the detached feature bank periodically refreshes
+  the \(k\)-means centroids every \(R\) epochs.%
+}
+\label{fig:attackdropp_core_training}
+\end{figure}
+
 
 \begin{algorithm}[H]
 \caption{AttackDRO++ with Gradient Fingerprints and Uniform Anchor}
@@ -87,47 +283,27 @@ Sample fixed projection matrix \(P \in \mathbb{R}^{C d_h \times d_{\mathrm{proj}
 \end{algorithm}
 
 
-The cluster refresh schedule is treated as a configurable training choice rather than a fixed mathematical requirement. It can be
-instantiated using either epoch-based or step-based schedules. Unless otherwise
-specified, the main experiments use an epoch-based schedule with \(R=2\) epochs and
-reset \(\mathbf{q}\) to the uniform distribution after each cluster refresh.
-
-\subsection{Progression from Stage 1 to the Final Method}
-
-This methodology directly extends the attacks-as-domains framework from Stage 1,
-which diagnosed the cross-attack robustness gap. Stage 2 moves from diagnosis to
-intervention. The progression builds sequentially: Single-AT diagnoses the cross-attack
-gap by training against one source attack, which leaves a large vulnerability to other
-threat models. Uniform multi-attack ERM covers multiple source attacks with equal
-weighting, providing a strong baseline but failing to adapt to weak groups. AttackDRO
-introduces attack-level reweighting but assumes each attack identity is homogeneous.
-To resolve this, the cluster-DRO component replaces fixed attack identities with
-discovered latent groups. Gradient fingerprints enrich this grouping with
-optimization-level information, and the uniform anchor stabilizes the adaptive objective
-by preserving the strong multi-attack training signal. Together, these form the
-final AttackDRO++ method.
-
-The evaluation discipline from Stage 1 carries through the method design: source attacks are
-fixed during training, heldout attacks are never used for optimization, and results are
-reported both per attack and through aggregate robustness metrics.
-
-\subsection{Implementation and Computational Considerations}
-
-The final implementation evaluated in the main experiments uses gradient
-fingerprints, an online K-means refresh policy, \(K=4\) clusters, and
-uniform-anchor strength \(\lambda_{\mathrm{DRO}}=0.35\). Chapter~\ref{chap:experimental_setup}
-documents the full training configuration, software stack, and evaluation protocol.
-
-The main additional state introduced by AttackDRO++ is the feature bank used for
-cluster refresh. The bank stores detached augmented features, so clustering does
-not backpropagate through past minibatches. K-means is refitted only at the
-configured refresh interval, and the cluster weights are reset or refreshed after
-the cluster identities change. This keeps the adaptive grouping mechanism tied to
-recent model representations while avoiding a per-step clustering cost.
-
-The dominant computational cost remains adversarial example generation, because
-all compared multi-attack methods use the same mixed source attacks. The
-AttackDRO++ additions therefore change the training objective and bookkeeping
-rather than the threat model or evaluation protocol. Chapter~\ref{chap:experimental_setup}
-specifies the concrete training configuration, software stack, and evaluation
-procedures used to run this implementation.
+\begin{table}[H]
+\centering
+\caption{Default hyperparameters for AttackDRO++ in the main experiments.}
+\label{tab:ch4_hparams}
+\small
+\begin{tabularx}{\textwidth}{@{}l l l X@{}}
+\toprule
+Hyperparameter & Symbol & Value & Role \\
+\midrule
+DRO anchor strength      & \(\lambda_{\mathrm{DRO}}\)  & 0.35  & Interpolates between uniform ERM and Cluster-DRO \\
+Number of clusters       & \(K\)                       & 4     & Controls latent group granularity \\
+\(q\) learning rate      & \(\eta_q\)                  & \(3\times10^{-4}\) & Step size for exponentiated-gradient update \\
+\(q\)-floor              & \(q_{\min}\)                & 0.03  & Minimum mass retained by each cluster \\
+\(q\)-warmup             & \(T_w\)                     & 3 epochs & Delays adaptive reweighting until clusters are more reliable \\
+Gradient projection dim. & \(d_{\mathrm{proj}}\)       & 128   & Dimension of projected gradient fingerprint \\
+Gradient weight          & \(\lambda_{\mathrm{grad}}\) & 0.1   & Weight of GradFP component in \(\psi\) \\
+Label weight             & \(\lambda_{\mathrm{lbl}}\)  & 0.1   & Weight of label component in \(\psi\) \\
+Feature bank size        & \(|\mathcal{F}|\)           & 4{,}096 & Buffer used to refit K-means \\
+Cluster refresh interval & \(R\)                       & 2 epochs & Default K-means refit frequency \\
+\(q\)-refresh policy     & N/A                         & reset & Resets \(\mathbf{q}\) to uniform after cluster refresh \\
+Bootstrap assignment     & N/A                         & random & Used before the first K-means refit \\
+\bottomrule
+\end{tabularx}
+\end{table}

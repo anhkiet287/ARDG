@@ -190,35 +190,30 @@ alternative gradient fingerprints.  These variants may reduce sensitivity to
 feature-bank quality and allow the grouping structure to adapt more smoothly
 during training.
 
-Graybox and blackbox transfer should also be expanded.  The current graybox
-analysis uses independently trained checkpoints from the same method families.
-Future work could add more surrogate architectures, cross-architecture transfer,
-larger surrogate ensembles, and transfer from methods not used during training.
-This would clarify whether group-aware multi-attack training improves robustness
-only within a controlled family of models or also under broader deployment-like
-transfer conditions.
+Graybox and blackbox transfer should also be expanded. The current graybox
+analysis uses checkpoints from the same method families. Future work could add
+cross-architecture transfer, larger surrogate ensembles, and transfer from
+unseen methods. This would clarify whether group-aware training helps only within
+controlled model families or also under broader deployment-like conditions.
 
-Finally, future work should reduce the computational overhead of the method.
-Feature banks, gradient fingerprints, cluster refreshes, and additional
-bookkeeping all increase training complexity.  More efficient feature updates,
-lower-cost fingerprint approximations, and adaptive refresh schedules would make
-AttackDRO++ more practical for larger models and datasets.
+Finally, future work should reduce the computational overhead of AttackDRO++.
+Feature banks, gradient fingerprints, and cluster refreshes add training
+complexity, so cheaper fingerprint approximations and adaptive refresh schedules
+would make the method more practical for larger models and datasets.
 
 \section{Closing Remarks}
 
-Cross-attack robustness is not reducible to a single attack score; it depends
-on how robustness is distributed across threat geometries,
-classes, and evaluation conditions.  Under the CIFAR-10 and ResNet-18 protocol
-used in this report, AttackDRO++ supports the view that group-aware
-multi-attack training can improve robustness balance over a uniform multi-attack
-baseline.  The improvement is clearest on average and held-out robustness
-metrics; the hardest-case and AutoAttack-$\ell_\infty$ behavior is statistically
-indistinguishable from Multi-AT and does not meaningfully degrade in the
-evaluated panel, but it does not improve either.  The results remain
-conditional: broader datasets, stronger adaptive attacks, additional
-architectures, and larger transfer settings are all needed before making
-general claims.
+Under the CIFAR-10 and ResNet-18 protocol, AttackDRO++ improves average
+robustness balance over Multi-AT while preserving hardest-case and
+AutoAttack-$\ell_\infty$ behavior. These results do not show unrestricted
+robustness, but they do show that robustness should not be judged from a single
+attack score alone. A model can appear strong under one threat model while still
+remaining uneven across other attacks, classes, or settings.
 
-The main conclusion is therefore not that AttackDRO++ establishes unrestricted
-robustness, but that adversarial robustness is better evaluated and optimized
-as a multi-domain problem than as a single-attack score.
+The main conclusion is therefore that adversarial robustness is better evaluated
+and optimized as a multi-domain problem. Treating attacks as domain-like sources
+makes the robustness gap visible, while latent grouping and anchored reweighting
+provide a practical way to train against part of that gap. AttackDRO++ does not
+remove the need for broader evaluation, but it supports the central claim of this
+report: robustness should be studied across attacks, not only through a single
+headline metric.

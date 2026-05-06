@@ -17,4 +17,98 @@ $$
 
 This feature vector is used for clustering adversarial examples in AttackDRO++ and for constructing the gradient-fingerprint augmented feature described in Chapter 4. For ResNet-18 on CIFAR-10, the penultimate representation dimension is \(d_h = 512\). Therefore, the raw classifier-head gradient proxy has dimension \(C d_h = 10 \times 512 = 5120\), which is later reduced by random projection.
 
+The instantiated model differs from the ImageNet ResNet-18 stem before the residual stages begin: the training code replaces the standard \(7{\times}7\), stride-2 convolution and max-pooling with a CIFAR-adapted \(3{\times}3\), stride-1 convolution followed by an identity max-pool; Table~\ref{tab:ch5_resnet18_layer_summary} records the resulting tensor shapes and trainable parameters used by the report.
+
+\definecolor{ch5headerblue}{HTML}{1E3A5F}
+\definecolor{ch5sectiongray}{HTML}{E2E8F0}
+\definecolor{ch5rowlight}{HTML}{F8FAFC}
+\definecolor{ch5rowmid}{HTML}{F1F5F9}
+
+% \begin{landscape}
+\begin{table}[H]
+\centering
+\caption{CIFAR-10 adapted ResNet-18 architecture used in the instantiated training model.}
+\label{tab:ch5_resnet18_layer_summary}
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}
+>{\raggedright\arraybackslash\ttfamily}p{0.28\textwidth}
+>{\raggedright\arraybackslash\ttfamily}p{0.22\textwidth}
+>{\raggedright\arraybackslash\ttfamily}p{0.22\textwidth}
+>{\raggedleft\arraybackslash\ttfamily}X
+@{}}
+\toprule
+\rowcolor{ch5headerblue}
+\textcolor{white}{\textbf{Layer / block}} &
+\textcolor{white}{\textbf{Input shape}} &
+\textcolor{white}{\textbf{Output shape}} &
+\textcolor{white}{\textbf{Params}} \\
+\midrule
+
+\rowcolor{ch5rowlight}
+Conv2d $3{\times}3$, 64, stride 1
+& {[1, 3, 32, 32]}
+& {[1, 64, 32, 32]}
+& 1{,}728 \\
+
+\rowcolor{ch5rowmid}
+BatchNorm2d + ReLU
+& {[1, 64, 32, 32]}
+& {[1, 64, 32, 32]}
+& 128 \\
+
+\rowcolor{ch5rowlight}
+Identity maxpool
+& {[1, 64, 32, 32]}
+& {[1, 64, 32, 32]}
+& -- \\
+
+\rowcolor{ch5sectiongray}
+\texttt{layer1}: 2 BasicBlocks, 64 channels
+& {[1, 64, 32, 32]}
+& {[1, 64, 32, 32]}
+& 147{,}968 \\
+
+\rowcolor{ch5rowlight}
+\texttt{layer2}: 2 BasicBlocks, 128 channels
+& {[1, 64, 32, 32]}
+& {[1, 128, 16, 16]}
+& 525{,}568 \\
+
+\rowcolor{ch5sectiongray}
+\texttt{layer3}: 2 BasicBlocks, 256 channels
+& {[1, 128, 16, 16]}
+& {[1, 256, 8, 8]}
+& 2{,}099{,}712 \\
+
+\rowcolor{ch5rowlight}
+\texttt{layer4}: 2 BasicBlocks, 512 channels
+& {[1, 256, 8, 8]}
+& {[1, 512, 4, 4]}
+& 8{,}390{,}656 \\
+
+\rowcolor{ch5rowmid}
+AdaptiveAvgPool2d
+& {[1, 512, 4, 4]}
+& {[1, 512, 1, 1]}
+& -- \\
+
+\rowcolor{ch5rowlight}
+Linear classifier
+& {[1, 512]}
+& {[1, 10]}
+& 5{,}130 \\
+
+\midrule
+\textbf{Total trainable parameters}
+& --
+& --
+& \textbf{11{,}170{,}122} \\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+% \end{landscape}
+
 Unless otherwise stated, all main experiments use the same ResNet-18 architecture and differ only in the training objective. This controlled setup ensures that performance differences can be attributed to the training method rather than to architectural changes. Higher-capacity architectures are treated as scaling checks or future extensions rather than the main basis for comparison.

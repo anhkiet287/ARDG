@@ -108,10 +108,10 @@ Status values:
 | `fig:ch6_graybox_transfer_matrix` | `report/chapters/chapter6/2_graybox_results.tex` | Method-level graybox transfer matrix | active, referenced | Chapter-aware rename. |
 | `fig:ch6_graybox_transfer_linf` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox transfer matrices for linf attack family | active, referenced | Chapter-aware rename. |
 | `fig:ch6_graybox_transfer_l2` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox transfer matrices for l2 attack family | active, referenced | Chapter-aware rename. |
-| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for DDN-AT | active, referenced | Start of figure range. |
-| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for PGD-AT | active, unused | Middle of figure range. |
-| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for Multi-AT | active, unused | Middle of figure range. |
-| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for AttackDRO++ | active, referenced | End of figure range. |
+| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for DDN-AT | active, referenced | Start of figure range. |
+| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for PGD-AT | active, unused | Middle of figure range. |
+| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for Multi-AT | active, unused | Middle of figure range. |
+| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for AttackDRO++ | active, referenced | End of figure range. |
 | `fig:ch6_graybox_delta_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs Multi-AT | active, referenced | Start of figure range. |
 | `fig:ch6_graybox_delta_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs PGD-AT | active, unused | Middle of figure range. |
 | `fig:ch6_graybox_delta_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs DDN-AT | active, referenced | End of figure range. |
@@ -123,6 +123,7 @@ Status values:
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `tab:ch4_hparams` | `report/chapters/chapter4/7-complete_pipeline.tex` | Default hyperparameters for AttackDRO++ | active, referenced | Renamed from `tab:hparams`. |
+| `tab:ch5_resnet18_layer_summary` | `report/chapters/chapter5/2-architectures.tex` | CIFAR-10 ResNet-18 instantiated layer summary | active, referenced | Architecture table generated from the CIFAR-adapted ResNet-18 used in training. |
 | `tab:ch5_training_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Training attack configuration | active, referenced | Chapter-aware rename. |
 | `tab:ch5_evaluation_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Validation and test attacks for Mean(8) | active, referenced | Chapter-aware rename. |
 | `tab:ch5_autoattack_config` | `report/chapters/chapter5/3-attack_suite.tex` | AutoAttack configuration | active, unused | Chapter-aware rename. |
@@ -230,6 +231,7 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | `subsec:ch6_hardest_evaluation_cases` | `\ref` | `report/chapters/chapter6/1_main_results.tex` | yes | Hardest-evaluation subsection reference. |
 | `subsec:ch6_paired_graybox_comparisons` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox comparison subsection reference. |
 | `tab:ch4_hparams` | `\ref` | `report/chapters/chapter4/7-complete_pipeline.tex` | yes | Table reference. |
+| `tab:ch5_resnet18_layer_summary` | `\ref` | `report/chapters/chapter5/2-architectures.tex` | yes | Model architecture table reference. |
 | `tab:ch5_training_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
 | `tab:ch5_evaluation_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
 | `tab:ch5_training_config` | `\ref` | `report/chapters/chapter5/4-configuration.tex` | yes | Table reference. |

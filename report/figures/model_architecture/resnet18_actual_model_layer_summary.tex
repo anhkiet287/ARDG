@@ -1,0 +1,108 @@
+% CIFAR-10 ResNet-18 Layer Summary -- rendered table asset.
+% Compile from the repository root with:
+%   pdflatex -interaction=nonstopmode -halt-on-error -output-directory=report/figures/model_architecture report/figures/model_architecture/resnet18_actual_model_layer_summary.tex
+
+\documentclass[11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{caption}
+
+\definecolor{headerblue}{HTML}{1E3A5F}
+\definecolor{sectiongray}{HTML}{E2E8F0}
+\definecolor{rowlight}{HTML}{F8FAFC}
+\definecolor{rowmid}{HTML}{F1F5F9}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{table}[htbp]
+\centering
+\caption[CIFAR-10 ResNet-18 layer summary]{%
+    CIFAR-10 ResNet-18 layer summary.
+    The CIFAR-adapted stem replaces the standard \(7{\times}7\) convolution
+    with stride~2 and max-pooling with a \(3{\times}3\) convolution with
+    stride~1 followed by an \texttt{Identity} layer, preserving the full
+    \(32{\times}32\) spatial resolution through \texttt{layer1}.
+    Total trainable parameters: \(\approx 11.17\)M.%
+}
+\label{tab:resnet18-layer-summary}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{%
+    >{\ttfamily\small}p{5.2cm}%
+    >{\ttfamily\small}p{3.2cm}%
+    >{\ttfamily\small}p{3.2cm}%
+    >{\ttfamily\small\raggedleft\arraybackslash}p{1.8cm}%
+}
+\rowcolor{headerblue}
+\multicolumn{1}{>{\bfseries\color{white}\ttfamily\small}p{5.2cm}}{Layer (type:depth-idx)} &
+\multicolumn{1}{>{\bfseries\color{white}\ttfamily\small}p{3.2cm}}{Input Shape} &
+\multicolumn{1}{>{\bfseries\color{white}\ttfamily\small}p{3.2cm}}{Output Shape} &
+\multicolumn{1}{>{\bfseries\color{white}\ttfamily\small\raggedleft\arraybackslash}p{1.8cm}}{Param \#} \\
+\toprule
+
+\rowcolor{rowmid}
+Conv2d: 1-1            & {[1, 3, 32, 32]}   & {[1, 64, 32, 32]}  & 1{,}728  \\
+\rowcolor{rowlight}
+BatchNorm2d: 1-2       & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & 128      \\
+\rowcolor{rowmid}
+ReLU: 1-3              & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & --       \\
+\rowcolor{rowlight}
+Identity: 1-4          & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & --       \\
+
+\midrule
+\rowcolor{sectiongray}
+\multicolumn{4}{>{\bfseries\color{headerblue}\normalfont\small}l}{%
+    \textemdash\ \texttt{layer1} (Sequential: 1-5)} \\
+\rowcolor{rowmid}
+\quad BasicBlock: 2-1  & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & --       \\
+\rowcolor{rowlight}
+\quad\quad Conv2d: 3-1 & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & 36{,}864 \\
+\rowcolor{rowmid}
+\quad\quad BatchNorm2d & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & 128      \\
+\rowcolor{rowlight}
+\quad\quad Conv2d: 3-4 & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & 36{,}864 \\
+\rowcolor{rowmid}
+\quad BasicBlock: 2-2  & {[1, 64, 32, 32]}  & {[1, 64, 32, 32]}  & 73{,}856 \\
+
+\midrule
+\rowcolor{sectiongray}
+\multicolumn{4}{>{\bfseries\color{headerblue}\normalfont\small}l}{%
+    \textemdash\ \texttt{layer2} (Sequential: 1-6)} \\
+\rowcolor{rowlight}
+\quad BasicBlock: 2-3  & {[1, 64, 32, 32]}  & {[1, 128, 16, 16]} & 230{,}144 \\
+\rowcolor{rowmid}
+\quad BasicBlock: 2-4  & {[1, 128, 16, 16]} & {[1, 128, 16, 16]} & 295{,}424 \\
+
+\midrule
+\rowcolor{sectiongray}
+\multicolumn{4}{>{\bfseries\color{headerblue}\normalfont\small}l}{%
+    \textemdash\ \texttt{layer3} (Sequential: 1-7)} \\
+\rowcolor{rowlight}
+\quad BasicBlock: 2-5  & {[1, 128, 16, 16]} & {[1, 256, 8, 8]}   & 919{,}040 \\
+\rowcolor{rowmid}
+\quad BasicBlock: 2-6  & {[1, 256, 8, 8]}   & {[1, 256, 8, 8]}   & 1{,}180{,}672 \\
+
+\midrule
+\rowcolor{sectiongray}
+\multicolumn{4}{>{\bfseries\color{headerblue}\normalfont\small}l}{%
+    \textemdash\ \texttt{layer4} (Sequential: 1-8)} \\
+\rowcolor{rowlight}
+\quad BasicBlock: 2-7  & {[1, 256, 8, 8]}   & {[1, 512, 4, 4]}   & 3{,}670{,}016 \\
+\rowcolor{rowmid}
+\quad BasicBlock: 2-8  & {[1, 512, 4, 4]}   & {[1, 512, 4, 4]}   & 4{,}720{,}640 \\
+
+\midrule
+\rowcolor{rowlight}
+AdaptiveAvgPool2d      & {[1, 512, 4, 4]}   & {[1, 512, 1, 1]}   & --        \\
+\rowcolor{rowmid}
+Linear (fc): 1-10      & {[1, 512]}         & {[1, 10]}          & 5{,}130   \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

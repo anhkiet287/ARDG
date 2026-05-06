@@ -39,7 +39,7 @@ Status values: `active`, `final`, `appendix`, `unused`, `referenced`,
 | `fig:ch6_whitebox_abs_pgdat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_per_class_attack_PGDAT_n5.png` | active | Absolute whitebox class-attack heatmap for PGD-AT. |
 | `fig:ch6_whitebox_abs_ddnat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_per_class_attack_DDNAT_n5.png` | active | Absolute whitebox class-attack heatmap for DDN-AT. |
 | `fig:ch6_whitebox_abs_multiat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_per_class_attack_MultiAT_n5.png` | active | Absolute whitebox class-attack heatmap for Multi-AT. |
-| `fig:ch6_whitebox_abs_attackdropp` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png` | active | Absolute whitebox class-attack heatmap for AttackDRO++ (Ours). |
+| `fig:ch6_whitebox_abs_attackdropp` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_per_class_attack_AttackDROpp_n5.png` | active | Absolute whitebox class-attack heatmap for AttackDRO++. |
 | `fig:ch6_whitebox_delta_vs_multiat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_MultiAT_n5.png` | active | Whitebox delta heatmap against Multi-AT. |
 | `fig:ch6_whitebox_delta_vs_pgdat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_PGDAT_n5.png` | active | Whitebox delta heatmap against PGD-AT. |
 | `fig:ch6_whitebox_delta_vs_ddnat` | `report/chapters/chapter6/4_whitebox.tex` | `figures/whitebox/whitebox_delta_per_class_attack_AttackDROpp_vs_DDNAT_n5.png` | active | Whitebox delta heatmap against DDN-AT. |
@@ -48,15 +48,15 @@ Status values: `active`, `final`, `appendix`, `unused`, `referenced`,
 | `fig:ch6_graybox_transfer_matrix` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_transfer_matrix_4method_aggregate_science_clean.png` | active, referenced | Method-level graybox transfer matrix. |
 | `fig:ch6_graybox_transfer_linf` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/transfer_matrix_4method_pgd20_ce_science_clean.png`; `figures/graybox/transfer_matrix_4method_fgsm_rs_science_clean.png`; `figures/graybox/transfer_matrix_4method_tpgd_science_clean.png`; `figures/graybox/transfer_matrix_4method_mifgsm_science_clean.png` | active, referenced | Graybox transfer matrices for the `\ell_\infty` attack family. |
 | `fig:ch6_graybox_transfer_l2` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/transfer_matrix_4method_pgd_l2_science_clean.png`; `figures/graybox/transfer_matrix_4method_ddn_l2_science_clean.png`; `figures/graybox/transfer_matrix_4method_deepfool_l2_science_clean.png`; `figures/graybox/transfer_matrix_4method_cw_l2_science_clean.png` | active, referenced | Graybox transfer matrices for the `\ell_2` attack family. |
-| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_DDNAT.png` | active, referenced | Whitebox-graybox gap heatmap for DDN-AT. |
-| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_PGDAT.png` | active | Whitebox-graybox gap heatmap for PGD-AT. |
-| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_MultiAT.png` | active | Whitebox-graybox gap heatmap for Multi-AT. |
-| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_AttackDROpp.png` | active, referenced | Whitebox-graybox gap heatmap for AttackDRO++ (Ours). |
-| `fig:ch6_graybox_delta_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.png` | active, referenced | Graybox delta heatmap against Multi-AT. |
-| `fig:ch6_graybox_delta_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.png` | active | Graybox delta heatmap against PGD-AT. |
-| `fig:ch6_graybox_delta_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.png` | active, referenced | Graybox delta heatmap against DDN-AT. |
+| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_DDNAT.pdf` | active, referenced | Graybox-minus-whitebox gap heatmap for DDN-AT. |
+| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_PGDAT.pdf` | active | Graybox-minus-whitebox gap heatmap for PGD-AT. |
+| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_MultiAT.pdf` | active | Graybox-minus-whitebox gap heatmap for Multi-AT. |
+| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/whitebox_graybox_gap_AttackDROpp.pdf` | active, referenced | Graybox-minus-whitebox gap heatmap for AttackDRO++. |
+| `fig:ch6_graybox_delta_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_uniform.pdf` | active, referenced | Graybox delta heatmap against Multi-AT. |
+| `fig:ch6_graybox_delta_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singlePGD.pdf` | active | Graybox delta heatmap against PGD-AT. |
+| `fig:ch6_graybox_delta_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/graybox_delta_per_class_attack_AttackDRO++_vs_singleDDN.pdf` | active, referenced | Graybox delta heatmap against DDN-AT. |
 | `fig:ch6_method_decomposition` | `report/chapters/chapter6/2_graybox_results.tex` | `figures/graybox/method_decomposition_three_panel_science.png` | active | Graybox method contribution decomposition figure. |
-| `fig:app_wrn2810_architecture_check` | `report/appendices.tex` | `figures/ablations/wrn2810_architecture_check.png` | active, appendix, supplementary | Appendix C WRN-28-10 single-run architecture check. |
+| `fig:app_wrn2810_architecture_check` | `report/appendices.tex` | `figures/ablations/wrn2810_architecture_check.pdf` | active, appendix, supplementary | Appendix C WRN-28-10 single-run architecture check. |
 
 Frontmatter logo files such as `figures/Logo_BK.png` are not numbered report
 figures and are not included in the active figure inventory.
@@ -66,6 +66,7 @@ figures and are not included in the active figure inventory.
 | Label | File | Status | Notes |
 |---|---|---|---|
 | `tab:ch4_hparams` | `report/chapters/chapter4/7-complete_pipeline.tex` | active, referenced | Default AttackDRO++ hyperparameters in the methodology chapter. |
+| `tab:ch5_resnet18_layer_summary` | `report/chapters/chapter5/2-architectures.tex` | active, referenced | CIFAR-10 ResNet-18 instantiated layer summary. |
 | `tab:ch5_training_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | active, referenced | Source attack configuration used during training. |
 | `tab:ch5_evaluation_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | active, referenced | Evaluation attacks used for Mean(8). |
 | `tab:ch5_autoattack_config` | `report/chapters/chapter5/3-attack_suite.tex` | active | AutoAttack-$\ell_\infty$ configuration. |
