@@ -310,6 +310,13 @@ X.~Zou and W.~Liu, ``On the adversarial robustness of out-of-distribution
   \url{https://openreview.net/forum?id=IiwTFcGGTq}
 \BIBentrySTDinterwordspacing
 
+\bibitem{krizhevsky2009learning}
+\BIBentryALTinterwordspacing
+A.~Krizhevsky, ``Learning multiple layers of features from tiny images,''
+  University of Toronto, Tech. Rep., 2009. [Online]. Available:
+  \url{https://www.cs.toronto.edu/~kriz/cifar.html}
+\BIBentrySTDinterwordspacing
+
 \bibitem{he2016deep}
 K.~He, X.~Zhang, S.~Ren, and J.~Sun, ``Deep residual learning for image
   recognition,'' in \emph{Proceedings of the IEEE Conference on Computer Vision

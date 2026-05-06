@@ -49,65 +49,74 @@ and reproducible experimental protocol.
 
 \section{Answers to Research Questions}
 
-The research-question answers in Table~\ref{tab:ch7_rq_answers} connect each claim to
-the evidence panel that supports it while keeping the interpretation conditional on the
-CIFAR-10 and ResNet-18 setting used for the main experiments.
+The research questions posed in Chapter~\ref{chap:introduction} can now be
+answered from the evidence in Chapter~\ref{chap:results_analysis}.  The answers
+remain conditional on the CIFAR-10 and ResNet-18 setting used for the main
+experiments, and the strongest claims are restricted to the evaluation protocol
+defined in Chapter~\ref{chap:experimental_setup}.
 
-\begin{table}[H]
-\centering
-\caption{Summary answers to the research questions.  Each answer is based on the
-experimental protocol defined in Chapter~\ref{chap:experimental_setup} and the
-results analyzed in Chapter~\ref{chap:results_analysis}.  All answers are
-conditioned on the CIFAR-10 and ResNet-18 setting.}
-\label{tab:ch7_rq_answers}
-\footnotesize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.10}
-\begin{tabularx}{\textwidth}{@{}>{%
-\raggedright\arraybackslash}p{0.09\textwidth}>{%
-\raggedright\arraybackslash}X>{%
-\raggedright\arraybackslash}X@{}}
-\toprule
-RQ & Answer & Main evidence \\
-\midrule
-RQ1 & Single-attack adversarial training produces attack-dependent robustness: PGD-AT and DDN-AT each protect their source attack family more strongly than attacks outside their training objective. & Whitebox aggregate and per-attack results in Section~\ref{sec:ch6_whitebox}. \\
-RQ2 & Uniform multi-attack training improves balance across seen and held-out attacks compared with single-attack baselines, but uniform averaging does not fully remove hard attack-specific and class-specific failure modes. & Aggregate and per-attack comparisons in Sections~\ref{subsec:ch6_aggregate_comparison} and~\ref{subsec:ch6_per_attack_accuracy}. \\
-RQ3 & AttackDRO++ improves average robustness and training stability over the uniform multi-attack baseline in the main whitebox panel, while evidence from hardest-case checks, full-test AutoAttack-$\ell_\infty$, graybox transfer, and supplementary architecture checks requires conservative interpretation. & Whitebox aggregate, stability, class-wise, and graybox analyses in Sections~\ref{sec:ch6_whitebox}--\ref{sec:ch6_graybox}; supplementary WRN-28-10 check in Appendix~\ref{app:extras}. \\
-RQ4 & The selected configuration is supported by sensitivity studies: moderate clustering, a moderate uniform anchor, and a two-epoch refresh schedule provide a stable practical setting. & Ablation results in Section~\ref{sec:ch6_ablation}. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+\paragraph{RQ1.}
+Single-source adversarial training does produce attack-dependent robustness.
+PGD-AT and DDN-AT are not uniformly weak; each is strongest on the threat family
+closest to its training objective.  The aggregate comparison in
+Table~\ref{tab:ch6_aggregate_results} keeps PGD-AT ahead on the hardest
+$\ell_\infty$-dominated behavior, including Worst(8), while DDN-AT remains
+strongest on the held-out $\ell_2$ mean.  At the same time, both specialists
+lose substantially outside their preferred family: AttackDRO++ exceeds PGD-AT
+by about $+1.826$~pp on Mean(8) and DDN-AT by about $+6.098$~pp on Mean(8).
+The per-attack breakdown in Table~\ref{tab:ch6_per_attack_all_baselines}
+confirms the same specialist pattern at the attack level, so the first research
+question is answered positively.
 
-The first two answers support the premise of the report.  Single-attack
-training remains useful when the target threat family is known, but it creates a
-specialist profile that leaves the complementary threat family exposed.
-Multi-attack training reduces this specialization by covering both source
-threat geometries, yet the Chapter~\ref{chap:results_analysis} drilldowns show
-that some attack families and CIFAR-10 classes remain systematically harder
-than others even under uniform averaging.
+\paragraph{RQ2.}
+Uniform multi-attack training improves robustness balance compared with
+single-source training, but it does not fully solve the hard-group problem.
+Because Multi-AT is trained on both PGD-$\ell_\infty$ and DDN-$\ell_2$ source
+attacks, its higher Mean(8) than PGD-AT and DDN-AT in
+Table~\ref{tab:ch6_aggregate_results} reflects a reduction in cross-norm
+specialization rather than a new worst-case guarantee.  The per-attack analysis
+in Section~\ref{subsec:ch6_per_attack_accuracy} and the class-wise whitebox
+analysis in Section~\ref{sec:ch6_whitebox_class_attack} still identify
+persistent difficult cells, especially under strong $\ell_\infty$ attacks on
+hard CIFAR-10 classes.  Multi-AT is therefore a necessary strong baseline for
+this report, but its fixed averaging rule remains coarse.
 
-The third answer requires the most careful reading because its strength varies
-across the evidence panels.  AttackDRO++ improves average
-cross-attack balance and reduces seed-to-seed variation relative to Multi-AT in
-the main whitebox panel.  This answer is strongest for the aggregate and
-held-out whitebox metrics, where paired differences are statistically supported
-with medium effect sizes.  It is weakest for the hardest-case metrics
-(Worst(8) and full-test AutoAttack-$\ell_\infty$), where AttackDRO++ is
-statistically indistinguishable from Multi-AT and should be read as broadly
-comparable rather than as an improvement.  Graybox transfer supports a positive
-trend over Multi-AT, while also showing that transfer accuracy can be inflated
-by specialist geometry mismatch.  The WRN-28-10 check in
-Appendix~\ref{app:extras} is supplementary only: it is a single-run result that
-is useful mainly because it prevents the conclusion from becoming stronger than
-the evidence supports.  Taken together, the RQ3 evidence supports a bounded
-improvement in average robustness balance under the evaluated protocol, not a
-claim that transfers across architectures or attack configurations.
+\paragraph{RQ3.}
+AttackDRO++ provides a bounded improvement over Multi-AT on average robustness
+balance and stability, while hardest-case and AutoAttack behavior should be read
+as preservation rather than improvement.  In the main whitebox panel,
+AttackDRO++ improves Mean(8) over Multi-AT by $+0.279$~pp and held-out attack
+mean by $+0.319$~pp in Table~\ref{tab:ch6_aggregate_results}.  The paired
+aggregate panel in Table~\ref{tab:ch6_paired_aggregate_all_baselines} supports
+this as a small positive effect, although the corrected tests in
+Table~\ref{tab:ch6_corrected_paired_tests} require conservative interpretation.
+The stability evidence is stronger: the comparison in
+Table~\ref{tab:ch6_variance_reduction} gives a Mean(8) standard deviation of
+$0.447$~pp for Multi-AT and $0.148$~pp for AttackDRO++, about a
+$3.03{\times}$ reduction.  By contrast, the separate hardest-case checks in
+Tables~\ref{tab:ch6_worst_autoattack_sanity} and
+\ref{tab:ch6_autoattack_fulltest} leave Worst(8) and full-test
+AutoAttack-$\ell_\infty$ statistically indistinguishable from Multi-AT,
+including a full-test AutoAttack difference of about $-0.006$~pp with
+$p=0.9584$.  The graybox panel in Section~\ref{sec:ch6_graybox} includes a
+$+0.549$~pp gain over Multi-AT in
+Table~\ref{tab:ch6_paired_graybox_two_panel}, but this transfer result must be
+read cautiously because specialist geometry mismatch can inflate transfer
+accuracy.  The answer to RQ3 is therefore positive for bounded average
+robustness balance and stability, not for architecture-general or unrestricted
+robustness.
 
-The fourth answer indicates that the selected configuration is not highly
-sensitive to the tested hyperparameter ranges.  However, because the ablation
-panels are smaller than the main aggregate panel, they should be read as
-practical configuration guidance rather than as evidence that the configuration
-was exhaustively optimized.
+\paragraph{RQ4.}
+The ablation evidence supports the selected configuration as a practical stable
+choice rather than as an exhaustively optimized setting.  Section~\ref{sec:ch6_ablation}
+indicates that a moderate anchor strength, moderate cluster count, and two-epoch
+cluster refresh schedule provide the most stable operating point among the
+tested choices.  The final configuration uses
+$\lambda_{\mathrm{DRO}}=0.35$, $K=4$, and a two-epoch refresh schedule, which
+keeps the uniform Multi-AT signal active while allowing cluster-level
+reweighting to emphasize harder groups.  Because these ablations use smaller
+panels than the main aggregate comparison, they should be interpreted as
+configuration guidance rather than theoretical proof.
 
 \section{Limitations of the Current Study}
 
@@ -181,35 +190,30 @@ alternative gradient fingerprints.  These variants may reduce sensitivity to
 feature-bank quality and allow the grouping structure to adapt more smoothly
 during training.
 
-Graybox and blackbox transfer should also be expanded.  The current graybox
-analysis uses independently trained checkpoints from the same method families.
-Future work could add more surrogate architectures, cross-architecture transfer,
-larger surrogate ensembles, and transfer from methods not used during training.
-This would clarify whether group-aware multi-attack training improves robustness
-only within a controlled family of models or also under broader deployment-like
-transfer conditions.
+Graybox and blackbox transfer should also be expanded. The current graybox
+analysis uses checkpoints from the same method families. Future work could add
+cross-architecture transfer, larger surrogate ensembles, and transfer from
+unseen methods. This would clarify whether group-aware training helps only within
+controlled model families or also under broader deployment-like conditions.
 
-Finally, future work should reduce the computational overhead of the method.
-Feature banks, gradient fingerprints, cluster refreshes, and additional
-bookkeeping all increase training complexity.  More efficient feature updates,
-lower-cost fingerprint approximations, and adaptive refresh schedules would make
-AttackDRO++ more practical for larger models and datasets.
+Finally, future work should reduce the computational overhead of AttackDRO++.
+Feature banks, gradient fingerprints, and cluster refreshes add training
+complexity, so cheaper fingerprint approximations and adaptive refresh schedules
+would make the method more practical for larger models and datasets.
 
 \section{Closing Remarks}
 
-Cross-attack robustness is not reducible to a single attack score; it depends
-on how robustness is distributed across threat geometries,
-classes, and evaluation conditions.  Under the CIFAR-10 and ResNet-18 protocol
-used in this report, AttackDRO++ supports the view that group-aware
-multi-attack training can improve robustness balance over a uniform multi-attack
-baseline.  The improvement is clearest on average and held-out robustness
-metrics; the hardest-case and AutoAttack-$\ell_\infty$ behavior is statistically
-indistinguishable from Multi-AT and does not meaningfully degrade in the
-evaluated panel, but it does not improve either.  The results remain
-conditional: broader datasets, stronger adaptive attacks, additional
-architectures, and larger transfer settings are all needed before making
-general claims.
+Under the CIFAR-10 and ResNet-18 protocol, AttackDRO++ improves average
+robustness balance over Multi-AT while preserving hardest-case and
+AutoAttack-$\ell_\infty$ behavior. These results do not show unrestricted
+robustness, but they do show that robustness should not be judged from a single
+attack score alone. A model can appear strong under one threat model while still
+remaining uneven across other attacks, classes, or settings.
 
-The main conclusion is therefore not that AttackDRO++ establishes unrestricted
-robustness, but that adversarial robustness is better evaluated and optimized
-as a multi-domain problem than as a single-attack score.
+The main conclusion is therefore that adversarial robustness is better evaluated
+and optimized as a multi-domain problem. Treating attacks as domain-like sources
+makes the robustness gap visible, while latent grouping and anchored reweighting
+provide a practical way to train against part of that gap. AttackDRO++ does not
+remove the need for broader evaluation, but it supports the central claim of this
+report: robustness should be studied across attacks, not only through a single
+headline metric.

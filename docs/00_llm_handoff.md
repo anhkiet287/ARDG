@@ -17,13 +17,13 @@
 ## Latest changes
 
 - Fixed planning-file method naming consistency across `docs/01_outline.md` and `docs/06_style_rules.md`.
-- Final names: `PGD-AT`, `DDN-AT`, `Multi-AT`, `AttackDRO++`, and `AttackDRO++ (Ours)` for formal result tables/captions when comparison clarity is needed.
+- Final names: `PGD-AT`, `DDN-AT`, `Multi-AT`, and `AttackDRO++` for formal result tables/captions.
 - Created `docs/07_task_assignment.md` as the practical writing task board for the report team.
 - Task board assigns Chapter 2 to ĐA, Chapter 3 to Thành, Chapters 1 and 4-7 to Kiệt, and cross-file consistency to the Team.
-- The task board is based on the local LaTeX TODO comments plus the outline, style rules, and label/figure/notation registries.
+- The task board is based on the local LaTeX to-do comments plus the outline, style rules, and label/figure/notation registries.
 - No LaTeX source files were edited for the task-assignment task, and the report was not recompiled.
-- Added local TODO writing instructions in the active LaTeX source files for Chapters 1-7.
-- TODO owners: `TODO[ĐA]` for Chapter 2, `TODO[Thành]` for Chapter 3, `TODO[Kiệt]` for Chapters 1 and 4-7, and `TODO[Team]` for shared table/figure/setup work.
+- Added local to-do writing instructions in the active LaTeX source files for Chapters 1-7.
+- to-do owners: `to-do[ĐA]` for Chapter 2, `to-do[Thành]` for Chapter 3, `to-do[Kiệt]` for Chapters 1 and 4-7, and `to-do[Team]` for shared table/figure/setup work.
 - No prose, results, labels, section titles, numerical values, figures, or tables were changed.
 - No compilation required unless desired; the patch only adds LaTeX comment lines.
 - Created `docs/04_figure_table_registry.md` as the current figure/table registry for the compiled 7-chapter report.
@@ -31,7 +31,7 @@
 - Registry also records unused figure assets under `report/figures/`, likely candidates for Chapter 6 planned visuals, and remaining planned tables such as `tab:ch5_tools_platforms`, `tab:ch5_setup_summary`, and a Chapter 7 RQ answer table.
 - No LaTeX source files were edited for the figure/table registry task, and the report was not recompiled.
 - Created `docs/05_notation_registry.md` as the current notation/acronym/method/attack/metric registry for the compiled 7-chapter report.
-- Registry findings: formal method names are mostly established as `PGD-AT`, `DDN-AT`, `Multi-AT`, and `AttackDRO++ (Ours)`, while remaining cleanup candidates include `Multi-ATtack`, `PGD20-CE`, `M(8)`, `Uniform Multi-AT`, and `AttackDRO++ Anchor35 GradFP` in older prose/table text.
+- Registry findings: formal method names are mostly established as `PGD-AT`, `DDN-AT`, `Multi-AT`, and `AttackDRO++`, while remaining cleanup candidates include `Multi-ATtack`, `PGD20-CE`, `M(8)`, `Uniform Multi-AT`, and `AttackDRO++ Anchor35 GradFP` in older prose/table text.
 - Registry also records the current metric/equation notation, attack-name mapping, acronym gaps, planned tools/platforms for Chapter 5.9, and notation issues such as the `K` class-count versus cluster-count ambiguity.
 - No LaTeX source files were edited for the notation registry task, and the report was not recompiled.
 - Created `docs/03_label_registry.md` as the current label/reference registry for the compiled 7-chapter report.
@@ -46,7 +46,7 @@ Active structure after the structural patch:
 ```text
 Chapter 1: Introduction
   1.1 Adversarial Robustness and the Cross-Attack Gap
-  1.2 Stage 1 Findings and Their Limitations
+  1.2 Diagnostic Findings and Their Limitations
   1.3 Problem Statement
   1.4 Research Questions and Hypotheses
   1.5 Contributions of This Work
@@ -93,7 +93,7 @@ Chapter 4: Proposed Methodology
   4.6 Augmented Clustering with Gradient Fingerprints
   4.7 Uniform-Anchored Training Objective
   4.8 Complete Training Framework
-    4.8.1 Progression from Stage 1 to the Final Method
+    4.8.1 Progression from Diagnostic Motivation to the Final Method
     4.8.2 Implementation and Computational Considerations
   4.9 Chapter Summary
 
@@ -178,10 +178,10 @@ Still not aligned:
 - Numbered Chapter Summary sections remain in:
   - `report/chapters/chapter2/6-summary.tex`
   - `report/chapters/chapter4/summary.tex`
-- TODO comments were added beside those Chapter Summary sections:
-  - `% TODO: Convert numbered Chapter Summary into closing prose according to docs/06_style_rules.md.`
+- to-do comments were added beside those Chapter Summary sections:
+  - `% to-do: Convert numbered Chapter Summary into closing prose according to docs/06_style_rules.md.`
 - Chapter 5 special summary style is still missing.
-- Formal table/caption/row-label method names were partially normalized to `Multi-AT`, `AttackDRO++ (Ours)`, `PGD-AT`, and `DDN-AT`.
+- Formal table/caption/row-label method names were partially normalized to `Multi-AT`, `AttackDRO++`, `PGD-AT`, and `DDN-AT`.
 - Long explanatory prose still contains older terms such as `PGD-AT`, `DDN-AT`, `Multi-ATtack`, and `AttackDRO++ Anchor35 GradFP`. This was left intentionally because this patch was structural/path-only and should not rewrite technical paragraphs.
 
 ## Rename/move candidates
@@ -233,7 +233,7 @@ Recommended next patch should be prose/content oriented, not another path patch:
 - Should Chapter 5.9 be brief environment prose, or include a table of hardware/software/config tracking?
 - Should diagnostics be moved into Appendix C in the PDF, or remain unused source only?
 - Should extra ablations be moved into Appendix C, or remain unused until results are complete?
-- Should remaining prose use only `AttackDRO++ (Ours)`, or keep `AttackDRO++` in running text after first definition?
+- Should remaining prose use only `AttackDRO++`, or keep `AttackDRO++` in running text after first definition?
 - Should `Uniform Multi-Attack ERM` in Chapter 4 remain as a method-construction name while formal result tables use `Multi-AT`?
 
 ## Codex applied changes
@@ -276,7 +276,7 @@ Structural changes:
 - Removed `\include{chapters/chapter8}` from `report/main.tex`.
 - Commented out the Chapter 6 diagnostics input.
 - Disabled extra ablation headings and the graybox section summary with `\iffalse`.
-- Added TODO markers beside Chapter 2 and Chapter 4 numbered summaries.
+- Added to-do markers beside Chapter 2 and Chapter 4 numbered summaries.
 
 Path changes:
 - Renamed `report/images` to `report/figures`.
@@ -286,7 +286,7 @@ Path changes:
 
 Naming changes:
 - Applied requested heading renames in Chapters 1, 3, 4, 5, and 6.
-- Normalized selected formal table/caption/row labels to `Multi-AT`, `AttackDRO++ (Ours)`, `PGD-AT`, and `DDN-AT`.
+- Normalized selected formal table/caption/row labels to `Multi-AT`, `AttackDRO++`, `PGD-AT`, and `DDN-AT`.
 
 Label/reference fixes:
 - Added `sec:gradfp`.

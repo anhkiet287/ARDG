@@ -7,26 +7,12 @@ The experiments in this report were implemented in Python using a PyTorch-based
 training pipeline. The codebase is organized around a configurable experiment
 script that defines dataset construction, model initialization, adversarial attack
 generation, training objectives, checkpoint selection, and fixed
-evaluation scripts in one place. This organization is important because the compared methods differ
-mainly in their grouping and weighting strategies, while the dataset split,
-architecture, source attacks, evaluation attacks, optimizer, and checkpointing
-rules are kept fixed.
+evaluation scripts in one place. 
 
-Because reproducibility depends on both the training code and the analysis stack,
-Table~\ref{tab:ch5_tools_platforms} records the tools and platforms that form the
-experimental workflow. Google Colab and Google Drive are used for
-interactive execution and persistent storage of checkpoints, cached adversarial
-examples, figures, and result files. PyTorch and torchvision provide the core
-deep-learning infrastructure, including model definitions, data loading, and
-optimization. The attack implementations are built primarily with TorchAttacks,
-with AutoAttack-$\ell_\infty$ and DDN-$\ell_2$ handled through their dedicated
-packages when required. scikit-learn is used for K-means clustering in
-AttackDRO++, while NumPy and pandas are used to aggregate seed-level and
-attack-level results.
 
 \begin{table}[H]
 \centering
-\caption{Tools and platforms used in the experimental workflow. The table lists only tools that are part of the implemented training, evaluation, logging, or reporting pipeline.}
+\caption[Experimental tools and platforms]{Tools and platforms used in the experimental workflow. The table lists only tools that are part of the implemented training, evaluation, logging, or reporting pipeline.}
 \label{tab:ch5_tools_platforms}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -92,6 +78,25 @@ Weights \& Biases
 \end{tabularx}
 \end{table}
 
+\newpage
+This organization is important because the compared methods differ
+mainly in their grouping and weighting strategies, while the dataset split,
+architecture, source attacks, evaluation attacks, optimizer, and checkpointing
+rules are kept fixed.
+
+
+Because reproducibility depends on both the training code and the analysis stack,
+Table~\ref{tab:ch5_tools_platforms} records the tools and platforms that form the
+experimental workflow. Google Colab and Google Drive are used for
+interactive execution and persistent storage of checkpoints, cached adversarial
+examples, figures, and result files. PyTorch and torchvision provide the core
+deep-learning infrastructure, including model definitions, data loading, and
+optimization. The attack implementations are built primarily with TorchAttacks,
+with AutoAttack-$\ell_\infty$ and DDN-$\ell_2$ handled through their dedicated
+packages when required. scikit-learn is used for K-means clustering in
+AttackDRO++, while NumPy and pandas are used to aggregate seed-level and
+attack-level results.
+
 Experiment tracking is treated as part of the reproducibility protocol rather than
 as a separate result source. Each run records the method name, seed, dataset,
 backbone, source attacks, evaluation attacks, and key hyperparameters. During
@@ -114,7 +119,7 @@ suite, repeated-seed protocol, and analysis stack in one place.
 
 \begin{table}[H]
 \centering
-\caption{Summary of the experimental setup used in this report. Unless otherwise stated, evaluations use CIFAR-10, ResNet-18, and the eight non-AutoAttack attacks for Mean(8), with AutoAttack-$\ell_\infty$ reported separately.}
+\caption[Experimental setup summary]{Summary of the experimental setup used in this report. Unless otherwise stated, evaluations use CIFAR-10, ResNet-18, and the eight non-AutoAttack attacks for Mean(8), with AutoAttack-$\ell_\infty$ reported separately.}
 \label{tab:ch5_setup_summary}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -167,8 +172,9 @@ Implementation stack
 \end{tabularx}
 \end{table}
 
-This chapter has defined the experimental setting used throughout the remainder of
-the report: the dataset, model, attacks, training configurations, hyperparameters,
-statistical protocol, evaluation metrics, graybox transfer design, and
-implementation tools. These definitions provide the reproducibility contract for
-the empirical claims that follow. Chapter~\ref{chap:results_analysis} now presents the results obtained under this protocol and analyzes how the proposed method behaves under whitebox, graybox, per-class, and ablation settings.
+With the experimental protocol fixed, the report now moves from setup to evidence.
+The next chapter uses this controlled setting to examine whether changing only the
+training objective is enough to reduce the cross-attack robustness gap. In particular,
+Chapter~6 compares the baseline methods with AttackDRO++ across aggregate,
+per-attack, per-class, and graybox transfer results, showing where the proposed
+approach improves robustness and where its limitations remain.

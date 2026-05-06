@@ -1,5 +1,4 @@
-﻿\newpage
-\section{Statistical Significance Protocol}
+﻿\section{Statistical Significance Protocol}
 \label{sec:ch5_statistical_protocol}
 
 To ensure that the reported improvements are not caused by seed-specific randomness, this study applies a repeated-seed statistical protocol. Each method is trained and evaluated under the same set of seeds, dataset split, architecture, attack suite, and evaluation configuration. The seed-level result is used as the basic unit of analysis.
@@ -39,7 +38,7 @@ for each method comparison.
 
 \begin{table}[H]
 \centering
-\caption{Reporting format for the statistical significance protocol used in Chapter~\ref{chap:results_analysis}.}
+\caption[Statistical reporting format]{Reporting format for the statistical significance protocol used in Chapter~\ref{chap:results_analysis}.}
 \label{tab:ch5_statistical_reporting_format}
 \footnotesize
 \setlength{\tabcolsep}{4pt}
@@ -85,4 +84,4 @@ Correction
 \end{tabularx}
 \end{table}
 
-A comparison is considered statistically supported when AttackDRO++ improves the mean metric, obtains a corrected $p$-value below the significance threshold, and shows a non-trivial paired effect size. This protocol is applied consistently to white-box robustness, gray-box transfer robustness, aggregate robustness metrics, and ablation studies.
+A comparison is considered statistically supported when AttackDRO++ improves the mean metric, obtains a corrected $p$-value below the significance threshold, and shows a non-trivial paired effect size. This protocol is applied consistently to whitebox robustness, graybox transfer robustness, aggregate robustness metrics, and ablation studies.

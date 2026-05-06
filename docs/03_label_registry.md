@@ -65,16 +65,16 @@ Status values:
 | `sec:ch5_graybox_protocol` | `report/chapters/chapter5/8-graybox_transfer.tex` | Graybox Transfer Protocol | active, referenced | Renamed from `sec:graybox-design`. |
 | `sec:ch5_tools_platforms` | `report/chapters/chapter5/9-tools_tracking.tex` | Tools, Platforms, and Experiment Tracking | active, unused | New Chapter 5.9 section label. |
 | `sec:ch6_whitebox` | `report/chapters/chapter6/1_main_results.tex` | Whitebox Robustness Under Direct Attacks | active, referenced | Chapter-aware section label. |
-| `sec:ch6_whitebox_class_attack` | `report/chapters/chapter6/4_whitebox.tex` | Class-wise Whitebox Robustness Across Attacks | active, unused | Renamed from `sec:whitebox_class_attack`. |
-| `sec:ch6_graybox` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox Robustness Across Surrogate Models | active, referenced | Referenced from Chapter 7 RQ answer table. |
-| `sec:ch6_ablation` | `report/chapters/chapter6/3_ablation.tex` | Sensitivity to Key Hyperparameters | active, referenced | Referenced from Chapter 7 RQ answer table. |
+| `sec:ch6_whitebox_class_attack` | `report/chapters/chapter6/4_whitebox.tex` | Class-wise Whitebox Robustness Across Attacks | active, referenced | Referenced from Chapter 7 RQ answer section. |
+| `sec:ch6_graybox` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox Robustness Across Surrogate Models | active, referenced | Referenced from Chapter 7 RQ answer section. |
+| `sec:ch6_ablation` | `report/chapters/chapter6/3_ablation.tex` | Sensitivity to Key Hyperparameters | active, referenced | Referenced from Chapter 7 RQ answer section. |
 
 ### Subsection labels
 
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `subsec:ch5_evaluation_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Evaluation Attacks | active, unused | Renamed from `sec:evaluation_attacks`. |
-| `subsec:ch6_aggregate_comparison` | `report/chapters/chapter6/1_main_results.tex` | Aggregate Comparison Across Methods | active, referenced | Referenced from Chapter 7 RQ answer table. |
+| `subsec:ch6_aggregate_comparison` | `report/chapters/chapter6/1_main_results.tex` | Aggregate Comparison Across Methods | active, unused | No active prose reference after Chapter 7 RQ table removal. |
 | `subsec:ch6_per_attack_accuracy` | `report/chapters/chapter6/1_main_results.tex` | Per-Attack Accuracy: Where Do Methods Diverge? | active, referenced | Aligned with `docs/01_outline.md`. |
 | `subsec:ch6_hardest_evaluation_cases` | `report/chapters/chapter6/1_main_results.tex` | Robustness Under the Hardest Evaluation Cases | active, referenced | Approved replacement for the old metric-heavy 6.1.3 title. |
 | `subsec:ch6_training_stability` | `report/chapters/chapter6/1_main_results.tex` | Training Stability: How Predictable Is the Outcome? | active, unused | Aligned with `docs/01_outline.md`. |
@@ -108,10 +108,10 @@ Status values:
 | `fig:ch6_graybox_transfer_matrix` | `report/chapters/chapter6/2_graybox_results.tex` | Method-level graybox transfer matrix | active, referenced | Chapter-aware rename. |
 | `fig:ch6_graybox_transfer_linf` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox transfer matrices for linf attack family | active, referenced | Chapter-aware rename. |
 | `fig:ch6_graybox_transfer_l2` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox transfer matrices for l2 attack family | active, referenced | Chapter-aware rename. |
-| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for DDN-AT | active, referenced | Start of figure range. |
-| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for PGD-AT | active, unused | Middle of figure range. |
-| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for Multi-AT | active, unused | Middle of figure range. |
-| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | Whitebox-graybox gap heatmap for AttackDRO++ | active, referenced | End of figure range. |
+| `fig:ch6_graybox_gap_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for DDN-AT | active, referenced | Start of figure range. |
+| `fig:ch6_graybox_gap_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for PGD-AT | active, unused | Middle of figure range. |
+| `fig:ch6_graybox_gap_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for Multi-AT | active, unused | Middle of figure range. |
+| `fig:ch6_graybox_gap_attackdropp` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox-minus-whitebox gap heatmap for AttackDRO++ | active, referenced | End of figure range. |
 | `fig:ch6_graybox_delta_multiat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs Multi-AT | active, referenced | Start of figure range. |
 | `fig:ch6_graybox_delta_pgdat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs PGD-AT | active, unused | Middle of figure range. |
 | `fig:ch6_graybox_delta_ddnat` | `report/chapters/chapter6/2_graybox_results.tex` | Graybox delta heatmap vs DDN-AT | active, referenced | End of figure range. |
@@ -123,6 +123,7 @@ Status values:
 | Label | File | Points to | Status | Notes |
 |---|---|---|---|---|
 | `tab:ch4_hparams` | `report/chapters/chapter4/7-complete_pipeline.tex` | Default hyperparameters for AttackDRO++ | active, referenced | Renamed from `tab:hparams`. |
+| `tab:ch5_resnet18_layer_summary` | `report/chapters/chapter5/2-architectures.tex` | CIFAR-10 ResNet-18 instantiated layer summary | active, referenced | Architecture table generated from the CIFAR-adapted ResNet-18 used in training. |
 | `tab:ch5_training_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Training attack configuration | active, referenced | Chapter-aware rename. |
 | `tab:ch5_evaluation_attacks` | `report/chapters/chapter5/3-attack_suite.tex` | Validation and test attacks for Mean(8) | active, referenced | Chapter-aware rename. |
 | `tab:ch5_autoattack_config` | `report/chapters/chapter5/3-attack_suite.tex` | AutoAttack configuration | active, unused | Chapter-aware rename. |
@@ -154,7 +155,7 @@ Status values:
 | `tab:ch6_ablation_num_clusters` | `report/chapters/chapter6/3_ablation.tex` | Number-of-clusters ablation | active, referenced | Chapter-aware rename. |
 | `tab:ch6_ablation_anchor_strength` | `report/chapters/chapter6/3_ablation.tex` | Anchor-strength ablation | active, referenced | Added for active Chapter 6 ablation table. |
 | `tab:ch6_cluster_refresh_schedule_ablation` | `report/chapters/chapter6/3_ablation.tex` | Cluster-refresh schedule ablation | active, referenced | Chapter-aware rename. |
-| `tab:ch7_rq_answers` | `report/chapters/chapter7.tex` | Summary answers to research questions | active, unused | Chapter 7 synthesis table. |
+| `tab:ch7_rq_answers` | `report/chapters/chapter7.tex` | Removed research-question answer table | removed, deprecated | Section 7.2 now answers the research questions in prose paragraphs. |
 | `tab:app_wrn2810_architecture_check` | `report/appendices.tex` | Supplementary WRN-28-10 architecture check | active, unused | Appendix C table label. |
 
 ### Algorithm labels
@@ -202,7 +203,7 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 
 | Reference | Type | File | Target exists? | Notes |
 |---|---|---|---|---|
-| `chap:results_analysis` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex`; `report/chapters/chapter7.tex` | yes | Chapter 5.9 transition and Chapter 7 RQ table caption. |
+| `chap:results_analysis` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex`; `report/chapters/chapter7.tex` | yes | Chapter 5.9 transition and Chapter 7 RQ answer section. |
 | `chap:conclusion` | `\ref` | `report/chapters/chapter6/6_summary.tex` | yes | Chapter 6 transition to conclusion. |
 | `chap:introduction` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 maps answers back to the research questions. |
 | `alg:ch4_attackdropp` | `\ref` | `report/chapters/chapter4/7-complete_pipeline.tex` | yes | Algorithm reference. |
@@ -218,18 +219,19 @@ Active reference commands found: `\ref` and `\eqref`. No active uses were found 
 | `sec:ch5_evaluation_metrics` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex`; `report/chapters/chapter6/2_graybox_results.tex` | yes | Metric definitions. |
 | `sec:ch5_graybox_protocol` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox protocol reference. |
 | `sec:ch6_whitebox` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex`; `report/chapters/chapter6/4_whitebox.tex`; `report/chapters/chapter7.tex` | yes | Whitebox result reference. |
-| `sec:ch6_graybox` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer table. |
-| `sec:ch6_ablation` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer table. |
+| `sec:ch6_whitebox_class_attack` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer section. |
+| `sec:ch6_graybox` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer section. |
+| `sec:ch6_ablation` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer section. |
 | `chap:experimental_setup` | `\ref` | `report/chapters/chapter4/summary.tex`; `report/chapters/chapter6/3_ablation.tex`; `report/chapters/chapter7.tex` | yes | Setup chapter references. |
 | `chap:methodology` | `\ref` | `report/chapters/chapter6/3_ablation.tex` | yes | Method chapter reference. |
 | `app:logs` | `\ref` | `report/chapters/chapter5/9-tools_tracking.tex` | yes | Appendix B tracking export reference. |
 | `app:algorithms` | `\ref` | `report/chapters/chapter2/2-at-deep-dive.tex` | yes | Appendix A attack and training pseudocode reference. |
 | `app:extras` | `\ref` | `report/chapters/chapter6/3_ablation.tex`; `report/chapters/chapter7.tex` | yes | Appendix C supplementary architecture reference. |
-| `subsec:ch6_aggregate_comparison` | `\ref` | `report/chapters/chapter7.tex` | yes | Chapter 7 RQ answer table. |
 | `subsec:ch6_per_attack_accuracy` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex`; `report/chapters/chapter7.tex` | yes | Per-attack whitebox subsection reference. |
 | `subsec:ch6_hardest_evaluation_cases` | `\ref` | `report/chapters/chapter6/1_main_results.tex` | yes | Hardest-evaluation subsection reference. |
 | `subsec:ch6_paired_graybox_comparisons` | `\ref` | `report/chapters/chapter6/2_graybox_results.tex` | yes | Graybox comparison subsection reference. |
 | `tab:ch4_hparams` | `\ref` | `report/chapters/chapter4/7-complete_pipeline.tex` | yes | Table reference. |
+| `tab:ch5_resnet18_layer_summary` | `\ref` | `report/chapters/chapter5/2-architectures.tex` | yes | Model architecture table reference. |
 | `tab:ch5_training_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
 | `tab:ch5_evaluation_attacks` | `\ref` | `report/chapters/chapter5/3-attack_suite.tex` | yes | Table reference. |
 | `tab:ch5_training_config` | `\ref` | `report/chapters/chapter5/4-configuration.tex` | yes | Table reference. |

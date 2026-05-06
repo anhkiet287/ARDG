@@ -240,7 +240,7 @@ Component & Configuration \\
 Dataset & CIFAR-10 \\
 Backbone & ResNet-18 \\
 Training attacks & PGD-$\ell_\infty$, DDN-$\ell_2$ \\
-Evaluation attacks & FGSM-RS, PGD-$\ell_\infty$, TPGD, MIFGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, CW-$\ell_2$, AutoAttack-$\ell_\infty$ \\
+Evaluation attacks & FGSM-RS, PGD-$\ell_\infty$, TPGD, MI-FGSM, PGD-$\ell_2$, DDN-$\ell_2$, DeepFool-$\ell_2$, CW-$\ell_2$, AutoAttack-$\ell_\infty$ \\
 Main metric & Mean robust accuracy over eight attacks, excluding AutoAttack-$\ell_\infty$ \\
 Seeds & Five random seeds \\
 \bottomrule
@@ -283,7 +283,7 @@ but only where needed.
 | `fgsm_rs` | FGSM-RS |
 | `pgd20_ce` | PGD-$\ell_\infty$ |
 | `pgd_l2` | PGD-$\ell_2$ |
-| `tpgd` | TPGD |
+| `tpgd` | TPGD (TRADES-style Projected Gradient Descent on first use) |
 | `mifgsm` | MI-FGSM |
 | `cw_l2` | CW-$\ell_2$ |
 | `deepfool_l2` | DeepFool-$\ell_2$ |
@@ -394,7 +394,7 @@ Use these report-facing method names consistently in titles, tables, captions, a
 | PGD-AT | PGD-AT | Single-attack adversarial training using PGD-$\ell_\infty$. |
 | DDN-AT | DDN-AT | Single-attack adversarial training using DDN-$\ell_2$. |
 | Multi-AT | Multi-AT | Uniform multi-attack adversarial training baseline. |
-| AttackDRO++ | AttackDRO++; AttackDRO++ (Ours) in formal result comparisons when needed | Proposed method. Use “the proposed method” when avoiding repeated method names in prose. |
+| AttackDRO++ | AttackDRO++ | Proposed method. Use “the proposed method” when avoiding repeated method names in prose. |
 
 Usage rules:
 
@@ -403,7 +403,7 @@ Usage rules:
 - Use `Multi-AT` as the formal baseline name.
 - Use “uniform multi-attack adversarial training baseline” only as explanatory prose, not as the formal method name.
 - Use `AttackDRO++` in prose after first definition.
-- Use `AttackDRO++ (Ours)` in formal result tables/captions when comparison clarity is needed.
+- Use `AttackDRO++` in formal result tables/captions when comparison clarity is needed.
 - Define these method names once in Chapter 5, preferably in `tab:ch5_compared_methods`.
 
 ### Chapters

@@ -45,8 +45,8 @@ Important method naming rules:
 |---|---|---|---|---|---|---|
 | `FGSM-RS` | `fgsm_rs` | $\ell_\infty$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Held-out $\ell_\infty$ attack. |
 | `PGD-$\ell_\infty$` | `pgd20_ce` | $\ell_\infty$ | Yes | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_training_attacks` and `tab:ch5_evaluation_attacks`. | `pgd20_ce` maps to PGD-$\ell_\infty$; define once that it uses 20 steps and cross-entropy loss. Do not repeatedly use `PGD20-CE` in prose. |
-| `TPGD` | `tpgd` | $\ell_\infty$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Held-out $\ell_\infty$ attack. Define acronym/form in Chapter 2 or Chapter 5 if used heavily. |
-| `MI-FGSM` | `mifgsm` | $\ell_\infty$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Use hyphenated `MI-FGSM`, not `MIFGSM`, in report text. |
+| `TPGD` | `tpgd` | $\ell_\infty$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Held-out $\ell_\infty$ TRADES-style Projected Gradient Descent attack. Define acronym/form in Chapter 2 or Chapter 5 if used heavily. |
+| `MI-FGSM` | `mifgsm` | $\ell_\infty$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Use hyphenated `MI-FGSM` in report text. |
 | `PGD-$\ell_2$` | `pgd_l2` | $\ell_2$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Held-out $\ell_2$ attack. |
 | `DDN-$\ell_2$` | `ddn_l2` | $\ell_2$ | Yes | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_training_attacks` and `tab:ch5_evaluation_attacks`. | Source attack for `DDN-AT`; also part of Mean(8). |
 | `DeepFool-$\ell_2$` | `deepfool_l2` | $\ell_2$ | No | Yes | `report/chapters/chapter5/3-attack_suite.tex`, `tab:ch5_evaluation_attacks`; style map in `docs/06_style_rules.md`. | Held-out $\ell_2$ attack. |
@@ -148,8 +148,8 @@ Metric title rule:
 | `DDN` | Decoupled Direction and Norm | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `report/chapters/chapter5/3-attack_suite.tex`. | Included in the front-matter abbreviation list and used in `DDN-AT` and `DDN-$\ell_2$`. |
 | `FGSM` | Fast Gradient Sign Method | `report/outsider/list-of-abbreviations.tex`; used in Chapter 2. | `FGSM-RS` is listed separately as Fast Gradient Sign Method with Random Start. |
 | `FGSM-RS` | Fast Gradient Sign Method with Random Start | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `tab:ch5_evaluation_attacks`. | Held-out $\ell_\infty$ evaluation attack. |
-| `MI-FGSM` | Momentum Iterative Fast Gradient Sign Method | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `tab:ch5_evaluation_attacks`. | Use hyphenated `MI-FGSM`, not `MIFGSM`, in report text. |
-| `TPGD` | Targeted Projected Gradient Descent | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `tab:ch5_evaluation_attacks`. | Expansion follows the approved Chapter 2 outline. |
+| `MI-FGSM` | Momentum Iterative Fast Gradient Sign Method | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `tab:ch5_evaluation_attacks`. | Use hyphenated `MI-FGSM` in report text. |
+| `TPGD` | TRADES-style Projected Gradient Descent | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter2/2-at-deep-dive.tex`; `tab:ch5_evaluation_attacks`. | Expansion follows the active Chapter 2 definition. |
 | `CW` | Carlini-Wagner | `report/outsider/list-of-abbreviations.tex`; used as `CW-$\ell_2$`. | Use `Carlini--Wagner` in LaTeX. |
 | `DRO` | Distributionally Robust Optimization | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter4.tex`; `report/chapters/chapter4/3-attackDRO.tex`. | Central optimization shorthand; use `Group DRO` with a space in prose. |
 | `ERM` | Empirical Risk Minimization | `report/outsider/list-of-abbreviations.tex`; `report/chapters/chapter4/2-multi_attack.tex`; Chapter 4 method sections. | Expanded at first Chapter 4 use as empirical risk minimization (ERM). |
@@ -239,7 +239,7 @@ Metric title rule:
 - Prefer `AttackDRO++` over adding an `(Ours)` suffix unless disambiguating in crowded tables.
 - Decide whether Chapter 2 should change class-count notation from `K` to `C` to avoid conflict with the Chapter 4 cluster count `K`.
 - Confirm actual tools/platforms before adding Chapter 5.9: Colab, Drive, W&B, PyTorch, torchvision, TorchAttacks, AutoAttack package, adv-lib, scikit-learn, pandas, NumPy, matplotlib, hardware, and environment.
-- If Chapter 2 later defines a different meaning for `TPGD`, update the front matter and this registry; current approved outline maps it to Targeted Projected Gradient Descent.
+- If Chapter 2 later defines a different meaning for `TPGD`, update the front matter and this registry; current approved outline maps it to TRADES-style Projected Gradient Descent.
 
 ### Postpone
 

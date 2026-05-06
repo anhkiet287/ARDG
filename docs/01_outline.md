@@ -80,7 +80,7 @@ Use these report-facing method names consistently in titles, tables, captions, a
 | PGD-AT | PGD-AT | Single-attack adversarial training using PGD-$\ell_\infty$. |
 | DDN-AT | DDN-AT | Single-attack adversarial training using DDN-$\ell_2$. |
 | Multi-AT | Multi-AT | Uniform multi-attack adversarial training baseline. |
-| AttackDRO++ | AttackDRO++; AttackDRO++ (Ours) in formal result comparisons when needed | Proposed method. Use “the proposed method” when avoiding repeated method names in prose. |
+| AttackDRO++ | AttackDRO++ | Proposed method. Use “the proposed method” when avoiding repeated method names in prose. |
 
 Usage rules:
 
@@ -89,7 +89,7 @@ Usage rules:
 - Use DDN-AT in formal tables/captions.
 - Use Multi-AT consistently in formal tables/captions.
 - Use AttackDRO++ in prose after first definition.
-- Use AttackDRO++ (Ours) in formal result tables/captions when comparison clarity is needed.
+- Use AttackDRO++ in formal result tables/captions when comparison clarity is needed.
 - Define these names once in Chapter 5 in the compared-methods table.
 ```
 
@@ -266,7 +266,7 @@ Transition out:
     2.3.4 DeepFool
     2.3.5 Decoupled Direction and Norm (DDN)
     2.3.6 Momentum Iterative Fast Gradient Sign Method (MI-FGSM)
-    2.3.7 Targeted Projected Gradient Descent (TPGD)
+    2.3.7 TRADES-style Projected Gradient Descent (TPGD)
     2.3.8 AutoAttack
 2.4 Adversarial Training as Min-Max Optimization
 2.5 Distributionally Robust Optimization
@@ -356,13 +356,13 @@ Notes:
 4.6 Augmented Clustering with Gradient Fingerprints
 4.7 Uniform-Anchored Training Objective
 4.8 Complete Training Framework
-    4.8.1 Progression from Stage 1 to the Final Method
+    4.8.1 Progression from Diagnostic Motivation to the Final Method
     4.8.2 Implementation and Computational Considerations
 ```
 
 | # | Title | Purpose | Target |
 |---|---|---|---:|
-| 4.1 | Methodology Overview | Roadmap from Stage 1 observation to final method. | 300–450 w |
+| 4.1 | Methodology Overview | Roadmap from diagnostic motivation to final method. | 300–450 w |
 | 4.2 | Multi-Attack Training as a Domain Problem | Formalize attacks-as-domains and why averaging can hide hard groups. | 700–900 w |
 | 4.3 | Uniform Multi-Attack ERM Baseline | Define the strong uniform baseline. | 400–550 w |
 | 4.4 | AttackDRO: Group DRO Over Attack Identities | Define attack-level group DRO and its limits. | 700–900 w |
@@ -429,6 +429,7 @@ Required tables:
 
 | Label | Content | Status |
 |---|---|---|
+| `tab:ch5_resnet18_layer_summary` | CIFAR-10 ResNet-18 instantiated layer summary | active |
 | `tab:ch5_training_attacks` | Training attack configuration | active |
 | `tab:ch5_evaluation_attacks` | Evaluation attack configuration and source-of-truth attack naming | active |
 | `tab:ch5_autoattack_config` | AutoAttack configuration | active |
@@ -691,7 +692,7 @@ Required assets:
 
 | Asset | Status | Notes |
 |---|---|---|
-| RQ answer table (`tab:ch7_rq_answers`) | active | Maps RQ, answer, evidence. |
+| RQ answer table (`tab:ch7_rq_answers`) | removed, deprecated | Section 7.2 now answers the research questions in prose paragraphs. |
 
 ---
 
@@ -861,7 +862,7 @@ Markdown preview:
 | Method | Mean(8) | Mean $\ell_\infty$ | Mean $\ell_2$ |
 |---|---:|---:|---:|
 | Multi-AT | TBD | TBD | TBD |
-| AttackDRO++ (Ours) | TBD | TBD | TBD |
+| AttackDRO++ | TBD | TBD | TBD |
 
 LaTeX insertion:
 
@@ -875,7 +876,7 @@ LaTeX insertion:
 Method & Mean(8) & Mean $\ell_\infty$ & Mean $\ell_2$ \\
 \midrule
 Multi-AT & TBD & TBD & TBD \\
-AttackDRO++ (Ours) & TBD & TBD & TBD \\
+AttackDRO++ & TBD & TBD & TBD \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -904,7 +905,7 @@ Recommended main-text table style:
 Method & Mean(8) & Mean $\ell_\infty$ & Mean $\ell_2$ \\
 \midrule
 Multi-AT & TBD & TBD & TBD \\
-AttackDRO++ (Ours) & TBD & TBD & TBD \\
+AttackDRO++ & TBD & TBD & TBD \\
 \bottomrule
 \end{tabular}
 \end{table}

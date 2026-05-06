@@ -109,10 +109,9 @@ averages:
     \right].
 \end{align}
 
-AutoAttack-$\ell_\infty$ is reported separately from Mean(8). Early ablations may use
-AutoAttack-$\ell_\infty$ on 512 test samples as a sanity check, while final AutoAttack
-comparisons are reported on the full test set for a fixed random-seed panel.
-We denote this subset evaluation as AutoAttack-512 when a compact table label is needed.
+AutoAttack-$\ell_\infty$ is reported separately from Mean(8). We use
+AutoAttack-$\ell_\infty$ on 512 test samples as a sanity check (we denote this subset evaluation as AutoAttack-512), while final AutoAttack
+comparisons are reported on the full test set for random seeds.
 
 For graybox evaluation, adversarial examples are generated using a surrogate model
 \(f_{\theta_s}\) and evaluated on a target model \(f_{\theta_t}\):

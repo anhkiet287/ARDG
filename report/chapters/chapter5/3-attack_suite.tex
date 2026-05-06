@@ -1,5 +1,5 @@
 \section{Attack Suite and Configuration}
-Stage 2 evaluates whether robustness learned from a small set of source attacks generalizes to a broader attack suite. The attack suite is divided into two groups: source attacks used during training and evaluation attacks used only for validation or final testing.
+The evaluation protocol tests whether robustness learned from a small set of source attacks generalizes to a broader attack suite. The attack suite is divided into two groups: source attacks used during training and evaluation attacks used only for validation or final testing.
 
 \subsection{Training Attacks}
 The main training setup uses two source attacks:
@@ -24,13 +24,13 @@ compares weighting and grouping strategies.
 
 \begin{table}[H]
 \centering
-\caption{Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for the multi-attack design path from Multi-AT through AttackDRO++.}
+\caption[Source attack configuration]{Source attack configuration used during training. Both attacks are used to generate mixed adversarial minibatches for Multi-AT, AttackDRO, Cluster-DRO, and AttackDRO++.}
 \label{tab:ch5_training_attacks}
 \begin{tabular}{llllll}
 \toprule
 Attack & Norm & Budget & Steps & Loss / objective & Role \\
 \midrule
-PGD-{$\ell_\infty$} & $\ell_\infty$ & $8/255$ & 20 & Cross-entropy & Source attack \\
+PGD-$\ell_\infty$ & $\ell_\infty$ & $8/255$ & 20 & Cross-entropy & Source attack \\
 DDN-$\ell_2$ & $\ell_2$ & $0.5$ & 20 & DDN objective & Source attack \\
 \bottomrule
 \end{tabular}
@@ -56,7 +56,7 @@ metric, denoted Mean(8), is computed over the eight attacks in the table. AutoAt
 reported separately and is therefore not included in Mean(8).
 \begin{table}[H]
 \centering
-\caption{Validation and test attacks used to compute Mean(8), the average robust accuracy over the eight non-AutoAttack evaluation attacks. Source attacks are also used during training; held-out attacks are used only for validation and test evaluation.}
+\caption[Validation and test attacks]{Validation and test attacks used to compute Mean(8), the average robust accuracy over the eight non-AutoAttack evaluation attacks. Source attacks are also used during training; held-out attacks are used only for validation and test evaluation.}
 \label{tab:ch5_evaluation_attacks}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{7pt}
@@ -82,9 +82,10 @@ definitions are given in Section~\ref{sec:ch5_evaluation_metrics}.
 
 \paragraph{AutoAttack configuration}
 
-AutoAttack is used as an additional standardized \(\ell_\infty\) stress test following
-Croce and Hein~\cite{croce2020reliable}. It is not included in Mean(8), because it is
-computationally more expensive and follows a separate evaluation protocol.
+AutoAttack is reported as a separate standardized $\ell_\infty$ stress test following
+Croce and Hein~\cite{croce2020reliable}. It is excluded from Mean(8) so that the main
+aggregate metric remains tied to the fixed eight-attack evaluation suite, while
+AutoAttack serves as an independent robustness check. This also reflects that AutoAttack is an ensemble protocol, not a single attack, so it is reported separately.
 
 The AutoAttack configuration uses the standard \(\ell_\infty\) setting with perturbation
 budget \(\varepsilon_\infty = 8/255\). In early experiments and ablations, AutoAttack is
@@ -96,7 +97,7 @@ random-seed panel.
 
 \begin{table}[H]
 \centering
-\caption{AutoAttack-$\ell_\infty$ configuration used as a separate stress test. AutoAttack is reported separately from Mean(8).}
+\caption[AutoAttack configuration]{AutoAttack-$\ell_\infty$ configuration used as a separate stress test. AutoAttack is reported separately from Mean(8).}
 \label{tab:ch5_autoattack_config}
 \renewcommand{\arraystretch}{1.08}
 \setlength{\tabcolsep}{10pt}

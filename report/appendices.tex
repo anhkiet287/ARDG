@@ -49,7 +49,7 @@
 \includegraphics[width=0.95\linewidth]{figures/wandb/media_images_media_q_trajectory_15650_2752bccd0ffdd754ab89.png}
 \caption{Group-weight trajectory.}
 \end{subfigure}
-\caption{Representative W\&B dashboard exports for experiment tracking. Panels (a)\textendash(e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell_\infty$ and DDN-$\ell_2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}
+\caption[W\&B dashboard exports]{Representative W\&B dashboard exports for experiment tracking. Panels (a)\textendash(e) track training loss, training accuracy, clean validation accuracy, and validation robustness under PGD-$\ell_\infty$ and DDN-$\ell_2$ during a training run. Panel (f) records the AttackDRO++ group-weight trajectory diagnostic. These exports document training telemetry and are not used as result evidence.}
 \label{fig:app_wandb_core_metrics}
 \end{figure}
 
@@ -66,9 +66,30 @@
 % Goal: store supplementary ablation tables, sweep summaries, training curves,
 % qualitative grids, and plots that are not part of the main chapters.
 
+\section{Adversarial Perturbation Visualizations}
+\label{app:adv_visualizations}
+
+\subsection{Grouped Adversarial Perturbation Visualizations}
+
+Figure~\ref{fig:app_grouped_linf_adv_viz} and Figure~\ref{fig:app_grouped_l2_adv_viz} summarize adversarial examples and normalized perturbation heatmaps across the main \(\ell_\infty\) and \(\ell_2\) evaluation attacks. These figures are intended as qualitative support for the attack descriptions in Chapter~2; all heatmaps are normalized for visibility.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{figures/adv_viz/adv_grouped_linf.pdf}
+\caption[Grouped \(\ell_\infty\) perturbation visualization]{Grouped \(\ell_\infty\) adversarial examples on CIFAR-10, with adversarial images and normalized perturbation heatmaps.}
+\label{fig:app_grouped_linf_adv_viz}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{figures/adv_viz/adv_grouped_l2.pdf}
+\caption[Grouped \(\ell_2\) perturbation visualization]{Grouped \(\ell_2\) adversarial examples on CIFAR-10, with adversarial images and normalized perturbation heatmaps.}
+\label{fig:app_grouped_l2_adv_viz}
+\end{figure}
+
 \begin{table}[H]
 \centering
-\caption{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are
+\caption[Supplementary WRN-28-10 architecture check]{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are
 robust accuracy (\%) from a single run and are therefore not included in the
 main paired claims. Mean(8) and Worst(8) are computed over the eight
 non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately. Bold values indicate the best method for each metric.}
@@ -95,8 +116,8 @@ AttackDRO++
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{figures/ablations/wrn2810_architecture_check.png}
-    \caption{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately.}
+    \includegraphics[width=0.75\linewidth]{figures/ablations/wrn2810_architecture_check.pdf}
+    \caption[Supplementary WRN-28-10 architecture check]{Supplementary WRN-28-10 architecture check on CIFAR-10. Values are from a single run and are therefore not included in the main paired claims. Mean(8) and Worst(8) are computed over the eight non-AutoAttack attacks; AutoAttack-$\ell_\infty$ is reported separately.}
     \label{fig:app_wrn2810_architecture_check}
 \end{figure}
 
@@ -107,5 +128,19 @@ AttackDRO++
 \chapter{Compute Resources and Environment Notes}
 \label{app:compute}
 
-% Goal: document GPU/CPU, RAM, operating system, CUDA/cuDNN, library versions,
-% runtime measurement policy, and reproducibility notes if verified.
+The main experiments were executed through the Python and PyTorch pipeline
+described in Chapter~\ref{chap:experimental_setup}.  Google Colab provided the
+interactive GPU runtime, while Google Drive stored checkpoints, cached
+adversarial examples, result CSV files, and exported figures.  The exact GPU
+model available to a run was treated as execution metadata rather than an
+experimental variable; model selection and statistical comparisons are based on
+saved checkpoints and fixed evaluation scripts, not on wall-clock runtime.
+
+The implementation stack used PyTorch and torchvision for training, TorchAttacks
+and dedicated AutoAttack/DDN implementations for adversarial evaluation,
+scikit-learn for MiniBatch K-means, and NumPy, pandas, matplotlib, and
+SciencePlots for aggregation and figure generation.  Weights \& Biases was used
+for telemetry and configuration tracking.  The source attack definitions,
+evaluation attack suite, seed protocol, and reporting metrics are fixed in
+Chapter~\ref{chap:experimental_setup}; this appendix records the compute context
+only to avoid leaving the environment notes implicit.

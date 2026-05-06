@@ -6,13 +6,13 @@ Task board for writing and polishing the DATN report. This file tells each membe
 ## 1. Current report status
 
 - The report compiles as 7 active chapters from `report/main.tex`.
-- Chapter 7 is still empty except for `\chapter{Conclusion and Future Work}`, its label, and local TODO comments.
+- Chapter 7 is still empty except for `\chapter{Conclusion and Future Work}`, its label, and local to-do comments.
 - Chapter 5.9, `Tools, Platforms, and Experiment Tracking`, is still missing.
 - The Chapter 5 setup recap table `tab:ch5_setup_summary` is still missing.
-- Chapter 6 closing synthesis in `report/chapters/chapter6/6_summary.tex` is empty except for TODO guidance.
+- Chapter 6 closing synthesis in `report/chapters/chapter6/6_summary.tex` is empty except for to-do guidance.
 - Chapter 2 still needs outline-level restructuring: the active files use older section names, while `docs/01_outline.md` expects a clearer 2.1-2.7 background flow.
 - Chapter 6 graybox section is still too granular and should later be consolidated around the main transfer story.
-- Local TODO comments now exist in the active LaTeX source files for Chapters 1-7 and are the main source for writing tasks.
+- Local to-do comments now exist in the active LaTeX source files for Chapters 1-7 and are the main source for writing tasks.
 
 ## 2. Global rules for all members
 
@@ -34,7 +34,7 @@ Task board for writing and polishing the DATN report. This file tells each membe
 |---|---|---|---|---|---|
 | ĐA | Chapter 2 Background | `report/chapters/chapter2.tex`, `report/chapters/chapter2/*.tex` | High | todo | Restructured background, compact attack/DRO/statistics explanations, useful tables/optional concept figure plan. |
 | Thành | Chapter 3 Related Work | `report/chapters/chapter3.tex`, `report/chapters/chapter3/*.tex` | High | todo | Related-work narrative that compares prior work and ends with a clear gap. |
-| Kiệt | Chapter 1 Introduction | `report/chapters/chapter1.tex` | High | todo | Compact motivation, Stage 1 bridge, RQs, contributions, scope, and report organization. |
+| Kiệt | Chapter 1 Introduction | `report/chapters/chapter1.tex` | High | todo | Compact motivation, diagnostic bridge, RQs, contributions, scope, and report organization. |
 | Kiệt | Chapter 4 Proposed Methodology | `report/chapters/chapter4.tex`, `report/chapters/chapter4/*.tex` | Medium | todo | Clear method explanation with no result claims; checked equations, algorithm, and hyperparameter table. |
 | Kiệt | Chapter 5 Experimental Setup | `report/chapters/chapter5.tex`, `report/chapters/chapter5/*.tex` | High | todo | Reproducible setup chapter with missing 5.9 and setup recap table added. |
 | Kiệt | Chapter 6 Results and Analysis | `report/chapters/chapter6.tex`, `report/chapters/chapter6/*.tex` | High | todo | Result interpretation, figure/table references, graybox consolidation, and closing synthesis. |
@@ -125,7 +125,7 @@ File to edit:
 Tasks:
 - Keep the chapter compact, with a 6-8 page total target.
 - Do not add a Chapter 1 summary.
-- Strengthen the Stage 1 to Stage 2 bridge.
+- Strengthen the diagnostic-to-method bridge.
 - Make research questions answerable by current Chapter 6 evidence.
 - Keep contributions tied to implemented method/evaluation pieces.
 - Keep scope conservative: CIFAR-10, ResNet-18 main setting, defined attack suite, repeated-seed protocol.
@@ -134,7 +134,7 @@ Tasks:
 
 Expected output:
 - Compact motivation.
-- Clear Stage 1 bridge.
+- Clear diagnostic bridge.
 - Research questions and hypotheses that match the active evaluation.
 - Conservative contributions and scope.
 - Report organization that previews Chapters 2-7.

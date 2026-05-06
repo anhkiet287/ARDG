@@ -10908,22 +10908,21 @@ for method in GRAYBOX_METHODS:
 
 # 2. Pairwise delta heatmaps.
 DELTA_PAIRS = [
-    ("attackdro_pp_anchor035_gradfp_online_k4", "multi_attack_pgd_linf_ddn_l2_mb", "AttackDRO++_vs_Multi-AT"),
-    ("multi_attack_pgd_linf_ddn_l2_mb", "single_at_pgd_linf", "Multi-AT_vs_PGD-AT"),
-    ("multi_attack_pgd_linf_ddn_l2_mb", "single_at_ddn_l2", "Multi-AT_vs_DDN-AT"),
-    ("attackdro_pp_anchor035_gradfp_online_k4", "single_at_pgd_linf", "AttackDRO++_vs_PGD-AT"),
-    ("attackdro_pp_anchor035_gradfp_online_k4", "single_at_ddn_l2", "AttackDRO++_vs_DDN-AT"),
+    ("attackdro_pp_anchor035_gradfp_online_k4", "multi_attack_pgd_linf_ddn_l2_mb", "AttackDRO++_vs_uniform", "AttackDRO++ minus Multi-AT"),
+    ("multi_attack_pgd_linf_ddn_l2_mb", "single_at_pgd_linf", "Multi-AT_vs_PGD-AT", "Multi-AT minus PGD-AT"),
+    ("multi_attack_pgd_linf_ddn_l2_mb", "single_at_ddn_l2", "Multi-AT_vs_DDN-AT", "Multi-AT minus DDN-AT"),
+    ("attackdro_pp_anchor035_gradfp_online_k4", "single_at_pgd_linf", "AttackDRO++_vs_singlePGD", "AttackDRO++ minus PGD-AT"),
+    ("attackdro_pp_anchor035_gradfp_online_k4", "single_at_ddn_l2", "AttackDRO++_vs_singleDDN", "AttackDRO++ minus DDN-AT"),
 ]
-for ma, mb, name in DELTA_PAIRS:
+for ma, mb, name, title in DELTA_PAIRS:
     a = method_cell[ma].rename(columns={"acc": "acc_a"})[["class_name", "attack", "acc_a"]]
     b = method_cell[mb].rename(columns={"acc": "acc_b"})[["class_name", "attack", "acc_b"]]
     m = a.merge(b, on=["class_name", "attack"])
     m["delta_pp"] = 100 * (m["acc_a"] - m["acc_b"])
     mat = _cell_matrix(m, "delta_pp")
     vmax = max(1.0, float(np.nanmax(np.abs(mat.values))))
-    safe_name = name.replace('+', 'p').replace('-', '')
-    out = GRAYBOX_OUT_DIR / f"graybox_delta_per_class_attack_{safe_name}.png"
-    _plot_cell_heatmap(mat, f"graybox delta: {name.replace('_', ' ')}", out, cmap="RdYlGn", vmin=-vmax, vmax=vmax)
+    out = GRAYBOX_OUT_DIR / f"graybox_delta_per_class_attack_{name}.png"
+    _plot_cell_heatmap(mat, title, out, cmap="RdYlGn", vmin=-vmax, vmax=vmax)
     print(f"Saved: {out}")
 
 # 3. Whitebox vs graybox gap.
@@ -10932,13 +10931,13 @@ for method in GRAYBOX_METHODS:
     w = white.query("target_method == @method").groupby(["class_name", "attack"], as_index=False)["acc"].mean()
     g = method_cell[method]
     m = w.rename(columns={"acc": "white_acc"}).merge(g.rename(columns={"acc": "gray_acc"}), on=["class_name", "attack"])
-    m["gap_pp"] = 100 * (m["white_acc"] - m["gray_acc"])
+    m["gap_pp"] = 100 * (m["gray_acc"] - m["white_acc"])
     mat = _cell_matrix(m, "gap_pp")
     vmax = max(1.0, float(np.nanmax(np.abs(mat.values))))
     method_short = METHOD_DISPLAY_NAMES.get(method, method)
     safe_name = method_short.replace('+', 'p').replace('-', '')
     out = GRAYBOX_OUT_DIR / f"whitebox_graybox_gap_{safe_name}.png"
-    _plot_cell_heatmap(mat, f"whitebox - graybox gap: {method_short}", out, cmap="RdYlGn", vmin=-vmax, vmax=vmax)
+    _plot_cell_heatmap(mat, f"graybox - whitebox gap: {method_short}", out, cmap="RdYlGn", vmin=-vmax, vmax=vmax)
     print(f"Saved: {out}")
 
 # 4. Bottom-10 graybox cells per method.
@@ -12624,4 +12623,3 @@ fig.savefig(out_path, dpi=220, bbox_inches="tight")
 plt.show()
 
 print("Saved:", out_path)
-
